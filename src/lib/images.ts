@@ -1,0 +1,18 @@
+export const IMAGES = {
+  heroBanner: "/images/hero-banner.png",
+  vfMpv7: "/images/vf-mpv7.png",
+  evoScooter: "/images/evo-scooter.png",
+  vf9Suv: "/images/vf9-suv.jpg",
+  brandStory: "/images/brand-story.jpg",
+  accModel: "/images/acc-model.jpg",
+  accCharger: "/images/acc-charger.jpg",
+  accMat: "/images/acc-mat.jpg",
+  accUmbrella: "/images/acc-umbrella.jpg",
+  chargingStations: "/images/charging-stations.jpg",
+  chargingScooter: "/images/charging-scooter.jpg",
+  portableCharger: "/images/portable-charger.jpg",
+  showroom: "/images/showroom.jpg",
+  community: "/images/community.jpg",
+  herioGreen: "/images/herio-green.jpg",
+  newsletterBg: "/images/newsletter-bg.jpg",
+} as const;
