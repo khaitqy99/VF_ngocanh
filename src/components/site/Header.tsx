@@ -1,18 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
 
 const NAV = [
-  "Giới thiệu",
-  "Ô tô",
-  "Xe máy điện",
-  "Phụ kiện xe",
-  "Dịch vụ hậu mãi",
-  "Pin và trạm sạc",
-  "Lưu trữ năng lượng",
-];
+  { label: "Giới thiệu", href: "/gioi-thieu" },
+  { label: "Ô tô", href: "/oto" },
+  { label: "Xe máy điện", href: "/xe-may-dien" },
+  { label: "Phụ kiện xe", href: "/phu-kien" },
+  { label: "Dịch vụ hậu mãi", href: "/dich-vu-hau-mai" },
+  { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
+  { label: "Lưu trữ năng lượng", href: "/luu-tru-nang-luong" },
+] as const;
 
 function Logo() {
   return (
@@ -32,8 +32,8 @@ function Logo() {
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -53,45 +53,29 @@ export default function Header() {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-6 xl:gap-8 lg:flex">
-          {NAV.map((n) => (
-            <a
-              key={n}
-              href="#"
-              className="whitespace-nowrap text-[13px] font-medium text-foreground/80 transition-colors hover:text-brand"
-            >
-              {n}
-            </a>
-          ))}
+          {NAV.map(({ label, href }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={label}
+                href={href}
+                className={`relative whitespace-nowrap pb-0.5 text-[13px] font-medium transition-colors hover:text-brand ${
+                  active ? "text-brand" : "text-foreground/80"
+                }`}
+              >
+                {label}
+                {active && (
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-brand" />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2.5">
-          <button className="hidden items-center rounded-md bg-brand px-4 py-2.5 text-[12px] font-semibold tracking-wide text-white shadow-sm transition-colors hover:bg-[#0046cc] sm:inline-flex">
-            ĐĂNG KÝ LÁI THỬ
-          </button>
-          <button
-            onClick={() => setOpen(!open)}
-            className="rounded-md p-2 text-brand-dark lg:p-2.5"
-            aria-label="Menu"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
+        <button className="hidden items-center rounded-md bg-brand px-4 py-2.5 text-[12px] font-semibold tracking-wide text-white shadow-sm transition-colors hover:bg-[#0046cc] sm:inline-flex">
+          ĐĂNG KÝ LÁI THỬ
+        </button>
       </div>
-
-      {open && (
-        <div className="border-t bg-white lg:hidden">
-          <div className="container-vf flex flex-col gap-1 py-4">
-            {NAV.map((n) => (
-              <a key={n} href="#" className="py-2.5 text-sm font-medium text-foreground/85">
-                {n}
-              </a>
-            ))}
-            <button className="mt-3 rounded-md bg-brand px-4 py-2.5 text-sm font-semibold text-white">
-              ĐĂNG KÝ LÁI THỬ
-            </button>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

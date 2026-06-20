@@ -15,4 +15,5 @@ export const IMAGES = {
   community: "/images/community.jpg",
   herioGreen: "/images/herio-green.jpg",
   newsletterBg: "/images/newsletter-bg.jpg",
+  otoHero: "/images/cars/oto-hero.jpg",
 } as const;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Facebook, Youtube, MapPin, Phone, Mail } from "lucide-react";
 
 function Logo() {
@@ -44,13 +45,34 @@ export default function Footer() {
         </div>
         <FCol
           title="SẢN PHẨM"
-          items={["VF 3", "VF 5", "VF 6", "VF 7", "VF 8", "VF e34", "Xe máy điện"]}
+          items={[
+            "VF 3",
+            "VF 5",
+            "VF 6",
+            "VF 7",
+            "VF 8",
+            "VF e34",
+            { label: "Xe máy điện", href: "/xe-may-dien" },
+          ]}
         />
         <FCol
           title="DỊCH VỤ"
-          items={["Đăng ký lái thử", "Bảo dưỡng - Sửa chữa", "Bảo hành", "Dịch vụ khác"]}
+          items={[
+            { label: "Đăng ký lái thử", href: "#" },
+            { label: "Bảo dưỡng - Sửa chữa", href: "/dich-vu-hau-mai" },
+            { label: "Bảo hành", href: "/dich-vu-hau-mai" },
+            { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
+          ]}
         />
-        <FCol title="VỀ CHÚNG TÔI" items={["Giới thiệu", "Tin tức", "Tuyển dụng", "Liên hệ"]} />
+        <FCol
+          title="VỀ CHÚNG TÔI"
+          items={[
+            { label: "Giới thiệu", href: "/gioi-thieu" },
+            { label: "Tin tức", href: "#" },
+            { label: "Tuyển dụng", href: "#" },
+            { label: "Liên hệ", href: "#" },
+          ]}
+        />
         <div>
           <h4 className="mb-4 text-[13px] font-bold tracking-wider text-brand-dark">LIÊN HỆ</h4>
           <ul className="space-y-3 text-xs text-foreground/80">
@@ -69,25 +91,44 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="container-vf mt-10 border-t border-border/60 pt-6 text-center text-[11px] text-muted-foreground">
-        © 2026 VF Ngọc Anh. All rights reserved.
+      <div className="container-vf mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-[11px] text-muted-foreground sm:flex-row">
+        <p>© 2026 VF Ngọc Anh. All rights reserved.</p>
+        <div className="flex gap-4">
+          <a href="#" className="hover:text-brand">
+            Chính sách bảo mật
+          </a>
+          <a href="#" className="hover:text-brand">
+            Điều khoản sử dụng
+          </a>
+        </div>
       </div>
     </footer>
   );
 }
 
-function FCol({ title, items }: { title: string; items: string[] }) {
+function FCol({
+  title,
+  items,
+}: {
+  title: string;
+  items: (string | { label: string; href: string })[];
+}) {
   return (
     <div>
       <h4 className="mb-4 text-[13px] font-bold tracking-wider text-brand-dark">{title}</h4>
       <ul className="space-y-2.5">
-        {items.map((i) => (
-          <li key={i}>
-            <a href="#" className="text-xs text-foreground/80 hover:text-brand">
-              {i}
-            </a>
-          </li>
-        ))}
+        {items.map((i) => {
+          const label = typeof i === "string" ? i : i.label;
+          const href = typeof i === "string" ? "#" : i.href;
+          const Comp = href.startsWith("/") ? Link : "a";
+          return (
+            <li key={label}>
+              <Comp href={href} className="text-xs text-foreground/80 hover:text-brand">
+                {label}
+              </Comp>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
