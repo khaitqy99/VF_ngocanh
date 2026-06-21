@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast, Toaster } from "sonner";
 import {
   Shield,
   MapPin,
@@ -15,7 +17,22 @@ import {
   ShieldCheck,
   Leaf,
   ChevronRight,
+  Scale,
+  Calculator,
+  Calendar,
+  Search,
+  Info,
+  Sparkles,
+  TrendingUp,
+  X,
+  Check,
+  Phone,
+  Clock,
+  Plus,
+  AlertCircle,
+  Percent,
   Package,
+  Bike,
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
@@ -48,44 +65,45 @@ import {
   RANGE_OPTIONS,
   SPEED_OPTIONS,
   TYPE_OPTIONS,
+  type ScooterModel,
   type ScooterType,
   type RangeBucket,
   type SpeedBucket,
 } from "@/lib/scooters";
 
 const HERO_FEATURES = [
-  { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 3 năm" },
-  { icon: MapPin, text: "Dịch vụ toàn diện", sub: "Mạng lưới rộng khắp" },
-  { icon: Wallet, text: "Hỗ trợ tài chính", sub: "Trả góp linh hoạt" },
+  { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000km" },
+  { icon: MapPin, text: "Dịch vụ toàn diện", sub: "Cứu hộ 24/7 & trạm sạc toàn quốc" },
+  { icon: Wallet, text: "Hỗ trợ tài chính", sub: "Trả góp lãi suất 0% siêu linh hoạt" },
 ] as const;
 
 const WHY_VINFAST = [
   {
     icon: Cpu,
     title: "Công nghệ thông minh",
-    desc: "Kết nối app VinFast, định vị GPS và cập nhật phần mềm từ xa trên mọi hành trình.",
+    desc: "Kết nối thông minh qua App VinFast Scooter, định vị GPS chống trộm, chẩn đoán lỗi xe tự động và nâng cấp phần mềm FOTA.",
   },
   {
     icon: Zap,
-    title: "Vận hành êm ái",
-    desc: "Động cơ điện mạnh mẽ, khởi động nhanh và vận hành yên tĩnh, tiết kiệm chi phí.",
+    title: "Hiệu suất đột phá",
+    desc: "Động cơ điện in-wheel mạnh mẽ hoặc Mid-motor truyền động dây đai, tăng tốc bốc như xe xăng, vận hành êm ái tuyệt đối.",
   },
   {
     icon: ShieldCheck,
-    title: "An toàn vượt trội",
-    desc: "Hệ thống phanh ABS, đèn LED và cảm biến thông minh bảo vệ người lái mọi lúc.",
+    title: "An toàn & Chống nước",
+    desc: "Đèn full-LED siêu sáng, phanh đĩa ABS cao cấp. Đạt chuẩn chống nước IP67 cao nhất, tự tin vượt lụt ngập sâu tới 0.5 mét.",
   },
   {
     icon: Leaf,
-    title: "Thân thiện môi trường",
-    desc: "Không khí thải, giảm tiếng ồn và góp phần kiến tạo đô thị xanh bền vững.",
+    title: "Siêu tiết kiệm & Thân thiện",
+    desc: "Chi phí sạc điện siêu rẻ (chỉ bằng 1/10 chi phí xăng). Không khí thải, không tiếng ồn, gìn giữ môi trường đô thị xanh.",
   },
 ] as const;
 
 const sectionHeading =
-  "text-center text-lg font-black leading-tight tracking-tight text-balance text-brand-dark sm:text-xl md:text-2xl lg:text-[1.75rem]";
+  "text-center text-xl font-black leading-tight tracking-tight text-brand-dark sm:text-2xl md:text-3xl lg:text-4xl";
 
-type SortKey = "newest" | "price-asc" | "price-desc";
+type SortKey = "newest" | "price-asc" | "price-desc" | "range-desc" | "speed-desc";
 
 type Filters = {
   types: Set<ScooterType | "all">;
@@ -101,71 +119,1521 @@ const defaultFilters = (): Filters => ({
   speeds: new Set(),
 });
 
+// Cities and Provinces for Scooter Rolling Cost
+const PROVINCES = [
+  { id: "hanoi", name: "Hà Nội (Lệ phí biển 2 - 4 triệu)", rate: 0.05, maxPlate: 4_000_000 },
+  { id: "hcm", name: "TP. Hồ Chí Minh (Lệ phí biển 2 - 4 triệu)", rate: 0.05, maxPlate: 4_000_000 },
+  {
+    id: "other",
+    name: "Tỉnh/Thành phố khác (Lệ phí biển 100K - 800K)",
+    rate: 0.02,
+    maxPlate: 800_000,
+  },
+];
+
 export default function ScootersPage() {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [sort, setSort] = useState<SortKey>("newest");
   const [mobileFilters, setMobileFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [segmentTab, setSegmentTab] = useState<string>("all");
 
+  // Comparison State
+  const [compareList, setCompareList] = useState<ScooterModel[]>([]);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
+
+  // Booking Modal State
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingScooter, setBookingScooter] = useState<ScooterModel | null>(null);
+  const [bookingStep, setBookingStep] = useState(1);
+  const [bookingForm, setBookingForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    service: "Đăng ký lái thử",
+    showroom: "VF Ngọc Anh - Long Biên",
+    date: "",
+    time: "09:00",
+    note: "",
+    contactMethod: "Phone",
+  });
+
+  // Rolling Cost Estimator State
+  const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo-neo");
+  const [estimatorLocation, setEstimatorLocation] = useState<string>("hanoi");
+  const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
+
+  // Installment Calculator State
+  const [downPaymentPct, setDownPaymentPct] = useState<number>(30);
+  const [loanTermYears, setLoanTermYears] = useState<number>(2); // Typically 1-2 years for scooters
+  const [interestRate, setInterestRate] = useState<number>(0); // Promo 0% is common
+  const [estimatorTab, setEstimatorTab] = useState<"rolling" | "installment">("rolling");
+
+  // Filter scooters based on sidebar filters + segment tab + search query
   const filteredScooters = useMemo(() => {
     let result = SCOOTERS.filter((scooter) => {
+      // 1. Sidebar filters
       const typeOk =
         filters.types.has("all") || filters.types.size === 0 || filters.types.has(scooter.type);
       const priceOk =
         scooter.price >= filters.priceRange[0] && scooter.price <= filters.priceRange[1];
       const rangeOk = filters.ranges.size === 0 || filters.ranges.has(scooter.rangeBucket);
       const speedOk = filters.speeds.size === 0 || filters.speeds.has(scooter.speedBucket);
-      return typeOk && priceOk && rangeOk && speedOk;
+
+      // 2. Quick segment tab
+      let tabOk = true;
+      if (segmentTab === "student") {
+        tabOk = scooter.type === "xe-dap-dien" || scooter.id === "evo-lite-neo";
+      } else if (segmentTab === "urban") {
+        tabOk = scooter.type === "xe-co-ban" || scooter.id === "feliz-s";
+      } else if (segmentTab === "luxury") {
+        tabOk = scooter.type === "xe-ga-cao-cap" || scooter.id === "klara-s2";
+      }
+
+      // 3. Search query
+      const searchOk =
+        searchQuery === "" ||
+        scooter.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        scooter.subtitle.toLowerCase().includes(searchQuery.toLowerCase());
+
+      return typeOk && priceOk && rangeOk && speedOk && tabOk && searchOk;
     });
 
+    // Sorting
     if (sort === "price-asc") result = [...result].sort((a, b) => a.price - b.price);
     if (sort === "price-desc") result = [...result].sort((a, b) => b.price - a.price);
+    if (sort === "range-desc") result = [...result].sort((a, b) => b.range - a.range);
+    if (sort === "speed-desc") result = [...result].sort((a, b) => b.topSpeed - a.topSpeed);
     return result;
-  }, [filters, sort]);
+  }, [filters, sort, segmentTab, searchQuery]);
 
-  const clearFilters = () => setFilters(defaultFilters());
+  const clearFilters = () => {
+    setFilters(defaultFilters());
+    setSearchQuery("");
+    setSegmentTab("all");
+    toast.success("Đã thiết lập lại tất cả bộ lọc");
+  };
+
+  // Toggle scooter for comparison
+  const toggleCompare = (scooter: ScooterModel) => {
+    setCompareList((prev) => {
+      const exists = prev.find((item) => item.id === scooter.id);
+      if (exists) {
+        toast.info(`Đã xóa ${scooter.name} khỏi danh sách so sánh`);
+        return prev.filter((item) => item.id !== scooter.id);
+      }
+      if (prev.length >= 3) {
+        toast.error("Bạn chỉ có thể so sánh tối đa 3 xe cùng lúc");
+        return prev;
+      }
+      toast.success(`Đã thêm ${scooter.name} vào danh sách so sánh`);
+      return [...prev, scooter];
+    });
+  };
+
+  // Trigger Booking Modal
+  const openBooking = (scooter: ScooterModel) => {
+    setBookingScooter(scooter);
+    setBookingStep(1);
+    setIsBookingOpen(true);
+  };
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bookingForm.name || !bookingForm.phone) {
+      toast.error("Vui lòng nhập đầy đủ Họ tên và Số điện thoại");
+      return;
+    }
+    // Advance to success step
+    setBookingStep(4);
+    toast.success("Gửi yêu cầu đặt lịch/mua xe thành công!");
+  };
+
+  const selectedEstimatorScooter = useMemo(() => {
+    return SCOOTERS.find((s) => s.id === estimatorScooterId) || SCOOTERS[0];
+  }, [estimatorScooterId]);
+
+  // Rolling Cost Calculation for Scooter
+  const rollingCostResult = useMemo(() => {
+    const scooter = selectedEstimatorScooter;
+    const basePrice =
+      estimatorBattery === "purchase"
+        ? scooter.price + scooter.batteryPurchasePrice
+        : scooter.price;
+
+    // Vietnam Motorcycle Registration fee
+    const province = PROVINCES.find((p) => p.id === estimatorLocation) || PROVINCES[0];
+    const registrationTax = Math.round(basePrice * province.rate);
+
+    // Plate Fee (Calculated based on price range in HN/HCM)
+    let plateFee = 100_000;
+    if (province.id === "hanoi" || province.id === "hcm") {
+      if (basePrice < 15_000_000) plateFee = 1_000_000;
+      else if (basePrice <= 40_000_000) plateFee = 2_000_000;
+      else plateFee = 4_000_000;
+    } else {
+      // Provinces
+      if (basePrice < 15_000_000) plateFee = 150_000;
+      else if (basePrice <= 40_000_000) plateFee = 400_000;
+      else plateFee = 800_000;
+    }
+
+    const inspectionFee = 100_000; // soft fee for registration support
+    const civilInsurance = 66_000; // Standard compulsory civil liability insurance for under 50cc or over 50cc scooters
+
+    const totalRolling = basePrice + registrationTax + plateFee + inspectionFee + civilInsurance;
+
+    return {
+      basePrice,
+      registrationTax,
+      plateFee,
+      inspectionFee,
+      civilInsurance,
+      totalRolling,
+    };
+  }, [selectedEstimatorScooter, estimatorLocation, estimatorBattery]);
+
+  // Installment Calculator Calculation
+  const installmentResult = useMemo(() => {
+    const totalCost = rollingCostResult.totalRolling;
+    const loanAmount = Math.round((totalCost * downPaymentPct) / 100);
+    const upfrontAmount = totalCost - loanAmount;
+
+    const months = loanTermYears * 12;
+    const monthlyRate = interestRate / 100 / 12;
+
+    // Amortization (Principal + Interest)
+    const firstMonthPrincipal = Math.round(loanAmount / months);
+    const firstMonthInterest = Math.round(loanAmount * monthlyRate);
+    const firstMonthTotal = firstMonthPrincipal + firstMonthInterest;
+
+    let totalPaid = 0;
+    let tempLoan = loanAmount;
+    for (let m = 0; m < months; m++) {
+      const interest = tempLoan * monthlyRate;
+      totalPaid += firstMonthPrincipal + interest;
+      tempLoan -= firstMonthPrincipal;
+    }
+    const avgMonthlyPayment = Math.round(totalPaid / months);
+
+    return {
+      loanAmount,
+      upfrontAmount,
+      firstMonthPrincipal,
+      firstMonthInterest,
+      firstMonthTotal,
+      avgMonthlyPayment,
+    };
+  }, [rollingCostResult, downPaymentPct, loanTermYears, interestRate]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+      <Toaster position="top-right" richColors />
       <Header />
+
       <main>
+        {/* Breadcrumbs */}
         <BreadcrumbBar />
-        <HeroSection />
-        <CatalogSection
-          filters={filters}
-          setFilters={setFilters}
-          sort={sort}
-          setSort={setSort}
-          scooters={filteredScooters}
-          onClear={clearFilters}
-          mobileFilters={mobileFilters}
-          setMobileFilters={setMobileFilters}
+
+        {/* Premium Interactive Hero for Scooters */}
+        <HeroSection
+          onExplore={() => {
+            document.getElementById("scooter-catalog-grid")?.scrollIntoView({ behavior: "smooth" });
+          }}
         />
+
+        {/* Search Dashboard */}
+        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+          <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
+              TÌM KIẾM DÒNG XE MÁY ĐIỆN
+            </div>
+
+            <div className="relative w-full sm:w-80">
+              <Search className="absolute left-3 top-2.5 size-4 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Tìm tên xe ga, xe máy điện..."
+                className="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:bg-white transition-all text-slate-800"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+                >
+                  <X className="size-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Main Catalog Explorer Section */}
+        <section className="py-12 md:py-16">
+          <div className="container-vf">
+            <button
+              type="button"
+              onClick={() => setMobileFilters(!mobileFilters)}
+              className="mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark lg:hidden shadow-sm hover:bg-slate-50"
+            >
+              <span className="flex items-center gap-2">
+                <SlidersIcon className="size-4 text-brand" /> Bộ lọc nâng cao
+              </span>
+              <ChevronDown
+                className={`size-4 transition-transform duration-300 ${mobileFilters ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+              {/* Sidebar Filter Component */}
+              <aside
+                className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+              >
+                <FilterSidebar filters={filters} setFilters={setFilters} onClear={clearFilters} />
+              </aside>
+
+              {/* Grid content and pagination */}
+              <div className="min-w-0 flex-1">
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <h2 className="text-base font-black tracking-wide text-brand-dark uppercase flex items-center gap-2">
+                      <TrendingUp className="size-4 text-brand" />
+                      {segmentTab === "all"
+                        ? "DANH SÁCH SẢN PHẨM"
+                        : segmentTab === "student"
+                          ? "XE ĐIỆN HỌC ĐƯỜNG"
+                          : segmentTab === "urban"
+                            ? "DÒNG XE PHỔ THÔNG"
+                            : "XE GA CAO CẤP FLASGHIP"}
+                    </h2>
+                    <p className="text-xs font-bold text-slate-400 mt-1">
+                      Đang hiển thị {filteredScooters.length} xe máy điện thông minh
+                    </p>
+                  </div>
+
+                  <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
+                    <SelectTrigger className="h-10 w-[200px] border-slate-200 bg-white text-xs font-semibold text-slate-700 shadow-sm focus:ring-brand">
+                      <SelectValue placeholder="Sắp xếp" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="newest">Sắp xếp: Mới nhất</SelectItem>
+                      <SelectItem value="price-asc">Giá: Thấp đến cao</SelectItem>
+                      <SelectItem value="price-desc">Giá: Cao đến thấp</SelectItem>
+                      <SelectItem value="range-desc">Quãng đường: Xa nhất</SelectItem>
+                      <SelectItem value="speed-desc">Tốc độ: Cao nhất</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Empty State */}
+                {filteredScooters.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-2xl border-2 border-dashed border-slate-200 bg-white py-20 text-center shadow-sm"
+                  >
+                    <AlertCircle className="size-12 mx-auto text-slate-300 mb-4" />
+                    <p className="text-sm font-black text-brand-dark">
+                      Không tìm thấy mẫu xe phù hợp
+                    </p>
+                    <p className="text-xs text-slate-400 mt-2">
+                      Vui lòng thay đổi tiêu chí bộ lọc của bạn hoặc làm mới bộ lọc.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={clearFilters}
+                      className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-xs font-bold text-white shadow-soft hover:bg-brand-dark transition-all"
+                    >
+                      <RotateCcw className="size-3" /> Xóa bộ lọc & Tìm lại
+                    </button>
+                  </motion.div>
+                ) : (
+                  <div
+                    id="scooter-catalog-grid"
+                    className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-3"
+                  >
+                    <AnimatePresence mode="popLayout">
+                      {filteredScooters.map((scooter) => (
+                        <ScooterCard
+                          key={scooter.id}
+                          scooter={scooter}
+                          onCompare={() => toggleCompare(scooter)}
+                          isCompared={compareList.some((item) => item.id === scooter.id)}
+                          onBookDrive={() => openBooking(scooter)}
+                          onEstimatePrice={() => {
+                            setEstimatorScooterId(scooter.id);
+                            document
+                              .getElementById("estimator-tool")
+                              ?.scrollIntoView({ behavior: "smooth" });
+                          }}
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Sticky Comparison Bottom Bar */}
+        <AnimatePresence>
+          {compareList.length > 0 && (
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              className="fixed bottom-0 left-0 right-0 z-40 bg-brand-dark text-white shadow-2xl border-t border-brand/20 py-4 px-6 md:px-8"
+            >
+              <div className="container-vf flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="bg-brand/30 p-2.5 rounded-lg border border-brand/40 hidden md:block">
+                    <Scale className="size-5 text-brand" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black">SO SÁNH XE MÁY ĐIỆN</h4>
+                    <p className="text-xs text-brand-light opacity-80">
+                      Đã chọn {compareList.length}/3 mẫu xe để so sánh thông số chi tiết
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 flex-wrap justify-center">
+                  <div className="flex gap-2">
+                    {compareList.map((scooter) => (
+                      <div
+                        key={scooter.id}
+                        className="relative flex items-center gap-2 bg-slate-900/60 pl-2 pr-8 py-1 rounded-lg border border-slate-700"
+                      >
+                        <img
+                          src={scooter.image}
+                          alt={scooter.name}
+                          className="size-8 object-contain"
+                        />
+                        <span className="text-xs font-bold">{scooter.name}</span>
+                        <button
+                          onClick={() => toggleCompare(scooter)}
+                          className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-slate-700 hover:bg-red-500 rounded-full p-0.5 text-white/80 transition-all"
+                        >
+                          <X className="size-3" />
+                        </button>
+                      </div>
+                    ))}
+                    {compareList.length < 3 && (
+                      <div className="flex items-center justify-center border border-dashed border-slate-500 rounded-lg px-4 py-1.5 text-xs text-slate-400 font-bold bg-slate-950/20">
+                        + Thêm xe khác
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCompareList([])}
+                      className="px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition-all text-slate-300"
+                    >
+                      Xóa tất cả
+                    </button>
+                    <button
+                      onClick={() => setIsCompareOpen(true)}
+                      disabled={compareList.length < 2}
+                      className={`px-6 py-2.5 rounded-lg text-xs font-extrabold flex items-center gap-2 shadow-lg transition-all ${
+                        compareList.length >= 2
+                          ? "bg-brand hover:bg-blue-600 text-white"
+                          : "bg-slate-700 text-slate-400 cursor-not-allowed"
+                      }`}
+                    >
+                      <Scale className="size-4" /> So sánh chi tiết
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Dynamic & Gorgeous Rolling Cost & Installment Loan Estimator for Scooters */}
+        <section
+          id="estimator-tool"
+          className="bg-white text-slate-800 py-16 md:py-20 overflow-hidden relative border-b border-slate-200"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
+
+          <div className="container-vf relative z-10">
+            <div className="max-w-2xl mx-auto text-center mb-12">
+              <span className="bg-brand/10 text-brand px-4 py-1.5 rounded-full text-xs font-extrabold tracking-widest uppercase border border-brand/20">
+                Công cụ tính toán
+              </span>
+              <h2 className="text-2xl font-black mt-4 tracking-tight md:text-3xl lg:text-4xl text-brand-dark">
+                DỰ TOÁN CHI PHÍ & TRẢ GÓP XE MÁY
+              </h2>
+              <p className="text-slate-500 text-xs md:text-sm mt-3 leading-relaxed">
+                Tính toán chi phí lăn bánh chính xác bao gồm lệ phí trước bạ xe máy điện, lệ phí cấp
+                biển số theo quy định mới, phương án thuê pin hoặc mua đứt pin LFP, và dự toán kế
+                hoạch mua xe trả góp 0% lãi suất.
+              </p>
+            </div>
+
+            {/* Main Estimator Container */}
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl grid lg:grid-cols-12 max-w-5xl mx-auto">
+              {/* Left Settings Panel */}
+              <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
+                <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
+                  <Calculator className="size-4 text-brand" /> Cấu hình dự toán
+                </h3>
+
+                {/* Select Scooter */}
+                <div className="mt-6">
+                  <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
+                    Chọn dòng xe máy điện
+                  </label>
+                  <Select
+                    value={estimatorScooterId}
+                    onValueChange={(v) => setEstimatorScooterId(v)}
+                  >
+                    <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                      <SelectValue placeholder="Chọn xe" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border-slate-200 text-slate-800">
+                      {SCOOTERS.map((s) => (
+                        <SelectItem
+                          key={s.id}
+                          value={s.id}
+                          className="focus:bg-slate-100 font-medium"
+                        >
+                          {s.name} — {formatPrice(s.price)} VNĐ
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Tab switch inside estimator settings */}
+                <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                  <button
+                    onClick={() => setEstimatorTab("rolling")}
+                    className={`py-2 text-xs font-bold rounded-md transition-all ${
+                      estimatorTab === "rolling"
+                        ? "bg-brand text-white shadow-md"
+                        : "text-slate-500 hover:text-brand-dark"
+                    }`}
+                  >
+                    Giá Lăn Bánh
+                  </button>
+                  <button
+                    onClick={() => setEstimatorTab("installment")}
+                    className={`py-2 text-xs font-bold rounded-md transition-all ${
+                      estimatorTab === "installment"
+                        ? "bg-brand text-white shadow-md"
+                        : "text-slate-500 hover:text-brand-dark"
+                    }`}
+                  >
+                    Phương Án Trả Góp
+                  </button>
+                </div>
+
+                {/* Common options for both tabs */}
+                <div className="mt-6 space-y-4">
+                  {/* Battery option */}
+                  <div>
+                    <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
+                      Phương án pin xe máy
+                    </span>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setEstimatorBattery("rent")}
+                        className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
+                          estimatorBattery === "rent"
+                            ? "border-brand bg-brand/10 text-brand"
+                            : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                        }`}
+                      >
+                        <span>Thuê pin</span>
+                        <span className="text-[10px] font-semibold opacity-70 mt-1">
+                          + {formatPrice(selectedEstimatorScooter.rentBatteryPrice)} đ/tháng
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => setEstimatorBattery("purchase")}
+                        className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
+                          estimatorBattery === "purchase"
+                            ? "border-brand bg-brand/10 text-brand"
+                            : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                        }`}
+                      >
+                        <span>Mua đứt pin</span>
+                        <span className="text-[10px] font-semibold opacity-70 mt-1">
+                          + {formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Province Selection */}
+                  <div>
+                    <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
+                      Hộ khẩu đăng ký biển số
+                    </label>
+                    <Select
+                      value={estimatorLocation}
+                      onValueChange={(v) => setEstimatorLocation(v)}
+                    >
+                      <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                        <SelectValue placeholder="Chọn Khu Vực" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white border-slate-200 text-slate-800">
+                        {PROVINCES.map((p) => (
+                          <SelectItem
+                            key={p.id}
+                            value={p.id}
+                            className="focus:bg-slate-100 font-medium"
+                          >
+                            {p.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Additional options based on selected tab */}
+                  {estimatorTab === "installment" && (
+                    <div className="space-y-4 pt-2">
+                      {/* Downpayment % slider */}
+                      <div>
+                        <div className="flex justify-between text-xs font-bold mb-2">
+                          <span className="text-slate-500">Trả trước</span>
+                          <span className="text-brand">{100 - downPaymentPct}% giá trị</span>
+                        </div>
+                        <Slider
+                          min={20}
+                          max={80}
+                          step={10}
+                          value={[100 - downPaymentPct]}
+                          onValueChange={(v) => setDownPaymentPct(100 - v[0])}
+                          className="py-1"
+                        />
+                        <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                          <span>Trả trước tối thiểu 20%</span>
+                          <span>Trả trước tối đa 80%</span>
+                        </div>
+                      </div>
+
+                      {/* Loan term slider */}
+                      <div>
+                        <div className="flex justify-between text-xs font-bold mb-2">
+                          <span className="text-slate-500">Thời gian trả góp</span>
+                          <span className="text-brand">
+                            {loanTermYears} năm ({loanTermYears * 12} tháng)
+                          </span>
+                        </div>
+                        <Slider
+                          min={1}
+                          max={3}
+                          step={1}
+                          value={[loanTermYears]}
+                          onValueChange={(v) => setLoanTermYears(v[0])}
+                          className="py-1"
+                        />
+                        <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                          <span>1 năm (12 tháng)</span>
+                          <span>3 năm (36 tháng)</span>
+                        </div>
+                      </div>
+
+                      {/* Interest Rate */}
+                      <div>
+                        <div className="flex justify-between text-xs font-bold mb-2">
+                          <span className="text-slate-500">Lãi suất trả góp</span>
+                          <span className="text-brand">{interestRate}% / năm</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          {[0, 4.9].map((rate) => (
+                            <button
+                              key={rate}
+                              onClick={() => setInterestRate(rate)}
+                              className={`py-1 rounded text-xs font-bold border transition-all ${
+                                interestRate === rate
+                                  ? "border-brand bg-brand/10 text-brand"
+                                  : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                              }`}
+                            >
+                              {rate}% {rate === 0 ? "(Gói ưu đãi 0%)" : "(Gói tiêu chuẩn)"}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Results Panel */}
+              <div className="lg:col-span-7 p-6 md:p-8 bg-slate-50 flex flex-col justify-between">
+                {estimatorTab === "rolling" ? (
+                  // Rolling Cost Output UI
+                  <div>
+                    <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
+                      <Calculator className="size-4 text-brand" /> Chi phí lăn bánh chi tiết
+                    </h3>
+
+                    <div className="space-y-4 text-xs font-semibold">
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Giá niêm yết của xe máy</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(selectedEstimatorScooter.price)} VNĐ
+                        </span>
+                      </div>
+
+                      {estimatorBattery === "purchase" && (
+                        <div className="flex justify-between items-center text-slate-600 pl-4 border-l-2 border-slate-200">
+                          <span>Mua đứt pin LFP công nghệ mới</span>
+                          <span className="font-bold text-slate-800">
+                            + {formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} VNĐ
+                          </span>
+                        </div>
+                      )}
+
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Lệ phí trước bạ xe máy điện</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(rollingCostResult.registrationTax)} VNĐ
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Lệ phí cấp biển số theo giá trị xe</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(rollingCostResult.plateFee)} VNĐ
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Bảo hiểm trách nhiệm dân sự bắt buộc (xe máy)</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(rollingCostResult.civilInsurance)} VNĐ
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Phí dịch vụ đăng ký biển số hỗ trợ</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(rollingCostResult.inspectionFee)} VNĐ
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // Installment Loan Output UI
+                  <div>
+                    <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
+                      <Percent className="size-4 text-brand" /> Phương án tài chính mua xe
+                    </h3>
+
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase">
+                          Số tiền trả góp ({downPaymentPct}%)
+                        </p>
+                        <p className="text-lg font-black text-brand mt-1">
+                          {formatPrice(installmentResult.loanAmount)} VNĐ
+                        </p>
+                      </div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase">
+                          Số tiền thanh toán trước ({100 - downPaymentPct}%)
+                        </p>
+                        <p className="text-lg font-black text-slate-800 mt-1">
+                          {formatPrice(installmentResult.upfrontAmount)} VNĐ
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 text-xs font-semibold">
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Tổng giá trị lăn bánh xe máy</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(rollingCostResult.totalRolling)} VNĐ
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Thời hạn trả góp</span>
+                        <span className="font-bold text-slate-800">
+                          {loanTermYears * 12} tháng ({loanTermYears} năm)
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Gốc thanh toán hàng tháng</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(installmentResult.firstMonthPrincipal)} VNĐ
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Lãi thanh toán hàng tháng</span>
+                        <span className="font-bold text-slate-800">
+                          {formatPrice(installmentResult.firstMonthInterest)} VNĐ
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-slate-500 pt-3 border-t border-slate-200">
+                        <span className="flex items-center gap-1.5">
+                          <Info className="size-3.5 text-brand" /> Thủ tục nhanh gọn
+                        </span>
+                        <span className="text-[11px]">
+                          Duyệt hồ sơ nhanh qua CCCD gắn chip trong 10 phút
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Final Total and Action Buttons */}
+                <div className="mt-8 border-t border-slate-200 pt-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                      {estimatorTab === "rolling" ? (
+                        <>
+                          <p className="text-[11px] font-extrabold text-slate-500 tracking-wider uppercase">
+                            TỔNG CHI PHÍ LĂN BÁNH DỰ KIẾN
+                          </p>
+                          <p className="text-2xl md:text-3xl font-black text-brand mt-1">
+                            {formatPrice(rollingCostResult.totalRolling)}{" "}
+                            <span className="text-sm font-semibold text-slate-500">VNĐ</span>
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-[11px] font-extrabold text-slate-500 tracking-wider uppercase">
+                            GÓC THANH TOÁN HÀNG THÁNG
+                          </p>
+                          <p className="text-2xl md:text-3xl font-black text-brand mt-1">
+                            {formatPrice(installmentResult.firstMonthTotal)}{" "}
+                            <span className="text-sm font-semibold text-slate-500">VNĐ/Tháng</span>
+                          </p>
+                          <p className="text-[11px] text-slate-500 mt-1">
+                            Trung bình thanh toán hàng tháng: ~
+                            {formatPrice(installmentResult.avgMonthlyPayment)} đ
+                          </p>
+                        </>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={() => openBooking(selectedEstimatorScooter)}
+                      className="w-full sm:w-auto bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+                    >
+                      <Calendar className="size-4" /> ĐẶT MUA / ĐẶT LỊCH NGAY
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Promo Banners */}
         <PromoBanners />
+
+        {/* Why VinFast Feature List */}
         <WhyVinFastSection />
       </main>
+
       <Footer />
       <FloatingButtons />
+
+      {/* RENDER MODAL: Comprehensive Booking Appointment Scheduler for Scooters */}
+      <AnimatePresence>
+        {isBookingOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 flex flex-col text-slate-800"
+            >
+              {/* Modal Header */}
+              <div className="bg-brand-dark text-white p-5 flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-black">LIÊN HỆ & ĐẶT MUA XE MÁY ĐIỆN</h3>
+                  <p className="text-xs text-brand-light opacity-85 mt-1">
+                    Mua sắm an tâm tại Showroom VF Ngọc Anh
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsBookingOpen(false)}
+                  className="p-1 rounded-lg hover:bg-white/10 transition-all text-white/80 hover:text-white"
+                >
+                  <X className="size-5" />
+                </button>
+              </div>
+
+              {/* Steps Indicator */}
+              {bookingStep < 4 && (
+                <div className="bg-slate-50 border-b border-slate-100 px-6 py-3 flex justify-between items-center text-[10px] font-bold text-slate-400">
+                  <span
+                    className={`${bookingStep === 1 ? "text-brand" : bookingStep > 1 ? "text-slate-700" : ""}`}
+                  >
+                    1. CHỌN XE MÁY
+                  </span>
+                  <ChevronRight className="size-3" />
+                  <span
+                    className={`${bookingStep === 2 ? "text-brand" : bookingStep > 2 ? "text-slate-700" : ""}`}
+                  >
+                    2. THÔNG TIN KHÁCH HÀNG
+                  </span>
+                  <ChevronRight className="size-3" />
+                  <span className={`${bookingStep === 3 ? "text-brand" : ""}`}>
+                    3. ĐẶT LỊCH & HOÀN TẤT
+                  </span>
+                </div>
+              )}
+
+              {/* Form Content */}
+              <form
+                onSubmit={handleBookingSubmit}
+                className="flex-1 overflow-y-auto p-6 max-h-[75vh]"
+              >
+                {bookingStep === 1 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-4"
+                  >
+                    <p className="text-xs font-bold text-slate-500 mb-2">
+                      Vui lòng chọn dòng xe máy điện bạn đang quan tâm và dịch vụ yêu cầu:
+                    </p>
+
+                    {/* Scooter Selector visual list */}
+                    <div className="grid grid-cols-2 gap-3 max-h-[180px] overflow-y-auto border border-slate-100 p-2 rounded-xl bg-slate-50">
+                      {SCOOTERS.map((scooter) => (
+                        <button
+                          key={scooter.id}
+                          type="button"
+                          onClick={() => setBookingScooter(scooter)}
+                          className={`flex items-center gap-3 p-2.5 rounded-lg border text-left transition-all ${
+                            bookingScooter?.id === scooter.id
+                              ? "border-brand bg-brand/5 ring-1 ring-brand font-bold"
+                              : "border-slate-200 bg-white hover:bg-slate-50"
+                          }`}
+                        >
+                          <img
+                            src={scooter.image}
+                            alt={scooter.name}
+                            className="size-8 object-contain"
+                          />
+                          <span className="text-xs">{scooter.name}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Service Options */}
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Bạn cần tư vấn dịch vụ gì?
+                      </span>
+                      <div className="grid grid-cols-3 gap-2">
+                        {["Đăng ký lái thử", "Nhận báo giá", "Hỗ trợ trả góp 0%"].map((svc) => (
+                          <button
+                            key={svc}
+                            type="button"
+                            onClick={() => setBookingForm({ ...bookingForm, service: svc })}
+                            className={`py-2 px-1 text-center rounded-lg border text-[11px] font-bold transition-all ${
+                              bookingForm.service === svc
+                                ? "border-brand bg-brand/5 text-brand font-black"
+                                : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                            }`}
+                          >
+                            {svc}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-4 border-t border-slate-100 mt-6">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(2)}
+                        disabled={!bookingScooter}
+                        className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+                      >
+                        Tiếp theo <ChevronRight className="size-4" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {bookingStep === 2 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-4"
+                  >
+                    <p className="text-xs font-bold text-slate-500">
+                      Chúng tôi cần một số thông tin liên hệ để gửi lịch hẹn và hỗ trợ làm hồ sơ xe:
+                    </p>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                        Họ và tên quý khách *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={bookingForm.name}
+                        onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
+                        placeholder="Nguyễn Văn A"
+                        className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                        Số điện thoại liên hệ *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={bookingForm.phone}
+                        onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
+                        placeholder="09xx xxx xxx"
+                        className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                        Địa chỉ Email (Tùy chọn)
+                      </label>
+                      <input
+                        type="email"
+                        value={bookingForm.email}
+                        onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
+                        placeholder="email@example.com"
+                        className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Hình thức liên hệ ưu tiên
+                      </span>
+                      <div className="flex gap-4">
+                        {[
+                          { id: "Phone", label: "Gọi điện" },
+                          { id: "Zalo", label: "Chat Zalo" },
+                          { id: "Email", label: "Gửi Email" },
+                        ].map((m) => (
+                          <label
+                            key={m.id}
+                            className="flex items-center gap-2 cursor-pointer text-xs text-slate-600 font-semibold select-none"
+                          >
+                            <input
+                              type="radio"
+                              name="contact"
+                              checked={bookingForm.contactMethod === m.id}
+                              onChange={() =>
+                                setBookingForm({ ...bookingForm, contactMethod: m.id })
+                              }
+                              className="text-brand accent-brand scale-110"
+                            />
+                            {m.label}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between pt-4 border-t border-slate-100 mt-6">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(1)}
+                        className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                      >
+                        Quay lại
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!bookingForm.name || !bookingForm.phone) {
+                            toast.error("Vui lòng nhập đầy đủ thông tin bắt buộc");
+                            return;
+                          }
+                          setBookingStep(3);
+                        }}
+                        className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-lg"
+                      >
+                        Tiếp theo
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {bookingStep === 3 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-4"
+                  >
+                    <p className="text-xs font-bold text-slate-500">
+                      Đặt lịch hẹn mong muốn tại Showroom để được đón tiếp chu đáo nhất:
+                    </p>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                        Showroom làm việc
+                      </label>
+                      <input
+                        type="text"
+                        disabled
+                        value={bookingForm.showroom}
+                        className="w-full bg-slate-100 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-bold text-slate-500 cursor-not-allowed"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                          Ngày đến showroom *
+                        </label>
+                        <input
+                          type="date"
+                          required
+                          value={bookingForm.date}
+                          onChange={(e) => setBookingForm({ ...bookingForm, date: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                          Giờ hẹn mong muốn
+                        </label>
+                        <select
+                          value={bookingForm.time}
+                          onChange={(e) => setBookingForm({ ...bookingForm, time: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                        >
+                          {[
+                            "08:00",
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00",
+                          ].map((t) => (
+                            <option key={t} value={t}>
+                              {t}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                        Yêu cầu / Ghi chú thêm
+                      </label>
+                      <textarea
+                        value={bookingForm.note}
+                        onChange={(e) => setBookingForm({ ...bookingForm, note: e.target.value })}
+                        placeholder="Tôi muốn đăng ký mua xe trả góp 0%, tư vấn màu sơn đỏ mận hợp mệnh..."
+                        rows={3}
+                        className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                      />
+                    </div>
+
+                    <div className="flex justify-between pt-4 border-t border-slate-100 mt-6">
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(2)}
+                        className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                      >
+                        Quay lại
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs tracking-wider px-6 py-2.5 rounded-lg flex items-center gap-1.5 shadow-md"
+                      >
+                        <Check className="size-4" /> Hoàn tất đăng ký
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {bookingStep === 4 && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-6 text-center space-y-4"
+                  >
+                    <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
+                      <Check className="size-8" strokeWidth={2.5} />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black text-slate-900">ĐĂNG KÝ THÀNH CÔNG!</h4>
+                      <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
+                        Cảm ơn quý khách{" "}
+                        <strong className="text-slate-800">{bookingForm.name}</strong> đã tin tưởng
+                        showroom VF Ngọc Anh. Chuyên viên tư vấn xe máy điện sẽ liên hệ trực tiếp hỗ
+                        trợ quý khách trong vòng 10 phút qua{" "}
+                        <strong className="text-slate-800">
+                          {bookingForm.contactMethod === "Phone"
+                            ? "Số điện thoại"
+                            : bookingForm.contactMethod}
+                        </strong>
+                        .
+                      </p>
+                    </div>
+
+                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 text-left text-xs font-semibold space-y-2 max-w-sm mx-auto">
+                      <div className="flex justify-between text-slate-500">
+                        <span>Mẫu xe đăng ký:</span>
+                        <span className="text-slate-800 font-bold">{bookingScooter?.name}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-500">
+                        <span>Nhu cầu tư vấn:</span>
+                        <span className="text-slate-800 font-bold">{bookingForm.service}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-500">
+                        <span>Lịch hẹn đề xuất:</span>
+                        <span className="text-slate-800 font-bold">
+                          {bookingForm.date
+                            ? `${bookingForm.time} ngày ${bookingForm.date}`
+                            : "Chờ xếp lịch"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="pt-4">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsBookingOpen(false);
+                          setBookingForm({
+                            name: "",
+                            phone: "",
+                            email: "",
+                            service: "Đăng ký lái thử",
+                            showroom: "VF Ngọc Anh - Long Biên",
+                            date: "",
+                            time: "09:00",
+                            note: "",
+                            contactMethod: "Phone",
+                          });
+                        }}
+                        className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-6 py-2.5 rounded-lg"
+                      >
+                        Quay lại Danh sách xe
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* RENDER MODAL: Gorgeous Side-by-Side Specifications Comparison Table for Scooters */}
+      <AnimatePresence>
+        {isCompareOpen && compareList.length >= 2 && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.95, y: 20, opacity: 0 }}
+              className="bg-white border border-slate-200 text-slate-800 rounded-3xl max-w-5xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl"
+            >
+              {/* Compare Header */}
+              <div className="p-6 border-b border-slate-200 flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-black text-brand-dark flex items-center gap-2">
+                    <Scale className="size-5 text-brand" /> SO SÁNH THÔNG SỐ XE MÁY ĐIỆN
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    So sánh chi tiết các mẫu xe máy điện thông minh tiên phong
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsCompareOpen(false)}
+                  className="bg-slate-100 hover:bg-red-500 rounded-full p-2 text-slate-500 hover:text-white transition-all"
+                >
+                  <X className="size-5" />
+                </button>
+              </div>
+
+              {/* Compare Table content */}
+              <div className="flex-1 overflow-x-auto overflow-y-auto p-6">
+                <table className="w-full border-collapse border-spacing-0">
+                  <thead>
+                    <tr>
+                      <th className="p-4 text-left text-slate-500 font-extrabold text-[11px] tracking-wider uppercase bg-slate-50 rounded-tl-xl w-1/4">
+                        THÔNG SỐ SO SÁNH
+                      </th>
+                      {compareList.map((scooter) => (
+                        <th
+                          key={scooter.id}
+                          className="p-4 text-center bg-slate-50 last:rounded-tr-xl"
+                        >
+                          <div className="flex flex-col items-center">
+                            <img
+                              src={scooter.image}
+                              alt={scooter.name}
+                              className="h-16 w-auto object-contain mb-3"
+                            />
+                            <h4 className="text-base font-black text-brand-dark">{scooter.name}</h4>
+                            <p className="text-[10px] text-slate-500 mt-0.5 font-medium">
+                              {scooter.subtitle}
+                            </p>
+                            <p className="text-xs font-black text-brand mt-2">
+                              Từ {formatPrice(scooter.price)} đ
+                            </p>
+                          </div>
+                        </th>
+                      ))}
+                      {/* Blank column if comparing only 2 scooters */}
+                      {compareList.length === 2 && (
+                        <th className="p-4 bg-slate-50/80 text-slate-400 font-bold text-xs">
+                          Chưa chọn xe thứ 3
+                        </th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody className="text-xs font-semibold text-slate-600">
+                    {/* Segment row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Phân loại
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800 capitalize">
+                          {scooter.type === "xe-dap-dien"
+                            ? "Xe đạp điện"
+                            : scooter.type === "xe-co-ban"
+                              ? "Xe phổ thông"
+                              : scooter.type === "xe-the-thao"
+                                ? "Xe thể thao"
+                                : "Xe ga điện"}
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Range row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Quãng đường tối đa (WLTP)
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td
+                          key={scooter.id}
+                          className="p-4 text-center text-brand font-black text-sm"
+                        >
+                          {scooter.range} km / sạc đầy
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Speed row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Tốc độ tối đa
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td
+                          key={scooter.id}
+                          className="p-4 text-center text-slate-800 font-extrabold"
+                        >
+                          {scooter.topSpeed} km/h
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Motor Power row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Công suất động cơ
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          {scooter.motorPower} W
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Battery Type row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Công nghệ Pin
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          {scooter.batteryType}
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Charging Time row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Thời gian sạc đầy
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td
+                          key={scooter.id}
+                          className="p-4 text-center text-emerald-600 font-bold text-[11px]"
+                        >
+                          {scooter.chargingTime}
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Trunk capacity row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Thể tích cốp xe
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          {scooter.trunk > 0 ? `${scooter.trunk} L` : "Không có cốp"}
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Dimensions row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Kích thước tổng thể
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td
+                          key={scooter.id}
+                          className="p-4 text-center text-slate-800 text-[11px] font-mono"
+                        >
+                          {scooter.dimensions}
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Weight row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Trọng lượng xe (gồm pin)
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          {scooter.weight} kg
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Rent Battery price row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Gói thuê pin hàng tháng
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          {formatPrice(scooter.rentBatteryPrice)} VNĐ/Tháng
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Purchase Battery price row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Mua đứt pin chính hãng
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4 text-center text-slate-800">
+                          +{formatPrice(scooter.batteryPurchasePrice)} VNĐ
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Color count row */}
+                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
+                        Bảng màu sơn lựa chọn
+                      </td>
+                      {compareList.map((scooter) => (
+                        <td key={scooter.id} className="p-4">
+                          <div className="flex justify-center gap-1.5 flex-wrap">
+                            {scooter.colors.map((c) => (
+                              <div
+                                key={c.name}
+                                className="size-4 rounded-full border border-slate-300 shadow"
+                                style={{ backgroundColor: c.hex }}
+                                title={c.name}
+                              />
+                            ))}
+                          </div>
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+
+                    {/* Action buttons row */}
+                    <tr>
+                      <td className="p-4 bg-slate-50/80" />
+                      {compareList.map((scooter) => (
+                        <td
+                          key={scooter.id}
+                          className="p-4 text-center bg-slate-50/80 last:rounded-br-xl"
+                        >
+                          <button
+                            onClick={() => {
+                              setIsCompareOpen(false);
+                              openBooking(scooter);
+                            }}
+                            className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all"
+                          >
+                            ĐẶT MUA / LÁI THỬ
+                          </button>
+                        </td>
+                      ))}
+                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 function BreadcrumbBar() {
   return (
-    <div className="border-b border-border/40 bg-white">
-      <div className="container-vf py-3">
+    <div className="border-b border-slate-200 bg-white">
+      <div className="container-vf py-3.5">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/" className="text-xs text-muted-foreground hover:text-brand">
+                <Link
+                  href="/"
+                  className="text-xs font-bold text-slate-500 hover:text-brand transition-colors"
+                >
                   Trang chủ
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-xs font-medium text-foreground">
-                Xe máy điện
+              <BreadcrumbPage className="text-xs font-extrabold text-brand-dark">
+                Xe máy điện thông minh
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -175,148 +1643,100 @@ function BreadcrumbBar() {
   );
 }
 
-function HeroSection() {
+function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <section className="relative overflow-hidden bg-[#e8ecf2]">
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="4" y1="21" y2="14" />
+      <line x1="4" x2="4" y1="10" y2="3" />
+      <line x1="12" x2="12" y1="21" y2="12" />
+      <line x1="12" x2="12" y1="8" y2="3" />
+      <line x1="20" x2="20" y1="21" y2="16" />
+      <line x1="20" x2="20" y1="12" y2="3" />
+      <line x1="2" x2="6" y1="14" y2="14" />
+      <line x1="10" x2="14" y1="8" y2="8" />
+      <line x1="18" x2="22" y1="16" y2="16" />
+    </svg>
+  );
+}
+
+function HeroSection({ onExplore }: { onExplore: () => void }) {
+  return (
+    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
       <div className="absolute inset-0">
         <img
           src={SCOOTER_IMAGES.hero}
           alt="Xe máy điện VinFast"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       </div>
-      <div className="container-vf relative z-10 py-10 md:py-14 lg:py-16">
-        <p className="text-xs font-bold tracking-[0.15em] text-brand uppercase">
-          Xe máy điện VinFast
-        </p>
-        <h1 className="mt-2 max-w-xl text-2xl font-black leading-tight tracking-tight text-brand-dark sm:text-3xl lg:text-4xl">
-          DI CHUYỂN XANH <span className="text-brand">THÔNG MINH, TIỆN LỢI</span>
-        </h1>
-        <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-          Khám phá đa dạng dòng xe máy điện VinFast — từ xe đạp điện, xe ga đến xe thể thao, đáp ứng
-          mọi nhu cầu di chuyển đô thị hiện đại.
-        </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3 sm:gap-6">
-          {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
-            <div key={text} className="flex items-start gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-white/80">
-                <Icon className="size-4 text-brand" strokeWidth={1.5} />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-brand-dark">{text}</p>
-                <p className="text-[11px] text-muted-foreground">{sub}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function CatalogSection({
-  filters,
-  setFilters,
-  sort,
-  setSort,
-  scooters,
-  onClear,
-  mobileFilters,
-  setMobileFilters,
-}: {
-  filters: Filters;
-  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
-  sort: SortKey;
-  setSort: (v: SortKey) => void;
-  scooters: typeof SCOOTERS;
-  onClear: () => void;
-  mobileFilters: boolean;
-  setMobileFilters: (v: boolean) => void;
-}) {
-  const [page, setPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(scooters.length / SCOOTERS_PER_PAGE));
-  const paginatedScooters = scooters.slice(
-    (page - 1) * SCOOTERS_PER_PAGE,
-    page * SCOOTERS_PER_PAGE,
-  );
-
-  useEffect(() => {
-    setPage(1);
-  }, [scooters]);
-
-  useEffect(() => {
-    if (page > totalPages) setPage(totalPages);
-  }, [page, totalPages]);
-
-  const goToPage = (next: number) => {
-    setPage(next);
-    document
-      .getElementById("scooter-catalog-grid")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  return (
-    <section className="bg-surface py-10 md:py-12 lg:py-14">
-      <div className="container-vf">
-        <button
-          type="button"
-          onClick={() => setMobileFilters(!mobileFilters)}
-          className="mb-4 flex w-full items-center justify-between rounded-lg border border-border bg-white px-4 py-3 text-sm font-semibold text-brand-dark lg:hidden"
-        >
-          Bộ lọc sản phẩm
-          <ChevronDown className={`size-4 transition ${mobileFilters ? "rotate-180" : ""}`} />
-        </button>
-
-        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-          <aside
-            className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[240px] lg:self-start`}
+      <div className="container-vf relative z-10 text-white">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col justify-center"
           >
-            <FilterSidebar filters={filters} setFilters={setFilters} onClear={onClear} />
-          </aside>
+            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
+              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> XE MÁY ĐIỆN VINFAST
+              — KHỞI ĐẦU HÀNH TRÌNH XANH
+            </div>
+            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              THỜI THƯỢNG, BỨT PHÁ <br />
+              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
+                CÔNG NGHỆ TƯƠNG LAI
+              </span>
+            </h1>
+            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
+              Sở hữu xe máy điện VinFast thời thượng với công nghệ pin LFP siêu bền bỉ lên tới
+              200km/sạc, khả năng chống nước IP67 vượt trội và chính sách trả góp 0% lãi suất tại VF
+              Ngọc Anh.
+            </p>
 
-          <div className="min-w-0 flex-1">
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h2 className="text-sm font-black tracking-wide text-brand-dark">TẤT CẢ DÒNG XE</h2>
-                <p className="text-xs text-muted-foreground">{scooters.length} mẫu xe</p>
-              </div>
-              <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
-                <SelectTrigger className="h-9 w-[180px] border-border bg-white text-xs">
-                  <SelectValue placeholder="Sắp xếp" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Sắp xếp: Mới nhất</SelectItem>
-                  <SelectItem value="price-asc">Giá: Thấp đến cao</SelectItem>
-                  <SelectItem value="price-desc">Giá: Cao đến thấp</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button
+                onClick={onExplore}
+                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
+              >
+                KHÁM PHÁ CATALOG XE MÁY
+              </button>
+              <a
+                href="tel:1900232389"
+                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
+              >
+                <Phone className="size-4 text-accent-yellow" /> GỌI TƯ VẤN: 1900 2323 89
+              </a>
             </div>
 
-            {scooters.length === 0 ? (
-              <div className="rounded-xl border border-border bg-white py-16 text-center">
-                <p className="text-sm font-medium text-brand-dark">Không tìm thấy mẫu xe phù hợp</p>
-                <button
-                  type="button"
-                  onClick={onClear}
-                  className="mt-3 text-xs font-semibold text-brand hover:underline"
-                >
-                  Xóa bộ lọc
-                </button>
-              </div>
-            ) : (
-              <div
-                id="scooter-catalog-grid"
-                className="grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3"
-              >
-                {paginatedScooters.map((scooter) => (
-                  <ScooterCard key={scooter.id} scooter={scooter} />
-                ))}
-              </div>
-            )}
-
-            <CatalogPagination page={page} totalPages={totalPages} onPageChange={goToPage} />
-          </div>
+            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
+              {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
+                <div key={text} className="flex items-start gap-3">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
+                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black text-white">{text}</p>
+                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
+                      {sub}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -354,10 +1774,14 @@ function FilterSidebar({
   };
 
   return (
-    <div className="rounded-xl border border-border/60 bg-white p-5 shadow-soft lg:sticky lg:top-20 lg:z-10 lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
-      <h3 className="text-xs font-black tracking-wider text-brand-dark">BỘ LỌC SẢN PHẨM</h3>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft lg:max-h-[80vh] lg:overflow-y-auto">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+        <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
+          <SlidersIcon className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
+        </h3>
+      </div>
 
-      <FilterGroup title="LOẠI XE">
+      <FilterGroup title="DÒNG XE MÁY">
         {TYPE_OPTIONS.map(({ value, label }) => (
           <FilterCheck
             key={value}
@@ -369,7 +1793,7 @@ function FilterSidebar({
         ))}
       </FilterGroup>
 
-      <FilterGroup title="TẦM GIÁ">
+      <FilterGroup title="TẦM GIÁ MONG MUỐN">
         <Slider
           min={PRICE_MIN}
           max={PRICE_MAX}
@@ -378,19 +1802,19 @@ function FilterSidebar({
           onValueChange={(v) =>
             setFilters((prev) => ({ ...prev, priceRange: v as [number, number] }))
           }
-          className="mt-3"
+          className="mt-4"
         />
-        <div className="mt-3 flex items-center justify-between gap-2 text-[10px] text-muted-foreground">
-          <span className="rounded border border-border px-2 py-1">
+        <div className="mt-3 flex items-center justify-between gap-1 text-[10px] text-slate-500 font-extrabold">
+          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
             {formatPrice(filters.priceRange[0])} đ
           </span>
-          <span className="rounded border border-border px-2 py-1">
+          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
             {formatPrice(filters.priceRange[1])} đ
           </span>
         </div>
       </FilterGroup>
 
-      <FilterGroup title="QUÃNG ĐƯỜNG">
+      <FilterGroup title="QUÃNG ĐƯỜNG / SẠC">
         {RANGE_OPTIONS.map(({ value, label }) => (
           <FilterCheck
             key={value}
@@ -417,10 +1841,10 @@ function FilterSidebar({
       <button
         type="button"
         onClick={onClear}
-        className="mt-2 flex w-full items-center justify-center gap-2 rounded-md border border-border py-2.5 text-xs font-semibold text-muted-foreground transition hover:border-brand hover:text-brand"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-slate-200 py-3 text-xs font-extrabold text-slate-500 transition-all hover:border-red-400 hover:text-red-500 hover:bg-red-50/50"
       >
-        <RotateCcw size={13} />
-        XÓA BỘ LỌC
+        <RotateCcw size={14} />
+        THIẾT LẬP LẠI
       </button>
     </div>
   );
@@ -428,9 +1852,11 @@ function FilterSidebar({
 
 function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-5 border-t border-border/50 pt-5 first:mt-4 first:border-t-0 first:pt-0">
-      <p className="mb-3 text-[10px] font-bold tracking-wider text-brand-dark">{title}</p>
-      <div className="space-y-2.5">{children}</div>
+    <div className="mt-4 border-t border-slate-100 pt-4 first:mt-0 first:border-t-0 first:pt-0">
+      <p className="mb-2.5 text-[10px] font-black tracking-wider text-slate-400 uppercase">
+        {title}
+      </p>
+      <div className="space-y-2">{children}</div>
     </div>
   );
 }
@@ -447,10 +1873,296 @@ function FilterCheck({
   onChange: () => void;
 }) {
   return (
-    <label htmlFor={id} className="flex cursor-pointer items-center gap-2.5">
-      <Checkbox id={id} checked={checked} onCheckedChange={onChange} />
-      <span className="text-xs text-foreground/85">{label}</span>
+    <label
+      htmlFor={id}
+      className="flex cursor-pointer items-center gap-2.5 text-slate-600 hover:text-slate-800 py-0.5 select-none font-semibold text-xs"
+    >
+      <Checkbox
+        id={id}
+        checked={checked}
+        onCheckedChange={onChange}
+        className="size-4 border-slate-300 text-brand"
+      />
+      <span>{label}</span>
     </label>
+  );
+}
+
+// Gorgeous ScooterCard Component with cover image
+function ScooterCard({
+  scooter,
+  onCompare,
+  isCompared,
+  onBookDrive,
+  onEstimatePrice,
+}: {
+  scooter: ScooterModel;
+  onCompare: () => void;
+  isCompared: boolean;
+  onBookDrive: () => void;
+  onEstimatePrice: () => void;
+}) {
+  const [activeColor, setActiveColor] = useState(scooter.colors[0]);
+
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      transition={{ duration: 0.3 }}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-1 relative"
+    >
+      {/* Visual Tags */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+        {scooter.isBestSeller && (
+          <span className="bg-brand text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
+            Bán chạy nhất
+          </span>
+        )}
+        {scooter.isNew && (
+          <span className="bg-emerald-500 text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
+            Model 2026
+          </span>
+        )}
+        {scooter.isPromo && (
+          <span className="bg-[#f00] text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase flex items-center gap-1">
+            Gói trả góp 0%
+          </span>
+        )}
+      </div>
+
+      {/* Quick Compare button */}
+      <button
+        onClick={onCompare}
+        className={`absolute top-3 right-3 z-10 size-8 rounded-full border flex items-center justify-center shadow transition-all ${
+          isCompared
+            ? "bg-brand border-brand text-white"
+            : "bg-white/80 border-slate-200 text-slate-400 hover:text-brand hover:bg-white"
+        }`}
+        title="Thêm vào so sánh"
+      >
+        <Scale className="size-4" />
+      </button>
+
+      {/* Scooter Thumbnail Zone - Full Cover Image */}
+      <Link
+        href={`/xe-may-dien/${scooter.id}`}
+        className="relative flex aspect-[4/3] w-full shrink-0 overflow-hidden bg-slate-50"
+      >
+        <img
+          src={scooter.image}
+          alt={scooter.name}
+          className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+        <div className="absolute bottom-3 right-3 text-[10px] font-bold text-slate-400 bg-slate-100/90 px-2 py-0.5 rounded-full font-mono shadow-sm">
+          Pin {scooter.batteryType}
+        </div>
+      </Link>
+
+      {/* Details Area */}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-lg font-black text-brand-dark group-hover:text-brand transition-colors">
+              <Link href={`/xe-may-dien/${scooter.id}`}>{scooter.name}</Link>
+            </h3>
+            <p className="text-[11px] font-semibold text-slate-400 leading-tight mt-0.5 min-h-[30px]">
+              {scooter.subtitle}
+            </p>
+          </div>
+        </div>
+
+        {/* Color Dot Selector */}
+        <div className="mt-3 flex items-center gap-1.5">
+          <span className="text-[10px] font-extrabold text-slate-400 mr-1 uppercase">
+            Màu xe máy:
+          </span>
+          {scooter.colors.map((c) => (
+            <button
+              key={c.name}
+              onClick={() => setActiveColor(c)}
+              className={`size-4 rounded-full border shadow-sm transition-all transform hover:scale-110 ${
+                activeColor.name === c.name
+                  ? "ring-1 ring-brand ring-offset-1 scale-110 border-white"
+                  : "border-slate-300"
+              }`}
+              style={{ backgroundColor: c.hex }}
+              title={c.name}
+            />
+          ))}
+        </div>
+
+        {/* Dynamic color text feedback */}
+        <p className="text-[10px] text-slate-400 font-bold mt-1.5 min-h-[15px]">
+          Sơn: {activeColor.name}
+        </p>
+
+        {/* Specs Ribbon */}
+        <div className="mt-4 grid grid-cols-3 gap-2 bg-slate-50 border border-slate-100 p-2.5 rounded-xl text-[10px] text-slate-600 font-bold">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Gauge size={14} className="text-brand mb-1" />
+            <span>{scooter.range} km</span>
+          </div>
+          <div className="flex flex-col items-center justify-center text-center border-x border-slate-200">
+            <Zap size={14} className="text-brand mb-1" />
+            <span>{scooter.topSpeed} km/h</span>
+          </div>
+          <div className="flex flex-col items-center justify-center text-center">
+            <Package size={14} className="text-brand mb-1" />
+            <span>{scooter.trunk > 0 ? `${scooter.trunk}L cốp` : "Móc treo"}</span>
+          </div>
+        </div>
+
+        {/* Pricing Area */}
+        <div className="mt-5 flex justify-between items-end border-b border-slate-100 pb-4">
+          <div>
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">
+              Giá niêm yết (Xe chưa pin)
+            </p>
+            <p className="text-base font-black text-brand-dark mt-0.5">
+              {formatPrice(scooter.price)}{" "}
+              <span className="text-[11px] font-bold text-slate-500">đ</span>
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">
+              Mua đứt pin LFP
+            </p>
+            <p className="text-xs font-black text-slate-500 mt-0.5">
+              +{formatPrice(scooter.batteryPurchasePrice)} đ
+            </p>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={onEstimatePrice}
+            className="flex items-center justify-center rounded-lg border border-slate-200 hover:border-brand hover:bg-slate-50 text-[10px] font-extrabold text-slate-600 hover:text-brand tracking-wider py-2.5 transition-all gap-1 shadow-sm"
+          >
+            <Calculator className="size-3.5" /> LĂN BÁNH
+          </button>
+          <button
+            type="button"
+            onClick={onBookDrive}
+            className="rounded-lg bg-brand hover:bg-blue-600 text-[10px] font-extrabold tracking-wider text-white py-2.5 transition-all flex items-center justify-center gap-1 shadow-md hover:shadow-lg"
+          >
+            <Calendar className="size-3.5" /> ĐẶT MUA
+          </button>
+        </div>
+        <Link
+          href={`/xe-may-dien/${scooter.id}`}
+          prefetch
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg border-2 border-brand/20 bg-brand/5 py-2.5 text-[10px] font-extrabold uppercase tracking-widest text-brand transition hover:border-brand hover:bg-brand hover:text-white"
+        >
+          Xem trọn bộ thông số kỹ thuật
+          <ChevronRight className="size-3.5" />
+        </Link>
+      </div>
+    </motion.article>
+  );
+}
+
+function PromoBanners() {
+  return (
+    <section className="bg-white py-12 border-y border-slate-100">
+      <div className="container-vf grid gap-6 md:grid-cols-2">
+        <div className="relative overflow-hidden rounded-2xl shadow-md border border-slate-100 flex min-h-[220px]">
+          <img
+            src={SCOOTER_IMAGES.promoTestDrive}
+            alt="Trải nghiệm xe máy điện"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-transparent" />
+          <div className="relative z-10 p-6 md:p-8 text-white flex flex-col justify-center max-w-sm">
+            <span className="bg-accent-yellow text-slate-900 font-black text-[9px] tracking-wider px-2 py-0.5 rounded uppercase self-start mb-3">
+              Lái thử miễn phí
+            </span>
+            <h3 className="text-xl font-black leading-tight uppercase">
+              Hành trình xanh — Lái thử ngay
+            </h3>
+            <p className="mt-2 text-xs leading-relaxed text-slate-300 font-medium">
+              Trải nghiệm khả năng tăng tốc mượt mà, công nghệ định vị thông minh của xe máy điện
+              VinFast tại Showroom VF Ngọc Anh hoàn toàn miễn phí.
+            </p>
+            <a
+              href="tel:1900232389"
+              className="mt-5 bg-brand hover:bg-blue-600 text-white text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center self-start shadow-md"
+            >
+              LIÊN HỆ SHOWROOM NGAY
+            </a>
+          </div>
+        </div>
+
+        <div className="relative overflow-hidden rounded-2xl border border-brand/10 bg-gradient-to-br from-blue-50/70 via-indigo-50/30 to-white shadow-soft p-6 md:p-8 flex flex-col justify-center min-h-[220px]">
+          <div className="absolute top-4 right-4 opacity-15">
+            <Wallet className="size-24 text-brand" strokeWidth={1} />
+          </div>
+          <div className="relative z-10">
+            <span className="bg-brand/20 text-brand font-black text-[9px] tracking-wider px-2 py-0.5 rounded uppercase inline-block mb-3 border border-brand/10">
+              Chính sách trả góp
+            </span>
+            <h3 className="text-xl font-black leading-tight text-brand-dark uppercase">
+              Trả góp 0% lãi suất — Không lo tài chính
+            </h3>
+            <ul className="mt-4 space-y-2 text-xs text-slate-600 font-semibold">
+              <li className="flex items-start gap-2">
+                <Check size={14} className="mt-0.5 shrink-0 text-emerald-500" strokeWidth={3} />
+                Lãi suất ưu đãi đặc biệt 0% trong suốt thời gian trả góp.
+              </li>
+              <li className="flex items-start gap-2">
+                <Check size={14} className="mt-0.5 shrink-0 text-emerald-500" strokeWidth={3} />
+                Trả trước chỉ từ 20% giá trị xe, kỳ hạn linh hoạt tới 24 tháng.
+              </li>
+              <li className="flex items-start gap-2">
+                <Check size={14} className="mt-0.5 shrink-0 text-emerald-500" strokeWidth={3} />
+                Thủ tục nhanh gọn, chỉ cần CCCD có chip, xét duyệt hồ sơ online.
+              </li>
+            </ul>
+            <a
+              href="tel:1900232389"
+              className="mt-5 inline-block border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
+            >
+              GỌI TƯ VẤN TRẢ GÓP XE MÁY
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyVinFastSection() {
+  return (
+    <section className="bg-slate-50 py-16 md:py-20 border-b border-slate-200">
+      <div className="container-vf">
+        <div className="max-w-2xl mx-auto text-center mb-12">
+          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
+            Lựa chọn thông minh
+          </span>
+          <h2 className={sectionHeading + " mt-2"}>VÌ SAO NÊN CHỌN XE MÁY ĐIỆN VINFAST?</h2>
+          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
+        </div>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {WHY_VINFAST.map(({ icon: Icon, title, desc }) => (
+            <div
+              key={title}
+              className="bg-white border border-slate-200 p-6 rounded-2xl shadow-soft hover:shadow-md transition-all text-center"
+            >
+              <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-brand/10 border border-brand/20 text-brand">
+                <Icon className="size-6 text-brand" strokeWidth={1.5} />
+              </div>
+              <h3 className="mt-4 text-sm font-black text-brand-dark uppercase">{title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -468,7 +2180,7 @@ function CatalogPagination({
   const btnBase =
     "inline-flex h-9 min-w-9 items-center justify-center rounded-md border text-xs font-semibold transition disabled:pointer-events-none disabled:opacity-40";
   const btnIdle =
-    "border-border bg-white text-brand-dark shadow-sm hover:border-brand hover:text-brand";
+    "border-slate-200 bg-white text-brand-dark shadow-sm hover:border-brand hover:text-brand";
   const btnActive = "border-brand bg-brand text-white shadow-sm";
 
   return (
@@ -505,151 +2217,5 @@ function CatalogPagination({
         <ChevronRight size={14} />
       </button>
     </nav>
-  );
-}
-
-function ScooterCard({ scooter }: { scooter: (typeof SCOOTERS)[number] }) {
-  return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border/60 bg-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-card">
-      <div className="flex aspect-[4/3] w-full shrink-0 items-center justify-center bg-[#f4f6fa] p-4">
-        <img
-          src={scooter.image}
-          alt={scooter.name}
-          className="max-h-full max-w-full object-contain"
-          loading="lazy"
-        />
-      </div>
-      <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-base font-black text-brand-dark">{scooter.name}</h3>
-        <p className="mt-0.5 min-h-[34px] text-[11px] leading-snug text-muted-foreground">
-          {scooter.subtitle}
-        </p>
-
-        <div className="mt-3 flex min-h-[18px] flex-wrap gap-x-3 gap-y-1 text-[10px] text-muted-foreground">
-          <span className="inline-flex items-center gap-1 whitespace-nowrap">
-            <Gauge size={12} className="text-brand" />
-            {scooter.range} km
-          </span>
-          <span className="inline-flex items-center gap-1 whitespace-nowrap">
-            <Zap size={12} className="text-brand" />
-            {scooter.topSpeed} km/h
-          </span>
-          {scooter.trunk > 0 && (
-            <span className="inline-flex items-center gap-1 whitespace-nowrap">
-              <Package size={12} className="text-brand" />
-              Cốp {scooter.trunk}L
-            </span>
-          )}
-        </div>
-
-        <p className="mt-3 min-h-[40px] text-sm font-black leading-snug text-brand-dark">
-          Giá từ {formatPrice(scooter.price)} VNĐ
-        </p>
-
-        <div className="mt-auto flex gap-2 pt-4">
-          <button
-            type="button"
-            className="flex flex-1 items-center justify-center rounded-md border border-brand bg-white py-2 text-[10px] font-semibold tracking-wide text-brand transition hover:bg-brand/5"
-          >
-            XEM CHI TIẾT
-          </button>
-          <button
-            type="button"
-            className="flex-1 rounded-md bg-brand py-2 text-[10px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
-          >
-            ĐẶT MUA NGAY
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function PromoBanners() {
-  return (
-    <section className="bg-white py-10 md:py-12">
-      <div className="container-vf grid gap-4 md:grid-cols-2 md:gap-5">
-        <div className="relative overflow-hidden rounded-xl shadow-card">
-          <img
-            src={SCOOTER_IMAGES.promoTestDrive}
-            alt="Trải nghiệm xe máy điện"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/90 via-brand-dark/75 to-brand-dark/40" />
-          <div className="relative z-10 p-6 text-white md:p-8">
-            <p className="text-[10px] font-bold tracking-wider text-white/70 uppercase">
-              Trải nghiệm xe VinFast
-            </p>
-            <h3 className="mt-2 text-lg font-black leading-tight md:text-xl">
-              LÁI THỬ MIỄN PHÍ NGAY
-            </h3>
-            <p className="mt-2 max-w-xs text-xs leading-relaxed text-white/80">
-              Trải nghiệm trực tiếp các dòng xe máy điện VinFast tại showroom VF Ngọc Anh.
-            </p>
-            <button
-              type="button"
-              className="mt-5 rounded-md bg-brand px-5 py-2.5 text-[11px] font-semibold tracking-wide text-white hover:bg-[#0046cc]"
-            >
-              ĐĂNG KÝ LÁI THỬ
-            </button>
-          </div>
-        </div>
-
-        <div className="relative overflow-hidden rounded-xl border border-brand/10 bg-gradient-to-br from-[#e8f0ff] via-[#f0f5ff] to-white shadow-soft">
-          <div className="absolute top-4 right-4 opacity-20">
-            <Wallet className="size-24 text-brand" strokeWidth={1} />
-          </div>
-          <div className="relative z-10 p-6 md:p-8">
-            <p className="text-[10px] font-bold tracking-wider text-brand uppercase">
-              Ưu đãi hấp dẫn
-            </p>
-            <h3 className="mt-2 text-lg font-black leading-tight text-brand-dark md:text-xl">
-              HỖ TRỢ TÀI CHÍNH LINH HOẠT
-            </h3>
-            <ul className="mt-4 space-y-2 text-xs text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <ChevronRight size={14} className="mt-0.5 shrink-0 text-brand" />
-                Hỗ trợ vay lên tới 80% giá trị xe
-              </li>
-              <li className="flex items-start gap-2">
-                <ChevronRight size={14} className="mt-0.5 shrink-0 text-brand" />
-                Lãi suất ưu đãi từ 0%/năm
-              </li>
-              <li className="flex items-start gap-2">
-                <ChevronRight size={14} className="mt-0.5 shrink-0 text-brand" />
-                Thủ tục đơn giản, giải ngân nhanh
-              </li>
-            </ul>
-            <button
-              type="button"
-              className="mt-5 rounded-md border border-brand bg-white px-5 py-2.5 text-[11px] font-semibold tracking-wide text-brand transition hover:bg-brand/5"
-            >
-              TÌM HIỂU THÊM
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhyVinFastSection() {
-  return (
-    <section className="bg-surface py-14 md:py-16 lg:py-20">
-      <div className="container-vf">
-        <h2 className={sectionHeading}>VÌ SAO NÊN CHỌN XE MÁY ĐIỆN VINFAST?</h2>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {WHY_VINFAST.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-white">
-                <Icon className="size-6 text-brand" strokeWidth={1.5} />
-              </div>
-              <h3 className="mt-4 text-sm font-bold text-brand-dark">{title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }

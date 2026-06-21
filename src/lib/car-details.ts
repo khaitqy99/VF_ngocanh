@@ -74,7 +74,7 @@ export type ReviewsSection = {
   items: ReviewItem[];
 };
 
-export type CarDetail = CarModel & {
+export type CarDetail = Omit<CarModel, "colors"> & {
   tagline: string;
   badges: string[];
   slogan: string;
@@ -156,26 +156,26 @@ function buildSafety(car: CarModel): SafetySection {
 }
 
 function buildSpecGroups(car: CarModel): SpecGroup[] {
+  const driveLabel =
+    car.drive === "awd" ? "AWD (2 cầu)" : car.drive === "rwd" ? "RWD (Cầu sau)" : "FWD (Cầu trước)";
+
   return [
     {
       category: "Kích thước",
       items: [
-        { label: "Dài x Rộng x Cao (mm)", value: "4.545 x 1.890 x 1.635" },
-        { label: "Chiều dài cơ sở (mm)", value: "2.840" },
-        { label: "Khoảng sáng gầm (mm)", value: "180" },
+        { label: "Dài x Rộng x Cao (mm)", value: car.dimensions },
+        { label: "Khoảng sáng gầm (mm)", value: car.seats >= 7 ? "190" : "180" },
         { label: "Dung tích cốp (lít)", value: car.seats >= 7 ? "450" : "376" },
+        { label: "Số chỗ ngồi", value: `${car.seats} chỗ` },
       ],
     },
     {
       category: "Động cơ & Vận hành",
       items: [
         { label: "Công suất tối đa", value: `${car.power} Hp` },
-        { label: "Mô-men xoắn cực đại", value: `${Math.round(car.power * 1.2)} Nm` },
-        { label: "Dẫn động", value: car.drive.toUpperCase() },
-        {
-          label: "Tăng tốc 0–100 km/h",
-          value: car.power > 300 ? "5.5 giây" : car.power > 200 ? "7.0 giây" : "8.5 giây",
-        },
+        { label: "Mô-men xoắn cực đại", value: `${car.torque} Nm` },
+        { label: "Dẫn động", value: driveLabel },
+        { label: "Tăng tốc 0–100 km/h", value: car.acceleration },
         {
           label: "Tốc độ tối đa",
           value: car.power > 300 ? "200 km/h" : car.power > 200 ? "180 km/h" : "160 km/h",
@@ -185,14 +185,12 @@ function buildSpecGroups(car: CarModel): SpecGroup[] {
     {
       category: "Pin & Sạc",
       items: [
-        { label: "Loại pin", value: "LFP" },
-        {
-          label: "Dung lượng pin",
-          value: car.range > 400 ? "87.7 kWh" : car.range > 300 ? "64 kWh" : "37.2 kWh",
-        },
+        { label: "Loại pin", value: "LFP (Lithium Iron Phosphate)" },
+        { label: "Dung lượng pin", value: `${car.batteryCapacity} kWh` },
         { label: "Quãng đường (WLTP)", value: `${car.range} km` },
-        { label: "Sạc nhanh DC", value: "10–70% trong 24–25 phút" },
-        { label: "Sạc AC", value: "0–100% trong 8–10 giờ" },
+        { label: "Sạc nhanh DC", value: car.chargingTime },
+        { label: "Giá mua pin", value: `${formatPrice(car.batteryPurchasePrice)} VNĐ` },
+        { label: "Giá thuê pin", value: `${formatPrice(car.rentBatteryPrice)} VNĐ/tháng` },
       ],
     },
     {
@@ -523,14 +521,17 @@ function buildDefaultDetail(car: CarModel): CarDetail {
     slogan: car.subtitle,
     gallery: Array(6).fill(car.image) as string[],
     variants: [{ id: "standard", name: car.name, price: car.price }],
-    colors: DEFAULT_COLORS,
+    colors:
+      car.colors.length > 0
+        ? car.colors.map((c, i) => ({ id: `color-${i}`, name: c.name, hex: c.hex }))
+        : DEFAULT_COLORS,
     quickSpecs: {
       range: car.range,
       power: car.power,
-      torque: Math.round(car.power * 1.2),
-      acceleration: car.power > 300 ? "5.5s" : car.power > 200 ? "7.0s" : "8.5s",
+      torque: car.torque,
+      acceleration: car.acceleration.replace(/\s*\(.*\)/, ""),
       topSpeed: car.power > 300 ? 200 : car.power > 200 ? 180 : 160,
-      fastCharge: "10–70% trong 25 phút",
+      fastCharge: car.chargingTime,
     },
     overview: {
       title: `Triết lý thiết kế ${car.name}`,

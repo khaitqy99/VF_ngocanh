@@ -13,6 +13,9 @@ import {
   Timer,
   Wind,
   BatteryCharging,
+  Package,
+  Scale,
+  Bike,
   MapPin,
   MessageCircle,
   GitCompareArrows,
@@ -22,9 +25,7 @@ import {
   Mic,
   Download,
   Smartphone,
-  Radar,
   Monitor,
-  KeyRound,
   Navigation,
   Settings2,
   Battery,
@@ -33,7 +34,6 @@ import {
   ArrowRight,
   X,
   ZoomIn,
-  Users,
   Calendar,
   Calculator,
   Percent,
@@ -72,12 +72,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type CarDetail, formatPrice, getRelatedCars, type TechFeature } from "@/lib/car-details";
+import {
+  type ScooterDetail,
+  formatPrice,
+  getRelatedScooters,
+  type TechFeature,
+} from "@/lib/scooter-details";
 
 const TABS = [
   { id: "tong-quan", label: "Tổng quan" },
   { id: "ngoai-that", label: "Ngoại thất" },
-  { id: "noi-that", label: "Nội thất" },
+  { id: "thiet-ke", label: "Thiết kế" },
   { id: "cong-nghe", label: "Công nghệ" },
   { id: "van-hanh", label: "Vận hành" },
   { id: "an-toan", label: "An toàn" },
@@ -90,36 +95,34 @@ const TABS = [
 type TabId = (typeof TABS)[number]["id"];
 
 const SERVICE_BAR = [
-  { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 10 năm hoặc 200.000 km" },
+  { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000 km" },
   { icon: Headphones, title: "Cứu hộ 24/7", sub: "Hỗ trợ mọi lúc, mọi nơi" },
   { icon: MapPin, title: "Showroom Cà Mau", sub: "Tư vấn & giao xe tận nơi" },
-  { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Vay 80%, trả góp lãi suất thấp" },
+  { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Trả góp 0%, lãi suất thấp" },
 ] as const;
 
 const PROVINCES = [
-  { id: "camau", name: "Cà Mau (Phí biển ~1 triệu)", plateFee: 1_000_000 },
-  { id: "hanoi", name: "Hà Nội (Phí biển 20 triệu)", plateFee: 20_000_000 },
-  { id: "hcm", name: "TP. Hồ Chí Minh (Phí biển 20 triệu)", plateFee: 20_000_000 },
-  { id: "other", name: "Tỉnh/Thành phố khác (Phí biển 1 triệu)", plateFee: 1_000_000 },
+  { id: "camau", name: "Cà Mau & tỉnh khác", rate: 0.02 },
+  { id: "hanoi", name: "Hà Nội (Lệ phí biển 2–4 triệu)", rate: 0.05 },
+  { id: "hcm", name: "TP. HCM (Lệ phí biển 2–4 triệu)", rate: 0.05 },
+  { id: "other", name: "Tỉnh/Thành phố khác", rate: 0.02 },
 ] as const;
 
 const TECH_ICONS: Record<TechFeature["icon"], React.ElementType> = {
   voice: Mic,
   fota: Download,
   app: Smartphone,
-  adas: Radar,
+  gps: Navigation,
   screen: Monitor,
-  keyless: KeyRound,
-  nav: Navigation,
   drive: Settings2,
   battery: Battery,
 };
 
 const sectionHeading = "text-xl font-black tracking-tight text-brand-dark sm:text-2xl md:text-3xl";
 
-type Props = { detail: CarDetail };
+type Props = { detail: ScooterDetail };
 
-export default function CarDetailPage({ detail }: Props) {
+export default function ScooterDetailPage({ detail }: Props) {
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -134,7 +137,6 @@ export default function CarDetailPage({ detail }: Props) {
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
 
   const [estimatorLocation, setEstimatorLocation] = useState("camau");
-  const [includeInsurance, setIncludeInsurance] = useState(true);
   const [estimatorTab, setEstimatorTab] = useState<"rolling" | "installment">("rolling");
   const [downPaymentPct, setDownPaymentPct] = useState(30);
   const [loanTermYears, setLoanTermYears] = useState(5);
@@ -146,43 +148,48 @@ export default function CarDetailPage({ detail }: Props) {
 
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
-  const related = getRelatedCars(detail.id);
+  const related = getRelatedScooters(detail.id);
 
   const basePrice =
     batteryMode === "purchase" ? variant.price + detail.batteryPurchasePrice : variant.price;
 
   const rollingCost = useMemo(() => {
     const province = PROVINCES.find((p) => p.id === estimatorLocation) ?? PROVINCES[0];
-    const roadMaintenanceFee = 1_560_000;
-    const inspectionFee = 340_000;
-    const civilInsurance = 480_000;
-    const physicalInsurance = Math.round(basePrice * 0.011);
-    const totalRolling =
-      basePrice +
-      province.plateFee +
-      roadMaintenanceFee +
-      inspectionFee +
-      civilInsurance +
-      (includeInsurance ? physicalInsurance : 0);
-    return {
-      plateFee: province.plateFee,
-      roadMaintenanceFee,
-      inspectionFee,
-      civilInsurance,
-      physicalInsurance,
-      totalRolling,
-    };
-  }, [basePrice, estimatorLocation, includeInsurance]);
+    const registrationTax = Math.round(basePrice * province.rate);
+
+    let plateFee = 150_000;
+    if (province.id === "hanoi" || province.id === "hcm") {
+      if (basePrice < 15_000_000) plateFee = 1_000_000;
+      else if (basePrice <= 40_000_000) plateFee = 2_000_000;
+      else plateFee = 4_000_000;
+    } else if (basePrice < 15_000_000) plateFee = 150_000;
+    else if (basePrice <= 40_000_000) plateFee = 400_000;
+    else plateFee = 800_000;
+
+    const inspectionFee = 100_000;
+    const civilInsurance = 66_000;
+    const totalRolling = basePrice + registrationTax + plateFee + inspectionFee + civilInsurance;
+
+    return { registrationTax, plateFee, inspectionFee, civilInsurance, totalRolling };
+  }, [basePrice, estimatorLocation]);
 
   const installment = useMemo(() => {
-    const upfrontAmount = Math.round(rollingCost.totalRolling * (downPaymentPct / 100));
-    const loanAmount = rollingCost.totalRolling - upfrontAmount;
+    const totalCost = rollingCost.totalRolling;
+    const loanAmount = Math.round((totalCost * downPaymentPct) / 100);
+    const upfrontAmount = totalCost - loanAmount;
     const monthlyRate = interestRate / 100 / 12;
     const months = loanTermYears * 12;
     const firstMonthInterest = Math.round(loanAmount * monthlyRate);
     const firstMonthPrincipal = Math.round(loanAmount / months);
     const firstMonthTotal = firstMonthInterest + firstMonthPrincipal;
-    const avgMonthlyPayment = Math.round((loanAmount + loanAmount * monthlyRate * months) / months);
+    let totalPaid = 0;
+    let tempLoan = loanAmount;
+    for (let m = 0; m < months; m++) {
+      const interest = tempLoan * monthlyRate;
+      totalPaid += firstMonthPrincipal + interest;
+      tempLoan -= firstMonthPrincipal;
+    }
+    const avgMonthlyPayment = Math.round(totalPaid / months);
     return {
       upfrontAmount,
       loanAmount,
@@ -245,7 +252,7 @@ export default function CarDetailPage({ detail }: Props) {
       <Header />
       <Toaster position="top-center" richColors />
       <main>
-        <BreadcrumbBar carName={detail.name} variantName={variant.name} />
+        <BreadcrumbBar scooterName={detail.name} variantName={variant.name} />
 
         {/* Hero */}
         <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-b from-slate-50 to-white">
@@ -344,7 +351,7 @@ export default function CarDetailPage({ detail }: Props) {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-                        Giá niêm yết từ
+                        Giá niêm yết (chưa pin)
                       </p>
                       <p className="text-3xl font-black text-brand md:text-4xl">
                         {formatPrice(variant.price)}{" "}
@@ -368,11 +375,17 @@ export default function CarDetailPage({ detail }: Props) {
                       value={`${detail.quickSpecs.range} km`}
                       label="Quãng đường"
                     />
-                    <HighlightStat icon={Users} value={`${detail.seats}`} label="Chỗ ngồi" />
                     <HighlightStat
                       icon={Zap}
-                      value={`${detail.quickSpecs.power}`}
-                      label="Công suất Hp"
+                      value={`${detail.quickSpecs.topSpeed}`}
+                      label="km/h tối đa"
+                    />
+                    <HighlightStat
+                      icon={Package}
+                      value={
+                        detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk}L` : "Móc treo"
+                      }
+                      label="Cốp xe"
                     />
                   </div>
 
@@ -502,10 +515,10 @@ export default function CarDetailPage({ detail }: Props) {
                   <div className="mt-6 flex flex-col gap-2.5">
                     <button
                       type="button"
-                      onClick={() => openBooking("Đặt cọc ngay")}
+                      onClick={() => openBooking("Đặt mua ngay")}
                       className="w-full rounded-xl bg-brand py-3.5 text-xs font-black tracking-wide text-white shadow-lg transition hover:bg-[#0046cc]"
                     >
-                      ĐẶT CỌC NGAY
+                      ĐẶT MUA NGAY
                     </button>
                     <button
                       type="button"
@@ -519,7 +532,7 @@ export default function CarDetailPage({ detail }: Props) {
                   <div className="mt-5 grid grid-cols-2 gap-2 border-t border-border/50 pt-5">
                     <UtilityLink icon={MapPin} label="Tìm đại lý" href="/gioi-thieu" />
                     <UtilityLink icon={MessageCircle} label="Chat Zalo" href="#" />
-                    <UtilityLink icon={GitCompareArrows} label="So sánh xe" href="/oto" />
+                    <UtilityLink icon={GitCompareArrows} label="So sánh xe" href="/xe-may-dien" />
                     <UtilityLink icon={FileDown} label="Tải brochure" href="#" />
                   </div>
                 </div>
@@ -540,32 +553,32 @@ export default function CarDetailPage({ detail }: Props) {
               />
               <SpecItem
                 icon={Zap}
-                label="Công suất"
-                value={`${detail.quickSpecs.power} Hp`}
-                light
-              />
-              <SpecItem
-                icon={Wind}
-                label="Mô-men xoắn"
-                value={`${detail.quickSpecs.torque} Nm`}
-                light
-              />
-              <SpecItem
-                icon={Timer}
-                label="Tăng tốc 0–100"
-                value={detail.quickSpecs.acceleration}
-                light
-              />
-              <SpecItem
-                icon={Gauge}
                 label="Tốc độ tối đa"
                 value={`${detail.quickSpecs.topSpeed} km/h`}
                 light
               />
               <SpecItem
+                icon={Bike}
+                label="Công suất"
+                value={`${detail.quickSpecs.motorPower} W`}
+                light
+              />
+              <SpecItem
+                icon={Package}
+                label="Cốp xe"
+                value={detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk} lít` : "Móc treo"}
+                light
+              />
+              <SpecItem
+                icon={Scale}
+                label="Trọng lượng"
+                value={`${detail.quickSpecs.weight} kg`}
+                light
+              />
+              <SpecItem
                 icon={BatteryCharging}
-                label="Sạc nhanh"
-                value={detail.quickSpecs.fastCharge}
+                label="Thời gian sạc"
+                value={detail.quickSpecs.chargingTime.split(" (")[0]}
                 light
               />
             </div>
@@ -619,12 +632,12 @@ export default function CarDetailPage({ detail }: Props) {
           </SectionWrap>
 
           <SectionWrap
-            id="noi-that"
+            id="thiet-ke"
             ref={(el) => {
-              sectionRefs.current["noi-that"] = el;
+              sectionRefs.current["thiet-ke"] = el;
             }}
           >
-            <InteriorSection detail={detail} />
+            <DesignSection detail={detail} />
           </SectionWrap>
 
           <SectionWrap
@@ -684,13 +697,10 @@ export default function CarDetailPage({ detail }: Props) {
             <FinanceSection
               detail={detail}
               variant={variant}
-              basePrice={basePrice}
               batteryMode={batteryMode}
               setBatteryMode={setBatteryMode}
               estimatorLocation={estimatorLocation}
               setEstimatorLocation={setEstimatorLocation}
-              includeInsurance={includeInsurance}
-              setIncludeInsurance={setIncludeInsurance}
               estimatorTab={estimatorTab}
               setEstimatorTab={setEstimatorTab}
               downPaymentPct={downPaymentPct}
@@ -725,24 +735,29 @@ export default function CarDetailPage({ detail }: Props) {
             </p>
             <Carousel opts={{ align: "start", loop: false }} className="mt-8">
               <CarouselContent className="-ml-4">
-                {related.map((car) => (
-                  <CarouselItem key={car.id} className="basis-full pl-4 sm:basis-1/2 lg:basis-1/4">
+                {related.map((scooter) => (
+                  <CarouselItem
+                    key={scooter.id}
+                    className="basis-full pl-4 sm:basis-1/2 lg:basis-1/4"
+                  >
                     <Link
-                      href={`/oto/${car.id}`}
+                      href={`/xe-may-dien/${scooter.id}`}
                       className="group block overflow-hidden rounded-2xl border border-border/60 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-card"
                     >
                       <div className="relative aspect-[4/3] overflow-hidden">
                         <img
-                          src={car.image}
-                          alt={car.name}
+                          src={scooter.image}
+                          alt={scooter.name}
                           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                         />
                       </div>
                       <div className="p-4">
-                        <h3 className="text-sm font-black text-brand-dark">{car.name}</h3>
-                        <p className="mt-0.5 text-[11px] text-muted-foreground">{car.subtitle}</p>
+                        <h3 className="text-sm font-black text-brand-dark">{scooter.name}</h3>
+                        <p className="mt-0.5 text-[11px] text-muted-foreground">
+                          {scooter.subtitle}
+                        </p>
                         <p className="mt-2 text-xs font-bold text-brand">
-                          Giá từ {formatPrice(car.price)} VND
+                          Giá từ {formatPrice(scooter.price)} VND
                         </p>
                       </div>
                     </Link>
@@ -754,10 +769,10 @@ export default function CarDetailPage({ detail }: Props) {
             </Carousel>
             <div className="mt-8 text-center">
               <Link
-                href="/oto"
+                href="/xe-may-dien"
                 className="inline-flex items-center gap-2 rounded-xl border border-brand bg-white px-6 py-3 text-xs font-bold tracking-wide text-brand transition hover:bg-brand/5"
               >
-                Xem tất cả xe ô tô <ArrowRight className="size-4" />
+                Xem tất cả xe máy điện <ArrowRight className="size-4" />
               </Link>
             </div>
           </div>
@@ -830,10 +845,10 @@ export default function CarDetailPage({ detail }: Props) {
         </button>
         <button
           type="button"
-          onClick={() => openBooking("Đặt cọc ngay")}
+          onClick={() => openBooking("Đặt mua ngay")}
           className="flex-1 rounded-xl bg-brand py-3 text-[11px] font-black text-white"
         >
-          ĐẶT CỌC
+          ĐẶT MUA
         </button>
       </div>
 
@@ -955,7 +970,7 @@ export default function CarDetailPage({ detail }: Props) {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    {["Đăng ký lái thử", "Đặt cọc ngay", "Nhận báo giá", "Tư vấn trả góp"].map(
+                    {["Đăng ký lái thử", "Đặt mua ngay", "Nhận báo giá", "Tư vấn trả góp"].map(
                       (svc) => (
                         <button
                           key={svc}
@@ -1051,7 +1066,7 @@ function SectionWrap({
   );
 }
 
-function OverviewSection({ detail }: { detail: CarDetail }) {
+function OverviewSection({ detail }: { detail: ScooterDetail }) {
   return (
     <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
       <div>
@@ -1082,7 +1097,7 @@ function OverviewSection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function ExteriorSection({ detail }: { detail: CarDetail }) {
+function ExteriorSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader title="Ngoại thất" subtitle="Thiết kế ấn tượng, khí động học tối ưu" />
@@ -1095,12 +1110,15 @@ function ExteriorSection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function InteriorSection({ detail }: { detail: CarDetail }) {
+function InteriorSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
-      <SectionHeader title="Nội thất" subtitle="Không gian cabin cao cấp, tiện nghi vượt trội" />
+      <SectionHeader
+        title="Thiết kế & Tiện nghi"
+        subtitle="Thiết kế ergonomic, tiện dụng cho đô thị"
+      />
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {detail.interior.map((item) => (
+        {detail.design.map((item) => (
           <FeatureCard key={item.title} {...item} />
         ))}
       </div>
@@ -1108,7 +1126,11 @@ function InteriorSection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function TechnologySection({ detail }: { detail: CarDetail }) {
+function DesignSection({ detail }: { detail: ScooterDetail }) {
+  return <InteriorSection detail={detail} />;
+}
+
+function TechnologySection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader
@@ -1137,7 +1159,7 @@ function TechnologySection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function PerformanceSection({ detail }: { detail: CarDetail }) {
+function PerformanceSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader
@@ -1180,7 +1202,7 @@ function PerformanceSection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function SafetySection({ detail }: { detail: CarDetail }) {
+function SafetySection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader title={detail.safety.title} subtitle={detail.safety.subtitle} center />
@@ -1223,7 +1245,7 @@ function SafetySection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function SpecsSection({ detail }: { detail: CarDetail }) {
+function SpecsSection({ detail }: { detail: ScooterDetail }) {
   const [expanded, setExpanded] = useState<string | null>(detail.specGroups[0]?.category ?? null);
 
   return (
@@ -1279,7 +1301,7 @@ function SpecsSection({ detail }: { detail: CarDetail }) {
   );
 }
 
-function AccessoriesSection({ detail }: { detail: CarDetail }) {
+function AccessoriesSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
@@ -1310,15 +1332,12 @@ function AccessoriesSection({ detail }: { detail: CarDetail }) {
 }
 
 type FinanceProps = {
-  detail: CarDetail;
+  detail: ScooterDetail;
   variant: { name: string; price: number };
-  basePrice: number;
   batteryMode: "rent" | "purchase";
   setBatteryMode: (v: "rent" | "purchase") => void;
   estimatorLocation: string;
   setEstimatorLocation: (v: string) => void;
-  includeInsurance: boolean;
-  setIncludeInsurance: (v: boolean) => void;
   estimatorTab: "rolling" | "installment";
   setEstimatorTab: (v: "rolling" | "installment") => void;
   downPaymentPct: number;
@@ -1328,11 +1347,10 @@ type FinanceProps = {
   interestRate: number;
   setInterestRate: (v: number) => void;
   rollingCost: {
+    registrationTax: number;
     plateFee: number;
-    roadMaintenanceFee: number;
     inspectionFee: number;
     civilInsurance: number;
-    physicalInsurance: number;
     totalRolling: number;
   };
   installment: {
@@ -1349,13 +1367,10 @@ type FinanceProps = {
 function FinanceSection({
   detail,
   variant,
-  basePrice,
   batteryMode,
   setBatteryMode,
   estimatorLocation,
   setEstimatorLocation,
-  includeInsurance,
-  setIncludeInsurance,
   estimatorTab,
   setEstimatorTab,
   downPaymentPct,
@@ -1455,12 +1470,8 @@ function FinanceSection({
               </div>
 
               <label className="flex cursor-pointer items-center gap-2">
-                <Checkbox
-                  checked={includeInsurance}
-                  onCheckedChange={(v) => setIncludeInsurance(!!v)}
-                />
                 <span className="text-xs text-muted-foreground">
-                  Bao gồm bảo hiểm vật chất (~1.1%)
+                  Chi phí đăng ký xe máy điện theo quy định từng tỉnh/thành
                 </span>
               </label>
 
@@ -1468,8 +1479,8 @@ function FinanceSection({
                 <>
                   <div>
                     <div className="mb-2 flex justify-between text-[10px] font-bold text-muted-foreground uppercase">
-                      <span>Trả trước ({downPaymentPct}%)</span>
-                      <span className="text-brand">{formatPrice(installment.upfrontAmount)} đ</span>
+                      <span>Tỷ lệ vay ({downPaymentPct}%)</span>
+                      <span className="text-brand">{formatPrice(installment.loanAmount)} đ</span>
                     </div>
                     <Slider
                       value={[downPaymentPct]}
@@ -1530,7 +1541,7 @@ function FinanceSection({
           <div className="bg-surface p-6 lg:col-span-7">
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
-                <CostRow label="Giá niêm yết xe" value={formatPrice(variant.price)} />
+                <CostRow label="Giá xe (chưa pin)" value={formatPrice(variant.price)} />
                 {batteryMode === "purchase" && (
                   <CostRow
                     label="Mua đứt pin"
@@ -1538,23 +1549,16 @@ function FinanceSection({
                     indent
                   />
                 )}
-                <CostRow label="Lệ phí trước bạ (miễn 0%)" value="0" highlight />
+                <CostRow label="Lệ phí trước bạ" value={formatPrice(rollingCost.registrationTax)} />
                 <CostRow label="Phí đăng ký biển số" value={formatPrice(rollingCost.plateFee)} />
                 <CostRow
-                  label="Phí bảo trì đường bộ (12 tháng)"
-                  value={formatPrice(rollingCost.roadMaintenanceFee)}
+                  label="Phí hỗ trợ đăng kiểm"
+                  value={formatPrice(rollingCost.inspectionFee)}
                 />
-                <CostRow label="Phí đăng kiểm" value={formatPrice(rollingCost.inspectionFee)} />
                 <CostRow
                   label="Bảo hiểm TNDS bắt buộc"
                   value={formatPrice(rollingCost.civilInsurance)}
                 />
-                {includeInsurance && (
-                  <CostRow
-                    label="Bảo hiểm vật chất (~1.1%)"
-                    value={formatPrice(rollingCost.physicalInsurance)}
-                  />
-                )}
               </div>
             ) : (
               <div className="space-y-4 text-xs">
@@ -1626,7 +1630,7 @@ function FinanceSection({
   );
 }
 
-function ReviewsSection({ detail }: { detail: CarDetail }) {
+function ReviewsSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
       <SectionHeader
@@ -1676,7 +1680,7 @@ function ReviewsSection({ detail }: { detail: CarDetail }) {
 
 /* ─── Shared UI atoms ─── */
 
-function BreadcrumbBar({ carName, variantName }: { carName: string; variantName: string }) {
+function BreadcrumbBar({ scooterName, variantName }: { scooterName: string; variantName: string }) {
   return (
     <div className="border-b border-border/40 bg-white">
       <div className="container-vf py-3">
@@ -1692,14 +1696,19 @@ function BreadcrumbBar({ carName, variantName }: { carName: string; variantName:
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/oto" className="text-xs text-muted-foreground hover:text-brand">
-                  Ô tô
+                <Link
+                  href="/xe-may-dien"
+                  className="text-xs text-muted-foreground hover:text-brand"
+                >
+                  Xe máy điện
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-xs text-muted-foreground">{carName}</BreadcrumbPage>
+              <BreadcrumbPage className="text-xs text-muted-foreground">
+                {scooterName}
+              </BreadcrumbPage>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

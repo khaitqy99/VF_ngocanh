@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Users, Check, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -124,6 +125,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
+        <h1 className="sr-only">VF Ngọc Anh — Đại lý ủy quyền chính thức VinFast Cà Mau</h1>
         <Hero />
         <FeaturedVehicle />
         <ScooterSection />
@@ -155,7 +157,14 @@ function Hero() {
             key={i}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={src} alt="VinFast promotion" className="h-full w-full object-contain" />
+            <Image
+              src={src}
+              alt="VinFast promotion"
+              fill
+              priority={i === 0}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              className="object-contain"
+            />
           </div>
         ))}
         <button

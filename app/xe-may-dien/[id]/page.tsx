@@ -1,33 +1,33 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import CarDetailPage from "@/components/cars/CarDetailPage";
-import { CARS } from "@/lib/cars";
-import { getCarDetail } from "@/lib/car-details";
+import ScooterDetailPage from "@/components/scooters/ScooterDetailPage";
+import { SCOOTERS } from "@/lib/scooters";
+import { getScooterDetail } from "@/lib/scooter-details";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-  return CARS.map((car) => ({ id: car.id }));
+  return SCOOTERS.map((scooter) => ({ id: scooter.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const detail = getCarDetail(id);
-  if (!detail) return { title: "Không tìm thấy xe" };
+  const detail = getScooterDetail(id);
+  if (!detail) return { title: "Không tìm thấy xe máy" };
   const title = `${detail.name} — ${detail.tagline}`;
-  const description = `${detail.slogan} — Khám phá chi tiết thông số kỹ thuật, bảng giá xe, ưu đãi và chính sách mua trả góp lăn bánh tại đại lý VinFast Ngọc Anh Cà Mau.`;
+  const description = `${detail.slogan} — Khám phá chi tiết thông số kỹ thuật, bảng giá, ưu đãi và chính sách trả góp tại đại lý VinFast Ngọc Anh Cà Mau.`;
   const image = detail.image;
   return {
     title,
     description,
     alternates: {
-      canonical: `/oto/${id}`,
+      canonical: `/xe-may-dien/${id}`,
     },
     openGraph: {
       title,
       description,
-      url: `/oto/${id}`,
+      url: `/xe-may-dien/${id}`,
       images: [
         {
           url: image,
@@ -46,14 +46,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function CarDetailRoute({ params }: Props) {
+export default async function ScooterDetailRoute({ params }: Props) {
   const { id } = await params;
-  const detail = getCarDetail(id);
+  const detail = getScooterDetail(id);
   if (!detail) notFound();
 
-  const carSchema = {
+  const productSchema = {
     "@context": "https://schema.org",
-    "@type": "Car",
+    "@type": "Product",
     name: `VinFast ${detail.name}`,
     image: `https://vinfast3scamau.com${detail.image}`,
     description: `${detail.slogan} — ${detail.tagline}`,
@@ -61,14 +61,12 @@ export default async function CarDetailRoute({ params }: Props) {
       "@type": "Brand",
       name: "VinFast",
     },
-    model: detail.name,
-    vehicleSeatingCapacity: detail.seats,
     offers: {
       "@type": "Offer",
       price: detail.price,
       priceCurrency: "VND",
       availability: "https://schema.org/InStock",
-      url: `https://vinfast3scamau.com/oto/${detail.id}`,
+      url: `https://vinfast3scamau.com/xe-may-dien/${detail.id}`,
       priceValidUntil: "2027-12-31",
     },
   };
@@ -77,9 +75,9 @@ export default async function CarDetailRoute({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(carSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <CarDetailPage detail={detail} />
+      <ScooterDetailPage detail={detail} />
     </>
   );
 }
