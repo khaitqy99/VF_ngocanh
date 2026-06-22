@@ -180,14 +180,14 @@ function BreadcrumbBar() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
+    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0">
         <img
           src={IMAGES.showroom}
           alt="Showroom VF Ngọc Anh"
           className="h-full w-full object-cover opacity-80 filter blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
       </div>
 
       <div className="container-vf relative z-10 text-white">
@@ -255,7 +255,7 @@ function HeroSection() {
 
 function MissionSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20 border-b border-slate-200/60">
+    <section className="bg-slate-50 section-y border-b border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -331,7 +331,7 @@ function TimelineSection() {
   };
 
   return (
-    <section className="bg-white py-16 md:py-20 overflow-hidden border-b border-slate-200/60">
+    <section className="bg-white section-y overflow-hidden border-b border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -343,14 +343,14 @@ function TimelineSection() {
 
         <div className="relative">
           {/* Connecting line */}
-          <div className="absolute top-[18px] right-8 left-8 hidden h-[2px] bg-slate-200 md:block" />
+          <div className="absolute top-[18px] right-8 left-8 hidden h-[2px] bg-slate-200 lg:block" />
 
           <div
             id="about-timeline"
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:gap-5 md:overflow-visible md:pb-0 scrollbar-none"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:pb-0 scrollbar-none"
           >
             {MILESTONES.map((m) => (
-              <div key={m.year} className="w-[85%] shrink-0 snap-center sm:w-[48%] md:w-full">
+              <div key={m.year} className="w-[85%] shrink-0 snap-center sm:w-[48%] lg:w-full">
                 <div className="relative flex flex-col items-center">
                   {/* Timeline Dot */}
                   <div className="relative z-10 mb-4 flex size-9 items-center justify-center rounded-full border border-brand bg-white shadow-sm">
@@ -384,7 +384,7 @@ function TimelineSection() {
           <button
             type="button"
             onClick={() => scrollBy("prev")}
-            className="absolute top-1/2 -left-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md border border-slate-200 transition hover:text-brand md:hidden"
+            className="absolute top-1/2 -left-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md border border-slate-200 transition hover:text-brand lg:hidden"
             aria-label="Mốc trước"
           >
             <ChevronLeft size={18} />
@@ -392,7 +392,7 @@ function TimelineSection() {
           <button
             type="button"
             onClick={() => scrollBy("next")}
-            className="absolute top-1/2 -right-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md border border-slate-200 transition hover:text-brand md:-right-4"
+            className="absolute top-1/2 -right-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md border border-slate-200 transition hover:text-brand lg:-right-4 lg:hidden"
             aria-label="Mốc tiếp"
           >
             <ChevronRight size={18} />
@@ -405,7 +405,7 @@ function TimelineSection() {
 
 function WhyChooseSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20">
+    <section className="bg-slate-50 section-y">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -454,7 +454,7 @@ function WhyChooseSection() {
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-16 md:py-20 text-white">
+    <section className="relative overflow-hidden bg-brand-dark section-y text-white">
       {/* Background neon effect overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
 

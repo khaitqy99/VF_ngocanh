@@ -299,6 +299,53 @@ export const ACCESSORIES: AccessoryProduct[] = [
   },
 ];
 
+export function getAccessory(id: string) {
+  return ACCESSORIES.find((item) => item.id === id);
+}
+
+export function getCarDetailAccessories(carId: string) {
+  const floorMatByCar: Record<string, string> = {
+    vf3: "tham-lot-san-vf3",
+    vf5: "tham-lot-san-vf5",
+    vf7: "tham-lot-san-vf7",
+    vf8: "tham-lot-san-vf8",
+  };
+
+  const ids = [
+    floorMatByCar[carId] ?? "tham-lot-san-all-in-one",
+    "bo-phu-nap-capo",
+    "camera-hanh-trinh",
+    "bo-sac-di-dong",
+  ];
+
+  return ids
+    .map((id) => getAccessory(id))
+    .filter((product): product is AccessoryProduct => Boolean(product));
+}
+
+export function getScooterDetailAccessories() {
+  const ids = ["bo-sac-di-dong", "cap-sac-mo-rong", "o-che-nang", "bo-ve-sinh-xe"];
+
+  return ids
+    .map((id) => getAccessory(id))
+    .filter((product): product is AccessoryProduct => Boolean(product));
+}
+
+export function getRelatedAccessories(id: string, limit = 4) {
+  const current = getAccessory(id);
+  if (!current) return [];
+
+  const sameCategory = ACCESSORIES.filter(
+    (item) => item.id !== id && item.category === current.category,
+  );
+  const fallback = ACCESSORIES.filter((item) => item.id !== id);
+
+  return [...sameCategory, ...fallback.filter((item) => !sameCategory.includes(item))].slice(
+    0,
+    limit,
+  );
+}
+
 export function getCategoryLabel(category: AccessoryCategory) {
   return CATEGORY_OPTIONS.find((c) => c.value === category)?.label ?? category;
 }

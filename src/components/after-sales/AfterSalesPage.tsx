@@ -294,7 +294,7 @@ export default function AfterSalesPage() {
         />
 
         {/* Dynamic Search / Quick Navigation Header */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+        <section className="bg-white border-b border-slate-100 py-4 sticky top-14 z-20 shadow-sm">
           <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
               Hệ thống chăm sóc hậu mãi VinFast
@@ -335,7 +335,7 @@ export default function AfterSalesPage() {
         {/* Interactive Booking Appointment Form */}
         <section
           id="service-booking-form"
-          className="bg-white text-slate-800 py-16 md:py-20 overflow-hidden relative border-y border-slate-200"
+          className="section-y overflow-hidden relative border-y border-slate-200 bg-white text-slate-800"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
@@ -674,14 +674,14 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
   return (
-    <section className="bg-slate-950 py-16 md:py-24 text-white overflow-hidden relative min-h-[480px] flex items-center">
+    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0">
         <img
           src={IMAGES.showroom}
           alt="Xưởng dịch vụ VF Ngọc Anh"
           className="h-full w-full object-cover opacity-80 filter blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
       </div>
 
       <div className="container-vf relative z-10 text-white">
@@ -748,7 +748,7 @@ function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
 
 function ServicesSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20">
+    <section className="bg-slate-50 section-y">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -794,7 +794,7 @@ function ServicesSection() {
 
 function WarrantySection() {
   return (
-    <section className="bg-white py-16 md:py-20 border-b border-slate-200">
+    <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -847,7 +847,7 @@ function WarrantySection() {
 
 function ProcessSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20 overflow-hidden border-b border-slate-200">
+    <section className="bg-slate-50 section-y overflow-hidden border-b border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -882,7 +882,7 @@ function ProcessSection() {
 
 function MaintenanceSection() {
   return (
-    <section className="bg-white py-16 md:py-20">
+    <section className="bg-white section-y">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="overflow-hidden rounded-2xl shadow-card relative group aspect-[4/3] w-full border border-slate-200 bg-slate-100">
@@ -947,7 +947,7 @@ function MaintenanceSection() {
 
 function WhyChooseSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20 border-t border-slate-200">
+    <section className="bg-slate-50 section-y border-t border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -997,7 +997,7 @@ function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="bg-white py-16 md:py-20 border-b border-slate-200">
+    <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf max-w-3xl">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1044,7 +1044,7 @@ function FaqSection() {
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-16 md:py-20">
+    <section className="relative overflow-hidden bg-brand-dark section-y">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10">
         <div className="grid items-center gap-8 lg:grid-cols-12">

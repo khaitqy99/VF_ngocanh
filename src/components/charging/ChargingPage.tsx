@@ -228,7 +228,7 @@ export default function ChargingPage() {
         />
 
         {/* Dynamic Search & Sticky Navigation Header */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+        <section className="bg-white border-b border-slate-100 py-4 sticky top-14 z-20 shadow-sm">
           <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
               Hệ sinh thái Pin & Năng lượng VinFast
@@ -264,7 +264,7 @@ export default function ChargingPage() {
         {/* Interactive Charging Time & Cost Simulator */}
         <section
           id="charging-simulator"
-          className="py-16 md:py-20 bg-white text-slate-800 relative overflow-hidden border-b border-slate-200"
+          className="section-y relative overflow-hidden border-b border-slate-200 bg-white text-slate-800"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
@@ -431,7 +431,7 @@ export default function ChargingPage() {
                         <p className="text-base font-black text-emerald-500 mt-1">
                           {formatPrice(simResult.cost)}
                         </p>
-                        <p className="text-[8px] text-slate-400 font-semibold mt-0.5">
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
                           Xấp xỉ {activeCharger.pricePerKwh}đ/kWh
                         </p>
                       </div>
@@ -442,7 +442,7 @@ export default function ChargingPage() {
                           Điện năng nạp thêm
                         </p>
                         <p className="text-base font-black text-brand mt-1">{simResult.kwh} kWh</p>
-                        <p className="text-[8px] text-slate-400 font-semibold mt-0.5">
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
                           Dung lượng thực nạp
                         </p>
                       </div>
@@ -753,14 +753,14 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToSection }: { onScrollToSection: (id: string) => void }) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
+    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0">
         <img
           src={CHARGING_IMAGES.hero}
           alt="Hệ thống trạm sạc VinFast"
           className="h-full w-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
       </div>
 
       <div className="container-vf relative z-10">
@@ -858,7 +858,7 @@ function EcosystemSection() {
   ] as const;
 
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -905,7 +905,7 @@ function EcosystemSection() {
 
 function StationTypesSection() {
   return (
-    <section className="py-16 md:py-20 bg-slate-50 border-y border-slate-200/60">
+    <section className="section-y bg-slate-50 border-y border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -968,7 +968,7 @@ function StationTypesSection() {
 
 function BatterySection() {
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
@@ -1050,7 +1050,7 @@ function ProductsSection({
   ];
 
   return (
-    <section id="san-pham-sac" className="py-16 md:py-20 bg-slate-50 border-t border-slate-200/60">
+    <section id="san-pham-sac" className="section-y bg-slate-50 border-t border-slate-200/60">
       <div id="bo-sac-tieu-chuan" className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1141,7 +1141,7 @@ function ProductsSection({
 
 function GuideSection() {
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1178,7 +1178,7 @@ function GuideSection() {
 
 function AppSection() {
   return (
-    <section className="py-16 md:py-20 bg-white text-slate-800 relative overflow-hidden border-b border-slate-200">
+    <section className="section-y bg-white text-slate-800 relative overflow-hidden border-b border-slate-200">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
@@ -1229,7 +1229,7 @@ function WhySection() {
   const icons = [MapPin, Zap, Leaf, Headphones] as const;
 
   return (
-    <section className="py-16 md:py-20 bg-slate-50 border-b border-slate-200/60">
+    <section className="section-y bg-slate-50 border-b border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1269,7 +1269,7 @@ function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-16 md:py-20 bg-white border-b border-slate-200">
+    <section className="section-y bg-white border-b border-slate-200">
       <div className="container-vf max-w-3xl">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1316,7 +1316,7 @@ function FaqSection() {
 
 function CtaSection() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-16 md:py-20">
+    <section className="relative overflow-hidden bg-brand-dark section-y">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10 text-center text-white">
         <h2 className="text-2xl font-black tracking-tight sm:text-3xl uppercase text-white">

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
 import {
@@ -14,8 +15,6 @@ import {
   Wind,
   BatteryCharging,
   MapPin,
-  MessageCircle,
-  GitCompareArrows,
   Shield,
   Headphones,
   Wallet,
@@ -29,7 +28,6 @@ import {
   Settings2,
   Battery,
   Star,
-  User,
   ArrowRight,
   X,
   ZoomIn,
@@ -41,13 +39,13 @@ import {
   Phone,
   Sparkles,
   ChevronDown,
-  FileDown,
   Share2,
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -56,13 +54,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -72,22 +63,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
+import { getCarDetailAccessories } from "@/lib/accessories";
 import { type CarDetail, formatPrice, getRelatedCars, type TechFeature } from "@/lib/car-details";
 
-const TABS = [
-  { id: "tong-quan", label: "Tổng quan" },
-  { id: "ngoai-that", label: "Ngoại thất" },
-  { id: "noi-that", label: "Nội thất" },
-  { id: "cong-nghe", label: "Công nghệ" },
-  { id: "van-hanh", label: "Vận hành" },
-  { id: "an-toan", label: "An toàn" },
-  { id: "thong-so", label: "Thông số" },
-  { id: "phu-kien", label: "Phụ kiện" },
-  { id: "tai-chinh", label: "Tài chính" },
-  { id: "danh-gia", label: "Đánh giá" },
-] as const;
-
-type TabId = (typeof TABS)[number]["id"];
+type SectionId =
+  | "tong-quan"
+  | "ngoai-that"
+  | "noi-that"
+  | "cong-nghe"
+  | "van-hanh"
+  | "an-toan"
+  | "thong-so"
+  | "phu-kien"
+  | "tai-chinh"
+  | "danh-gia";
 
 const SERVICE_BAR = [
   { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 10 năm hoặc 200.000 km" },
@@ -115,11 +105,12 @@ const TECH_ICONS: Record<TechFeature["icon"], React.ElementType> = {
   battery: Battery,
 };
 
-const sectionHeading = "text-xl font-black tracking-tight text-brand-dark sm:text-2xl md:text-3xl";
+const sectionHeading = "text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-3xl";
 
 type Props = { detail: CarDetail };
 
 export default function CarDetailPage({ detail }: Props) {
+  const router = useRouter();
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -127,11 +118,11 @@ export default function CarDetailPage({ detail }: Props) {
   );
   const [selectedColor, setSelectedColor] = useState(detail.colors[0]?.id ?? "color-0");
   const [batteryMode, setBatteryMode] = useState<"rent" | "purchase">("rent");
-  const [activeTab, setActiveTab] = useState<TabId>("tong-quan");
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState("Đăng ký lái thử");
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
+  const [configOpen, setConfigOpen] = useState(false);
 
   const [estimatorLocation, setEstimatorLocation] = useState("camau");
   const [includeInsurance, setIncludeInsurance] = useState(true);
@@ -139,10 +130,6 @@ export default function CarDetailPage({ detail }: Props) {
   const [downPaymentPct, setDownPaymentPct] = useState(30);
   const [loanTermYears, setLoanTermYears] = useState(5);
   const [interestRate, setInterestRate] = useState(5.9);
-
-  const sectionRefs = useRef<Partial<Record<TabId, HTMLElement | null>>>({});
-  const navRef = useRef<HTMLDivElement>(null);
-  const isScrollingRef = useRef(false);
 
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
@@ -193,32 +180,8 @@ export default function CarDetailPage({ detail }: Props) {
     };
   }, [rollingCost.totalRolling, downPaymentPct, loanTermYears, interestRate]);
 
-  const scrollToSection = useCallback((id: TabId) => {
-    setActiveTab(id);
-    isScrollingRef.current = true;
-    sectionRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => {
-      isScrollingRef.current = false;
-    }, 800);
-  }, []);
-
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    TABS.forEach(({ id }) => {
-      const el = sectionRefs.current[id];
-      if (!el) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !isScrollingRef.current) {
-            setActiveTab(id);
-          }
-        },
-        { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+  const scrollToSection = useCallback((id: SectionId) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
   const prevImage = () => setActiveImage((i) => (i === 0 ? detail.gallery.length - 1 : i - 1));
@@ -241,51 +204,50 @@ export default function CarDetailPage({ detail }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
+    <div className="min-h-screen overflow-x-hidden bg-white pb-28 lg:pb-0">
       <Header />
       <Toaster position="top-center" richColors />
       <main>
         <BreadcrumbBar carName={detail.name} variantName={variant.name} />
 
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-b from-slate-50 to-white">
+        <section className="relative overflow-x-hidden border-b border-border/40 bg-gradient-to-b from-slate-50 to-white">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,87,255,0.06),transparent_60%)]" />
-          <div className="container-vf relative py-8 md:py-12">
-            <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-12">
+            <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12 lg:gap-10">
               {/* Gallery */}
-              <div className="lg:col-span-7">
-                <div className="mb-4 flex flex-wrap items-center gap-2">
+              <div className="min-w-0 w-full lg:col-span-7">
+                <div className="mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 sm:gap-2">
                   {detail.badges.map((badge) => (
                     <span
                       key={badge}
-                      className="inline-flex items-center gap-1 rounded-full border border-brand/20 bg-brand/5 px-3 py-1 text-[10px] font-bold text-brand"
+                      className="inline-flex max-w-full items-center gap-1 rounded-full border border-brand/20 bg-brand/5 px-2 py-0.5 text-[10px] font-bold text-brand sm:px-3 sm:py-1"
                     >
-                      <Sparkles className="size-3" />
-                      {badge}
+                      <Sparkles className="size-3 shrink-0" />
+                      <span className="truncate">{badge}</span>
                     </span>
                   ))}
                   {detail.isNew && (
-                    <span className="rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-bold text-white">
+                    <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-bold text-white sm:px-3 sm:py-1">
                       MỚI
                     </span>
                   )}
                   {detail.isBestSeller && (
-                    <span className="rounded-full bg-accent-yellow px-3 py-1 text-[10px] font-bold text-brand-dark">
+                    <span className="rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] font-bold text-brand-dark sm:px-3 sm:py-1">
                       BÁN CHẠY
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs font-bold tracking-widest text-brand uppercase">
+                <p className="text-[11px] font-bold tracking-widest text-brand uppercase sm:text-xs">
                   VinFast {detail.name}
                 </p>
-                <h1 className="mt-1 text-2xl font-black tracking-tight text-brand-dark md:text-4xl">
+                <h1 className="mt-1 break-words text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-4xl">
                   {detail.tagline}
                 </h1>
-                <p className="mt-2 max-w-xl text-sm text-muted-foreground">{detail.slogan}</p>
 
-                <div className="relative mt-6 overflow-hidden rounded-2xl border border-border/50 bg-[#f4f6fa] shadow-card">
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
+                  <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
                     <img
                       src={detail.gallery[activeImage]}
                       alt={`${detail.name} - ảnh ${activeImage + 1}`}
@@ -295,14 +257,14 @@ export default function CarDetailPage({ detail }: Props) {
                   <button
                     type="button"
                     onClick={() => setLightboxOpen(true)}
-                    className="absolute top-4 right-4 flex items-center gap-1.5 rounded-lg border border-border/60 bg-white/90 px-3 py-1.5 text-[10px] font-bold text-brand-dark shadow-sm backdrop-blur transition hover:bg-white"
+                    className="absolute top-3 right-3 flex items-center gap-1 rounded-lg border border-border/60 bg-white/90 px-2.5 py-1 text-[10px] font-bold text-brand-dark shadow-sm backdrop-blur transition hover:bg-white sm:top-4 sm:right-4 sm:gap-1.5 sm:px-3 sm:py-1.5"
                   >
                     <ZoomIn className="size-3.5" /> Phóng to
                   </button>
                   <button
                     type="button"
                     onClick={prevImage}
-                    className="absolute top-1/2 left-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand"
+                    className="absolute top-1/2 left-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:left-3 sm:size-10"
                     aria-label="Ảnh trước"
                   >
                     <ChevronLeft size={20} />
@@ -310,7 +272,7 @@ export default function CarDetailPage({ detail }: Props) {
                   <button
                     type="button"
                     onClick={nextImage}
-                    className="absolute top-1/2 right-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand"
+                    className="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:right-3 sm:size-10"
                     aria-label="Ảnh sau"
                   >
                     <ChevronRight size={20} />
@@ -326,7 +288,7 @@ export default function CarDetailPage({ detail }: Props) {
                       key={i}
                       type="button"
                       onClick={() => setActiveImage(i)}
-                      className={`relative size-[72px] shrink-0 overflow-hidden rounded-xl border-2 transition ${
+                      className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:size-[72px] sm:rounded-xl ${
                         activeImage === i
                           ? "border-brand ring-2 ring-brand/20"
                           : "border-border/40 hover:border-border"
@@ -336,20 +298,60 @@ export default function CarDetailPage({ detail }: Props) {
                     </button>
                   ))}
                 </div>
+
+                {/* Quick specs — lấp cột gallery */}
+                <div className="mt-4 rounded-2xl border border-border/60 px-4 py-4 sm:mt-6 sm:px-5 sm:py-5">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+                    <SpecItem
+                      icon={Gauge}
+                      label="Quãng đường"
+                      value={`${detail.quickSpecs.range} km`}
+                    />
+                    <SpecItem
+                      icon={Zap}
+                      label="Công suất"
+                      value={`${detail.quickSpecs.power} Hp`}
+                    />
+                    <SpecItem
+                      icon={Wind}
+                      label="Mô-men xoắn"
+                      value={`${detail.quickSpecs.torque} Nm`}
+                    />
+                    <SpecItem
+                      icon={Timer}
+                      label="Tăng tốc 0–100"
+                      value={detail.quickSpecs.acceleration}
+                    />
+                    <SpecItem
+                      icon={Gauge}
+                      label="Tốc độ tối đa"
+                      value={`${detail.quickSpecs.topSpeed} km/h`}
+                    />
+                    <SpecItem
+                      icon={BatteryCharging}
+                      label="Sạc nhanh"
+                      value={detail.quickSpecs.fastCharge}
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Purchase panel — sticky on desktop */}
-              <div className="lg:col-span-5">
-                <div className="rounded-2xl border border-border/60 bg-white p-5 shadow-card lg:sticky lg:top-24 lg:p-6">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+              <div className="min-w-0 w-full lg:col-span-5">
+                <div className="box-border w-full min-w-0 max-w-full rounded-2xl border border-border/60 bg-white p-4 shadow-card sm:p-5 lg:sticky lg:top-24 lg:p-6">
+                  <div className="flex items-start justify-between gap-2 sm:gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
                         Giá niêm yết từ
                       </p>
-                      <p className="text-3xl font-black text-brand md:text-4xl">
-                        {formatPrice(variant.price)}{" "}
-                        <span className="text-base font-bold text-muted-foreground">VND</span>
-                      </p>
+                      <div className="mt-0.5">
+                        <span className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl">
+                          {formatPrice(variant.price)}
+                        </span>
+                        <span className="mt-0.5 block text-xs font-bold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline sm:text-base">
+                          VND
+                        </span>
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -361,8 +363,8 @@ export default function CarDetailPage({ detail }: Props) {
                     </button>
                   </div>
 
-                  {/* Quick highlights */}
-                  <div className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-surface p-3">
+                  {/* Quick highlights — desktop only */}
+                  <div className="mt-4 hidden grid-cols-3 gap-2 rounded-xl bg-surface p-3 lg:grid">
                     <HighlightStat
                       icon={Gauge}
                       value={`${detail.quickSpecs.range} km`}
@@ -376,119 +378,146 @@ export default function CarDetailPage({ detail }: Props) {
                     />
                   </div>
 
-                  {/* Variants */}
-                  <div className="mt-6">
-                    <p className="mb-3 text-[10px] font-bold tracking-wider text-brand-dark uppercase">
-                      Chọn phiên bản
-                    </p>
-                    <div className="space-y-2">
-                      {detail.variants.map((v) => {
-                        const selected = selectedVariant === v.id;
-                        return (
+                  {/* Mobile config toggle */}
+                  <button
+                    type="button"
+                    onClick={() => setConfigOpen((o) => !o)}
+                    className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-left transition hover:border-brand/40 lg:hidden"
+                    aria-expanded={configOpen}
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-brand-dark">Cấu hình xe</p>
+                      <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
+                        {variant.name} · {selectedColorObj?.name} ·{" "}
+                        {batteryMode === "rent" ? "Thuê pin" : "Mua pin"}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={`size-4 shrink-0 text-muted-foreground transition ${configOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  <div
+                    className={`mt-4 space-y-4 ${configOpen ? "block" : "hidden"} lg:mt-6 lg:block lg:space-y-6`}
+                  >
+                    {/* Variants */}
+                    <div>
+                      <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
+                        Chọn phiên bản
+                      </p>
+                      <div className="space-y-2">
+                        {detail.variants.map((v) => {
+                          const selected = selectedVariant === v.id;
+                          return (
+                            <button
+                              key={v.id}
+                              type="button"
+                              onClick={() => setSelectedVariant(v.id)}
+                              className={`flex w-full flex-col gap-1 rounded-xl border-2 px-3 py-2.5 text-left transition lg:flex-row lg:items-center lg:justify-between lg:px-4 lg:py-3 ${
+                                selected
+                                  ? "border-brand bg-brand/5 shadow-sm"
+                                  : "border-border hover:border-brand/40"
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <span
+                                  className={`flex size-5 shrink-0 items-center justify-center rounded-full border-2 ${
+                                    selected ? "border-brand bg-brand" : "border-border"
+                                  }`}
+                                >
+                                  {selected && <Check size={12} className="text-white" />}
+                                </span>
+                                <span className="text-sm font-semibold text-brand-dark">
+                                  {v.name}
+                                </span>
+                              </div>
+                              <span className="pl-8 text-xs font-bold tabular-nums text-muted-foreground lg:pl-0">
+                                {formatPrice(v.price)} đ
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Colors */}
+                    <div>
+                      <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
+                        Chọn màu sắc
+                      </p>
+                      <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                        {detail.colors.map((c) => (
                           <button
-                            key={v.id}
+                            key={c.id}
                             type="button"
-                            onClick={() => setSelectedVariant(v.id)}
-                            className={`flex w-full items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition ${
-                              selected
-                                ? "border-brand bg-brand/5 shadow-sm"
-                                : "border-border hover:border-brand/40"
+                            title={c.name}
+                            onClick={() => setSelectedColor(c.id)}
+                            className={`size-8 rounded-full border-2 transition sm:size-9 ${
+                              selectedColor === c.id
+                                ? "border-brand ring-2 ring-brand/30 ring-offset-2"
+                                : "border-border hover:border-brand/50"
                             }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <span
-                                className={`flex size-5 items-center justify-center rounded-full border-2 ${
-                                  selected ? "border-brand bg-brand" : "border-border"
-                                }`}
-                              >
-                                {selected && <Check size={12} className="text-white" />}
-                              </span>
-                              <span className="text-sm font-semibold text-brand-dark">
-                                {v.name}
-                              </span>
-                            </div>
-                            <span className="text-xs font-bold text-muted-foreground">
-                              {formatPrice(v.price)} đ
-                            </span>
-                          </button>
-                        );
-                      })}
+                            style={{ backgroundColor: c.hex }}
+                            aria-label={c.name}
+                          />
+                        ))}
+                      </div>
+                      <p className="mt-2 text-xs font-medium text-muted-foreground">
+                        {selectedColorObj?.name}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Colors */}
-                  <div className="mt-6">
-                    <p className="mb-3 text-[10px] font-bold tracking-wider text-brand-dark uppercase">
-                      Chọn màu sắc
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {detail.colors.map((c) => (
+                    {/* Battery mode */}
+                    <div>
+                      <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
+                        Hình thức pin
+                      </p>
+                      <div className="flex flex-col gap-2 sm:grid sm:grid-cols-2">
                         <button
-                          key={c.id}
                           type="button"
-                          title={c.name}
-                          onClick={() => setSelectedColor(c.id)}
-                          className={`size-9 rounded-full border-2 transition ${
-                            selectedColor === c.id
-                              ? "border-brand ring-2 ring-brand/30 ring-offset-2"
-                              : "border-border hover:border-brand/50"
+                          onClick={() => setBatteryMode("rent")}
+                          className={`rounded-xl border-2 px-3 py-2.5 text-left transition sm:py-3 ${
+                            batteryMode === "rent"
+                              ? "border-brand bg-brand/5"
+                              : "border-border hover:border-brand/40"
                           }`}
-                          style={{ backgroundColor: c.hex }}
-                          aria-label={c.name}
-                        />
-                      ))}
-                    </div>
-                    <p className="mt-2 text-xs font-medium text-muted-foreground">
-                      {selectedColorObj?.name}
-                    </p>
-                  </div>
-
-                  {/* Battery mode */}
-                  <div className="mt-6">
-                    <p className="mb-3 text-[10px] font-bold tracking-wider text-brand-dark uppercase">
-                      Hình thức pin
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setBatteryMode("rent")}
-                        className={`rounded-xl border-2 px-3 py-3 text-left transition ${
-                          batteryMode === "rent"
-                            ? "border-brand bg-brand/5"
-                            : "border-border hover:border-brand/40"
-                        }`}
-                      >
-                        <p className="text-xs font-bold text-brand-dark">Thuê pin</p>
-                        <p className="mt-0.5 text-[10px] text-muted-foreground">
-                          {formatPrice(detail.rentBatteryPrice)} đ/tháng
-                        </p>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setBatteryMode("purchase")}
-                        className={`rounded-xl border-2 px-3 py-3 text-left transition ${
-                          batteryMode === "purchase"
-                            ? "border-brand bg-brand/5"
-                            : "border-border hover:border-brand/40"
-                        }`}
-                      >
-                        <p className="text-xs font-bold text-brand-dark">Mua pin</p>
-                        <p className="mt-0.5 text-[10px] text-muted-foreground">
-                          +{formatPrice(detail.batteryPurchasePrice)} đ
-                        </p>
-                      </button>
+                        >
+                          <p className="text-xs font-bold text-brand-dark">Thuê pin</p>
+                          <p className="mt-0.5 text-[11px] tabular-nums text-muted-foreground sm:text-[10px]">
+                            {formatPrice(detail.rentBatteryPrice)} đ/tháng
+                          </p>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setBatteryMode("purchase")}
+                          className={`rounded-xl border-2 px-3 py-2.5 text-left transition sm:py-3 ${
+                            batteryMode === "purchase"
+                              ? "border-brand bg-brand/5"
+                              : "border-border hover:border-brand/40"
+                          }`}
+                        >
+                          <p className="text-xs font-bold text-brand-dark">Mua pin</p>
+                          <p className="mt-0.5 text-[11px] tabular-nums text-muted-foreground sm:text-[10px]">
+                            +{formatPrice(detail.batteryPurchasePrice)} đ
+                          </p>
+                        </button>
+                      </div>
                     </div>
                   </div>
 
                   {/* Estimated rolling cost preview */}
-                  <div className="mt-5 rounded-xl border border-brand/20 bg-brand/5 p-4">
-                    <p className="text-[10px] font-bold tracking-wider text-brand uppercase">
+                  <div className="mt-4 w-full min-w-0 rounded-xl border border-brand/20 bg-brand/5 p-3 sm:mt-5 sm:p-4">
+                    <p className="text-[11px] font-semibold text-brand sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
                       Chi phí lăn bánh dự kiến
                     </p>
-                    <p className="mt-1 text-xl font-black text-brand-dark">
-                      {formatPrice(rollingCost.totalRolling)}{" "}
-                      <span className="text-xs font-semibold text-muted-foreground">VND</span>
-                    </p>
+                    <div className="mt-1">
+                      <span className="block break-all text-base font-black tabular-nums leading-tight text-brand-dark sm:inline sm:break-normal sm:text-xl">
+                        {formatPrice(rollingCost.totalRolling)}
+                      </span>
+                      <span className="mt-0.5 block text-xs font-semibold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline">
+                        VND
+                      </span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => scrollToSection("tai-chinh")}
@@ -499,7 +528,7 @@ export default function CarDetailPage({ detail }: Props) {
                   </div>
 
                   {/* CTAs */}
-                  <div className="mt-6 flex flex-col gap-2.5">
+                  <div className="mt-6 hidden flex-col gap-2.5 lg:flex">
                     <button
                       type="button"
                       onClick={() => openBooking("Đặt cọc ngay")}
@@ -515,172 +544,47 @@ export default function CarDetailPage({ detail }: Props) {
                       ĐĂNG KÝ LÁI THỬ
                     </button>
                   </div>
-
-                  <div className="mt-5 grid grid-cols-2 gap-2 border-t border-border/50 pt-5">
-                    <UtilityLink icon={MapPin} label="Tìm đại lý" href="/gioi-thieu" />
-                    <UtilityLink icon={MessageCircle} label="Chat Zalo" href="#" />
-                    <UtilityLink icon={GitCompareArrows} label="So sánh xe" href="/oto" />
-                    <UtilityLink icon={FileDown} label="Tải brochure" href="#" />
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quick specs strip */}
-        <section className="border-b border-border/40 bg-brand-dark py-6 text-white">
-          <div className="container-vf">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-              <SpecItem
-                icon={Gauge}
-                label="Quãng đường"
-                value={`${detail.quickSpecs.range} km`}
-                light
-              />
-              <SpecItem
-                icon={Zap}
-                label="Công suất"
-                value={`${detail.quickSpecs.power} Hp`}
-                light
-              />
-              <SpecItem
-                icon={Wind}
-                label="Mô-men xoắn"
-                value={`${detail.quickSpecs.torque} Nm`}
-                light
-              />
-              <SpecItem
-                icon={Timer}
-                label="Tăng tốc 0–100"
-                value={detail.quickSpecs.acceleration}
-                light
-              />
-              <SpecItem
-                icon={Gauge}
-                label="Tốc độ tối đa"
-                value={`${detail.quickSpecs.topSpeed} km/h`}
-                light
-              />
-              <SpecItem
-                icon={BatteryCharging}
-                label="Sạc nhanh"
-                value={detail.quickSpecs.fastCharge}
-                light
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Sticky nav */}
-        <div
-          ref={navRef}
-          className="sticky top-[72px] z-40 border-b border-border/40 bg-white/95 shadow-sm backdrop-blur-md"
-        >
-          <div className="container-vf overflow-x-auto">
-            <nav className="flex gap-0" aria-label="Mục nội dung">
-              {TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => scrollToSection(tab.id)}
-                  className={`shrink-0 border-b-2 px-4 py-3.5 text-xs font-semibold whitespace-nowrap transition ${
-                    activeTab === tab.id
-                      ? "border-brand text-brand"
-                      : "border-transparent text-muted-foreground hover:text-brand-dark"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
-
         {/* All content sections */}
-        <div className="scroll-mt-36 bg-white">
-          <SectionWrap
-            id="tong-quan"
-            ref={(el) => {
-              sectionRefs.current["tong-quan"] = el;
-            }}
-          >
+        <div className="bg-white">
+          <SectionWrap id="tong-quan">
             <OverviewSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="ngoai-that"
-            alt
-            ref={(el) => {
-              sectionRefs.current["ngoai-that"] = el;
-            }}
-          >
+          <SectionWrap id="ngoai-that" alt>
             <ExteriorSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="noi-that"
-            ref={(el) => {
-              sectionRefs.current["noi-that"] = el;
-            }}
-          >
+          <SectionWrap id="noi-that">
             <InteriorSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="cong-nghe"
-            alt
-            ref={(el) => {
-              sectionRefs.current["cong-nghe"] = el;
-            }}
-          >
+          <SectionWrap id="cong-nghe" alt>
             <TechnologySection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="van-hanh"
-            ref={(el) => {
-              sectionRefs.current["van-hanh"] = el;
-            }}
-          >
+          <SectionWrap id="van-hanh">
             <PerformanceSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="an-toan"
-            alt
-            ref={(el) => {
-              sectionRefs.current["an-toan"] = el;
-            }}
-          >
+          <SectionWrap id="an-toan" alt>
             <SafetySection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="thong-so"
-            ref={(el) => {
-              sectionRefs.current["thong-so"] = el;
-            }}
-          >
+          <SectionWrap id="thong-so">
             <SpecsSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="phu-kien"
-            alt
-            ref={(el) => {
-              sectionRefs.current["phu-kien"] = el;
-            }}
-          >
+          <SectionWrap id="phu-kien" alt>
             <AccessoriesSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap
-            id="tai-chinh"
-            ref={(el) => {
-              sectionRefs.current["tai-chinh"] = el;
-            }}
-          >
+          <SectionWrap id="tai-chinh">
             <FinanceSection
               detail={detail}
               variant={variant}
@@ -705,53 +609,28 @@ export default function CarDetailPage({ detail }: Props) {
             />
           </SectionWrap>
 
-          <SectionWrap
-            id="danh-gia"
-            alt
-            ref={(el) => {
-              sectionRefs.current["danh-gia"] = el;
-            }}
-          >
+          <SectionWrap id="danh-gia" alt>
             <ReviewsSection detail={detail} />
           </SectionWrap>
         </div>
 
         {/* Related products */}
-        <section className="border-t border-border/40 bg-surface py-12 md:py-16">
+        <section className="section-y border-t border-border/40 bg-surface">
           <div className="container-vf">
             <h2 className={sectionHeading}>Sản phẩm liên quan</h2>
             <p className="mx-auto mt-2 max-w-lg text-center text-sm text-muted-foreground">
               Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn
             </p>
-            <Carousel opts={{ align: "start", loop: false }} className="mt-8">
-              <CarouselContent className="-ml-4">
-                {related.map((car) => (
-                  <CarouselItem key={car.id} className="basis-full pl-4 sm:basis-1/2 lg:basis-1/4">
-                    <Link
-                      href={`/oto/${car.id}`}
-                      className="group block overflow-hidden rounded-2xl border border-border/60 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-card"
-                    >
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <img
-                          src={car.image}
-                          alt={car.name}
-                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-sm font-black text-brand-dark">{car.name}</h3>
-                        <p className="mt-0.5 text-[11px] text-muted-foreground">{car.subtitle}</p>
-                        <p className="mt-2 text-xs font-bold text-brand">
-                          Giá từ {formatPrice(car.price)} VND
-                        </p>
-                      </div>
-                    </Link>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
-            </Carousel>
+            <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3">
+              {related.map((car) => (
+                <CarCatalogCard
+                  key={car.id}
+                  car={car}
+                  onBookDrive={() => openBooking(`Đăng ký lái thử ${car.name}`)}
+                  onEstimatePrice={() => router.push(`/oto/${car.id}#tai-chinh`)}
+                />
+              ))}
+            </div>
             <div className="mt-8 text-center">
               <Link
                 href="/oto"
@@ -764,7 +643,7 @@ export default function CarDetailPage({ detail }: Props) {
         </section>
 
         {/* Service bar */}
-        <section className="border-t border-border/40 bg-white py-12">
+        <section className="section-y border-t border-border/40 bg-white">
           <div className="container-vf">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {SERVICE_BAR.map(({ icon: Icon, title, sub }) => (
@@ -786,10 +665,10 @@ export default function CarDetailPage({ detail }: Props) {
         </section>
 
         {/* Showroom CTA */}
-        <section className="bg-brand-dark py-12 text-white">
-          <div className="container-vf flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
+        <section className="section-y bg-brand-dark text-white">
+          <div className="container-vf flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
             <div className="flex-1">
-              <h2 className="text-xl font-black md:text-2xl">
+              <h2 className="text-xl font-black sm:text-2xl">
                 Trải nghiệm {detail.name} tại showroom
               </h2>
               <p className="mt-2 text-sm text-white/75">
@@ -820,21 +699,29 @@ export default function CarDetailPage({ detail }: Props) {
       <FloatingButtons />
 
       {/* Mobile sticky bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex gap-2 border-t border-border/60 bg-white/95 p-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden">
-        <button
-          type="button"
-          onClick={() => openBooking("Đăng ký lái thử")}
-          className="flex-1 rounded-xl border-2 border-brand py-3 text-[11px] font-black text-brand"
-        >
-          LÁI THỬ
-        </button>
-        <button
-          type="button"
-          onClick={() => openBooking("Đặt cọc ngay")}
-          className="flex-1 rounded-xl bg-brand py-3 text-[11px] font-black text-white"
-        >
-          ĐẶT CỌC
-        </button>
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-white lg:hidden">
+        <div className="flex items-center gap-2 p-3">
+          <div className="min-w-0 shrink">
+            <p className="text-[9px] font-bold tracking-wider text-muted-foreground uppercase">
+              Giá từ
+            </p>
+            <p className="truncate text-sm font-black text-brand">{formatPrice(variant.price)} đ</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => openBooking("Đăng ký lái thử")}
+            className="flex-1 rounded-xl border-2 border-brand py-2.5 text-[11px] font-black text-brand"
+          >
+            LÁI THỬ
+          </button>
+          <button
+            type="button"
+            onClick={() => openBooking("Đặt cọc ngay")}
+            className="flex-1 rounded-xl bg-brand py-2.5 text-[11px] font-black text-white"
+          >
+            ĐẶT CỌC
+          </button>
+        </div>
       </div>
 
       {/* Lightbox */}
@@ -1033,18 +920,15 @@ function SectionWrap({
   id,
   alt,
   children,
-  ref,
 }: {
-  id: TabId;
+  id: SectionId;
   alt?: boolean;
   children: React.ReactNode;
-  ref?: (el: HTMLElement | null) => void;
 }) {
   return (
     <section
       id={id}
-      ref={ref}
-      className={`scroll-mt-36 py-12 md:py-16 ${alt ? "bg-surface" : "bg-white"}`}
+      className={`scroll-mt-20 section-y lg:scroll-mt-24 ${alt ? "bg-surface" : "bg-white"}`}
     >
       <div className="container-vf">{children}</div>
     </section>
@@ -1052,33 +936,60 @@ function SectionWrap({
 }
 
 function OverviewSection({ detail }: { detail: CarDetail }) {
+  const highlights = [
+    { label: "Quãng đường", value: `${detail.quickSpecs.range} km` },
+    { label: "Công suất", value: `${detail.quickSpecs.power} Hp` },
+    { label: "Tăng tốc", value: detail.quickSpecs.acceleration },
+  ];
+
   return (
-    <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-      <div>
-        <p className="text-xs font-bold tracking-widest text-brand uppercase">Tổng quan</p>
-        <h2 className={`mt-2 ${sectionHeading}`}>{detail.overview.title}</h2>
+    <>
+      <div className="max-w-2xl">
+        <p className="text-[11px] font-bold tracking-[0.18em] text-brand uppercase">Tổng quan</p>
+        <h2 className={`mt-2 text-left ${sectionHeading}`}>{detail.overview.title}</h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           {detail.overview.subtitle}
         </p>
-        <ul className="mt-6 space-y-3">
-          {detail.overview.bullets.map((b) => (
-            <li key={b} className="flex items-start gap-3 text-sm text-foreground/85">
-              <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/10">
-                <Check size={12} className="text-brand" />
-              </span>
-              {b}
-            </li>
-          ))}
-        </ul>
       </div>
-      <div className="overflow-hidden rounded-2xl shadow-card">
-        <img
-          src={detail.overview.image}
-          alt={detail.overview.title}
-          className="aspect-[4/3] w-full object-cover"
-        />
+
+      <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12 lg:gap-10">
+        <div className="order-1 lg:col-span-7">
+          <div className="overflow-hidden rounded-2xl bg-surface/50 p-2 sm:p-3">
+            <img
+              src={detail.overview.image}
+              alt={detail.overview.title}
+              className="aspect-[16/10] w-full rounded-xl object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="order-2 flex flex-col justify-center gap-4 lg:col-span-5 sm:gap-5">
+          <dl className="grid grid-cols-3 gap-2 sm:gap-3">
+            {highlights.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-border/60 px-3 py-2.5 text-center sm:px-4 sm:py-3"
+              >
+                <dt className="text-[10px] font-semibold text-muted-foreground uppercase">
+                  {item.label}
+                </dt>
+                <dd className="mt-0.5 text-sm font-black text-brand-dark">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="overflow-hidden rounded-2xl border border-border/60">
+            <ul className="divide-y divide-border/50">
+              {detail.overview.bullets.map((b) => (
+                <li key={b} className="flex items-start gap-3 px-4 py-3.5 sm:px-5 sm:py-4">
+                  <Check size={14} className="mt-0.5 shrink-0 text-brand" strokeWidth={2.5} />
+                  <span className="text-sm leading-relaxed text-foreground/85">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -1086,7 +997,7 @@ function ExteriorSection({ detail }: { detail: CarDetail }) {
   return (
     <>
       <SectionHeader title="Ngoại thất" subtitle="Thiết kế ấn tượng, khí động học tối ưu" />
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {detail.exterior.map((item) => (
           <FeatureCard key={item.title} {...item} />
         ))}
@@ -1099,7 +1010,7 @@ function InteriorSection({ detail }: { detail: CarDetail }) {
   return (
     <>
       <SectionHeader title="Nội thất" subtitle="Không gian cabin cao cấp, tiện nghi vượt trội" />
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {detail.interior.map((item) => (
           <FeatureCard key={item.title} {...item} />
         ))}
@@ -1116,22 +1027,25 @@ function TechnologySection({ detail }: { detail: CarDetail }) {
         subtitle="Hệ sinh thái kết nối toàn diện"
         center
       />
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {detail.technology.map((tech) => {
-          const Icon = TECH_ICONS[tech.icon];
-          return (
-            <div
-              key={tech.title}
-              className="group rounded-2xl border border-border/60 bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-card"
-            >
-              <div className="flex size-11 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 transition group-hover:bg-brand group-hover:text-white">
-                <Icon className="size-5 text-brand group-hover:text-white" strokeWidth={1.5} />
-              </div>
-              <h3 className="mt-4 text-sm font-bold text-brand-dark">{tech.title}</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{tech.desc}</p>
-            </div>
-          );
-        })}
+      <div className="mt-6 overflow-hidden rounded-2xl border border-border/60 bg-white sm:mt-8">
+        <ul className="divide-y divide-border/50">
+          {detail.technology.map((tech) => {
+            const Icon = TECH_ICONS[tech.icon];
+            return (
+              <li key={tech.title} className="flex items-start gap-3.5 px-4 py-3.5 sm:px-5 sm:py-4">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/5 text-brand">
+                  <Icon className="size-4" strokeWidth={1.5} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm font-bold text-brand-dark">{tech.title}</h3>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                    {tech.desc}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
   );
@@ -1188,30 +1102,25 @@ function SafetySection({ detail }: { detail: CarDetail }) {
         {detail.safety.highlights.map((h) => (
           <span
             key={h}
-            className="rounded-full border border-brand/30 bg-brand/5 px-4 py-1.5 text-xs font-semibold text-brand"
+            className="rounded-full border border-brand/20 px-3 py-1 text-[11px] font-semibold text-brand"
           >
             {h}
           </span>
         ))}
       </div>
-      <div className="mt-8 grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-        <div className="grid gap-3 sm:grid-cols-2">
+      <div className="mt-6 grid items-start gap-6 sm:mt-8 lg:grid-cols-2 lg:gap-10">
+        <ul className="order-2 divide-y divide-border/50 overflow-hidden rounded-2xl border border-border/60 bg-white lg:order-1">
           {detail.safety.features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-xl border border-border/60 bg-white p-4 shadow-soft"
-            >
-              <div className="flex items-start gap-2.5">
-                <Shield className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.5} />
-                <div>
-                  <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-                </div>
+            <li key={f.title} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
+              <Shield className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
+                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
-        <div className="overflow-hidden rounded-2xl shadow-card">
+        </ul>
+        <div className="order-1 overflow-hidden rounded-2xl border border-border/60 lg:order-2">
           <img
             src={detail.safety.image}
             alt={detail.safety.title}
@@ -1280,30 +1189,23 @@ function SpecsSection({ detail }: { detail: CarDetail }) {
 }
 
 function AccessoriesSection({ detail }: { detail: CarDetail }) {
+  const products = useMemo(() => getCarDetailAccessories(detail.id), [detail.id]);
+
   return (
     <>
       <SectionHeader title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {detail.accessories.map((acc) => (
-          <div
-            key={acc.name}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-card"
-          >
-            <div className="relative aspect-[16/10] overflow-hidden">
-              <img src={acc.image} alt={acc.name} className="h-full w-full object-cover" />
-            </div>
-            <div className="flex flex-1 flex-col p-4">
-              <h3 className="text-sm font-bold text-brand-dark">{acc.name}</h3>
-              <p className="mt-2 text-sm font-black text-brand">{formatPrice(acc.price)} VND</p>
-              <Link
-                href="/phu-kien"
-                className="mt-auto pt-4 text-xs font-semibold text-brand hover:underline"
-              >
-                Xem phụ kiện →
-              </Link>
-            </div>
-          </div>
+      <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
+        {products.map((product) => (
+          <AccessoryProductCard key={product.id} product={product} />
         ))}
+      </div>
+      <div className="mt-8 text-center">
+        <Link
+          href="/phu-kien"
+          className="inline-flex items-center gap-2 rounded-xl border border-brand bg-white px-6 py-3 text-xs font-bold tracking-wide text-brand transition hover:bg-brand/5"
+        >
+          Xem tất cả phụ kiện <ArrowRight className="size-4" />
+        </Link>
       </div>
     </>
   );
@@ -1379,7 +1281,7 @@ function FinanceSection({
       <div className="mt-8 overflow-hidden rounded-2xl border border-border/60 bg-white shadow-card">
         <div className="grid lg:grid-cols-12">
           {/* Settings */}
-          <div className="border-b border-border/50 p-6 lg:col-span-5 lg:border-r lg:border-b-0">
+          <div className="border-b border-border/50 p-4 sm:p-6 lg:col-span-5 lg:border-r lg:border-b-0">
             <div className="mb-5 flex rounded-xl border border-border bg-surface p-1">
               <button
                 type="button"
@@ -1441,7 +1343,7 @@ function FinanceSection({
                   Khu vực đăng ký
                 </p>
                 <Select value={estimatorLocation} onValueChange={setEstimatorLocation}>
-                  <SelectTrigger className="text-xs">
+                  <SelectTrigger className="w-full text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -1527,7 +1429,7 @@ function FinanceSection({
           </div>
 
           {/* Results */}
-          <div className="bg-surface p-6 lg:col-span-7">
+          <div className="bg-surface p-4 sm:p-6 lg:col-span-7">
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
                 <CostRow label="Giá niêm yết xe" value={formatPrice(variant.price)} />
@@ -1601,7 +1503,7 @@ function FinanceSection({
                   ? "Tổng chi phí lăn bánh dự kiến"
                   : "Thanh toán tháng đầu (ước tính)"}
               </p>
-              <p className="mt-1 text-2xl font-black text-brand md:text-3xl">
+              <p className="mt-1 text-xl font-black text-brand sm:text-2xl lg:text-3xl">
                 {estimatorTab === "rolling"
                   ? `${formatPrice(rollingCost.totalRolling)} VND`
                   : `${formatPrice(installment.firstMonthTotal)} VND/tháng`}
@@ -1627,6 +1529,9 @@ function FinanceSection({
 }
 
 function ReviewsSection({ detail }: { detail: CarDetail }) {
+  const rating = detail.reviews.averageRating;
+  const ratingPct = (rating / 5) * 100;
+
   return (
     <>
       <SectionHeader
@@ -1634,41 +1539,62 @@ function ReviewsSection({ detail }: { detail: CarDetail }) {
         subtitle="Trải nghiệm thực tế từ cộng đồng"
         center
       />
-      <div className="mx-auto mt-6 flex max-w-xs flex-col items-center rounded-2xl border border-border/60 bg-white p-6 shadow-soft">
-        <p className="text-5xl font-black text-brand-dark">
-          {detail.reviews.averageRating.toFixed(1)}
-        </p>
-        <StarRating rating={detail.reviews.averageRating} size={18} />
-        <p className="mt-2 text-xs text-muted-foreground">
-          Dựa trên {detail.reviews.totalReviews} đánh giá
-        </p>
-      </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {detail.reviews.items.map((review) => (
-          <div
-            key={`${review.name}-${review.date}`}
-            className="rounded-2xl border border-border/60 bg-white p-5 shadow-soft"
-          >
-            <div className="flex items-start gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand/10">
-                <User className="size-5 text-brand" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-bold text-brand-dark">{review.name}</p>
-                  <p className="text-[10px] text-muted-foreground">{review.date}</p>
-                </div>
-                {review.variant && (
-                  <p className="text-[10px] font-semibold text-brand">{review.variant}</p>
-                )}
-                <StarRating rating={review.rating} size={12} className="mt-1" />
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  {review.content}
-                </p>
-              </div>
+
+      <div className="mx-auto mt-8 max-w-5xl">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,240px)_1fr] lg:gap-10">
+          <aside className="flex flex-col items-center rounded-2xl border border-border/60 bg-surface/40 px-6 py-8 text-center lg:sticky lg:top-24 lg:items-start lg:self-start lg:py-10 lg:text-left">
+            <p className="text-5xl font-black leading-none tabular-nums text-brand-dark">
+              {rating.toFixed(1)}
+            </p>
+            <StarRating
+              rating={rating}
+              size={16}
+              className="mt-3 justify-center lg:justify-start"
+            />
+            <div className="mt-4 h-1.5 w-full max-w-[180px] overflow-hidden rounded-full bg-border/50">
+              <div
+                className="h-full rounded-full bg-brand transition-all"
+                style={{ width: `${ratingPct}%` }}
+              />
             </div>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Dựa trên{" "}
+              <span className="font-semibold text-brand-dark">{detail.reviews.totalReviews}</span>{" "}
+              đánh giá
+            </p>
+            <p className="mt-5 hidden text-xs leading-relaxed text-muted-foreground lg:block">
+              Phản hồi từ khách hàng đã trải nghiệm và mua xe tại VF Ngọc Anh Cà Mau.
+            </p>
+          </aside>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {detail.reviews.items.map((review) => (
+              <article
+                key={`${review.name}-${review.date}`}
+                className="flex flex-col rounded-2xl border border-border/60 p-5"
+              >
+                <StarRating rating={review.rating} size={12} />
+                <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-foreground/85">
+                  &ldquo;{review.content}&rdquo;
+                </blockquote>
+                <footer className="mt-4 flex items-center gap-3 border-t border-border/40 pt-4">
+                  <div
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-black text-brand"
+                    aria-hidden
+                  >
+                    {review.name.trim().charAt(0)}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-bold text-brand-dark">{review.name}</p>
+                    <p className="truncate text-[10px] text-muted-foreground">
+                      {[review.variant, review.date].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
+                </footer>
+              </article>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </>
   );
@@ -1679,9 +1605,9 @@ function ReviewsSection({ detail }: { detail: CarDetail }) {
 function BreadcrumbBar({ carName, variantName }: { carName: string; variantName: string }) {
   return (
     <div className="border-b border-border/40 bg-white">
-      <div className="container-vf py-3">
+      <div className="container-vf overflow-x-auto py-2.5 sm:py-3 scrollbar-none">
         <Breadcrumb>
-          <BreadcrumbList>
+          <BreadcrumbList className="flex-nowrap">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href="/" className="text-xs text-muted-foreground hover:text-brand">
@@ -1699,10 +1625,12 @@ function BreadcrumbBar({ carName, variantName }: { carName: string; variantName:
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-xs text-muted-foreground">{carName}</BreadcrumbPage>
+              <BreadcrumbPage className="max-w-[120px] truncate text-xs text-muted-foreground sm:max-w-none">
+                {carName}
+              </BreadcrumbPage>
             </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
+            <BreadcrumbSeparator className="hidden sm:block" />
+            <BreadcrumbItem className="hidden sm:block">
               <BreadcrumbPage className="text-xs font-medium text-foreground">
                 {variantName}
               </BreadcrumbPage>
@@ -1759,26 +1687,6 @@ function SpecItem({
   );
 }
 
-function UtilityLink({
-  icon: Icon,
-  label,
-  href,
-}: {
-  icon: React.ElementType;
-  label: string;
-  href: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-[11px] font-semibold text-muted-foreground transition hover:bg-surface hover:text-brand"
-    >
-      <Icon size={14} className="text-brand" />
-      {label}
-    </Link>
-  );
-}
-
 function SectionHeader({
   title,
   subtitle,
@@ -1813,12 +1721,14 @@ function CostRow({
 }) {
   return (
     <div
-      className={`flex items-center justify-between font-semibold ${
+      className={`flex flex-col gap-1 text-xs font-semibold sm:flex-row sm:items-center sm:justify-between ${
         indent ? "border-l-2 border-border pl-3" : ""
       } ${highlight ? "text-emerald-600" : "text-slate-600"}`}
     >
-      <span>{label}</span>
-      <span className={highlight ? "font-bold" : "font-bold text-slate-800"}>{value} VNĐ</span>
+      <span className="min-w-0">{label}</span>
+      <span className={`shrink-0 ${highlight ? "font-bold" : "font-bold text-slate-800"}`}>
+        {value} VNĐ
+      </span>
     </div>
   );
 }
@@ -1849,17 +1759,19 @@ function StarRating({
 
 function FeatureCard({ title, desc, image }: { title: string; desc: string; image: string }) {
   return (
-    <div className="group overflow-hidden rounded-2xl border border-border/60 bg-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-card">
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="text-sm font-bold text-brand-dark">{title}</h3>
-        <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{desc}</p>
+    <div className="catalog-card rounded-xl border border-border/60 bg-white sm:rounded-2xl">
+      <img
+        src={image}
+        alt={title}
+        className="aspect-[4/3] w-full rounded-t-xl bg-slate-100 object-cover sm:rounded-t-2xl"
+        loading="lazy"
+        decoding="async"
+      />
+      <div className="p-3 sm:p-4">
+        <h3 className="text-xs font-bold text-brand-dark sm:text-sm">{title}</h3>
+        <p className="mt-1 text-[10px] leading-relaxed text-muted-foreground sm:mt-1.5 sm:text-xs">
+          {desc}
+        </p>
       </div>
     </div>
   );

@@ -141,7 +141,7 @@ export default function EnergyStoragePage() {
         <HeroSection onScrollToBooking={() => setIsConsultOpen(true)} />
 
         {/* Dynamic Navigation Sticky Bar */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+        <section className="bg-white border-b border-slate-100 py-4 sticky top-14 z-20 shadow-sm">
           <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
               Hệ sinh thái lưu trữ năng lượng VinFast BESS
@@ -174,7 +174,7 @@ export default function EnergyStoragePage() {
         {/* Interactive Saving & Payback Estimator Calculator */}
         <section
           id="saving-calculator"
-          className="py-16 md:py-20 bg-white text-slate-800 relative overflow-hidden border-b border-slate-200"
+          className="section-y relative overflow-hidden border-b border-slate-200 bg-white text-slate-800"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
@@ -309,7 +309,7 @@ export default function EnergyStoragePage() {
                         <p className="text-base font-black text-brand-dark mt-1">
                           {new Intl.NumberFormat("vi-VN").format(calcResults.yearlySaving)}đ
                         </p>
-                        <p className="text-[8px] text-slate-400 font-semibold mt-0.5">
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
                           Giá trị kinh tế lũy kế
                         </p>
                       </div>
@@ -322,7 +322,7 @@ export default function EnergyStoragePage() {
                         <p className="text-base font-black text-brand mt-1">
                           ~ {calcResults.paybackYears} năm
                         </p>
-                        <p className="text-[8px] text-slate-400 font-semibold mt-0.5">
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
                           Trục kỳ thu hồi đầu tư
                         </p>
                       </div>
@@ -637,14 +637,14 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
+    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0">
         <img
           src={IMAGES.chargingStations}
           alt="Hệ thống lưu trữ năng lượng VinFast"
           className="h-full w-full object-cover opacity-80 filter blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
       </div>
 
       <div className="container-vf relative z-10">
@@ -710,7 +710,7 @@ function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
 
 function IntroSection() {
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200">
@@ -764,7 +764,7 @@ function IntroSection() {
 
 function SolutionsSection() {
   return (
-    <section id="giai-phap" className="py-16 md:py-20 bg-slate-50 border-y border-slate-200/60">
+    <section id="giai-phap" className="section-y bg-slate-50 border-y border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -829,7 +829,7 @@ function SolutionsSection() {
 
 function BenefitsSection() {
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -869,7 +869,7 @@ function BenefitsSection() {
 
 function ApplicationsSection() {
   return (
-    <section className="py-16 md:py-20 bg-slate-50 border-y border-slate-200/60">
+    <section className="section-y bg-slate-50 border-y border-slate-200/60">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -919,7 +919,7 @@ function ApplicationsSection() {
 
 function SpecsSection() {
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
@@ -968,7 +968,7 @@ function SpecsSection() {
 
 function ProcessSection() {
   return (
-    <section className="py-16 md:py-20 bg-slate-50 border-y border-slate-200/60 overflow-hidden">
+    <section className="section-y bg-slate-50 border-y border-slate-200/60 overflow-hidden">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1026,7 +1026,7 @@ function WhyChooseSection() {
   ] as const;
 
   return (
-    <section className="py-16 md:py-20 bg-white border-b border-slate-200">
+    <section className="section-y bg-white border-b border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1076,7 +1076,7 @@ function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-16 md:py-20 bg-slate-50 border-b border-slate-200">
+    <section className="section-y bg-slate-50 border-b border-slate-200">
       <div className="container-vf max-w-3xl">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1123,7 +1123,7 @@ function FaqSection() {
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-16 md:py-20">
+    <section className="relative overflow-hidden bg-brand-dark section-y">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10 text-center text-white">
         <h2 className="text-2xl font-black tracking-tight sm:text-3xl uppercase text-white">

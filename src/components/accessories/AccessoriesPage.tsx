@@ -30,6 +30,7 @@ import {
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -275,7 +276,7 @@ export default function AccessoriesPage() {
   }, [cart]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+    <div className="min-h-screen overflow-x-hidden bg-white text-slate-800 font-sans">
       <Toaster position="top-right" richColors />
       <Header />
 
@@ -293,7 +294,7 @@ export default function AccessoriesPage() {
         />
 
         {/* Search Dashboard */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+        <section className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20">
           <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
               TÌM KIẾM PHỤ KIỆN CHÍNH HÃNG
@@ -322,7 +323,7 @@ export default function AccessoriesPage() {
               {/* Floating Quote Basket Button */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative bg-brand-dark hover:bg-brand text-white p-2.5 rounded-lg transition-all shadow-md flex items-center gap-2 px-4 shrink-0"
+                className="relative flex shrink-0 items-center gap-2 rounded-lg border border-brand/30 bg-brand-dark px-4 p-2.5 text-white transition-colors hover:bg-brand"
               >
                 <ShoppingCart className="size-4" />
                 <span className="text-xs font-black hidden sm:inline">GIỎ TƯ VẤN</span>
@@ -337,12 +338,12 @@ export default function AccessoriesPage() {
         </section>
 
         {/* Main Products Grid & Explorer */}
-        <section className="py-12 md:py-16">
+        <section className="section-y bg-white">
           <div className="container-vf">
             <button
               type="button"
               onClick={() => setMobileFilters(!mobileFilters)}
-              className="mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark lg:hidden shadow-sm hover:bg-slate-50"
+              className="mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark hover:bg-slate-50 lg:hidden"
             >
               <span className="flex items-center gap-2">
                 <SlidersHorizontal className="size-4 text-brand" /> Bộ lọc sản phẩm
@@ -374,7 +375,7 @@ export default function AccessoriesPage() {
                   </div>
 
                   <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
-                    <SelectTrigger className="h-10 w-[200px] border-slate-200 bg-white text-xs font-semibold text-slate-700 shadow-sm focus:ring-brand">
+                    <SelectTrigger className="h-10 w-full border-slate-200 bg-white text-xs font-semibold text-slate-700 shadow-sm focus:ring-brand sm:w-[200px]">
                       <SelectValue placeholder="Sắp xếp" />
                     </SelectTrigger>
                     <SelectContent>
@@ -411,17 +412,11 @@ export default function AccessoriesPage() {
                 ) : (
                   <div
                     id="accessory-catalog-grid"
-                    className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 items-stretch"
+                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
                   >
-                    <AnimatePresence mode="popLayout">
-                      {filteredProducts.map((product) => (
-                        <ProductCard
-                          key={product.id}
-                          product={product}
-                          onAdd={() => addToCart(product)}
-                        />
-                      ))}
-                    </AnimatePresence>
+                    {filteredProducts.map((product) => (
+                      <AccessoryProductCard key={product.id} product={product} />
+                    ))}
                   </div>
                 )}
               </div>
@@ -819,35 +814,31 @@ function BreadcrumbBar() {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
+    <section className="page-hero relative flex !overflow-visible items-center bg-slate-950 text-white lg:!overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={ACCESSORY_IMAGES.hero}
           alt="Phụ kiện chính hãng VinFast"
-          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
+          className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-black/70 lg:bg-black/60" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/75 via-black/45 to-black/20 lg:block" />
       </div>
 
       <div className="container-vf relative z-10 text-white">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col justify-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> PHỤ KIỆN CHÍNH HÃNG
-              VINFAST — CHẤT LƯỢNG TIÊU CHUẨN MỸ
+          <div className="flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold tracking-widest text-brand uppercase">
+              <Sparkles className="size-3.5 text-accent-yellow" /> PHỤ KIỆN CHÍNH HÃNG VINFAST —
+              CHẤT LƯỢNG TIÊU CHUẨN MỸ
             </div>
             <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
               CÁ NHÂN HÓA XE SANG <br />
-              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
+              <span className="text-blue-300 italic lg:bg-gradient-to-r lg:from-brand lg:via-blue-400 lg:to-emerald-400 lg:bg-clip-text lg:text-transparent">
                 NÂNG TẦM ĐẲNG CẤP
               </span>
             </h1>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
+            <p className="mt-4 text-xs font-medium leading-relaxed text-slate-300 md:text-sm">
               Nâng cấp chiếc xe điện VinFast của bạn bằng các giải pháp nội thất sang trọng, công
               nghệ an toàn dẫn đầu, và thiết bị sạc điện cao cấp chuẩn quốc tế, được phân phối trực
               tiếp tại VF Ngọc Anh.
@@ -856,19 +847,19 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={onExplore}
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
+                className="flex items-center gap-1.5 rounded-xl bg-brand px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
               >
                 KHÁM PHÁ PHỤ KIỆN
               </button>
               <a
                 href="tel:1900232389"
-                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
+                className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-white/20"
               >
                 <Phone className="size-4 text-accent-yellow" /> HOTLINE TƯ VẤN: 1900 2323 89
               </a>
             </div>
 
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
+            <div className="mt-10 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
               {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
                 <div key={text} className="flex items-start gap-3">
                   <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
@@ -876,110 +867,23 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
                   </div>
                   <div>
                     <p className="text-xs font-black text-white">{text}</p>
-                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
+                    <p className="mt-0.5 text-[10px] font-bold leading-snug tracking-wide text-slate-400 uppercase">
                       {sub}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Gorgeous ProductCard Component with cover image
-function ProductCard({ product, onAdd }: { product: AccessoryProduct; onAdd: () => void }) {
-  return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.3 }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-1 relative"
-    >
-      {/* Product badging */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-        {product.badge && (
-          <span className="bg-brand text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
-            {product.badge}
-          </span>
-        )}
-        {!product.inStock && (
-          <span className="bg-slate-400 text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
-            Hết hàng
-          </span>
-        )}
-      </div>
-
-      {/* Product Image Cover Frame with soft zoom */}
-      <div className="relative flex aspect-square w-full shrink-0 items-center justify-center bg-slate-50 overflow-hidden">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-        <div className="absolute bottom-3 right-3 text-[9px] font-bold text-slate-400 bg-slate-100/90 px-2 py-0.5 rounded-full shadow-sm">
-          Chính hãng VinFast
-        </div>
-      </div>
-
-      {/* Details Info */}
-      <div className="flex flex-1 flex-col p-5">
-        <p className="text-[10px] font-black text-brand uppercase tracking-wider">
-          {getCategoryLabel(product.category)}
-        </p>
-        <h3 className="mt-1 text-sm font-black leading-snug text-brand-dark group-hover:text-brand transition-colors line-clamp-1">
-          {product.name}
-        </h3>
-        <p className="mt-1.5 text-[11px] leading-relaxed text-slate-400 font-semibold line-clamp-2 min-h-[34px]">
-          {product.description}
-        </p>
-
-        {/* Compatibility indicator */}
-        <div className="mt-3.5 border-t border-slate-100 pt-3 flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase">
-          <span>Dòng xe hỗ trợ:</span>
-          <span
-            className="text-slate-600 font-extrabold truncate max-w-[140px]"
-            title={getVehicleLabels(product.vehicles)}
-          >
-            {getVehicleLabels(product.vehicles)}
-          </span>
-        </div>
-
-        {/* Pricing & Add to Cart area */}
-        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-          <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">
-              Giá bán ưu đãi
-            </p>
-            <p className="text-base font-black text-brand mt-0.5">
-              {formatPrice(product.price)}{" "}
-              <span className="text-[11px] font-bold text-slate-500">đ</span>
-            </p>
-          </div>
-
-          <button
-            onClick={onAdd}
-            disabled={!product.inStock}
-            className="rounded-lg bg-brand-dark hover:bg-brand disabled:bg-slate-200 text-white disabled:text-slate-400 size-9 transition-all flex items-center justify-center shadow-md disabled:cursor-not-allowed shrink-0"
-            title="Thêm vào giỏ tư vấn"
-          >
-            <Plus className="size-5" />
-          </button>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
 function InstallProcessSection() {
   return (
-    <section className="bg-white py-16 border-y border-slate-100">
+    <section className="bg-white section-y border-y border-slate-100">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1010,15 +914,15 @@ function InstallProcessSection() {
 
 function PromoBanners() {
   return (
-    <section className="bg-slate-50 py-12 md:py-14">
-      <div className="container-vf grid gap-6 md:grid-cols-2">
+    <section className="bg-slate-50 section-y">
+      <div className="container-vf grid gap-6 sm:grid-cols-2">
         <div className="relative overflow-hidden rounded-2xl shadow-md border border-slate-100 flex min-h-[220px]">
           <img
             src={ACCESSORY_IMAGES.promoInstall}
             alt="Lắp đặt phụ kiện tại showroom"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/95 via-brand-dark/80 to-brand-dark/70 lg:bg-gradient-to-r lg:from-brand-dark/95 lg:via-brand-dark/80 lg:to-transparent" />
           <div className="relative z-10 p-6 md:p-8 text-white flex flex-col justify-center max-w-sm">
             <span className="bg-accent-yellow text-slate-900 font-black text-[9px] tracking-wider px-2 py-0.5 rounded uppercase self-start mb-3">
               Ưu đãi lắp đặt
@@ -1079,7 +983,7 @@ function PromoBanners() {
 
 function WhyOfficialSection() {
   return (
-    <section className="bg-white py-16 md:py-20 border-b border-slate-200">
+    <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1110,7 +1014,7 @@ function WhyOfficialSection() {
 
 function FaqSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20 border-b border-slate-200">
+    <section className="bg-slate-50 section-y border-b border-slate-200">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -1140,7 +1044,7 @@ function FaqSection() {
 
 function ContactCta() {
   return (
-    <section className="bg-brand-dark py-14 md:py-16 relative overflow-hidden">
+    <section className="bg-brand-dark section-y relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10 flex flex-col items-center text-center">
         <h2 className="text-xl font-black tracking-tight text-white sm:text-2xl uppercase">

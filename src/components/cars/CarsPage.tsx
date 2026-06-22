@@ -8,7 +8,6 @@ import {
   Shield,
   MapPin,
   Wallet,
-  Users,
   Gauge,
   Zap,
   ChevronDown,
@@ -18,7 +17,6 @@ import {
   ShieldCheck,
   Leaf,
   ChevronRight,
-  Scale,
   Calculator,
   Calendar,
   Search,
@@ -34,6 +32,7 @@ import {
   Percent,
 } from "lucide-react";
 
+import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
@@ -135,10 +134,6 @@ export default function CarsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [segmentTab, setSegmentTab] = useState<string>("all");
 
-  // Comparison State
-  const [compareList, setCompareList] = useState<CarModel[]>([]);
-  const [isCompareOpen, setIsCompareOpen] = useState(false);
-
   // Booking Modal State
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingCar, setBookingCar] = useState<CarModel | null>(null);
@@ -212,23 +207,6 @@ export default function CarsPage() {
     setSearchQuery("");
     setSegmentTab("all");
     toast.success("Đã thiết lập lại tất cả bộ lọc");
-  };
-
-  // Toggle car for comparison
-  const toggleCompare = (car: CarModel) => {
-    setCompareList((prev) => {
-      const exists = prev.find((item) => item.id === car.id);
-      if (exists) {
-        toast.info(`Đã xóa ${car.name} khỏi danh sách so sánh`);
-        return prev.filter((item) => item.id !== car.id);
-      }
-      if (prev.length >= 3) {
-        toast.error("Bạn chỉ có thể so sánh tối đa 3 mẫu xe cùng lúc");
-        return prev;
-      }
-      toast.success(`Đã thêm ${car.name} vào danh sách so sánh`);
-      return [...prev, car];
-    });
   };
 
   // Trigger Booking Modal
@@ -330,7 +308,7 @@ export default function CarsPage() {
   }, [rollingCostResult, downPaymentPct, loanTermYears, interestRate]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+    <div className="min-h-screen overflow-x-hidden bg-white text-slate-800 font-sans">
       <Toaster position="top-right" richColors />
       <Header />
 
@@ -346,7 +324,7 @@ export default function CarsPage() {
         />
 
         {/* Search Dashboard */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-[72px] z-20 shadow-sm">
+        <section className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20">
           <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
               TÌM KIẾM DÒNG XE Ô TÔ ĐIỆN
@@ -374,12 +352,12 @@ export default function CarsPage() {
         </section>
 
         {/* Main Catalog Explorer Section */}
-        <section className="py-12 md:py-16">
+        <section className="section-y bg-white">
           <div className="container-vf">
             <button
               type="button"
               onClick={() => setMobileFilters(!mobileFilters)}
-              className="mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark lg:hidden shadow-sm hover:bg-slate-50"
+              className="mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark hover:bg-slate-50 lg:hidden"
             >
               <span className="flex items-center gap-2">
                 <SlidersIcon className="size-4 text-brand" /> Bộ lọc nâng cao
@@ -411,7 +389,7 @@ export default function CarsPage() {
                   </div>
 
                   <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
-                    <SelectTrigger className="h-10 w-[200px] border-slate-200 bg-white text-xs font-semibold text-slate-700 shadow-sm focus:ring-brand">
+                    <SelectTrigger className="h-10 w-full border-slate-200 bg-white text-xs font-semibold text-slate-700 focus:ring-brand sm:w-[200px]">
                       <SelectValue placeholder="Sắp xếp" />
                     </SelectTrigger>
                     <SelectContent>
@@ -449,25 +427,21 @@ export default function CarsPage() {
                 ) : (
                   <div
                     id="car-catalog-grid"
-                    className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-3"
+                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
                   >
-                    <AnimatePresence mode="popLayout">
-                      {filteredCars.map((car) => (
-                        <CarCard
-                          key={car.id}
-                          car={car}
-                          onCompare={() => toggleCompare(car)}
-                          isCompared={compareList.some((item) => item.id === car.id)}
-                          onBookDrive={() => openBooking(car)}
-                          onEstimatePrice={() => {
-                            setEstimatorCarId(car.id);
-                            document
-                              .getElementById("estimator-tool")
-                              ?.scrollIntoView({ behavior: "smooth" });
-                          }}
-                        />
-                      ))}
-                    </AnimatePresence>
+                    {filteredCars.map((car) => (
+                      <CarCatalogCard
+                        key={car.id}
+                        car={car}
+                        onBookDrive={() => openBooking(car)}
+                        onEstimatePrice={() => {
+                          setEstimatorCarId(car.id);
+                          document
+                            .getElementById("estimator-tool")
+                            ?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                      />
+                    ))}
                   </div>
                 )}
               </div>
@@ -475,84 +449,11 @@ export default function CarsPage() {
           </div>
         </section>
 
-        {/* Sticky Comparison Bottom Bar */}
-        <AnimatePresence>
-          {compareList.length > 0 && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              className="fixed bottom-0 left-0 right-0 z-40 bg-brand-dark text-white shadow-2xl border-t border-brand/20 py-4 px-6 md:px-8"
-            >
-              <div className="container-vf flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="bg-brand/30 p-2.5 rounded-lg border border-brand/40 hidden md:block">
-                    <Scale className="size-5 text-brand" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-black">SO SÁNH XE ĐIỆN VINFAST</h4>
-                    <p className="text-xs text-brand-light opacity-80">
-                      Đã chọn {compareList.length}/3 mẫu xe để so sánh thông số chi tiết
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 flex-wrap justify-center">
-                  <div className="flex gap-2">
-                    {compareList.map((car) => (
-                      <div
-                        key={car.id}
-                        className="relative flex items-center gap-2 bg-slate-900/60 pl-2 pr-8 py-1 rounded-lg border border-slate-700"
-                      >
-                        <img src={car.image} alt={car.name} className="size-8 object-contain" />
-                        <span className="text-xs font-bold">{car.name}</span>
-                        <button
-                          onClick={() => toggleCompare(car)}
-                          className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-slate-700 hover:bg-red-500 rounded-full p-0.5 text-white/80 transition-all"
-                        >
-                          <X className="size-3" />
-                        </button>
-                      </div>
-                    ))}
-                    {compareList.length < 3 && (
-                      <div className="flex items-center justify-center border border-dashed border-slate-500 rounded-lg px-4 py-1.5 text-xs text-slate-400 font-bold bg-slate-950/20">
-                        + Thêm xe khác
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setCompareList([])}
-                      className="px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition-all text-slate-300"
-                    >
-                      Xóa tất cả
-                    </button>
-                    <button
-                      onClick={() => setIsCompareOpen(true)}
-                      disabled={compareList.length < 2}
-                      className={`px-6 py-2.5 rounded-lg text-xs font-extrabold flex items-center gap-2 shadow-lg transition-all ${
-                        compareList.length >= 2
-                          ? "bg-brand hover:bg-blue-600 text-white"
-                          : "bg-slate-700 text-slate-400 cursor-not-allowed"
-                      }`}
-                    >
-                      <Scale className="size-4" /> So sánh chi tiết
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Dynamic & Gorgeous Rolling Cost & Installment Loan Estimator */}
         <section
           id="estimator-tool"
-          className="bg-white text-slate-800 py-16 md:py-20 overflow-hidden relative border-b border-slate-200"
+          className="section-y relative border-b border-slate-200 bg-white text-slate-800"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
-
           <div className="container-vf relative z-10">
             <div className="max-w-2xl mx-auto text-center mb-12">
               <span className="bg-brand/10 text-brand px-4 py-1.5 rounded-full text-xs font-extrabold tracking-widest uppercase border border-brand/20">
@@ -568,7 +469,7 @@ export default function CarsPage() {
             </div>
 
             {/* Main Estimator Container */}
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl grid lg:grid-cols-12 max-w-5xl mx-auto">
+            <div className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-12">
               {/* Left Settings Panel */}
               <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
                 <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
@@ -602,9 +503,9 @@ export default function CarsPage() {
                 <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
                   <button
                     onClick={() => setEstimatorTab("rolling")}
-                    className={`py-2 text-xs font-bold rounded-md transition-all ${
+                    className={`rounded-md py-2 text-xs font-bold transition-colors ${
                       estimatorTab === "rolling"
-                        ? "bg-brand text-white shadow-md"
+                        ? "bg-brand text-white"
                         : "text-slate-500 hover:text-brand-dark"
                     }`}
                   >
@@ -612,9 +513,9 @@ export default function CarsPage() {
                   </button>
                   <button
                     onClick={() => setEstimatorTab("installment")}
-                    className={`py-2 text-xs font-bold rounded-md transition-all ${
+                    className={`rounded-md py-2 text-xs font-bold transition-colors ${
                       estimatorTab === "installment"
-                        ? "bg-brand text-white shadow-md"
+                        ? "bg-brand text-white"
                         : "text-slate-500 hover:text-brand-dark"
                     }`}
                   >
@@ -780,70 +681,53 @@ export default function CarsPage() {
                       <Calculator className="size-4 text-brand" /> Chi phí lăn bánh chi tiết
                     </h3>
 
-                    <div className="space-y-4 text-xs font-semibold">
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Giá niêm yết của xe</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(selectedEstimatorCar.price)} VNĐ
-                        </span>
-                      </div>
-
+                    <EstimatorCostList>
+                      <EstimatorCostRow
+                        label="Giá niêm yết của xe"
+                        value={`${formatPrice(selectedEstimatorCar.price)} đ`}
+                      />
                       {estimatorBattery === "purchase" && (
-                        <div className="flex justify-between items-center text-slate-600 pl-4 border-l-2 border-slate-200">
-                          <span>Mua đứt pin lithium-ion</span>
-                          <span className="font-bold text-slate-800">
-                            + {formatPrice(selectedEstimatorCar.batteryPurchasePrice)} VNĐ
-                          </span>
-                        </div>
+                        <EstimatorCostRow
+                          label="Mua đứt pin lithium-ion"
+                          value={`+${formatPrice(selectedEstimatorCar.batteryPurchasePrice)} đ`}
+                          sub
+                        />
                       )}
-
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span className="flex items-center gap-1.5">
-                          Lệ phí trước bạ{" "}
-                          <span className="bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase">
-                            Miễn phí 0%
+                      <EstimatorCostRow
+                        label={
+                          <span className="flex flex-wrap items-center gap-1.5">
+                            Lệ phí trước bạ
+                            <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-[9px] font-extrabold uppercase text-emerald-600">
+                              Miễn phí 0%
+                            </span>
                           </span>
-                        </span>
-                        <span className="font-bold text-emerald-600">0 VNĐ</span>
-                      </div>
-
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Phí đăng ký biển số xe điện</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(rollingCostResult.plateFee)} VNĐ
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Phí bảo trì đường bộ (12 tháng)</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(rollingCostResult.roadMaintenanceFee)} VNĐ
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Phí đăng kiểm xe mới</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(rollingCostResult.inspectionFee)} VNĐ
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Bảo hiểm trách nhiệm dân sự bắt buộc</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(rollingCostResult.civilInsurance)} VNĐ
-                        </span>
-                      </div>
-
+                        }
+                        value="0 đ"
+                        valueClassName="text-emerald-600"
+                      />
+                      <EstimatorCostRow
+                        label="Phí đăng ký biển số xe điện"
+                        value={`${formatPrice(rollingCostResult.plateFee)} đ`}
+                      />
+                      <EstimatorCostRow
+                        label="Phí bảo trì đường bộ (12 tháng)"
+                        value={`${formatPrice(rollingCostResult.roadMaintenanceFee)} đ`}
+                      />
+                      <EstimatorCostRow
+                        label="Phí đăng kiểm xe mới"
+                        value={`${formatPrice(rollingCostResult.inspectionFee)} đ`}
+                      />
+                      <EstimatorCostRow
+                        label="Bảo hiểm TNDS bắt buộc"
+                        value={`${formatPrice(rollingCostResult.civilInsurance)} đ`}
+                      />
                       {includeInsurance && (
-                        <div className="flex justify-between items-center text-slate-600">
-                          <span>Bảo hiểm vật chất thân vỏ (Dự kiến ~1.1%)</span>
-                          <span className="font-bold text-slate-800">
-                            {formatPrice(rollingCostResult.physicalInsurance)} VNĐ
-                          </span>
-                        </div>
+                        <EstimatorCostRow
+                          label="Bảo hiểm vật chất thân vỏ (~1.1%)"
+                          value={`${formatPrice(rollingCostResult.physicalInsurance)} đ`}
+                        />
                       )}
-                    </div>
+                    </EstimatorCostList>
                   </div>
                 ) : (
                   // Installment Loan Output UI
@@ -852,59 +736,48 @@ export default function CarsPage() {
                       <Percent className="size-4 text-brand" /> Phương án tài chính mua xe
                     </h3>
 
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase">
+                    <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div className="rounded-xl border border-slate-200 bg-white p-4">
+                        <p className="text-[10px] font-bold uppercase text-slate-500">
                           Số tiền cần vay ({downPaymentPct}%)
                         </p>
-                        <p className="text-lg font-black text-brand mt-1">
-                          {formatPrice(installmentResult.loanAmount)} VNĐ
+                        <p className="mt-1 text-lg font-black tabular-nums text-brand">
+                          {formatPrice(installmentResult.loanAmount)} đ
                         </p>
                       </div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase">
+                      <div className="rounded-xl border border-slate-200 bg-white p-4">
+                        <p className="text-[10px] font-bold uppercase text-slate-500">
                           Số tiền trả trước ({100 - downPaymentPct}%)
                         </p>
-                        <p className="text-lg font-black text-slate-800 mt-1">
-                          {formatPrice(installmentResult.upfrontAmount)} VNĐ
+                        <p className="mt-1 text-lg font-black tabular-nums text-slate-800">
+                          {formatPrice(installmentResult.upfrontAmount)} đ
                         </p>
                       </div>
                     </div>
 
-                    <div className="space-y-4 text-xs font-semibold">
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Tổng chi phí lăn bánh làm cơ sở</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(rollingCostResult.totalRolling)} VNĐ
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Thời hạn vay trả góp</span>
-                        <span className="font-bold text-slate-800">
-                          {loanTermYears * 12} tháng ({loanTermYears} năm)
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Gốc thanh toán hàng tháng (Cố định)</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(installmentResult.firstMonthPrincipal)} VNĐ
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center text-slate-600">
-                        <span>Lãi thanh toán tháng đầu tiên</span>
-                        <span className="font-bold text-slate-800">
-                          {formatPrice(installmentResult.firstMonthInterest)} VNĐ
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center text-slate-500 pt-3 border-t border-slate-200">
-                        <span className="flex items-center gap-1.5">
-                          <Info className="size-3.5 text-brand" /> Dư nợ giảm dần
-                        </span>
-                        <span className="text-[11px]">
-                          Tiền lãi & gốc sẽ giảm dần qua các tháng tiếp theo
-                        </span>
-                      </div>
-                    </div>
+                    <EstimatorCostList>
+                      <EstimatorCostRow
+                        label="Tổng chi phí lăn bánh làm cơ sở"
+                        value={`${formatPrice(rollingCostResult.totalRolling)} đ`}
+                      />
+                      <EstimatorCostRow
+                        label="Thời hạn vay trả góp"
+                        value={`${loanTermYears * 12} tháng`}
+                      />
+                      <EstimatorCostRow
+                        label="Gốc thanh toán hàng tháng"
+                        value={`${formatPrice(installmentResult.firstMonthPrincipal)} đ`}
+                      />
+                      <EstimatorCostRow
+                        label="Lãi thanh toán tháng đầu"
+                        value={`${formatPrice(installmentResult.firstMonthInterest)} đ`}
+                      />
+                    </EstimatorCostList>
+
+                    <p className="mt-3 flex items-start gap-2 rounded-lg border border-brand/15 bg-brand/5 px-3 py-2.5 text-[10px] leading-relaxed text-slate-600">
+                      <Info className="mt-0.5 size-3.5 shrink-0 text-brand" />
+                      Dư nợ giảm dần — tiền lãi và gốc sẽ giảm qua các tháng tiếp theo.
+                    </p>
                   </div>
                 )}
 
@@ -1350,285 +1223,40 @@ export default function CarsPage() {
           </div>
         )}
       </AnimatePresence>
-
-      {/* RENDER MODAL: Gorgeous Side-by-Side Specifications Comparison Table */}
-      <AnimatePresence>
-        {isCompareOpen && compareList.length >= 2 && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              className="bg-white border border-slate-200 text-slate-800 rounded-3xl max-w-5xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl"
-            >
-              {/* Compare Header */}
-              <div className="p-6 border-b border-slate-200 flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-black text-brand-dark flex items-center gap-2">
-                    <Scale className="size-5 text-brand" /> SO SÁNH THÔNG SỐ XE ĐIỆN VINFAST
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    So sánh chi tiết các mẫu xe điện đột phá nhất
-                  </p>
-                </div>
-                <button
-                  onClick={() => setIsCompareOpen(false)}
-                  className="bg-slate-100 hover:bg-red-500 rounded-full p-2 text-slate-500 hover:text-white transition-all"
-                >
-                  <X className="size-5" />
-                </button>
-              </div>
-
-              {/* Compare Table content */}
-              <div className="flex-1 overflow-x-auto overflow-y-auto p-6">
-                <table className="w-full border-collapse border-spacing-0">
-                  <thead>
-                    <tr>
-                      <th className="p-4 text-left text-slate-500 font-extrabold text-[11px] tracking-wider uppercase bg-slate-50 rounded-tl-xl w-1/4">
-                        THÔNG SỐ SO SÁNH
-                      </th>
-                      {compareList.map((car) => (
-                        <th key={car.id} className="p-4 text-center bg-slate-50 last:rounded-tr-xl">
-                          <div className="flex flex-col items-center">
-                            <img
-                              src={car.image}
-                              alt={car.name}
-                              className="h-16 w-auto object-contain mb-3"
-                            />
-                            <h4 className="text-base font-black text-brand-dark">{car.name}</h4>
-                            <p className="text-[10px] text-slate-500 mt-0.5 font-medium">
-                              {car.subtitle}
-                            </p>
-                            <p className="text-xs font-black text-brand mt-2">
-                              Từ {formatPrice(car.price)} đ
-                            </p>
-                          </div>
-                        </th>
-                      ))}
-                      {/* Blank column if comparing only 2 cars */}
-                      {compareList.length === 2 && (
-                        <th className="p-4 bg-slate-50/80 text-slate-400 font-bold text-xs">
-                          Chưa chọn xe thứ 3
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className="text-xs font-semibold text-slate-600">
-                    {/* Segment row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Phân khúc
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800 capitalize">
-                          {car.segment === "suv-nho"
-                            ? "SUV cỡ nhỏ"
-                            : car.segment.replace("suv-", "SUV cỡ ")}
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Seats row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Số chỗ ngồi
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800 font-extrabold">
-                          {car.seats} chỗ
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Range row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Quãng đường di chuyển (WLTP)
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-brand font-black text-sm">
-                          {car.range} km / sạc đầy
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Power row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Công suất tối đa
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          {car.power} Hp (Mã lực)
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Torque row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Mô-men xoắn cực đại
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          {car.torque} Nm
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Drive row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Hệ thống dẫn động
-                      </td>
-                      {compareList.map((car) => (
-                        <td
-                          key={car.id}
-                          className="p-4 text-center text-slate-800 uppercase font-bold"
-                        >
-                          {car.drive}
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Dimensions row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Kích thước (D x R x C)
-                      </td>
-                      {compareList.map((car) => (
-                        <td
-                          key={car.id}
-                          className="p-4 text-center text-slate-800 text-[11px] font-mono"
-                        >
-                          {car.dimensions}
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Battery Capacity row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Dung lượng pin lithium
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          {car.batteryCapacity} kWh
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Charging Time row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Sạc nhanh nhất (10% - 70%)
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-emerald-400 font-bold">
-                          {car.chargingTime}
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Acceleration row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Tăng tốc (0-100 km/h)
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          {car.acceleration}
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Rent Battery price row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Thuê pin hàng tháng
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          {formatPrice(car.rentBatteryPrice)} VNĐ/Tháng
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Purchase Battery price row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Mua đứt pin lithium-ion
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4 text-center text-slate-800">
-                          +{formatPrice(car.batteryPurchasePrice)} VNĐ
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Color count row */}
-                    <tr className="border-b border-slate-200 hover:bg-slate-50">
-                      <td className="p-4 text-slate-500 font-extrabold uppercase text-[10px]">
-                        Bảng màu sơn ngoại thất
-                      </td>
-                      {compareList.map((car) => (
-                        <td key={car.id} className="p-4">
-                          <div className="flex justify-center gap-1.5 flex-wrap">
-                            {car.colors.map((c) => (
-                              <div
-                                key={c.name}
-                                className="size-4 rounded-full border border-slate-700 shadow"
-                                style={{ backgroundColor: c.hex }}
-                                title={c.name}
-                              />
-                            ))}
-                          </div>
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-
-                    {/* Action buttons row */}
-                    <tr>
-                      <td className="p-4 bg-slate-50/80" />
-                      {compareList.map((car) => (
-                        <td
-                          key={car.id}
-                          className="p-4 text-center bg-slate-50/80 last:rounded-br-xl"
-                        >
-                          <button
-                            onClick={() => {
-                              setIsCompareOpen(false);
-                              openBooking(car);
-                            }}
-                            className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all"
-                          >
-                            ĐẶT LỊCH LÁI THỬ
-                          </button>
-                        </td>
-                      ))}
-                      {compareList.length === 2 && <td className="p-4 bg-slate-50/80" />}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
+  );
+}
+
+function EstimatorCostList({ children }: { children: React.ReactNode }) {
+  return (
+    <ul className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white">
+      {children}
+    </ul>
+  );
+}
+
+function EstimatorCostRow({
+  label,
+  value,
+  valueClassName = "text-brand-dark",
+  sub = false,
+}: {
+  label: React.ReactNode;
+  value: string;
+  valueClassName?: string;
+  sub?: boolean;
+}) {
+  return (
+    <li
+      className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4 ${
+        sub ? "bg-slate-50" : ""
+      }`}
+    >
+      <span className="min-w-0 text-[11px] leading-snug text-slate-600 sm:text-xs">{label}</span>
+      <span className={`shrink-0 text-sm font-black tabular-nums sm:text-right ${valueClassName}`}>
+        {value}
+      </span>
+    </li>
   );
 }
 
@@ -1690,35 +1318,27 @@ function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-16 md:py-24 text-white min-h-[480px] flex items-center">
+    <section className="page-hero relative flex !overflow-visible items-center bg-slate-950 text-white lg:!overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          src={CAR_IMAGES.hero}
-          alt="Ô tô VinFast"
-          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <img src={CAR_IMAGES.hero} alt="Ô tô VinFast" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/70 lg:bg-black/60" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/75 via-black/45 to-black/20 lg:block" />
       </div>
 
       <div className="container-vf relative z-10 text-white">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col justify-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> VF NGỌC ANH — ĐẠI
-              LÝ ỦY QUYỀN CHÍNH THỨC
+          <div className="flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold tracking-widest text-brand uppercase">
+              <Sparkles className="size-3.5 text-accent-yellow" /> VF NGỌC ANH — ĐẠI LÝ ỦY QUYỀN
+              CHÍNH THỨC
             </div>
             <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
               TƯƠNG LAI DI CHUYỂN <br />
-              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
+              <span className="text-blue-300 italic lg:bg-gradient-to-r lg:from-brand lg:via-blue-400 lg:to-emerald-400 lg:bg-clip-text lg:text-transparent">
                 THÔNG MINH, BỀN VỮNG
               </span>
             </h1>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
+            <p className="mt-4 text-xs font-medium leading-relaxed text-slate-300 md:text-sm">
               Showroom VinFast Ngọc Anh mang đến cho bạn các dòng xe SUV điện đột phá, công nghệ an
               toàn hàng đầu thế giới, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi.
             </p>
@@ -1726,19 +1346,19 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={onExplore}
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
+                className="flex items-center gap-1.5 rounded-xl bg-brand px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
               >
                 KHÁM PHÁ CATALOG XE
               </button>
               <a
                 href="tel:1900232389"
-                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
+                className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-white/20"
               >
                 <Phone className="size-4 text-accent-yellow" /> HOTLINE: 1900 2323 89
               </a>
             </div>
 
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
+            <div className="mt-10 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
               {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
                 <div key={text} className="flex items-start gap-3">
                   <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
@@ -1746,14 +1366,14 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
                   </div>
                   <div>
                     <p className="text-xs font-black text-white">{text}</p>
-                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
+                    <p className="mt-0.5 text-[10px] font-bold leading-snug tracking-wide text-slate-400 uppercase">
                       {sub}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -1791,7 +1411,7 @@ function FilterSidebar({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft lg:max-h-[80vh] lg:overflow-y-auto">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 lg:max-h-[80vh] lg:overflow-y-auto">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
         <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
           <SlidersIcon className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
@@ -1917,196 +1537,17 @@ function FilterCheck({
   );
 }
 
-// Gorgeous CarCard Component
-function CarCard({
-  car,
-  onCompare,
-  isCompared,
-  onBookDrive,
-  onEstimatePrice,
-}: {
-  car: CarModel;
-  onCompare: () => void;
-  isCompared: boolean;
-  onBookDrive: () => void;
-  onEstimatePrice: () => void;
-}) {
-  const [activeColor, setActiveColor] = useState(car.colors[0]);
-
-  return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.3 }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-1 relative"
-    >
-      {/* Visual Tags */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-        {car.isBestSeller && (
-          <span className="bg-brand text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
-            Bán chạy
-          </span>
-        )}
-        {car.isNew && (
-          <span className="bg-emerald-500 text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase">
-            Mới ra mắt
-          </span>
-        )}
-        {car.isPromo && (
-          <span className="bg-[#f00] text-white font-extrabold text-[9px] tracking-wider px-2 py-0.5 rounded-md shadow uppercase flex items-center gap-1">
-            Ưu đãi hot
-          </span>
-        )}
-      </div>
-
-      {/* Heart / Quick Favorite/Compare button */}
-      <button
-        onClick={onCompare}
-        className={`absolute top-3 right-3 z-10 size-8 rounded-full border flex items-center justify-center shadow transition-all ${
-          isCompared
-            ? "bg-brand border-brand text-white"
-            : "bg-white/80 border-slate-200 text-slate-400 hover:text-brand hover:bg-white"
-        }`}
-        title="Thêm so sánh"
-      >
-        <Scale className="size-4" />
-      </button>
-
-      {/* Car Thumbnail Zone with soft background */}
-      <Link
-        href={`/oto/${car.id}`}
-        prefetch
-        className="relative flex aspect-[4/3] w-full shrink-0 overflow-hidden bg-slate-50"
-      >
-        <img
-          src={car.image}
-          alt={car.name}
-          className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-        <div className="absolute bottom-3 right-3 text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full font-mono">
-          {car.dimensions.split("x")[0].trim()} mm
-        </div>
-      </Link>
-
-      {/* Details Area */}
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="text-lg font-black text-brand-dark group-hover:text-brand transition-colors">
-              <Link href={`/oto/${car.id}`} prefetch>
-                {car.name}
-              </Link>
-            </h3>
-            <p className="text-[11px] font-semibold text-slate-400 leading-tight mt-0.5">
-              {car.subtitle}
-            </p>
-          </div>
-        </div>
-
-        {/* Color Dot Selector */}
-        <div className="mt-3 flex items-center gap-1.5">
-          <span className="text-[10px] font-extrabold text-slate-400 mr-1 uppercase">
-            Màu ngoại thất:
-          </span>
-          {car.colors.map((c) => (
-            <button
-              key={c.name}
-              onClick={() => setActiveColor(c)}
-              className={`size-4 rounded-full border shadow-sm transition-all transform hover:scale-110 ${
-                activeColor.name === c.name
-                  ? "ring-1 ring-brand ring-offset-1 scale-110 border-white"
-                  : "border-slate-300"
-              }`}
-              style={{ backgroundColor: c.hex }}
-              title={c.name}
-            />
-          ))}
-        </div>
-
-        {/* Dynamic color text feedback */}
-        <p className="text-[10px] text-slate-400 font-bold mt-1.5 min-h-[15px]">
-          Sơn: {activeColor.name}
-        </p>
-
-        {/* Specs Ribbon */}
-        <div className="mt-4 grid grid-cols-3 gap-2 bg-slate-50 border border-slate-100 p-2.5 rounded-xl text-[10px] text-slate-600 font-bold">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Users size={14} className="text-brand mb-1" />
-            <span>{car.seats} chỗ</span>
-          </div>
-          <div className="flex flex-col items-center justify-center text-center border-x border-slate-200">
-            <Gauge size={14} className="text-brand mb-1" />
-            <span>{car.range} km</span>
-          </div>
-          <div className="flex flex-col items-center justify-center text-center">
-            <Zap size={14} className="text-brand mb-1" />
-            <span>{car.power} Hp</span>
-          </div>
-        </div>
-
-        {/* Pricing Area */}
-        <div className="mt-5 flex justify-between items-end border-b border-slate-100 pb-4">
-          <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">
-              Giá niêm yết (Thuê pin)
-            </p>
-            <p className="text-base font-black text-brand-dark mt-0.5">
-              {formatPrice(car.price)}{" "}
-              <span className="text-[11px] font-bold text-slate-500">đ</span>
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">
-              Hoặc mua đứt pin
-            </p>
-            <p className="text-xs font-black text-slate-500 mt-0.5">
-              +{formatPrice(car.batteryPurchasePrice)} đ
-            </p>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <button
-            onClick={onEstimatePrice}
-            className="flex items-center justify-center rounded-lg border border-slate-200 hover:border-brand hover:bg-slate-50 text-[10px] font-extrabold text-slate-600 hover:text-brand tracking-wider py-2.5 transition-all gap-1 shadow-sm"
-          >
-            <Calculator className="size-3.5" /> LĂN BÁNH
-          </button>
-          <button
-            onClick={onBookDrive}
-            className="rounded-lg bg-brand hover:bg-blue-600 text-[10px] font-extrabold tracking-wider text-white py-2.5 transition-all flex items-center justify-center gap-1 shadow-md hover:shadow-lg"
-          >
-            <Calendar className="size-3.5" /> LÁI THỬ
-          </button>
-        </div>
-        <Link
-          href={`/oto/${car.id}`}
-          prefetch
-          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg border-2 border-brand/20 bg-brand/5 py-2.5 text-[10px] font-extrabold uppercase tracking-widest text-brand transition hover:border-brand hover:bg-brand hover:text-white"
-        >
-          Xem trọn bộ thông số kỹ thuật
-          <ChevronRight className="size-3.5" />
-        </Link>
-      </div>
-    </motion.article>
-  );
-}
-
 function PromoBanners() {
   return (
-    <section className="bg-white py-12 border-y border-slate-100">
-      <div className="container-vf grid gap-6 md:grid-cols-2">
-        <div className="relative overflow-hidden rounded-2xl shadow-md border border-slate-100 flex min-h-[220px]">
+    <section className="bg-white section-y border-y border-slate-100">
+      <div className="container-vf grid gap-6 sm:grid-cols-2">
+        <div className="relative flex min-h-[220px] overflow-hidden rounded-2xl border border-slate-100">
           <img
             src={CAR_IMAGES.promoTestDrive}
             alt="Đăng ký lái thử"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-transparent" />
+          <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/95 sm:via-brand-dark/80 sm:to-transparent" />
           <div className="relative z-10 p-6 md:p-8 text-white flex flex-col justify-center max-w-sm">
             <span className="bg-accent-yellow text-slate-900 font-black text-[9px] tracking-wider px-2 py-0.5 rounded uppercase self-start mb-3">
               Hot Showroom
@@ -2120,15 +1561,15 @@ function PromoBanners() {
             </p>
             <a
               href="tel:1900232389"
-              className="mt-5 bg-brand hover:bg-blue-600 text-white text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center self-start shadow-md"
+              className="mt-5 self-center rounded-lg bg-brand px-5 py-2.5 text-center text-[11px] font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
             >
               GỌI ĐĂNG KÝ NGAY
             </a>
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-brand/10 bg-gradient-to-br from-blue-50/70 via-indigo-50/30 to-white shadow-soft p-6 md:p-8 flex flex-col justify-center min-h-[220px]">
-          <div className="absolute top-4 right-4 opacity-15">
+        <div className="relative flex min-h-[220px] flex-col justify-center overflow-hidden rounded-2xl border border-brand/10 bg-slate-50 p-6 md:p-8">
+          <div className="absolute top-4 right-4 hidden opacity-10 sm:block">
             <Wallet className="size-24 text-brand" strokeWidth={1} />
           </div>
           <div className="relative z-10">
@@ -2154,7 +1595,7 @@ function PromoBanners() {
             </ul>
             <a
               href="tel:1900232389"
-              className="mt-5 inline-block border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
+              className="mx-auto mt-5 block w-fit border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
             >
               GỌI TƯ VẤN TRẢ GÓP
             </a>
@@ -2167,7 +1608,7 @@ function PromoBanners() {
 
 function WhyVinFastSection() {
   return (
-    <section className="bg-slate-50 py-16 md:py-20 border-b border-slate-200">
+    <section className="section-y border-b border-slate-200 bg-white">
       <div className="container-vf">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
@@ -2177,17 +1618,21 @@ function WhyVinFastSection() {
           <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
           {WHY_VINFAST.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="bg-white border border-slate-200 p-6 rounded-2xl shadow-soft hover:shadow-md transition-all text-center"
+              className="rounded-2xl border border-slate-200 bg-white p-4 text-center sm:p-6"
             >
-              <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-brand/10 border border-brand/20 text-brand">
-                <Icon className="size-6 text-brand" strokeWidth={1.5} />
+              <div className="mx-auto flex size-10 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand sm:size-12">
+                <Icon className="size-5 text-brand sm:size-6" strokeWidth={1.5} />
               </div>
-              <h3 className="mt-4 text-sm font-black text-brand-dark uppercase">{title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
+              <h3 className="mt-3 text-[11px] font-black text-brand-dark uppercase sm:mt-4 sm:text-sm">
+                {title}
+              </h3>
+              <p className="mt-1.5 text-[10px] leading-relaxed font-medium text-slate-400 sm:mt-2 sm:text-xs">
+                {desc}
+              </p>
             </div>
           ))}
         </div>

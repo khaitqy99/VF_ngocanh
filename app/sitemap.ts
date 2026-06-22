@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { ACCESSORIES } from "@/lib/accessories";
 import { CARS } from "@/lib/cars";
 import { SCOOTERS } from "@/lib/scooters";
 
@@ -37,5 +38,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...carRoutes, ...scooterRoutes];
+  const accessoryRoutes = ACCESSORIES.map((product) => ({
+    url: `${siteUrl}/phu-kien/${product.id}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...carRoutes, ...scooterRoutes, ...accessoryRoutes];
 }

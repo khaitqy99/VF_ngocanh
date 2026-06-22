@@ -8,31 +8,31 @@ import { useState, useEffect } from "react";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
+import { ACCESSORIES } from "@/lib/accessories";
 import { IMAGES } from "@/lib/images";
 
 const HERO_SLIDES = [IMAGES.heroBanner, IMAGES.heroBanner, IMAGES.heroBanner];
 
 const featureCopy = "relative z-10 w-full min-w-0";
 const featureTitle =
-  "text-2xl font-black tracking-tight text-brand-dark sm:text-3xl md:text-xl md:leading-tight lg:text-2xl xl:text-[1.75rem] 2xl:text-4xl";
-const featureSubtitle =
-  "mt-2 text-sm text-muted-foreground md:mt-1 md:text-xs lg:mt-1.5 lg:text-sm xl:text-[15px]";
+  "text-2xl font-black tracking-tight text-brand-dark sm:text-3xl lg:text-2xl lg:leading-tight xl:text-[1.75rem] 2xl:text-4xl";
+const featureSubtitle = "mt-2 text-sm text-muted-foreground lg:mt-1.5 xl:text-[15px]";
 const featureSpecGrid =
-  "mt-6 grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-8 sm:gap-y-6 md:mt-3 md:gap-x-3 md:gap-y-2.5 lg:mt-5 lg:gap-x-6 lg:gap-y-4 xl:mt-6 xl:grid-cols-4 xl:gap-x-8 2xl:mt-7 2xl:gap-x-10";
-const featureActions = "mt-6 flex flex-wrap gap-2 sm:gap-3 md:mt-3 lg:mt-5 xl:mt-6 2xl:mt-8";
+  "mt-6 grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:mt-5 lg:gap-x-6 lg:gap-y-4 xl:mt-6 xl:grid-cols-4 xl:gap-x-8 2xl:mt-7 2xl:gap-x-10";
+const featureActions = "mt-6 grid grid-cols-2 gap-2 sm:gap-3 lg:mt-5 xl:mt-6 2xl:mt-8";
 const featurePanel =
-  "relative flex flex-col justify-center px-5 py-8 sm:px-8 md:absolute md:inset-y-0 md:w-1/2 md:px-8 md:py-0 lg:px-12 xl:px-16";
+  "relative flex flex-col justify-center px-5 py-8 sm:px-8 lg:absolute lg:inset-y-0 lg:w-1/2 lg:px-10 lg:py-0 xl:px-16";
 
 const warrantyTitle =
-  "text-2xl font-black tracking-tight text-brand-dark sm:text-3xl md:text-lg md:leading-tight lg:text-xl xl:text-2xl 2xl:text-4xl";
+  "text-2xl font-black tracking-tight text-brand-dark sm:text-3xl lg:text-xl lg:leading-tight xl:text-2xl 2xl:text-4xl";
 const warrantySubtitle =
-  "mt-2 text-sm leading-relaxed text-muted-foreground md:mt-0.5 md:text-[9px] md:leading-[1.35] md:line-clamp-2 lg:mt-1.5 lg:line-clamp-none lg:text-xs lg:leading-relaxed xl:text-sm 2xl:text-[15px]";
+  "mt-2 text-sm leading-relaxed text-muted-foreground lg:mt-1.5 lg:text-xs lg:leading-relaxed xl:text-sm 2xl:text-[15px]";
 const warrantySpecGrid =
-  "mt-5 grid grid-cols-2 gap-x-3 gap-y-3 sm:mt-6 sm:gap-x-6 sm:gap-y-4 md:mt-2 md:gap-x-2 md:gap-y-1 lg:mt-4 lg:gap-x-4 lg:gap-y-2.5 xl:mt-5 xl:grid-cols-4 xl:gap-x-6 2xl:mt-6 2xl:gap-x-8";
-const warrantyActions =
-  "mt-5 flex flex-wrap gap-2 sm:mt-6 sm:gap-3 md:mt-2 lg:mt-4 xl:mt-5 2xl:mt-7";
+  "mt-5 grid grid-cols-2 gap-x-3 gap-y-3 sm:mt-6 sm:gap-x-6 sm:gap-y-4 lg:mt-4 lg:gap-x-4 lg:gap-y-2.5 xl:mt-5 xl:grid-cols-4 xl:gap-x-6 2xl:mt-6 2xl:gap-x-8";
+const warrantyActions = "mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3 lg:mt-4 xl:mt-5 2xl:mt-7";
 const warrantyBtn =
-  "rounded-md px-4 py-2 text-[11px] font-semibold tracking-wide transition active:scale-[0.98] md:px-2.5 md:py-1 md:text-[9px] lg:px-3.5 lg:py-1.5 lg:text-[10px] xl:px-4 xl:py-2 xl:text-[11px] 2xl:px-5 2xl:py-2.5 2xl:text-[12px]";
+  "w-full rounded-md px-2.5 py-2 text-center text-[10px] font-semibold tracking-wide transition active:scale-[0.98] sm:px-4 sm:text-[11px] lg:px-3.5 lg:py-1.5 lg:text-[10px] xl:px-4 xl:py-2 xl:text-[11px] 2xl:px-5 2xl:py-2.5 2xl:text-[12px]";
 
 const sectionHeading =
   "text-center text-lg font-black leading-tight tracking-tight text-balance text-brand-dark sm:text-xl sm:leading-tight md:text-2xl md:leading-tight lg:text-[1.75rem] xl:text-3xl";
@@ -93,7 +93,7 @@ const SCOOTER_SLIDES: FeatureSlide[] = [
     title: "Di chuyển xanh - Phong cách mới",
     image: IMAGES.evoScooter,
     imageAlt: "EVO scooter",
-    imageClass: "absolute inset-0 h-full w-full object-cover object-right",
+    imageClass: "h-full w-full object-cover object-right",
     specs: [
       { value: "45 km", label: "Quãng đường" },
       { value: "70 km/h", label: "Vận tốc tối đa" },
@@ -108,7 +108,7 @@ const SCOOTER_SLIDES: FeatureSlide[] = [
     subtitle: "Xe điện thông minh - Di chuyển bền vững",
     image: IMAGES.chargingScooter,
     imageAlt: "Giải pháp sạc xe máy điện",
-    imageClass: "absolute inset-0 h-full w-full object-cover object-right",
+    imageClass: "h-full w-full object-cover object-right",
     specs: [
       { value: "59 km", label: "Quãng đường" },
       { value: "45 km/h", label: "Vận tốc tối đa" },
@@ -142,6 +142,10 @@ export default function HomePage() {
   );
 }
 
+const carouselNavBtn =
+  "flex items-center justify-center rounded-full border border-slate-200/80 bg-white/70 text-slate-500 shadow-sm transition hover:border-brand/30 hover:bg-white hover:text-brand active:scale-95";
+const carouselNavBtnSize = `${carouselNavBtn} h-8 w-8 md:h-9 md:w-9`;
+
 function Hero() {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -151,7 +155,7 @@ function Hero() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white">
-      <div className="relative w-full aspect-[1842/854] min-h-[180px] sm:min-h-[220px]">
+      <div className="relative w-full aspect-[1842/854]">
         {HERO_SLIDES.map((src, i) => (
           <div
             key={i}
@@ -162,31 +166,33 @@ function Hero() {
               alt="VinFast promotion"
               fill
               priority={i === 0}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              sizes="100vw"
               className="object-contain"
             />
           </div>
         ))}
         <button
           onClick={() => setIdx((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
-          className="absolute top-1/2 left-3 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-brand-dark shadow-md backdrop-blur hover:bg-white md:left-5"
+          className={`absolute top-1/2 left-3 z-10 -translate-y-1/2 md:left-5 ${carouselNavBtnSize}`}
           aria-label="Previous"
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={18} strokeWidth={1.75} />
         </button>
         <button
           onClick={() => setIdx((i) => (i + 1) % HERO_SLIDES.length)}
-          className="absolute top-1/2 right-3 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-brand-dark shadow-md backdrop-blur hover:bg-white md:right-5"
+          className={`absolute top-1/2 right-3 z-10 -translate-y-1/2 md:right-5 ${carouselNavBtnSize}`}
           aria-label="Next"
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={18} strokeWidth={1.75} />
         </button>
-        <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2 md:bottom-5">
+        <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 md:bottom-4">
           {HERO_SLIDES.map((_, i) => (
             <button
               key={i}
               onClick={() => setIdx(i)}
-              className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-white" : "w-2 bg-white/50"}`}
+              className={`h-1.5 rounded-full transition-all ${
+                i === idx ? "w-5 bg-brand" : "w-1.5 bg-slate-300"
+              }`}
               aria-label={`Slide ${i + 1}`}
             />
           ))}
@@ -209,47 +215,57 @@ function FeatureCarouselSection({
   const prev = () => setIdx((i) => (i - 1 + slides.length) % slides.length);
   const next = () => setIdx((i) => (i + 1) % slides.length);
 
-  const aspectClass = imageAspect === "1835/857" ? "aspect-[1835/857]" : "aspect-[2/1]";
-  const imageWrapClass = `relative ${aspectClass} w-full overflow-hidden bg-[#f4f6fa] ${
-    imageSide === "left" ? "md:w-1/2" : "md:ml-auto md:w-1/2"
+  const aspectClass =
+    imageAspect === "1835/857" ? "aspect-[1835/857] w-full" : "aspect-[2/1] w-full";
+  const imageWrapClass = `relative ${aspectClass} overflow-hidden bg-[#f4f6fa] ${
+    imageSide === "left" ? "lg:w-1/2" : "lg:ml-auto lg:w-1/2"
   }`;
 
   const textPanelClass =
-    imageSide === "left" ? `${featurePanel} md:right-0` : `${featurePanel} md:left-0`;
+    imageSide === "left" ? `${featurePanel} lg:right-0` : `${featurePanel} lg:left-0`;
   const imageFadeEdge =
     imageSide === "left"
-      ? "pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-28 bg-gradient-to-r from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] md:block md:w-40 lg:w-52"
-      : "pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-28 bg-gradient-to-l from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] md:block md:w-40 lg:w-52";
+      ? "pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-28 bg-gradient-to-r from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] lg:block lg:w-40 xl:w-52"
+      : "pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-28 bg-gradient-to-l from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] lg:block lg:w-40 xl:w-52";
   const textFadeEdge =
     imageSide === "left"
-      ? "pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-16 bg-gradient-to-l from-transparent to-[#f8f9fc]/80 md:block md:w-24 lg:w-32"
-      : "pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-16 bg-gradient-to-r from-transparent to-[#f8f9fc]/80 md:block md:w-24 lg:w-32";
+      ? "pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-16 bg-gradient-to-l from-transparent to-[#f8f9fc]/80 lg:block lg:w-24 xl:w-32"
+      : "pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-16 bg-gradient-to-r from-transparent to-[#f8f9fc]/80 lg:block lg:w-24 xl:w-32";
 
   return (
     <section className="relative w-full overflow-hidden bg-white">
       <div className="relative w-full bg-gradient-to-br from-[#f4f6fa] via-[#f8f9fc] to-white">
-        {slides.length > 1 && <CarouselArrows edge onPrev={prev} onNext={next} />}
-
         <div className="relative z-10">
+          <div className={imageWrapClass}>
+            {slides.map((slide, i) => (
+              <div
+                key={`${slide.title}-image`}
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  i === idx ? "z-[1] opacity-100" : "pointer-events-none opacity-0"
+                }`}
+                aria-hidden={i !== idx}
+              >
+                <img src={slide.image} alt={slide.imageAlt} className={slide.imageClass} />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent lg:hidden"
+                />
+                <div aria-hidden className={imageFadeEdge} />
+              </div>
+            ))}
+            {slides.length > 1 && <CarouselArrows onImage onPrev={prev} onNext={next} />}
+          </div>
+
           {slides.map((slide, i) => (
             <div
               key={slide.title}
               className={`transition-opacity duration-500 ${
                 i === idx
-                  ? "relative opacity-100"
+                  ? "relative opacity-100 lg:absolute lg:inset-0"
                   : "pointer-events-none absolute inset-0 opacity-0"
               }`}
               aria-hidden={i !== idx}
             >
-              <div className={imageWrapClass}>
-                <img src={slide.image} alt={slide.imageAlt} className={slide.imageClass} />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent md:hidden"
-                />
-                <div aria-hidden className={imageFadeEdge} />
-              </div>
-
               <div className={textPanelClass}>
                 <div aria-hidden className={textFadeEdge} />
                 <div className={featureCopy}>
@@ -262,7 +278,7 @@ function FeatureCarouselSection({
                         feature
                         icon={
                           spec.seats ? (
-                            <Users className="size-4 shrink-0 text-brand md:size-3.5 lg:size-4" />
+                            <Users className="size-4 shrink-0 text-brand lg:size-3.5 xl:size-4" />
                           ) : undefined
                         }
                         value={spec.value}
@@ -299,28 +315,32 @@ function ScooterSection() {
   return <FeatureCarouselSection slides={SCOOTER_SLIDES} imageSide="right" imageAspect="2/1" />;
 }
 
-const ACCESSORIES = [
-  { img: IMAGES.accModel, name: "Mô hình xe VinFast VF 3", price: "220.000 VND" },
-  { img: IMAGES.accCharger, name: "Bộ sạc treo tường 7,4kW", price: "11.900.000 VND" },
-  { img: IMAGES.accMat, name: "Thảm lót sàn All-in-One", price: "1.490.000 VND" },
-  { img: IMAGES.accUmbrella, name: "Ô che nắng", price: "400.000 VND" },
-];
+const HOME_FEATURED_ACCESSORY_IDS = [
+  "mo-hinh-vf3",
+  "bo-sac-treo-tuong",
+  "tham-lot-san-all-in-one",
+  "o-che-nang",
+] as const;
+
+const HOME_FEATURED_ACCESSORIES = HOME_FEATURED_ACCESSORY_IDS.map(
+  (id) => ACCESSORIES.find((product) => product.id === id)!,
+).filter(Boolean);
 
 function SectionHeader({ title, viewAllHref }: { title: string; viewAllHref?: string }) {
   return (
-    <div className="relative mb-8 flex flex-col items-center gap-3 sm:mb-10 md:min-h-10 md:justify-center">
-      <h2 className={`${sectionHeading} w-full px-2 sm:px-4 md:px-20 lg:px-24`}>{title}</h2>
+    <div className="relative mb-8 flex flex-col items-center gap-3 sm:mb-10 lg:min-h-10 lg:justify-center">
+      <h2 className={`${sectionHeading} w-full px-2 sm:px-4 lg:px-20 xl:px-24`}>{title}</h2>
       {viewAllHref ? (
         <Link
           href={viewAllHref}
-          className="shrink-0 text-xs font-semibold text-brand hover:underline sm:text-sm md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2"
+          className="shrink-0 text-xs font-semibold text-brand hover:underline sm:text-sm lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
         >
           Xem tất cả
         </Link>
       ) : (
         <a
           href="#"
-          className="shrink-0 text-xs font-semibold text-brand hover:underline sm:text-sm md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2"
+          className="shrink-0 text-xs font-semibold text-brand hover:underline sm:text-sm lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
         >
           Xem tất cả
         </a>
@@ -334,25 +354,9 @@ function Accessories() {
     <section className="section-y bg-white">
       <div className="container-vf">
         <SectionHeader title="PHỤ KIỆN CHÍNH HÃNG" viewAllHref="/phu-kien" />
-        <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
-          {ACCESSORIES.map((a) => (
-            <div
-              key={a.name}
-              className="group rounded-xl border border-border/50 bg-white p-3.5 transition hover:-translate-y-0.5 hover:shadow-card md:p-4"
-            >
-              <div className="flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-[#f5f6f9]">
-                <img
-                  src={a.img}
-                  alt={a.name}
-                  className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="mt-3 line-clamp-2 min-h-[38px] text-[13px] font-medium leading-snug text-foreground/90">
-                {a.name}
-              </h3>
-              <p className="mt-1 text-sm font-bold text-brand">{a.price}</p>
-            </div>
+        <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
+          {HOME_FEATURED_ACCESSORIES.map((product) => (
+            <AccessoryProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
@@ -462,29 +466,29 @@ function WarrantyService() {
     <section id="block-service" className="relative w-full overflow-hidden bg-white">
       <div className="relative w-full bg-gradient-to-br from-[#f4f6fa] via-[#f8f9fc] to-white">
         <div className="relative z-10">
-          <div className="relative aspect-[1835/857] w-full overflow-hidden bg-[#f4f6fa] md:ml-auto md:w-1/2">
+          <div className="relative w-full overflow-hidden bg-[#f4f6fa] lg:ml-auto lg:aspect-[1835/857] lg:w-1/2">
             <img
               src={IMAGES.vf9Suv}
               alt="VinFast VF 9"
-              className="h-full w-full object-contain object-right"
+              className="block w-full h-auto lg:h-full lg:w-full object-contain object-right"
               loading="lazy"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent md:hidden"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent lg:hidden"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-28 bg-gradient-to-l from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] md:block md:w-40 lg:w-52"
+              className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-28 bg-gradient-to-l from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] lg:block lg:w-40 xl:w-52"
             />
           </div>
 
-          <div className={`${featurePanel} md:left-0 md:px-6 lg:px-10 xl:px-14`}>
+          <div className={`${featurePanel} lg:left-0 lg:px-10 xl:px-14`}>
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-16 bg-gradient-to-r from-transparent to-[#f8f9fc]/80 md:block md:w-24 lg:w-32"
+              className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-16 bg-gradient-to-r from-transparent to-[#f8f9fc]/80 lg:block lg:w-24 xl:w-32"
             />
-            <div className={`${featureCopy} md:overflow-hidden`}>
+            <div className={`${featureCopy} lg:overflow-hidden`}>
               <h2 className={warrantyTitle}>Bảo hành & Dịch vụ</h2>
               <p className={warrantySubtitle}>
                 VinFast đã đầu tư nghiêm túc và bài bản để phát triển hệ thống Showroom, Nhà phân
@@ -501,7 +505,7 @@ function WarrantyService() {
                   href="https://vinfastauto.com/vn_vi/dat-lich-dich-vu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${warrantyBtn} inline-flex bg-brand text-white shadow-sm hover:bg-[#0046cc]`}
+                  className={`${warrantyBtn} bg-brand text-white shadow-sm hover:bg-[#0046cc]`}
                 >
                   ĐẶT LỊCH BẢO DƯỠNG
                 </a>
@@ -509,7 +513,7 @@ function WarrantyService() {
                   href="https://vinfastauto.com/vn_vi/dich-vu-hau-mai/bao-hanh-va-bao-duong"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${warrantyBtn} inline-flex border border-brand bg-white text-brand hover:bg-brand/5`}
+                  className={`${warrantyBtn} border border-brand bg-white text-brand hover:bg-brand/5`}
                 >
                   CHÍNH SÁCH
                 </a>
@@ -524,17 +528,17 @@ function WarrantyService() {
 
 function BrandStory() {
   return (
-    <section className="bg-white py-16 md:py-20 lg:py-24">
+    <section className="bg-white py-12 sm:py-16 lg:py-24">
       <div className="container-vf">
-        <div className="relative min-h-[360px] overflow-hidden rounded-xl shadow-card sm:min-h-[400px] md:h-[400px] lg:h-[420px]">
+        <div className="relative min-h-[420px] overflow-hidden rounded-xl shadow-card sm:min-h-[400px] lg:h-[420px]">
           <img
             src={IMAGES.brandStory}
-            alt="Brand story"
-            className="absolute inset-0 h-full w-full object-contain object-center md:object-cover"
+            alt="Dòng xe điện VinFast"
+            className="absolute inset-0 h-full w-full object-cover object-center"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/55" />
-          <div className="absolute inset-0 grid items-center gap-8 px-6 py-8 sm:px-8 sm:py-10 md:grid-cols-2 md:gap-12 md:px-12 md:py-12 lg:gap-14 lg:px-14">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/65 lg:bg-gradient-to-r lg:from-black/75 lg:via-black/45 lg:to-black/55" />
+          <div className="absolute inset-0 grid items-center gap-6 px-5 py-8 sm:gap-8 sm:px-8 sm:py-10 lg:grid-cols-2 lg:gap-14 lg:px-14 lg:py-12">
             <div className="text-white">
               <p className="text-2xl leading-[1.2] font-black italic md:text-3xl lg:text-4xl">
                 MÃNH LIỆT
@@ -559,9 +563,11 @@ function BrandStory() {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 rounded-md bg-brand px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#0046cc] md:mt-8">
-                TÌM HIỂU THÊM
-              </button>
+              <div className="mt-6 flex justify-center md:mt-8">
+                <button className="rounded-md bg-brand px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#0046cc]">
+                  TÌM HIỂU THÊM
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -572,8 +578,8 @@ function BrandStory() {
 
 function ShowroomCommunity() {
   return (
-    <section className="bg-white pb-20">
-      <div className="container-vf grid gap-4 md:grid-cols-2 md:gap-5">
+    <section className="bg-white pb-12 sm:pb-16 lg:pb-20">
+      <div className="container-vf grid gap-4 sm:grid-cols-2 sm:gap-5">
         {[
           {
             img: IMAGES.showroom,
@@ -625,7 +631,7 @@ function Newsletter() {
             e.preventDefault();
             setEmail("");
           }}
-          className="mx-auto mt-7 flex max-w-lg overflow-hidden rounded-md bg-white p-1 shadow-lg"
+          className="mx-auto mt-7 flex max-w-lg flex-col gap-2 overflow-hidden rounded-md bg-white p-1.5 shadow-lg sm:flex-row sm:gap-0 sm:p-1"
         >
           <input
             type="email"
@@ -637,7 +643,7 @@ function Newsletter() {
           />
           <button
             type="submit"
-            className="shrink-0 rounded-sm bg-brand px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0046cc]"
+            className="shrink-0 rounded-sm bg-brand px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0046cc] sm:rounded-sm"
           >
             GỬI
           </button>
@@ -675,9 +681,9 @@ function Spec({
           className={
             feature
               ? dense
-                ? "break-words text-sm tracking-tight sm:text-base md:text-[10px] md:leading-tight lg:text-xs xl:text-sm 2xl:text-lg"
-                : "break-words text-sm tracking-tight sm:text-base md:text-xs md:leading-snug lg:text-sm xl:text-base 2xl:text-lg"
-              : "text-base tracking-tight md:text-lg"
+                ? "break-words text-sm tracking-tight sm:text-base lg:text-xs lg:leading-tight xl:text-sm 2xl:text-lg"
+                : "break-words text-sm tracking-tight sm:text-base lg:text-sm lg:leading-snug xl:text-base 2xl:text-lg"
+              : "text-base tracking-tight lg:text-lg"
           }
         >
           {value}
@@ -687,8 +693,8 @@ function Spec({
         className={
           feature
             ? dense
-              ? "mt-0.5 text-[10px] leading-snug text-muted-foreground md:text-[8px] md:leading-tight lg:text-[9px] xl:text-[10px] 2xl:text-[11px]"
-              : "mt-0.5 text-[10px] leading-snug text-muted-foreground md:text-[9px] lg:text-[10px] xl:text-[11px]"
+              ? "mt-0.5 text-[11px] leading-snug text-muted-foreground lg:text-[10px] xl:text-[11px]"
+              : "mt-0.5 text-[11px] leading-snug text-muted-foreground lg:text-[10px] xl:text-[11px]"
             : "mt-0.5 text-[11px] text-muted-foreground"
         }
       >
@@ -699,7 +705,7 @@ function Spec({
 }
 
 const featureBtn =
-  "rounded-md px-4 py-2 text-[11px] font-semibold tracking-wide transition active:scale-[0.98] md:px-3 md:py-1.5 md:text-[10px] lg:px-4 lg:py-2 lg:text-[11px] xl:px-5 xl:py-2.5 xl:text-[12px]";
+  "w-full rounded-md px-2.5 py-2 text-center text-[10px] font-semibold tracking-wide transition active:scale-[0.98] sm:px-4 sm:text-[11px] lg:px-3.5 lg:py-1.5 lg:text-[10px] xl:px-4 xl:py-2 xl:text-[11px] 2xl:px-5 2xl:py-2.5 2xl:text-[12px]";
 
 function PrimaryBtn({ children, feature }: { children: React.ReactNode; feature?: boolean }) {
   return (
@@ -731,33 +737,43 @@ function OutlineBtn({ children, feature }: { children: React.ReactNode; feature?
 
 function CarouselArrows({
   edge,
+  onImage,
   onPrev,
   onNext,
 }: {
   edge?: boolean;
+  onImage?: boolean;
   onPrev: () => void;
   onNext: () => void;
 }) {
-  const pos = edge ? "left-3 md:left-6 lg:left-10" : "left-2 md:left-3";
-  const posR = edge ? "right-3 md:right-6 lg:right-10" : "right-2 md:right-3";
+  const pos = onImage
+    ? "left-2 sm:left-3"
+    : edge
+      ? "left-3 lg:left-6 xl:left-10"
+      : "left-2 lg:left-3";
+  const posR = onImage
+    ? "right-2 sm:right-3"
+    : edge
+      ? "right-3 lg:right-6 xl:right-10"
+      : "right-2 lg:right-3";
 
   return (
     <>
       <button
         type="button"
         onClick={onPrev}
-        className={`absolute top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md transition hover:text-brand ${pos}`}
+        className={`absolute top-1/2 z-20 -translate-y-1/2 ${carouselNavBtnSize} ${pos}`}
         aria-label="Slide trước"
       >
-        <ChevronLeft size={18} />
+        <ChevronLeft size={18} strokeWidth={1.75} />
       </button>
       <button
         type="button"
         onClick={onNext}
-        className={`absolute top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-dark shadow-md transition hover:text-brand ${posR}`}
+        className={`absolute top-1/2 z-20 -translate-y-1/2 ${carouselNavBtnSize} ${posR}`}
         aria-label="Slide sau"
       >
-        <ChevronRight size={18} />
+        <ChevronRight size={18} strokeWidth={1.75} />
       </button>
     </>
   );

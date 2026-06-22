@@ -20,14 +20,15 @@ function Logo() {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border/60 bg-footer pt-14 pb-8">
-      <div className="container-vf grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+    <footer className="border-t border-border/60 bg-footer pt-10 pb-6 sm:pt-12 sm:pb-8 lg:pt-14">
+      <div className="container-vf flex flex-col gap-8 lg:grid lg:grid-cols-5 lg:gap-10">
+        {/* Hàng 1: Thương hiệu */}
         <div className="lg:col-span-1">
-          <div className="mb-4 flex items-center gap-2.5">
+          <div className="mb-3 flex items-center gap-2.5 sm:mb-4">
             <Logo />
             <span className="font-black tracking-tight text-brand-dark">VF NGỌC ANH</span>
           </div>
-          <p className="mb-4 text-xs leading-relaxed text-muted-foreground">
+          <p className="mb-3 max-w-sm text-xs leading-relaxed text-muted-foreground sm:mb-4">
             Đại lý ủy quyền chính thức của VinFast. Mang đến trải nghiệm xe điện thông minh, thân
             thiện và dịch vụ tận tâm.
           </p>
@@ -43,39 +44,47 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <FCol
-          title="SẢN PHẨM"
-          items={[
-            "VF 3",
-            "VF 5",
-            "VF 6",
-            "VF 7",
-            "VF 8",
-            "VF e34",
-            { label: "Xe máy điện", href: "/xe-may-dien" },
-          ]}
-        />
-        <FCol
-          title="DỊCH VỤ"
-          items={[
-            { label: "Đăng ký lái thử", href: "#" },
-            { label: "Bảo dưỡng - Sửa chữa", href: "/dich-vu-hau-mai" },
-            { label: "Bảo hành", href: "/dich-vu-hau-mai" },
-            { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
-          ]}
-        />
-        <FCol
-          title="VỀ CHÚNG TÔI"
-          items={[
-            { label: "Giới thiệu", href: "/gioi-thieu" },
-            { label: "Tin tức", href: "#" },
-            { label: "Tuyển dụng", href: "#" },
-            { label: "Liên hệ", href: "#" },
-          ]}
-        />
-        <div>
-          <h4 className="mb-4 text-[13px] font-bold tracking-wider text-brand-dark">LIÊN HỆ</h4>
-          <ul className="space-y-3 text-xs text-foreground/80">
+
+        {/* Hàng 2: 3 cột liên kết */}
+        <div className="grid grid-cols-3 gap-x-3 gap-y-4 sm:gap-x-6 lg:contents">
+          <FCol
+            title="SẢN PHẨM"
+            items={[
+              "VF 3",
+              "VF 5",
+              "VF 6",
+              "VF 7",
+              "VF 8",
+              "VF e34",
+              { label: "Xe máy điện", href: "/xe-may-dien" },
+            ]}
+          />
+          <FCol
+            title="DỊCH VỤ"
+            items={[
+              { label: "Đăng ký lái thử", href: "#" },
+              { label: "Bảo dưỡng - Sửa chữa", href: "/dich-vu-hau-mai" },
+              { label: "Bảo hành", href: "/dich-vu-hau-mai" },
+              { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
+            ]}
+          />
+          <FCol
+            title="VỀ CHÚNG TÔI"
+            items={[
+              { label: "Giới thiệu", href: "/gioi-thieu" },
+              { label: "Tin tức", href: "#" },
+              { label: "Tuyển dụng", href: "#" },
+              { label: "Liên hệ", href: "#" },
+            ]}
+          />
+        </div>
+
+        {/* Hàng 3: Liên hệ */}
+        <div className="lg:col-span-1">
+          <h4 className="mb-3 text-[11px] font-bold tracking-wider text-brand-dark sm:mb-4 sm:text-[13px]">
+            LIÊN HỆ
+          </h4>
+          <ul className="space-y-2.5 text-xs text-foreground/80 sm:space-y-3">
             <li className="flex gap-2">
               <MapPin size={14} className="mt-0.5 shrink-0 text-brand" />
               Số 123 Nguyễn Văn Linh, Long Biên, Hà Nội
@@ -91,7 +100,8 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="container-vf mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-[11px] text-muted-foreground sm:flex-row">
+
+      <div className="container-vf mt-8 flex flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-[11px] text-muted-foreground sm:mt-10 sm:flex-row">
         <p>© 2026 VF Ngọc Anh. All rights reserved.</p>
         <div className="flex gap-4">
           <a href="#" className="hover:text-brand">
@@ -114,16 +124,21 @@ function FCol({
   items: (string | { label: string; href: string })[];
 }) {
   return (
-    <div>
-      <h4 className="mb-4 text-[13px] font-bold tracking-wider text-brand-dark">{title}</h4>
-      <ul className="space-y-2.5">
+    <div className="min-w-0">
+      <h4 className="mb-2 text-[10px] font-bold tracking-wider text-brand-dark sm:mb-4 sm:text-[13px]">
+        {title}
+      </h4>
+      <ul className="space-y-1.5 sm:space-y-2.5">
         {items.map((i) => {
           const label = typeof i === "string" ? i : i.label;
           const href = typeof i === "string" ? "#" : i.href;
           const Comp = href.startsWith("/") ? Link : "a";
           return (
             <li key={label}>
-              <Comp href={href} className="text-xs text-foreground/80 hover:text-brand">
+              <Comp
+                href={href}
+                className="text-[10px] leading-snug text-foreground/80 hover:text-brand sm:text-xs"
+              >
                 {label}
               </Comp>
             </li>

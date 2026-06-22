@@ -3,7 +3,7 @@ export const IMAGES = {
   vfMpv7: "/images/vf-mpv7.png",
   evoScooter: "/images/evo-scooter.png",
   vf9Suv: "/images/vf9-suv.jpg",
-  brandStory: "/images/brand-story.jpg",
+  brandStory: "/images/cars/oto-hero.jpg",
   accModel: "/images/acc-model.jpg",
   accCharger: "/images/acc-charger.jpg",
   accMat: "/images/acc-mat.jpg",
