@@ -17,6 +17,7 @@ export function CarCatalogCard({
   onEstimatePrice: () => void;
 }) {
   const [activeColor, setActiveColor] = useState(car.colors[0]);
+  const displayImage = activeColor.image ?? car.image;
 
   return (
     <article
@@ -24,13 +25,15 @@ export function CarCatalogCard({
     >
       <div className="relative">
         <Link href={`/oto/${car.id}`} prefetch className="block">
-          <img
-            src={car.image}
-            alt={car.name}
-            className="aspect-[4/3] w-full bg-slate-100 object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+          <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-slate-100">
+            <img
+              src={displayImage}
+              alt={`${car.name} - ${activeColor.name}`}
+              className="h-full w-full object-contain p-3 sm:p-4"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </Link>
         {(car.isBestSeller || car.isNew || car.isPromo) && (
           <div className="pointer-events-none absolute left-2 top-2 z-10 flex flex-col gap-1">

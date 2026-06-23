@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
@@ -123,6 +123,7 @@ export default function CarDetailPage({ detail }: Props) {
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
+  const thumbStripRef = useRef<HTMLDivElement>(null);
 
   const [estimatorLocation, setEstimatorLocation] = useState("camau");
   const [includeInsurance, setIncludeInsurance] = useState(true);
@@ -134,6 +135,17 @@ export default function CarDetailPage({ detail }: Props) {
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
   const related = getRelatedCars(detail.id);
+
+  const displayGallery = useMemo(() => {
+    const colorImage = selectedColorObj?.image;
+    if (!colorImage) return detail.gallery;
+    return [colorImage, ...detail.gallery.filter((img) => img !== colorImage)];
+  }, [selectedColorObj?.image, detail.gallery]);
+
+  const handleColorSelect = (colorId: string) => {
+    setSelectedColor(colorId);
+    setActiveImage(0);
+  };
 
   const basePrice =
     batteryMode === "purchase" ? variant.price + detail.batteryPurchasePrice : variant.price;
@@ -184,8 +196,22 @@ export default function CarDetailPage({ detail }: Props) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  const prevImage = () => setActiveImage((i) => (i === 0 ? detail.gallery.length - 1 : i - 1));
-  const nextImage = () => setActiveImage((i) => (i === detail.gallery.length - 1 ? 0 : i + 1));
+  const prevImage = () => setActiveImage((i) => (i === 0 ? displayGallery.length - 1 : i - 1));
+  const nextImage = () => setActiveImage((i) => (i === displayGallery.length - 1 ? 0 : i + 1));
+
+  const scrollThumbs = useCallback((direction: -1 | 1) => {
+    const el = thumbStripRef.current;
+    if (!el) return;
+    const thumb = el.querySelector<HTMLElement>("button");
+    const step = thumb ? thumb.offsetWidth + 8 : 80;
+    el.scrollBy({ left: direction * step * 3, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    const el = thumbStripRef.current;
+    const active = el?.children[activeImage] as HTMLElement | undefined;
+    active?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeImage]);
 
   const openBooking = (service: string) => {
     setBookingService(service);
@@ -249,9 +275,9 @@ export default function CarDetailPage({ detail }: Props) {
                 <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
                   <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
                     <img
-                      src={detail.gallery[activeImage]}
-                      alt={`${detail.name} - ảnh ${activeImage + 1}`}
-                      className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                      src={displayGallery[activeImage]}
+                      alt={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"} ${activeImage + 1}`}
+                      className="h-full w-full object-contain p-2 transition-transform duration-300 hover:scale-[1.02] sm:p-4"
                     />
                   </div>
                   <button
@@ -278,25 +304,50 @@ export default function CarDetailPage({ detail }: Props) {
                     <ChevronRight size={20} />
                   </button>
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-dark/70 px-3 py-1 text-[10px] font-bold text-white backdrop-blur">
-                    {activeImage + 1} / {detail.gallery.length}
+                    {activeImage + 1} / {displayGallery.length}
                   </div>
                 </div>
 
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-                  {detail.gallery.map((img, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActiveImage(i)}
-                      className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:size-[72px] sm:rounded-xl ${
-                        activeImage === i
-                          ? "border-brand ring-2 ring-brand/20"
-                          : "border-border/40 hover:border-border"
-                      }`}
-                    >
-                      <img src={img} alt="" className="h-full w-full object-cover" />
-                    </button>
-                  ))}
+                <div className="relative mt-3">
+                  <button
+                    type="button"
+                    onClick={() => scrollThumbs(-1)}
+                    className="absolute top-1/2 left-0 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:size-8"
+                    aria-label="Cuộn ảnh trước"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <div
+                    ref={thumbStripRef}
+                    className="flex gap-2 overflow-x-auto scroll-smooth px-9 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
+                  >
+                    {displayGallery.map((img, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setActiveImage(i)}
+                        className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:size-[72px] sm:rounded-xl ${
+                          activeImage === i
+                            ? "border-brand ring-2 ring-brand/20"
+                            : "border-border/40 hover:border-border"
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt=""
+                          className="h-full w-full object-contain bg-[#f4f6fa] p-0.5"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => scrollThumbs(1)}
+                    className="absolute top-1/2 right-0 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:size-8"
+                    aria-label="Cuộn ảnh sau"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
                 </div>
 
                 {/* Quick specs — lấp cột gallery */}
@@ -451,7 +502,7 @@ export default function CarDetailPage({ detail }: Props) {
                             key={c.id}
                             type="button"
                             title={c.name}
-                            onClick={() => setSelectedColor(c.id)}
+                            onClick={() => handleColorSelect(c.id)}
                             className={`size-8 rounded-full border-2 transition sm:size-9 ${
                               selectedColor === c.id
                                 ? "border-brand ring-2 ring-brand/30 ring-offset-2"
@@ -752,7 +803,7 @@ export default function CarDetailPage({ detail }: Props) {
               <ChevronLeft className="size-6" />
             </button>
             <img
-              src={detail.gallery[activeImage]}
+              src={displayGallery[activeImage]}
               alt={detail.name}
               className="max-h-[85vh] max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}
@@ -941,6 +992,10 @@ function OverviewSection({ detail }: { detail: CarDetail }) {
     { label: "Công suất", value: `${detail.quickSpecs.power} Hp` },
     { label: "Tăng tốc", value: detail.quickSpecs.acceleration },
   ];
+  const overviewImage =
+    detail.overview.image !== "/images/cars/oto-hero.jpg"
+      ? detail.overview.image
+      : (detail.gallery[0] ?? detail.overview.image);
 
   return (
     <>
@@ -956,9 +1011,9 @@ function OverviewSection({ detail }: { detail: CarDetail }) {
         <div className="order-1 lg:col-span-7">
           <div className="overflow-hidden rounded-2xl bg-surface/50 p-2 sm:p-3">
             <img
-              src={detail.overview.image}
+              src={overviewImage}
               alt={detail.overview.title}
-              className="aspect-[16/10] w-full rounded-xl object-cover"
+              className="aspect-[16/10] w-full rounded-xl object-contain bg-[#f4f6fa] p-2"
             />
           </div>
         </div>
@@ -994,9 +1049,18 @@ function OverviewSection({ detail }: { detail: CarDetail }) {
 }
 
 function ExteriorSection({ detail }: { detail: CarDetail }) {
+  const lead = detail.exterior[0];
   return (
     <>
-      <SectionHeader title="Ngoại thất" subtitle="Thiết kế ấn tượng, khí động học tối ưu" />
+      <SectionHeader
+        title="Ngoại thất"
+        subtitle={lead?.desc?.slice(0, 120) ?? "Thiết kế ấn tượng, khí động học tối ưu"}
+      />
+      {lead && lead.desc.length > 80 && (
+        <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+          {lead.desc}
+        </p>
+      )}
       <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {detail.exterior.map((item) => (
           <FeatureCard key={item.title} {...item} />
@@ -1007,9 +1071,18 @@ function ExteriorSection({ detail }: { detail: CarDetail }) {
 }
 
 function InteriorSection({ detail }: { detail: CarDetail }) {
+  const lead = detail.interior[0];
   return (
     <>
-      <SectionHeader title="Nội thất" subtitle="Không gian cabin cao cấp, tiện nghi vượt trội" />
+      <SectionHeader
+        title="Nội thất"
+        subtitle={lead?.desc?.slice(0, 120) ?? "Không gian cabin cao cấp, tiện nghi vượt trội"}
+      />
+      {lead && lead.desc.length > 80 && (
+        <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+          {lead.desc}
+        </p>
+      )}
       <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {detail.interior.map((item) => (
           <FeatureCard key={item.title} {...item} />
@@ -1024,7 +1097,7 @@ function TechnologySection({ detail }: { detail: CarDetail }) {
     <>
       <SectionHeader
         title="Công nghệ thông minh"
-        subtitle="Hệ sinh thái kết nối toàn diện"
+        subtitle={detail.technologySubtitle ?? "Hệ sinh thái kết nối toàn diện"}
         center
       />
       <div className="mt-6 overflow-hidden rounded-2xl border border-border/60 bg-white sm:mt-8">

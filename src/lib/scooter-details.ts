@@ -1,4 +1,5 @@
 import { SCOOTERS, TYPE_OPTIONS, type ScooterModel, formatPrice } from "./scooters";
+import { VINFAST_SCOOTER_DETAIL_OVERRIDES } from "./vinfast-detail-overrides";
 
 export type ScooterVariant = {
   id: string;
@@ -365,7 +366,10 @@ export function getScooterById(id: string): ScooterModel | undefined {
 export function getScooterDetail(id: string): ScooterDetail | undefined {
   const scooter = getScooterById(id);
   if (!scooter) return undefined;
-  return buildDefaultDetail(scooter);
+  const base = buildDefaultDetail(scooter);
+  const override = VINFAST_SCOOTER_DETAIL_OVERRIDES[id] as Partial<ScooterDetail> | undefined;
+  if (!override) return base;
+  return { ...base, ...override };
 }
 
 export function getRelatedScooters(id: string, limit = 4) {

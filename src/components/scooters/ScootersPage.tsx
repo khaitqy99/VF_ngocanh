@@ -153,7 +153,7 @@ export default function ScootersPage() {
   });
 
   // Rolling Cost Estimator State
-  const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo-neo");
+  const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo");
   const [estimatorLocation, setEstimatorLocation] = useState<string>("hanoi");
   const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
 
@@ -179,9 +179,9 @@ export default function ScootersPage() {
       if (segmentTab === "student") {
         tabOk = scooter.type === "xe-dap-dien" || scooter.id === "evo-lite-neo";
       } else if (segmentTab === "urban") {
-        tabOk = scooter.type === "xe-co-ban" || scooter.id === "feliz-s";
+        tabOk = scooter.type === "xe-co-ban" || scooter.id === "feliz-2025";
       } else if (segmentTab === "luxury") {
-        tabOk = scooter.type === "xe-ga-cao-cap" || scooter.id === "klara-s2";
+        tabOk = scooter.type === "xe-ga-cao-cap" || scooter.id === "vero-x";
       }
 
       // 3. Search query

@@ -1,0 +1,34 @@
+{
+  "cars": {
+    "vf3": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf3.html",
+    "vf5": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5.html",
+    "vf6": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6.html",
+    "vf7": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7.html",
+    "vf8": "https://shop.vinfastauto.com/vn_vi/car-vf8.html",
+    "vf8-all-new": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf8-the-all-new-2026",
+    "vf9": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-vf9.html",
+    "vf-mpv7": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf-mpv7",
+    "ec-van": "https://shop.vinfastauto.com/vn_vi/vinfast-ecvan.html",
+    "minio-green": "https://vinfastauto.com/vn_vi/minio-green",
+    "herio-green": "https://shop.vinfastauto.com/vn_vi/herio-green.html",
+    "nerio-green": "https://shop.vinfastauto.com/vn_vi/nerio-green.html",
+    "limo-green": "https://vinfastauto.com/vn_vi/limo-green"
+  },
+  "scooters": {
+    "evo-lite-neo": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-lite-neo.html",
+    "flazz-max": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-flazz-max",
+    "amio-s": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio-s",
+    "evo-lite": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+    "amio": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio",
+    "viper": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-viper",
+    "feliz-ii": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-feliz-II",
+    "evo": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+    "zgoo": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-zgoo.html",
+    "flazz": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-flazz.html",
+    "vero-x": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-verox.html",
+    "feliz-2025": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-feliz.html",
+    "evo-grand": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand.html",
+    "evo-grand-lite": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand-lite.html",
+    "drgnfly": "https://shop.vinfastauto.com/vn_vi/xe-dap-dien-drgnfly.html"
+  }
+}

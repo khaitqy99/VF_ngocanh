@@ -8,7 +8,21 @@ export type AccessoryCategory =
   | "qua-tang"
   | "phu-kien-chung";
 
-export type VehicleModel = "all" | "vf3" | "vf5" | "vf6" | "vf7" | "vf8" | "vf9" | "vf-e34";
+export type VehicleModel =
+  | "all"
+  | "vf3"
+  | "vf5"
+  | "vf6"
+  | "vf7"
+  | "vf8"
+  | "vf8-all-new"
+  | "vf9"
+  | "vf-mpv7"
+  | "ec-van"
+  | "herio-green"
+  | "nerio-green"
+  | "limo-green"
+  | "minio-green";
 
 export type AccessoryProduct = {
   id: string;
@@ -44,8 +58,14 @@ export const VEHICLE_OPTIONS: { value: VehicleModel; label: string }[] = [
   { value: "vf6", label: "VF 6" },
   { value: "vf7", label: "VF 7" },
   { value: "vf8", label: "VF 8" },
+  { value: "vf8-all-new", label: "VF 8 All New" },
   { value: "vf9", label: "VF 9" },
-  { value: "vf-e34", label: "VF e34" },
+  { value: "vf-mpv7", label: "VF MPV 7" },
+  { value: "ec-van", label: "EC VAN" },
+  { value: "herio-green", label: "Herio Green" },
+  { value: "nerio-green", label: "Nerio Green" },
+  { value: "limo-green", label: "Limo Green" },
+  { value: "minio-green", label: "Minio Green" },
 ];
 
 export const ACCESSORIES_PER_PAGE = 12;
@@ -147,10 +167,11 @@ export const ACCESSORIES: AccessoryProduct[] = [
   },
   {
     id: "bo-sac-treo-tuong",
-    name: "Bộ sạc treo tường 7,4kW",
-    description: "Sạc AC tại nhà, công suất 7,4kW, lắp đặt chuyên nghiệp tại showroom.",
-    price: 11_900_000,
-    image: IMAGES.accCharger,
+    name: "Bộ Sạc Treo Tường AC 11 kW",
+    description:
+      "Bộ sạc treo tường AC 11 kW chính hãng VinFast, sạc nhanh tại nhà an toàn và tiện lợi.",
+    price: 11_781_818,
+    image: "/images/vinfast/accessories/sac-11kw.webp",
     category: "sac-pin",
     vehicles: ["all"],
     badge: "Phổ biến",
@@ -209,10 +230,10 @@ export const ACCESSORIES: AccessoryProduct[] = [
   },
   {
     id: "mo-hinh-vf3",
-    name: "Mô hình xe VinFast VF 3",
-    description: "Mô hình thu nhỏ tỉ lệ 1:18, chi tiết tinh xảo — quà tặng ý nghĩa.",
-    price: 220_000,
-    image: IMAGES.accModel,
+    name: "Mô Hình Xe VinFast VF 3",
+    description: "Mô hình thu nhỏ VF 3 chính hãng VinFast — quà tặng và sưu tầm ý nghĩa.",
+    price: 2_074_000,
+    image: "/images/vinfast/accessories/vf3-mint.webp",
     category: "qua-tang",
     vehicles: ["vf3"],
     inStock: true,
@@ -225,6 +246,28 @@ export const ACCESSORIES: AccessoryProduct[] = [
     image: IMAGES.accModel,
     category: "qua-tang",
     vehicles: ["vf8"],
+    inStock: true,
+  },
+  {
+    id: "vf7-tam-che-pin-cao-ap",
+    name: "VF 7 Tấm Che Pin Cao Áp",
+    description:
+      "Tấm che pin cao áp chính hãng dành riêng cho VinFast VF 7, bảo vệ và hoàn thiện khu vực pin.",
+    price: 6_881_000,
+    image: "/images/vinfast/accessories/vf7-che-pin.webp",
+    category: "an-toan",
+    vehicles: ["vf7"],
+    inStock: true,
+  },
+  {
+    id: "o-golf-2-tang",
+    name: "Ô Golf 2 Tầng",
+    description:
+      "Ô golf 2 tầng chính hãng VinFast, chống nắng hiệu quả khi trên sân golf hoặc ngoài trời.",
+    price: 404_000,
+    image: "/images/vinfast/accessories/o-golf.webp",
+    category: "qua-tang",
+    vehicles: ["all"],
     inStock: true,
   },
   {

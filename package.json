@@ -8,7 +8,15 @@
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "images:crop": "node scripts/crop-design.mjs"
+    "images:crop": "node scripts/crop-design.mjs",
+    "sync:vinfast": "node scripts/sync-vinfast-home.mjs",
+    "sync:details": "node scripts/fetch-vinfast-details.mjs",
+    "sync:catalog": "node scripts/sync-vinfast-catalog.mjs",
+    "sync:vinfast-all": "node scripts/fetch-vinfast-details.mjs && node scripts/sync-vinfast-catalog.mjs",
+    "download:cars": "node scripts/download-cms-cars.mjs",
+    "download:accessories": "node scripts/download-accessories.mjs",
+    "download:charging": "node scripts/download-charging-images.mjs",
+    "sync:gallery": "node scripts/download-car-gallery-images.mjs && node scripts/generate-vinfast-galleries.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -23,7 +23,7 @@ export function AccessoryProductCard({
         <img
           src={product.image}
           alt={product.name}
-          className="aspect-square w-full bg-slate-100 object-cover"
+          className="aspect-square w-full bg-[#f7f9f9] object-contain p-3"
           loading="lazy"
           decoding="async"
         />
