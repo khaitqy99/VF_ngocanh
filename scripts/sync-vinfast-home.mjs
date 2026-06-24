@@ -57,7 +57,7 @@ const CAR_ID_MAP = {
   "VF 6": "vf6",
   "VF 7": "vf7",
   "VF 8": "vf8",
-  "VF 8 All New": "vf8",
+  "VF 8 All New": "vf8-all-new",
   "VF 9": "vf9",
   "VF MPV 7": "vf-mpv7",
   "Minio Green": "minio-green",
@@ -261,6 +261,19 @@ function parseHeroBanners(html) {
   return slides;
 }
 
+function parseSpecItems(chunk) {
+  const specs = [];
+  const specBlockRe =
+    /<div class="field-spec-item[^"]*">\s*<div class="field-spec-item--title[^"]*">\s*([^<]+?)\s*<\/div>\s*<div class="field-spec-item--desc[^"]*">\s*([^<]+?)\s*<\/div>(?:\s*<div[^>]*field-spec-item--desc-sub[^>]*>\s*([^<]+?)\s*<\/div>)?/g;
+  let m;
+  while ((m = specBlockRe.exec(chunk)) !== null) {
+    const spec = { label: m[1].trim(), value: m[2].trim() };
+    if (m[3]?.trim()) spec.listPrice = m[3].trim();
+    specs.push(spec);
+  }
+  return specs;
+}
+
 function parseVehicleSlides(html, blockId, idMap) {
   const block = extractSwiperWrapper(html, blockId);
   const slides = [];
@@ -273,13 +286,7 @@ function parseVehicleSlides(html, blockId, idMap) {
     const imageSrc = resolveUrl(img[1]);
     const name = resolveVehicleName(img[2], imageSrc);
 
-    const specs = [];
-    const specRe =
-      /<div class="field-spec-item--title[^"]*">([^<]*)<\/div>\s*<div class="field-spec-item--desc[^"]*">([^<]*)<\/div>/g;
-    let sm;
-    while ((sm = specRe.exec(chunk)) !== null) {
-      specs.push({ label: sm[1].trim(), value: sm[2].trim() });
-    }
+    const specs = parseSpecItems(chunk);
 
     const detailHref =
       chunk.match(/btn--primary--white"[^>]*href="([^"]+)"/)?.[1] ??
@@ -316,7 +323,12 @@ function specsToFeatureSpecs(specs, type) {
     ) {
       result.push({ value: spec.value, label: spec.label });
     } else if (label.includes("giá")) {
-      result.push({ value: spec.value, label: "Giá niêm yết", highlight: true });
+      result.push({
+        value: spec.value,
+        label: spec.label,
+        highlight: true,
+        ...(spec.listPrice ? { listPrice: spec.listPrice } : {}),
+      });
     } else if (type === "car" && label.includes("dòng xe")) {
       // segment shown as subtitle
     }
@@ -387,6 +399,7 @@ export type VinFastHomeSpec = {
   label: string;
   highlight?: boolean;
   seats?: boolean;
+  listPrice?: string;
 };
 
 export type VinFastHomeSlide = {

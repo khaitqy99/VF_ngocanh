@@ -702,7 +702,12 @@ function specsToFeatureSpecs(specs, type) {
     } else if (label.includes("công suất") || label.includes("cốp") || label.includes("pin lithium")) {
       result.push({ value: spec.value, label: spec.label });
     } else if (label.includes("giá")) {
-      result.push({ value: spec.value, label: "Giá niêm yết", highlight: true });
+      result.push({
+        value: spec.value,
+        label: spec.label,
+        highlight: true,
+        ...(spec.listPrice ? { listPrice: spec.listPrice } : {}),
+      });
     }
   }
   return result.slice(0, 4);
@@ -1103,6 +1108,7 @@ export type VinFastHomeSpec = {
   label: string;
   highlight?: boolean;
   seats?: boolean;
+  listPrice?: string;
 };
 
 export type VinFastHomeSlide = {

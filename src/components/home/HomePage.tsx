@@ -22,7 +22,10 @@ import { ACCESSORIES } from "@/lib/accessories";
 import { HERO_BANNERS, IMAGES } from "@/lib/images";
 import { springSnappy } from "@/lib/motion";
 import { FeatureCarouselSection, FeatureSpec } from "@/components/shared/FeatureCarouselSection";
+import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
+import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 import { VINFAST_FEATURED_CARS, VINFAST_FEATURED_SCOOTERS } from "@/lib/vinfast-home";
+import { Toaster } from "sonner";
 
 const featureCopy = "relative z-10 w-full min-w-0";
 const warrantyTitle =
@@ -40,15 +43,31 @@ const warrantyBtn =
 const sectionHeading =
   "text-center text-lg font-black leading-tight tracking-tight text-balance text-brand-dark sm:text-xl sm:leading-tight md:text-2xl md:leading-tight lg:text-[1.75rem] xl:text-3xl";
 
+const SCOOTER_BOOKING_SERVICES = [
+  "Đặt mua ngay",
+  "Đăng ký lái thử",
+  "Nhận báo giá",
+  "Tư vấn trả góp",
+];
+
 export default function HomePage() {
+  const [bookingSlide, setBookingSlide] = useState<VinFastHomeSlide | null>(null);
+  const [bookingKind, setBookingKind] = useState<"car" | "scooter">("car");
+
+  const openDepositModal = (slide: VinFastHomeSlide, kind: "car" | "scooter") => {
+    setBookingKind(kind);
+    setBookingSlide(slide);
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <Toaster position="top-center" richColors />
       <Header />
       <main>
         <h1 className="sr-only">VF Ngọc Anh — Đại lý ủy quyền chính thức VinFast Cà Mau</h1>
         <Hero />
-        <FeaturedVehicle />
-        <ScooterSection />
+        <FeaturedVehicle onDeposit={(slide) => openDepositModal(slide, "car")} />
+        <ScooterSection onDeposit={(slide) => openDepositModal(slide, "scooter")} />
         <Accessories />
         <ChargingEcosystem />
         <WarrantyService />
@@ -58,6 +77,14 @@ export default function HomePage() {
       </main>
       <Footer />
       <FloatingButtons />
+      <ShowroomBookingModal
+        open={bookingSlide !== null}
+        onClose={() => setBookingSlide(null)}
+        vehicleName={bookingSlide?.title ?? ""}
+        vehicleImage={bookingSlide?.image ?? ""}
+        service={bookingKind === "scooter" ? "Đặt mua ngay" : "Đặt cọc ngay"}
+        serviceOptions={bookingKind === "scooter" ? SCOOTER_BOOKING_SERVICES : undefined}
+      />
     </div>
   );
 }
@@ -141,22 +168,24 @@ function Hero() {
   );
 }
 
-function FeaturedVehicle() {
+function FeaturedVehicle({ onDeposit }: { onDeposit: (slide: VinFastHomeSlide) => void }) {
   return (
     <FeatureCarouselSection
       slides={VINFAST_FEATURED_CARS}
       imageSide="left"
       imageAspect="2544/1500"
+      onPrimaryClick={onDeposit}
     />
   );
 }
 
-function ScooterSection() {
+function ScooterSection({ onDeposit }: { onDeposit: (slide: VinFastHomeSlide) => void }) {
   return (
     <FeatureCarouselSection
       slides={VINFAST_FEATURED_SCOOTERS}
       imageSide="right"
       imageAspect="2544/1500"
+      onPrimaryClick={onDeposit}
     />
   );
 }

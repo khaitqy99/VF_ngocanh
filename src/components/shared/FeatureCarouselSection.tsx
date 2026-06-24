@@ -27,21 +27,21 @@ const featurePanel =
 const featureBtn =
   "w-full rounded-md px-2.5 py-2 text-center text-[10px] font-semibold tracking-wide transition active:scale-[0.98] sm:px-4 sm:text-[11px] lg:px-3.5 lg:py-1.5 lg:text-[10px] xl:px-4 xl:py-2 xl:text-[11px] 2xl:px-5 2xl:py-2.5 2xl:text-[12px]";
 
-const LIST_PRICE_LABEL = "Giá niêm yết";
-const LIST_PRICE_NOTE = "(Chưa bao gồm khuyến mãi hàng tháng)";
-
-function isListPriceSpec(label: string, value: string) {
-  return /giá\s*(bán\s*)?từ/i.test(label) || /VNĐ/i.test(value);
+function isPriceSpec(label: string, value: string) {
+  return /giá/i.test(label) || /VNĐ/i.test(value);
 }
 
 export function FeatureCarouselSection({
   slides,
   imageSide,
   imageAspect,
+  onPrimaryClick,
 }: {
   slides: FeatureCarouselSlide[];
   imageSide: "left" | "right";
   imageAspect: "2544/1500" | "2/1";
+  /** Mở modal / xử lý nút chính (vd. ĐẶT CỌC) thay vì điều hướng */
+  onPrimaryClick?: (slide: FeatureCarouselSlide) => void;
 }) {
   const [idx, setIdx] = useState(0);
 
@@ -115,46 +115,57 @@ export function FeatureCarouselSection({
                     {s.subtitle && <p className={featureSubtitle}>{s.subtitle}</p>}
                     {s.description && <p className={featureDescription}>{s.description}</p>}
                     <div className={featureSpecGrid}>
-                      {s.specs.map((spec) => {
-                        const listPrice = isListPriceSpec(spec.label, spec.value);
-                        return (
-                          <FeatureSpec
-                            key={`${spec.value}-${spec.label}`}
-                            feature
-                            className={
-                              listPrice && s.specs.length <= 3
-                                ? "col-span-2 xl:col-span-2"
-                                : undefined
-                            }
-                            icon={
-                              spec.seats ? (
-                                <Users className="size-4 shrink-0 text-brand lg:size-3.5 xl:size-4" />
-                              ) : undefined
-                            }
-                            value={spec.value}
-                            label={spec.label}
-                            highlight={spec.highlight}
-                          />
-                        );
-                      })}
-                    </div>
-                    <div className={featureActions}>
                       {(() => {
-                        const depositFirst = s.primaryCta === "ĐẶT CỌC";
-                        const primaryHref = depositFirst ? (s.detailHref ?? s.href) : s.href;
-                        const secondaryHref = depositFirst ? s.href : (s.detailHref ?? s.href);
+                        const priceSpec = s.specs.find((spec) =>
+                          isPriceSpec(spec.label, spec.value),
+                        );
+                        const otherSpecs = s.specs.filter(
+                          (spec) => !isPriceSpec(spec.label, spec.value),
+                        );
 
                         return (
                           <>
-                            <FeatureCta href={primaryHref} variant="primary" feature>
-                              {s.primaryCta}
-                            </FeatureCta>
-                            <FeatureCta href={secondaryHref} variant="outline" feature>
-                              {s.secondaryCta}
-                            </FeatureCta>
+                            {otherSpecs.map((spec) => (
+                              <FeatureSpec
+                                key={`${spec.value}-${spec.label}`}
+                                feature
+                                icon={
+                                  spec.seats ? (
+                                    <Users className="size-4 shrink-0 text-brand lg:size-3.5 xl:size-4" />
+                                  ) : undefined
+                                }
+                                value={spec.value}
+                                label={spec.label}
+                                highlight={spec.highlight}
+                              />
+                            ))}
+                            {priceSpec && (
+                              <FeaturePriceBlock
+                                feature
+                                label={priceSpec.label}
+                                value={priceSpec.value}
+                                listPrice={priceSpec.listPrice}
+                                className={
+                                  otherSpecs.length <= 2 ? "col-span-2 xl:col-span-1" : undefined
+                                }
+                              />
+                            )}
                           </>
                         );
                       })()}
+                    </div>
+                    <div className={featureActions}>
+                      <FeatureCta
+                        variant="primary"
+                        feature
+                        href={onPrimaryClick ? undefined : s.href}
+                        onClick={onPrimaryClick ? () => onPrimaryClick(s) : undefined}
+                      >
+                        {s.primaryCta}
+                      </FeatureCta>
+                      <FeatureCta href={s.href} variant="outline" feature>
+                        {s.secondaryCta}
+                      </FeatureCta>
                     </div>
                   </div>
                 </div>
@@ -164,6 +175,56 @@ export function FeatureCarouselSection({
         </div>
       </div>
     </section>
+  );
+}
+
+export function FeaturePriceBlock({
+  label,
+  value,
+  listPrice,
+  feature,
+  className,
+}: {
+  label: string;
+  value: string;
+  listPrice?: string;
+  feature?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={feature ? `min-w-0 ${className ?? ""}` : className}>
+      <div className="flex flex-col items-center text-center">
+        <p
+          className={
+            feature
+              ? "text-[11px] leading-snug text-muted-foreground lg:text-[10px] xl:text-[11px]"
+              : "text-[11px] text-muted-foreground"
+          }
+        >
+          {label}
+        </p>
+        <p
+          className={
+            feature
+              ? "mt-0.5 whitespace-nowrap text-sm font-bold tracking-tight text-brand-dark sm:text-base lg:text-sm xl:text-base 2xl:text-lg"
+              : "mt-0.5 text-base font-bold tracking-tight text-brand-dark lg:text-lg"
+          }
+        >
+          {value}
+        </p>
+        {listPrice && (
+          <p
+            className={
+              feature
+                ? "mt-0.5 whitespace-nowrap text-xs text-muted-foreground line-through lg:text-[11px]"
+                : "mt-0.5 text-xs text-muted-foreground line-through"
+            }
+          >
+            {listPrice}
+          </p>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -184,21 +245,18 @@ export function FeatureSpec({
   dense?: boolean;
   className?: string;
 }) {
-  const listPrice = isListPriceSpec(label, value);
-  const displayLabel = listPrice ? LIST_PRICE_LABEL : label;
-
   return (
     <div className={feature ? `min-w-0 ${className ?? ""}` : className}>
       <div
-        className={`flex min-w-0 items-baseline gap-1 font-bold ${highlight || listPrice ? "text-brand" : "text-brand-dark"}`}
+        className={`flex min-w-0 items-baseline gap-1 font-bold ${highlight ? "text-brand" : "text-brand-dark"}`}
       >
         {icon && <span className="text-brand">{icon}</span>}
         <span
           className={
             feature
               ? dense
-                ? `text-sm tracking-tight sm:text-base lg:text-xs lg:leading-tight xl:text-sm 2xl:text-lg ${highlight || listPrice ? "whitespace-nowrap" : "break-words"}`
-                : `text-sm tracking-tight sm:text-base lg:text-sm lg:leading-snug xl:text-base 2xl:text-lg ${highlight || listPrice ? "whitespace-nowrap" : "break-words"}`
+                ? `text-sm tracking-tight sm:text-base lg:text-xs lg:leading-tight xl:text-sm 2xl:text-lg ${highlight ? "whitespace-nowrap" : "break-words"}`
+                : `text-sm tracking-tight sm:text-base lg:text-sm lg:leading-snug xl:text-base 2xl:text-lg ${highlight ? "whitespace-nowrap" : "break-words"}`
               : "text-base tracking-tight lg:text-lg"
           }
         >
@@ -214,24 +272,21 @@ export function FeatureSpec({
             : "mt-0.5 text-[11px] text-muted-foreground"
         }
       >
-        {displayLabel}
+        {label}
       </p>
-      {listPrice && (
-        <p className="mt-0.5 whitespace-nowrap text-[10px] leading-snug text-muted-foreground/80">
-          {LIST_PRICE_NOTE}
-        </p>
-      )}
     </div>
   );
 }
 
 function FeatureCta({
   href,
+  onClick,
   variant,
   feature,
   children,
 }: {
   href?: string;
+  onClick?: () => void;
   variant: "primary" | "outline";
   feature?: boolean;
   children: React.ReactNode;
@@ -244,6 +299,14 @@ function FeatureCta({
       : feature
         ? `${featureBtn} border border-brand bg-white text-brand hover:bg-brand/5`
         : "rounded-md border border-brand bg-white px-5 py-2.5 text-[12px] font-semibold tracking-wide text-brand transition hover:bg-brand/5 active:scale-[0.98]";
+
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={className}>
+        {children}
+      </button>
+    );
+  }
 
   if (!href) {
     return (
