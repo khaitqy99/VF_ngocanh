@@ -17,7 +17,6 @@ import {
   Gauge,
   Leaf,
   Headphones,
-  Sparkles,
   Check,
   CheckCircle2,
   Phone,
@@ -35,6 +34,8 @@ import {
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
+import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -43,6 +44,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { CHARGING_HERO_BANNERS } from "@/lib/images";
 import {
   BATTERY_HIGHLIGHTS,
   CATEGORY_OPTIONS,
@@ -56,6 +58,7 @@ import {
   formatPrice,
   type ChargingProductCategory,
 } from "@/lib/charging";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 const HERO_FEATURES = [
   { icon: MapPin, text: "150.000+ cổng sạc", sub: "Phủ sóng khắp 63 tỉnh thành" },
@@ -753,74 +756,35 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToSection }: { onScrollToSection: (id: string) => void }) {
   return (
-    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
-      <div className="absolute inset-0">
-        <img
-          src={CHARGING_IMAGES.hero}
-          alt="Hệ thống trạm sạc VinFast"
-          className="h-full w-full object-cover opacity-80"
+    <>
+      <section className="relative w-full overflow-hidden bg-white">
+        <PromoBannerCarousel
+          banners={CHARGING_HERO_BANNERS}
+          aspectLayout
+          showControls={CHARGING_HERO_BANNERS.length > 1}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
-      </div>
+      </section>
 
-      <div className="container-vf relative z-10">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col justify-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> ĐỊNH HÌNH HỆ SINH
-              THÁI XANH TƯƠNG LAI
-            </div>
-            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              HỆ THỐNG TRẠM SẠC & PIN <br />
-              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
-                TOÀN DIỆN, THÔNG MINH
-              </span>
-            </h1>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              VinFast tự hào xây dựng hạ tầng năng lượng số 1 Đông Nam Á với hơn 150.000 cổng sạc
-              thông minh phủ khắp nẻo đường Việt Nam. Đồng hành cùng công nghệ pin LFP siêu bền và
-              các giải pháp sạc treo tường tiện ích tại nhà riêng.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={() => onScrollToSection("charging-simulator")}
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
-              >
-                <Sliders className="size-4 text-accent-yellow" /> DỰ TOÁN THỜI GIAN SẠC
-              </button>
-              <button
-                onClick={() => onScrollToSection("san-pham-sac")}
-                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
-              >
-                <ShoppingCart className="size-4" /> XEM THIẾT BỊ SẠC GIA ĐÌNH
-              </button>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
-              {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
-                <div key={text} className="flex items-start gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black text-white">{text}</p>
-                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
-                      {sub}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+      <CatalogHeroIntro
+        title="Hệ thống trạm sạc & pin"
+        titleAccent="toàn diện, thông minh"
+        description="VinFast tự hào xây dựng hạ tầng năng lượng hàng đầu Đông Nam Á với hơn 150.000 cổng sạc thông minh phủ khắp nẻo đường Việt Nam — đồng hành cùng công nghệ pin LFP siêu bền và giải pháp sạc tại nhà tiện ích."
+        primaryCta={{
+          label: "DỰ TOÁN THỜI GIAN SẠC",
+          onClick: () => onScrollToSection("charging-simulator"),
+        }}
+        secondaryCta={{
+          label: "XEM THIẾT BỊ SẠC GIA ĐÌNH",
+          href: "#san-pham-sac",
+        }}
+        highlights={[
+          { value: "150.000+", label: "Cổng sạc toàn quốc" },
+          { value: "2.500+", label: "Trạm sạc công cộng" },
+          { value: "24/7", label: "Hỗ trợ kỹ thuật" },
+        ]}
+        features={[...HERO_FEATURES]}
+      />
+    </>
   );
 }
 
@@ -1330,10 +1294,10 @@ function CtaSection() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="tel:1900232389"
+            href={HOTLINE_TEL}
             className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
           >
-            <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: 1900 2323 89
+            <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
           </a>
           <Link
             href="/gioi-thieu"

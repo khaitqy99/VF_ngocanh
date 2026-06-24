@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -17,13 +19,13 @@ export function AccessoryProductCard({
 }) {
   return (
     <article
-      className={`catalog-card flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
+      className={`catalog-card group flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
     >
-      <Link href={`/phu-kien/${product.id}`} className="relative block">
+      <Link href={`/phu-kien/${product.id}`} className="relative block overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
-          className="aspect-square w-full bg-[#f7f9f9] object-contain p-3"
+          className="aspect-square w-full bg-[#f7f9f9] object-contain p-3 transition duration-500 ease-out group-hover:scale-105"
           loading="lazy"
           decoding="async"
         />

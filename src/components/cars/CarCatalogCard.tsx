@@ -21,7 +21,7 @@ export function CarCatalogCard({
 
   return (
     <article
-      className={`catalog-card flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
+      className={`catalog-card group flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
     >
       <div className="relative">
         <Link href={`/oto/${car.id}`} prefetch className="block">
@@ -29,7 +29,7 @@ export function CarCatalogCard({
             <img
               src={displayImage}
               alt={`${car.name} - ${activeColor.name}`}
-              className="h-full w-full object-contain p-3 sm:p-4"
+              className="h-full w-full object-contain p-3 transition duration-500 ease-out group-hover:scale-105 sm:p-4"
               loading="lazy"
               decoding="async"
             />
@@ -92,9 +92,6 @@ export function CarCatalogCard({
             <p className="text-base font-black tabular-nums text-brand-dark sm:text-lg">
               {formatPrice(car.price)}{" "}
               <span className="text-[11px] font-bold text-slate-500">đ</span>
-            </p>
-            <p className="mt-1 text-[10px] font-semibold text-slate-500 sm:text-[11px]">
-              Hoặc mua đứt pin +{formatPrice(car.batteryPurchasePrice)} đ
             </p>
           </div>
 

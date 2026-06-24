@@ -702,7 +702,7 @@ function specsToFeatureSpecs(specs, type) {
     } else if (label.includes("công suất") || label.includes("cốp") || label.includes("pin lithium")) {
       result.push({ value: spec.value, label: spec.label });
     } else if (label.includes("giá")) {
-      result.push({ value: spec.value, label: spec.label, highlight: true });
+      result.push({ value: spec.value, label: "Giá niêm yết", highlight: true });
     }
   }
   return result.slice(0, 4);
@@ -1088,8 +1088,8 @@ function generateVinfastHomeTs(data, cars, scooters) {
         ? "h-full w-full object-contain object-left"
         : "h-full w-full object-contain object-right",
     specs: specsToFeatureSpecs(item.specs, type),
-    primaryCta: type === "car" ? "KHÁM PHÁ NGAY" : "MUA NGAY",
-    secondaryCta: type === "car" ? "ĐẶT LỊCH LÁI THỬ" : "XEM CHI TIẾT",
+    primaryCta: "ĐẶT CỌC",
+    secondaryCta: "KHÁM PHÁ NGAY",
     href: item.localId ? `${type === "car" ? "/oto" : "/xe-may-dien"}/${item.localId}` : item.detailHref,
     detailHref: item.detailHref,
   });

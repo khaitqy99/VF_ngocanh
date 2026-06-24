@@ -9,6 +9,7 @@ import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
+import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -24,6 +25,7 @@ import {
   getVehicleLabels,
   type AccessoryProduct,
 } from "@/lib/accessories";
+import { HOTLINE_TEL } from "@/lib/contact";
 
 const HIGHLIGHTS = [
   { icon: Shield, text: "100% chính hãng VinFast" },
@@ -106,7 +108,10 @@ export default function AccessoryDetailPage({ product }: Props) {
             </Link>
 
             <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-              <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+              <FadeIn
+                direction="left"
+                className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
+              >
                 <img
                   src={product.image}
                   alt={product.name}
@@ -126,9 +131,9 @@ export default function AccessoryDetailPage({ product }: Props) {
                     )}
                   </div>
                 )}
-              </div>
+              </FadeIn>
 
-              <div className="flex flex-col">
+              <FadeIn direction="right" delay={0.1} className="flex flex-col">
                 <p className="text-[11px] font-bold uppercase tracking-wide text-brand">
                   {getCategoryLabel(product.category)}
                 </p>
@@ -172,7 +177,7 @@ export default function AccessoryDetailPage({ product }: Props) {
 
                 <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <a
-                    href="tel:1900232389"
+                    href={HOTLINE_TEL}
                     className="flex items-center justify-center gap-2 rounded-lg bg-brand py-3.5 text-[11px] font-extrabold tracking-wide text-white hover:bg-[#0046cc]"
                   >
                     <Phone className="size-4" />
@@ -188,7 +193,7 @@ export default function AccessoryDetailPage({ product }: Props) {
                     THÊM GIỎ TƯ VẤN
                   </button>
                 </div>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -196,12 +201,18 @@ export default function AccessoryDetailPage({ product }: Props) {
         {related.length > 0 && (
           <section className="border-t border-slate-100 bg-white pb-12 sm:pb-16">
             <div className="container-vf">
-              <h2 className="text-lg font-black text-brand-dark sm:text-xl">Phụ kiện liên quan</h2>
-              <div className="mt-6 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
-                {related.map((item) => (
-                  <AccessoryProductCard key={item.id} product={item} />
+              <FadeIn>
+                <h2 className="text-lg font-black text-brand-dark sm:text-xl">
+                  Phụ kiện liên quan
+                </h2>
+              </FadeIn>
+              <CatalogGrid className="mt-6 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
+                {related.map((item, index) => (
+                  <CatalogGridItem key={item.id} index={index}>
+                    <AccessoryProductCard product={item} />
+                  </CatalogGridItem>
                 ))}
-              </div>
+              </CatalogGrid>
             </div>
           </section>
         )}

@@ -1,4 +1,5 @@
 import { IMAGES } from "@/lib/images";
+import { HOTLINE } from "@/lib/contact";
 
 export type ChargingProductCategory = "tram-sac" | "sac-tai-nha" | "sac-di-dong" | "phu-kien-sac";
 
@@ -199,7 +200,7 @@ export const WHY_CHARGING = [
   },
   {
     title: "Hỗ trợ 24/7",
-    desc: "Hotline 1900 2323 89 và đội ngũ kỹ thuật sẵn sàng hỗ trợ mọi vấn đề về pin và trạm sạc.",
+    desc: `Hotline cứu hộ ${HOTLINE} và đội ngũ kỹ thuật sẵn sàng hỗ trợ mọi vấn đề về pin và trạm sạc.`,
   },
 ] as const;
 
@@ -222,7 +223,7 @@ export const CHARGING_FAQ = [
   },
   {
     q: "VF Ngọc Anh có hỗ trợ lắp bộ sạc tại nhà không?",
-    a: "Có. Showroom VF Ngọc Anh cung cấp gói khảo sát, lắp đặt và bàn giao bộ sạc treo tường 7,4kW chính hãng. Liên hệ hotline 1900 2323 89 để đặt lịch.",
+    a: `Có. Showroom VF Ngọc Anh cung cấp gói khảo sát, lắp đặt và bàn giao bộ sạc treo tường 7,4kW chính hãng. Liên hệ hotline ${HOTLINE} để đặt lịch.`,
   },
   {
     q: "Sạc pin thường xuyên có làm hỏng pin không?",

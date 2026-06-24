@@ -33,6 +33,9 @@ import {
 } from "lucide-react";
 
 import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
+import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
+import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
+import { CatalogGrid, CatalogGridItem } from "@/components/motion";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
@@ -53,6 +56,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CAR_HERO_BANNERS } from "@/lib/images";
 import {
   CAR_IMAGES,
   CARS,
@@ -69,6 +73,7 @@ import {
   type DriveType,
   type RangeBucket,
 } from "@/lib/cars";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 10 năm hoặc 200.000km" },
@@ -425,24 +430,25 @@ export default function CarsPage() {
                     </button>
                   </motion.div>
                 ) : (
-                  <div
+                  <CatalogGrid
                     id="car-catalog-grid"
                     className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
                   >
-                    {filteredCars.map((car) => (
-                      <CarCatalogCard
-                        key={car.id}
-                        car={car}
-                        onBookDrive={() => openBooking(car)}
-                        onEstimatePrice={() => {
-                          setEstimatorCarId(car.id);
-                          document
-                            .getElementById("estimator-tool")
-                            ?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                      />
+                    {filteredCars.map((car, index) => (
+                      <CatalogGridItem key={car.id} index={index}>
+                        <CarCatalogCard
+                          car={car}
+                          onBookDrive={() => openBooking(car)}
+                          onEstimatePrice={() => {
+                            setEstimatorCarId(car.id);
+                            document
+                              .getElementById("estimator-tool")
+                              ?.scrollIntoView({ behavior: "smooth" });
+                          }}
+                        />
+                      </CatalogGridItem>
                     ))}
-                  </div>
+                  </CatalogGrid>
                 )}
               </div>
             </div>
@@ -1318,65 +1324,25 @@ function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <section className="page-hero relative flex !overflow-visible items-center bg-slate-950 text-white lg:!overflow-hidden">
-      <div className="absolute inset-0">
-        <img src={CAR_IMAGES.hero} alt="Ô tô VinFast" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-black/70 lg:bg-black/60" />
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/75 via-black/45 to-black/20 lg:block" />
-      </div>
+    <>
+      <section className="relative w-full overflow-hidden bg-white">
+        <PromoBannerCarousel banners={CAR_HERO_BANNERS} aspectLayout />
+      </section>
 
-      <div className="container-vf relative z-10 text-white">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold tracking-widest text-brand uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow" /> VF NGỌC ANH — ĐẠI LÝ ỦY QUYỀN
-              CHÍNH THỨC
-            </div>
-            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              TƯƠNG LAI DI CHUYỂN <br />
-              <span className="text-blue-300 italic lg:bg-gradient-to-r lg:from-brand lg:via-blue-400 lg:to-emerald-400 lg:bg-clip-text lg:text-transparent">
-                THÔNG MINH, BỀN VỮNG
-              </span>
-            </h1>
-            <p className="mt-4 text-xs font-medium leading-relaxed text-slate-300 md:text-sm">
-              Showroom VinFast Ngọc Anh mang đến cho bạn các dòng xe SUV điện đột phá, công nghệ an
-              toàn hàng đầu thế giới, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={onExplore}
-                className="flex items-center gap-1.5 rounded-xl bg-brand px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
-              >
-                KHÁM PHÁ CATALOG XE
-              </button>
-              <a
-                href="tel:1900232389"
-                className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-white/20"
-              >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE: 1900 2323 89
-              </a>
-            </div>
-
-            <div className="mt-10 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
-              {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
-                <div key={text} className="flex items-start gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black text-white">{text}</p>
-                    <p className="mt-0.5 text-[10px] font-bold leading-snug tracking-wide text-slate-400 uppercase">
-                      {sub}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <CatalogHeroIntro
+        title="Tương lai di chuyển"
+        titleAccent="thông minh, bền vững"
+        description="Showroom VinFast Ngọc Anh mang đến các dòng SUV điện đột phá, công nghệ an toàn hàng đầu, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi."
+        primaryCta={{ label: "KHÁM PHÁ CATALOG XE", onClick: onExplore }}
+        secondaryCta={{ label: `HOTLINE: ${HOTLINE}`, href: HOTLINE_TEL }}
+        highlights={[
+          { value: "13+", label: "Dòng ô tô điện" },
+          { value: "10 năm", label: "Bảo hành chính hãng" },
+          { value: "ADAS", label: "Công nghệ tự lái" },
+        ]}
+        features={[...HERO_FEATURES]}
+      />
+    </>
   );
 }
 
@@ -1544,8 +1510,8 @@ function PromoBanners() {
         <div className="relative flex min-h-[220px] overflow-hidden rounded-2xl border border-slate-100">
           <img
             src={CAR_IMAGES.promoTestDrive}
-            alt="Đăng ký lái thử"
-            className="absolute inset-0 h-full w-full object-cover"
+            alt="Showroom VF Ngọc Anh Cà Mau — Đăng ký lái thử"
+            className="absolute inset-0 h-full w-full object-cover object-[65%_center] sm:object-right"
           />
           <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/95 sm:via-brand-dark/80 sm:to-transparent" />
           <div className="relative z-10 p-6 md:p-8 text-white flex flex-col justify-center max-w-sm">
@@ -1560,7 +1526,7 @@ function PromoBanners() {
               VinFast Ngọc Anh. Quà tặng check-in hấp dẫn.
             </p>
             <a
-              href="tel:1900232389"
+              href={HOTLINE_TEL}
               className="mt-5 self-center rounded-lg bg-brand px-5 py-2.5 text-center text-[11px] font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
             >
               GỌI ĐĂNG KÝ NGAY
@@ -1594,7 +1560,7 @@ function PromoBanners() {
               </li>
             </ul>
             <a
-              href="tel:1900232389"
+              href={HOTLINE_TEL}
               className="mx-auto mt-5 block w-fit border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
             >
               GỌI TƯ VẤN TRẢ GÓP

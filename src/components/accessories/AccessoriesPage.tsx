@@ -31,6 +31,9 @@ import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
+import { CatalogGrid, CatalogGridItem } from "@/components/motion";
+import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
+import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -48,6 +51,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ACCESSORY_HERO_BANNERS } from "@/lib/images";
 import {
   ACCESSORIES,
   ACCESSORIES_PER_PAGE,
@@ -63,6 +67,7 @@ import {
   type AccessoryProduct,
   type VehicleModel,
 } from "@/lib/accessories";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "100% chính hãng", sub: "Bảo hành VinFast từ 6-24 tháng" },
@@ -410,14 +415,16 @@ export default function AccessoriesPage() {
                     </button>
                   </motion.div>
                 ) : (
-                  <div
+                  <CatalogGrid
                     id="accessory-catalog-grid"
                     className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
                   >
-                    {filteredProducts.map((product) => (
-                      <AccessoryProductCard key={product.id} product={product} />
+                    {filteredProducts.map((product, index) => (
+                      <CatalogGridItem key={product.id} index={index}>
+                        <AccessoryProductCard product={product} />
+                      </CatalogGridItem>
                     ))}
-                  </div>
+                  </CatalogGrid>
                 )}
               </div>
             </div>
@@ -814,70 +821,25 @@ function BreadcrumbBar() {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <section className="page-hero relative flex !overflow-visible items-center bg-slate-950 text-white lg:!overflow-hidden">
-      <div className="absolute inset-0">
-        <img
-          src={ACCESSORY_IMAGES.hero}
-          alt="Phụ kiện chính hãng VinFast"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/70 lg:bg-black/60" />
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/75 via-black/45 to-black/20 lg:block" />
-      </div>
+    <>
+      <section className="relative w-full overflow-hidden bg-white">
+        <PromoBannerCarousel banners={ACCESSORY_HERO_BANNERS} aspectLayout showControls={false} />
+      </section>
 
-      <div className="container-vf relative z-10 text-white">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold tracking-widest text-brand uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow" /> PHỤ KIỆN CHÍNH HÃNG VINFAST —
-              CHẤT LƯỢNG TIÊU CHUẨN MỸ
-            </div>
-            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              CÁ NHÂN HÓA XE SANG <br />
-              <span className="text-blue-300 italic lg:bg-gradient-to-r lg:from-brand lg:via-blue-400 lg:to-emerald-400 lg:bg-clip-text lg:text-transparent">
-                NÂNG TẦM ĐẲNG CẤP
-              </span>
-            </h1>
-            <p className="mt-4 text-xs font-medium leading-relaxed text-slate-300 md:text-sm">
-              Nâng cấp chiếc xe điện VinFast của bạn bằng các giải pháp nội thất sang trọng, công
-              nghệ an toàn dẫn đầu, và thiết bị sạc điện cao cấp chuẩn quốc tế, được phân phối trực
-              tiếp tại VF Ngọc Anh.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={onExplore}
-                className="flex items-center gap-1.5 rounded-xl bg-brand px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-blue-600"
-              >
-                KHÁM PHÁ PHỤ KIỆN
-              </button>
-              <a
-                href="tel:1900232389"
-                className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-extrabold tracking-wider text-white transition-colors hover:bg-white/20"
-              >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE TƯ VẤN: 1900 2323 89
-              </a>
-            </div>
-
-            <div className="mt-10 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
-              {HERO_FEATURES.map(({ icon: Icon, text, sub }) => (
-                <div key={text} className="flex items-start gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black text-white">{text}</p>
-                    <p className="mt-0.5 text-[10px] font-bold leading-snug tracking-wide text-slate-400 uppercase">
-                      {sub}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <CatalogHeroIntro
+        title="Cá nhân hóa xe sang"
+        titleAccent="nâng tầm đẳng cấp"
+        description="Nâng cấp xe điện VinFast với phụ kiện nội thất, ngoại thất, sạc pin và an toàn chính hãng — phân phối và lắp đặt tại VF Ngọc Anh."
+        primaryCta={{ label: "KHÁM PHÁ PHỤ KIỆN", onClick: onExplore }}
+        secondaryCta={{ label: `HOTLINE TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
+        highlights={[
+          { value: `${ACCESSORIES.length}+`, label: "Sản phẩm chính hãng" },
+          { value: "6–24", label: "Tháng bảo hành" },
+          { value: "3S", label: "Lắp đặt tại xưởng" },
+        ]}
+        features={[...HERO_FEATURES]}
+      />
+    </>
   );
 }
 
@@ -935,7 +897,7 @@ function PromoBanners() {
               sẽ được miễn phí công lắp đặt 100% tại xưởng dịch vụ kỹ thuật VF Ngọc Anh.
             </p>
             <a
-              href="tel:1900232389"
+              href={HOTLINE_TEL}
               className="mt-5 bg-brand hover:bg-blue-600 text-white text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center self-start shadow-md"
             >
               GỌI ĐẶT LỊCH HẸN NGAY
@@ -969,7 +931,7 @@ function PromoBanners() {
               </li>
             </ul>
             <a
-              href="tel:1900232389"
+              href={HOTLINE_TEL}
               className="mt-5 inline-block border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
             >
               TRA CỨU Hạn BẢO HÀNH
@@ -1056,11 +1018,11 @@ function ContactCta() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="tel:1900232389"
+            href={HOTLINE_TEL}
             className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all shadow-md"
           >
             <Phone size={15} />
-            HOTLINE: 1900 2323 89
+            HOTLINE: {HOTLINE}
           </a>
           <Link
             href="/oto"

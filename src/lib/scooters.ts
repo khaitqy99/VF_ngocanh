@@ -41,7 +41,7 @@ export type ScooterModel = {
 
 export const SCOOTER_IMAGES = {
   hero: "/images/charging-scooter.jpg",
-  promoTestDrive: "/images/charging-scooter.jpg",
+  promoTestDrive: "/images/about/showroom-ngoc-anh-camau.png",
   promoFinance: "/images/portable-charger.jpg",
 } as const;
 

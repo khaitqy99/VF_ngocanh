@@ -30,12 +30,13 @@ import {
   CheckCircle2,
   Mail,
   SlidersHorizontal,
-  Sparkles,
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
+import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -44,13 +45,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { IMAGES } from "@/lib/images";
-
-const STATS = [
-  { icon: MapPin, value: "63+", label: "Tỉnh thành phủ sóng dịch vụ ủy quyền" },
-  { icon: Users, value: "500+", label: "Kỹ thuật viên cao cấp đạt chứng nhận từ hãng" },
-  { icon: Clock, value: "24/7/365", label: "Cứu hộ, cứu trợ sạc pin & hỗ trợ khẩn cấp" },
-] as const;
+import { AFTER_SALES_HERO_BANNERS, IMAGES } from "@/lib/images";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 const SERVICES = [
   {
@@ -119,6 +115,12 @@ const SERVICES = [
       "Hỗ trợ cài đặt trực tiếp tại xưởng dịch vụ",
     ],
   },
+] as const;
+
+const HERO_FEATURES = [
+  { icon: Wrench, text: "Bảo dưỡng định kỳ", sub: "Quy trình chuẩn hãng, kiểm tra pin LFP" },
+  { icon: Stethoscope, text: "Sửa chữa chính hãng", sub: "Máy chẩn đoán điện tử thế hệ mới" },
+  { icon: Shield, text: "Bảo hành xe mới", sub: "Ô tô lên tới 10 năm / 200.000 km" },
 ] as const;
 
 const WARRANTY_POLICIES = [
@@ -208,7 +210,7 @@ const WHY_CHOOSE = [
   {
     icon: Award,
     title: "Showroom & Xưởng dịch vụ 3S đạt chuẩn quốc tế",
-    desc: "Hạ tầng xưởng dịch vụ quy mô lớn tại Long Biên, sở hữu đầy đủ trang thiết bị chuẩn kỹ thuật nghiêm ngặt nhất của VinFast toàn cầu.",
+    desc: "Xưởng dịch vụ 3S tại Cà Mau sở hữu đầy đủ trang thiết bị chuẩn kỹ thuật nghiêm ngặt nhất của VinFast toàn cầu.",
   },
   {
     icon: Users,
@@ -230,7 +232,7 @@ const WHY_CHOOSE = [
 const FAQS = [
   {
     q: "Làm sao để đặt lịch bảo dưỡng trực tuyến nhanh nhất tại VF Ngọc Anh?",
-    a: "Quý khách có thể sử dụng biểu mẫu Đăng ký đặt hẹn dịch vụ ở ngay phía dưới trang web này, gọi trực tiếp tới Hotline chăm sóc khách hàng 1900 2323 89, hoặc đặt qua ứng dụng di động VinFast Club. Sau khi gửi thông tin, cố vấn dịch vụ sẽ gọi điện xác nhận lịch hẹn trong 10 phút.",
+    a: `Quý khách có thể sử dụng biểu mẫu Đăng ký đặt hẹn dịch vụ ở ngay phía dưới trang web này, gọi trực tiếp tới Hotline chăm sóc khách hàng ${HOTLINE}, hoặc đặt qua ứng dụng di động VinFast Club. Sau khi gửi thông tin, cố vấn dịch vụ sẽ gọi điện xác nhận lịch hẹn trong 10 phút.`,
   },
   {
     q: "Chi phí bảo dưỡng định kỳ của ô tô điện VinFast khoảng bao nhiêu?",
@@ -238,7 +240,7 @@ const FAQS = [
   },
   {
     q: "Hệ thống cứu hộ pin lưu động Mobile Charging hoạt động ra sao?",
-    a: "Khi xe của quý khách cạn kiệt pin giữa đường hoặc gặp sự cố nguồn điện, chỉ cần gọi Hotline 1900 2323 89. Đội cứu hộ Mobile Charging chuyên dụng của chúng tôi sẽ di chuyển tới hiện trường và cung cấp dịch vụ sạc pin nhanh khẩn cấp (cho phép xe chạy tiếp khoảng 30 - 50 km) với mức chi phí vô cùng hỗ trợ.",
+    a: `Khi xe của quý khách cạn kiệt pin giữa đường hoặc gặp sự cố nguồn điện, chỉ cần gọi Hotline cứu hộ ${HOTLINE}. Đội cứu hộ Mobile Charging chuyên dụng của chúng tôi sẽ di chuyển tới hiện trường và cung cấp dịch vụ sạc pin nhanh khẩn cấp (cho phép xe chạy tiếp khoảng 30 - 50 km) với mức chi phí vô cùng hỗ trợ.`,
   },
   {
     q: "Sửa chữa xe tại gara ngoài có làm mất hiệu lực bảo hành chính hãng không?",
@@ -292,33 +294,6 @@ export default function AfterSalesPage() {
             document.getElementById("service-booking-form")?.scrollIntoView({ behavior: "smooth" });
           }}
         />
-
-        {/* Dynamic Search / Quick Navigation Header */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-14 z-20 shadow-sm">
-          <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
-              Hệ thống chăm sóc hậu mãi VinFast
-            </div>
-            <div className="flex items-center gap-3">
-              <a
-                href="tel:1900232389"
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-2"
-              >
-                <Phone className="size-4 text-accent-yellow" /> CỨU HỘ KHẨN CẤP: 1900 2323 89
-              </a>
-              <button
-                onClick={() => {
-                  document
-                    .getElementById("service-booking-form")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="bg-brand-dark hover:bg-brand text-white font-extrabold text-xs tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-2"
-              >
-                <Calendar className="size-4 text-brand" /> ĐẶT HẸN TRỰC TUYẾN
-              </button>
-            </div>
-          </div>
-        </section>
 
         {/* 6 Core Services Grids */}
         <ServicesSection />
@@ -383,8 +358,7 @@ export default function AfterSalesPage() {
 
                 <div className="mt-8 pt-6 border-t border-slate-200 text-xs text-slate-500 font-semibold space-y-2">
                   <p className="flex items-center gap-2">
-                    <MapPin className="size-4 text-brand" /> Số 123 Nguyễn Văn Linh, Long Biên, Hà
-                    Nội
+                    <MapPin className="size-4 text-brand" /> Showroom VF Ngọc Anh, Cà Mau
                   </p>
                   <p className="flex items-center gap-2">
                     <Clock className="size-4 text-brand" /> Giờ làm việc: Sáng 8:00 - 12:00 | Chiều
@@ -674,75 +648,29 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
   return (
-    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
-      <div className="absolute inset-0">
-        <img
-          src={IMAGES.showroom}
-          alt="Xưởng dịch vụ VF Ngọc Anh"
-          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
+    <>
+      <section className="relative w-full overflow-hidden bg-white">
+        <PromoBannerCarousel
+          banners={AFTER_SALES_HERO_BANNERS}
+          aspectLayout
+          showControls={AFTER_SALES_HERO_BANNERS.length > 1}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
-      </div>
+      </section>
 
-      <div className="container-vf relative z-10 text-white">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col justify-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> DỊCH VỤ 3S ỦY QUYỀN
-              CHÍNH THỨC VINFAST
-            </div>
-            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              CHĂM SÓC XE TOÀN DIỆN <br />
-              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
-                AN TÂM BỨT PHÁ
-              </span>
-            </h1>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              Trung tâm dịch vụ ủy quyền chính thức của VinFast tại VF Ngọc Anh được trang bị máy
-              móc hiện đại bậc nhất, phân phối linh kiện chính hãng 100%, bảo hành xe dài hạn tới 10
-              năm và hệ thống cứu hộ cứu trợ pin lưu động túc trực khẩn cấp 24/7.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={onScrollToBooking}
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
-              >
-                <Calendar className="size-4 text-accent-yellow" /> ĐẶT LỊCH HẸN TRỰC TUYẾN
-              </button>
-              <a
-                href="tel:1900232389"
-                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
-              >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: 1900 2323 89
-              </a>
-            </div>
-
-            {/* Core figures Stats */}
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
-              {STATS.map(({ icon: Icon, value, label }) => (
-                <div key={label} className="flex items-start gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-base font-black text-white">{value}</p>
-                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
-                      {label}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+      <CatalogHeroIntro
+        title="Chăm sóc xe toàn diện"
+        titleAccent="an tâm bứt phá"
+        description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VF Ngọc Anh — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
+        primaryCta={{ label: "ĐẶT LỊCH HẸN TRỰC TUYẾN", onClick: onScrollToBooking }}
+        secondaryCta={{ label: `HOTLINE CỨU HỘ: ${HOTLINE}`, href: HOTLINE_TEL }}
+        highlights={[
+          { value: "63+", label: "Tỉnh thành phủ sóng dịch vụ" },
+          { value: "10 năm", label: "Bảo hành ô tô điện" },
+          { value: "24/7", label: "Cứu hộ & hỗ trợ khẩn cấp" },
+        ]}
+        features={[...HERO_FEATURES]}
+      />
+    </>
   );
 }
 
@@ -1053,17 +981,17 @@ function CtaBanner() {
               Cần hỗ trợ dịch vụ bảo dưỡng?
             </h2>
             <p className="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              Trung tâm Chăm sóc khách hàng của đại lý VF Ngọc Anh tại Nguyễn Văn Linh, Long Biên
+              Trung tâm Chăm sóc khách hàng của đại lý VF Ngọc Anh tại Cà Mau túc trực phục vụ quý
               túc trực phục vụ quý khách 24/7/365. Hãy gọi ngay cho chúng tôi nếu quý khách cần hỗ
               trợ cứu hộ khẩn cấp!
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
               <a
-                href="tel:1900232389"
+                href={HOTLINE_TEL}
                 className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
               >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: 1900 2323 89
+                <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
               </a>
               <button
                 onClick={() => {
@@ -1080,7 +1008,7 @@ function CtaBanner() {
             <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-6 text-xs text-slate-400 font-semibold">
               <span className="flex items-center gap-2">
                 <MapPin className="size-4 text-brand" />
-                Số 123 Nguyễn Văn Linh, Long Biên, Hà Nội
+                Showroom VF Ngọc Anh, Cà Mau
               </span>
               <span className="flex items-center gap-2">
                 <Mail className="size-4 text-brand" />
@@ -1092,7 +1020,7 @@ function CtaBanner() {
             <img
               src={IMAGES.vf9Suv}
               alt="VinFast VF 9"
-              className="max-h-[220px] w-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]"
+              className="max-h-[240px] w-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)]"
               loading="lazy"
             />
           </div>

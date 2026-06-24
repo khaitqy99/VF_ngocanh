@@ -14,8 +14,16 @@
     "sync:catalog": "node scripts/sync-vinfast-catalog.mjs",
     "sync:vinfast-all": "node scripts/fetch-vinfast-details.mjs && node scripts/sync-vinfast-catalog.mjs",
     "download:cars": "node scripts/download-cms-cars.mjs",
+    "download:banners": "node scripts/download-banners.mjs",
+    "download:accessory-banners": "node scripts/download-accessory-banners.mjs",
+    "download:after-sales-banners": "node scripts/download-after-sales-banners.mjs",
+    "sync:after-sales-banners": "node scripts/download-after-sales-banners.mjs",
+    "sync:banners": "node scripts/sync-page-banners.mjs",
+    "sync:accessories": "node scripts/sync-vinfast-accessories.mjs",
     "download:accessories": "node scripts/download-accessories.mjs",
     "download:charging": "node scripts/download-charging-images.mjs",
+    "download:charging-banners": "node scripts/download-charging-banners.mjs",
+    "sync:charging-banners": "node scripts/download-charging-banners.mjs",
     "sync:gallery": "node scripts/download-car-gallery-images.mjs && node scripts/generate-vinfast-galleries.mjs"
   },
   "dependencies": {

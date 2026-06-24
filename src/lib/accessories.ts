@@ -1,4 +1,9 @@
 import { IMAGES } from "@/lib/images";
+import {
+  VINFAST_ACCESSORIES,
+  VINFAST_ACCESSORY_PRICE_MAX,
+  VINFAST_ACCESSORY_PRICE_MIN,
+} from "./vinfast-accessories";
 
 export type AccessoryCategory =
   | "noi-that"
@@ -26,6 +31,7 @@ export type VehicleModel =
 
 export type AccessoryProduct = {
   id: string;
+  shopPid?: string;
   name: string;
   description: string;
   price: number;
@@ -37,7 +43,7 @@ export type AccessoryProduct = {
 };
 
 export const ACCESSORY_IMAGES = {
-  hero: IMAGES.showroom,
+  hero: "/images/banners/accessories/phu-kien-banner-desktop.jpg",
   promoInstall: IMAGES.community,
   promoWarranty: IMAGES.portableCharger,
 } as const;
@@ -70,308 +76,43 @@ export const VEHICLE_OPTIONS: { value: VehicleModel; label: string }[] = [
 
 export const ACCESSORIES_PER_PAGE = 12;
 
-export const ACCESSORY_PRICE_MIN = 200_000;
-export const ACCESSORY_PRICE_MAX = 15_000_000;
+export const ACCESSORIES: AccessoryProduct[] = VINFAST_ACCESSORIES as unknown as AccessoryProduct[];
 
-export const ACCESSORIES: AccessoryProduct[] = [
-  {
-    id: "tham-lot-san-all-in-one",
-    name: "Thảm lót sàn All-in-One",
-    description: "Thảm lót sàn cao cấp chống nước, bám sát sàn xe, dễ vệ sinh.",
-    price: 1_490_000,
-    image: IMAGES.accMat,
-    category: "noi-that",
-    vehicles: ["all"],
-    badge: "Bán chạy",
-    inStock: true,
-  },
-  {
-    id: "tham-lot-san-vf7",
-    name: "Thảm lót sàn VF 7",
-    description: "Thiết kế riêng cho VF 7, bám sát từng góc cạp, chống trượt hiệu quả.",
-    price: 2_500_000,
-    image: "/images/cars/vf7.jpg",
-    category: "noi-that",
-    vehicles: ["vf7"],
-    inStock: true,
-  },
-  {
-    id: "tham-lot-san-vf8",
-    name: "Thảm lót sàn VF 8",
-    description: "Chất liệu cao cấp, chống thấm nước, bảo vệ sàn xe toàn diện.",
-    price: 2_800_000,
-    image: "/images/cars/vf8.jpg",
-    category: "noi-that",
-    vehicles: ["vf8"],
-    inStock: true,
-  },
-  {
-    id: "tui-da-vo-lang",
-    name: "Túi da bọc vô lăng",
-    description: "Da cao cấp, cảm giác cầm nắm êm tay, tăng tính thẩm mỹ nội thất.",
-    price: 890_000,
-    image: IMAGES.accMat,
-    category: "noi-that",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "goi-tua-dau",
-    name: "Gối tựa đầu cao cấp",
-    description: "Thiết kế ergonomic, hỗ trợ cổ và đầu trong các chuyến đi dài.",
-    price: 650_000,
-    image: IMAGES.accMat,
-    category: "noi-that",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-bao-ve-cop",
-    name: "Bộ bảo vệ cốp",
-    description: "Lớp bảo vệ chống trầy xước, chống thấm nước cho khoang hành lý.",
-    price: 2_200_000,
-    image: "/images/cars/vf9.jpg",
-    category: "noi-that",
-    vehicles: ["vf8", "vf9", "vf7"],
-    inStock: true,
-  },
-  {
-    id: "tam-che-nang-cua-so",
-    name: "Tấm che nắng cửa sổ",
-    description: "Giảm nhiệt cabin, bảo vệ da ghế và hệ thống nội thất khỏi tia UV.",
-    price: 1_800_000,
-    image: IMAGES.accUmbrella,
-    category: "ngoai-that",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-phu-nap-capo",
-    name: "Bộ phủ nắp capo",
-    description: "Bảo vệ nắp capo khỏi trầy xước, chống tia UV và bụi bẩn.",
-    price: 3_200_000,
-    image: "/images/cars/vf7.jpg",
-    category: "ngoai-that",
-    vehicles: ["vf7", "vf8", "vf9"],
-    inStock: true,
-  },
-  {
-    id: "bo-bao-ve-thanh-cua",
-    name: "Bộ bảo vệ thành cửa",
-    description: "Chống va đập khi mở cửa tại hẹp, giữ ngoại thất luôn như mới.",
-    price: 1_200_000,
-    image: "/images/cars/vf5.jpg",
-    category: "ngoai-that",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-sac-treo-tuong",
-    name: "Bộ Sạc Treo Tường AC 11 kW",
-    description:
-      "Bộ sạc treo tường AC 11 kW chính hãng VinFast, sạc nhanh tại nhà an toàn và tiện lợi.",
-    price: 11_781_818,
-    image: "/images/vinfast/accessories/sac-11kw.webp",
-    category: "sac-pin",
-    vehicles: ["all"],
-    badge: "Phổ biến",
-    inStock: true,
-  },
-  {
-    id: "bo-sac-di-dong",
-    name: "Bộ sạc di động",
-    description: "Sạc tiện lợi khi di chuyển, tương thích đa dòng xe điện VinFast.",
-    price: 5_800_000,
-    image: IMAGES.portableCharger,
-    category: "sac-pin",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "cap-sac-mo-rong",
-    name: "Cáp sạc mở rộng 5m",
-    description: "Tăng tầm với cáp sạc chính hãng, an toàn và bền bỉ theo thời gian.",
-    price: 2_400_000,
-    image: IMAGES.portableCharger,
-    category: "sac-pin",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "camera-hanh-trinh",
-    name: "Camera hành trình chính hãng",
-    description: "Ghi hình Full HD, tích hợp cảm biến va chạm và ghi hình đêm rõ nét.",
-    price: 4_500_000,
-    image: "/images/cars/vf8.jpg",
-    category: "an-toan",
-    vehicles: ["all"],
-    badge: "Mới",
-    inStock: true,
-  },
-  {
-    id: "cam-bien-lui",
-    name: "Cảm biến lùi nâng cấp",
-    description: "Hỗ trợ đỗ xe an toàn, cảnh báo vật cản phía sau chính xác.",
-    price: 3_600_000,
-    image: "/images/cars/vf6.jpg",
-    category: "an-toan",
-    vehicles: ["vf3", "vf5", "vf6"],
-    inStock: true,
-  },
-  {
-    id: "bo-dinh-vi-gps",
-    name: "Bộ định vị GPS thông minh",
-    description: "Theo dõi vị trí xe, hỗ trợ tìm xe và cảnh báo an ninh 24/7.",
-    price: 2_900_000,
-    image: "/images/cars/vf7.jpg",
-    category: "an-toan",
-    vehicles: ["all"],
-    inStock: false,
-  },
-  {
-    id: "mo-hinh-vf3",
-    name: "Mô Hình Xe VinFast VF 3",
-    description: "Mô hình thu nhỏ VF 3 chính hãng VinFast — quà tặng và sưu tầm ý nghĩa.",
-    price: 2_074_000,
-    image: "/images/vinfast/accessories/vf3-mint.webp",
-    category: "qua-tang",
-    vehicles: ["vf3"],
-    inStock: true,
-  },
-  {
-    id: "mo-hinh-vf8",
-    name: "Mô hình xe VinFast VF 8",
-    description: "Mô hình thu nhỏ cao cấp, hoàn thiện sơn bóng, kèm đế trưng bày.",
-    price: 350_000,
-    image: IMAGES.accModel,
-    category: "qua-tang",
-    vehicles: ["vf8"],
-    inStock: true,
-  },
-  {
-    id: "vf7-tam-che-pin-cao-ap",
-    name: "VF 7 Tấm Che Pin Cao Áp",
-    description:
-      "Tấm che pin cao áp chính hãng dành riêng cho VinFast VF 7, bảo vệ và hoàn thiện khu vực pin.",
-    price: 6_881_000,
-    image: "/images/vinfast/accessories/vf7-che-pin.webp",
-    category: "an-toan",
-    vehicles: ["vf7"],
-    inStock: true,
-  },
-  {
-    id: "o-golf-2-tang",
-    name: "Ô Golf 2 Tầng",
-    description:
-      "Ô golf 2 tầng chính hãng VinFast, chống nắng hiệu quả khi trên sân golf hoặc ngoài trời.",
-    price: 404_000,
-    image: "/images/vinfast/accessories/o-golf.webp",
-    category: "qua-tang",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "o-che-nang",
-    name: "Ô che nắng VinFast",
-    description: "Thiết kế gọn nhẹ, logo VinFast tinh tế, tiện mang theo mọi lúc.",
-    price: 400_000,
-    image: IMAGES.accUmbrella,
-    category: "qua-tang",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-qua-tang-vinfest",
-    name: "Bộ quà tặng VinFast Premium",
-    description: "Gồm túi vải, bình giữ nhiệt và sổ tay da — quà tặng khách hàng VIP.",
-    price: 780_000,
-    image: IMAGES.accUmbrella,
-    category: "qua-tang",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-ve-sinh-xe",
-    name: "Bộ vệ sinh xe điện",
-    description: "Chất tẩy rửa chuyên dụng an toàn cho xe điện, khăn microfiber cao cấp.",
-    price: 590_000,
-    image: IMAGES.community,
-    category: "phu-kien-chung",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "bo-cong-cu-khan-cap",
-    name: "Bộ công cụ khẩn cấp",
-    description: "Đèn pin, áo phản quang, dây kéo và bơm lốt — an tâm trên mọi hành trình.",
-    price: 1_100_000,
-    image: IMAGES.chargingStations,
-    category: "phu-kien-chung",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "nap-sac-bao-ve",
-    name: "Nắp bảo vệ cổng sạc",
-    description: "Chống bụi và nước cho cổng sạc, giữ hệ thống sạc luôn ổn định.",
-    price: 320_000,
-    image: IMAGES.portableCharger,
-    category: "phu-kien-chung",
-    vehicles: ["all"],
-    inStock: true,
-  },
-  {
-    id: "tham-lot-san-vf3",
-    name: "Thảm lót sàn VF 3",
-    description: "Thiết kế riêng cho VF 3, nhẹ, dễ tháo lắp và vệ sinh.",
-    price: 1_290_000,
-    image: "/images/cars/vf3.jpg",
-    category: "noi-that",
-    vehicles: ["vf3"],
-    inStock: true,
-  },
-  {
-    id: "tham-lot-san-vf5",
-    name: "Thảm lót sàn VF 5",
-    description: "Thảm cao su TPE chính hãng, chống trượt và chống mùi hiệu quả.",
-    price: 1_590_000,
-    image: "/images/cars/vf5.jpg",
-    category: "noi-that",
-    vehicles: ["vf5"],
-    inStock: true,
-  },
-];
+export const ACCESSORY_PRICE_MIN = VINFAST_ACCESSORY_PRICE_MIN;
+export const ACCESSORY_PRICE_MAX = VINFAST_ACCESSORY_PRICE_MAX;
+
+export function getAccessoryByShopPid(pid: string) {
+  return ACCESSORIES.find((item) => item.shopPid === pid);
+}
 
 export function getAccessory(id: string) {
   return ACCESSORIES.find((item) => item.id === id);
 }
 
+function accessoryRankForCar(carId: VehicleModel, product: AccessoryProduct) {
+  const n = product.name.toLowerCase();
+  const forCar = product.vehicles.includes(carId);
+  if (forCar && /thảm.*sàn|thảm cốp|lót sàn/.test(n)) return 0;
+  if (forCar && /film cách nhiệt|che nắng/.test(n)) return 1;
+  if (forCar && /camera/.test(n)) return 2;
+  if (forCar && /sạc/.test(n)) return 3;
+  if (forCar) return 4;
+  if (product.vehicles.includes("all") && /sạc treo tường|sạc tại nhà/.test(n)) return 5;
+  return 10;
+}
+
 export function getCarDetailAccessories(carId: string) {
-  const floorMatByCar: Record<string, string> = {
-    vf3: "tham-lot-san-vf3",
-    vf5: "tham-lot-san-vf5",
-    vf7: "tham-lot-san-vf7",
-    vf8: "tham-lot-san-vf8",
-  };
-
-  const ids = [
-    floorMatByCar[carId] ?? "tham-lot-san-all-in-one",
-    "bo-phu-nap-capo",
-    "camera-hanh-trinh",
-    "bo-sac-di-dong",
-  ];
-
-  return ids
-    .map((id) => getAccessory(id))
-    .filter((product): product is AccessoryProduct => Boolean(product));
+  const vehicle = carId as VehicleModel;
+  return [...ACCESSORIES]
+    .filter((p) => p.vehicles.includes(vehicle) || p.vehicles.includes("all"))
+    .sort((a, b) => accessoryRankForCar(vehicle, a) - accessoryRankForCar(vehicle, b))
+    .slice(0, 4);
 }
 
 export function getScooterDetailAccessories() {
-  const ids = ["bo-sac-di-dong", "cap-sac-mo-rong", "o-che-nang", "bo-ve-sinh-xe"];
-
-  return ids
-    .map((id) => getAccessory(id))
-    .filter((product): product is AccessoryProduct => Boolean(product));
+  return ACCESSORIES.filter(
+    (p) => p.category === "sac-pin" || p.category === "phu-kien-chung",
+  ).slice(0, 4);
 }
 
 export function getRelatedAccessories(id: string, limit = 4) {

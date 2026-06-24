@@ -55,6 +55,7 @@ import {
   INSTALLATION_STEPS,
   ENERGY_FAQS,
 } from "@/lib/energy-storage";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 const SOLUTION_ICONS = {
   residential: Home,
@@ -593,7 +594,7 @@ export default function EnergyStoragePage() {
 
               {/* Modal footer */}
               <div className="bg-slate-50 p-4 border-t border-slate-200 text-center text-[10px] text-slate-500 font-semibold uppercase">
-                Tổng đài chăm sóc năng lượng: 1900 2323 89
+                Tổng đài chăm sóc năng lượng: {HOTLINE}
               </div>
             </motion.div>
           </motion.div>
@@ -679,10 +680,10 @@ function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
                 <Calendar className="size-4" /> ĐĂNG KÝ TƯ VẤN KHẢO SÁT
               </button>
               <a
-                href="tel:1900232389"
+                href={HOTLINE_TEL}
                 className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
               >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE: 1900 2323 89
+                <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
               </a>
             </div>
 
@@ -1137,10 +1138,10 @@ function CtaBanner() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="tel:1900232389"
+            href={HOTLINE_TEL}
             className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
           >
-            <Phone className="size-4 text-accent-yellow" /> TƯ VẤN HOTLINE: 1900 2323 89
+            <Phone className="size-4 text-accent-yellow" /> TƯ VẤN HOTLINE: {HOTLINE}
           </a>
           <Link
             href="/gioi-thieu"

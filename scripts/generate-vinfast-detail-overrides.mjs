@@ -83,12 +83,55 @@ function mapFeatureCards(items, images, fallback) {
   const imgs = images.length ? images : [fallback];
   return items
     .filter((e) => e.title && e.desc && !BAD_TEXT_RE.test(e.title + e.desc))
-    .slice(0, 4)
+    .slice(0, 8)
     .map((e, i) => ({
-      title: e.title.slice(0, 80),
-      desc: e.desc.slice(0, 400),
-      image: imgs[i] ?? imgs[imgs.length - 1] ?? fallback,
+      title: e.title.slice(0, 100),
+      desc: e.desc.slice(0, 500),
+      image: imgs[i % imgs.length] ?? fallback,
     }));
+}
+
+function galleryByPattern(gallery, pattern) {
+  return gallery.filter((g) => pattern.test(g));
+}
+
+function expandExterior(features, gallery, fallback) {
+  const extImages = galleryByPattern(gallery, /exterior/i);
+  const mapped = mapFeatureCards(
+    features,
+    extImages.length ? extImages : gallery.filter((_, i) => i % 2 === 0),
+    fallback,
+  );
+  if (!mapped?.length) return mapped;
+  if (mapped.length > 1 || extImages.length < 2) return mapped;
+  const base = mapped[0];
+  return extImages.slice(0, 6).map((image) => ({ ...base, image }));
+}
+
+function mapTechnologyItems(items, technologyLead) {
+  if (!items?.length) return undefined;
+  const lead = sanitizeText(technologyLead, 400);
+  return items.slice(0, 6).map((t) => {
+    const title = sanitizeText(t.title, 80) || t.title;
+    let desc = sanitizeText(t.desc, 400);
+    const looksDuplicated =
+      desc &&
+      (/^Hợp tác cùng những đối tác/i.test(desc) || desc.endsWith(",") || desc.length < 35);
+    if (looksDuplicated) {
+      if (/trợ lý/i.test(title)) {
+        desc =
+          "Trợ lý ảo AI hỗ trợ tiếng Việt, điều khiển giọng nói thông minh và kết nối hệ sinh thái dịch vụ trên xe.";
+      } else if (/trợ lái/i.test(title)) {
+        desc =
+          "Hệ thống trợ lái nâng cao cấp độ 2 với các tính năng hỗ trợ giữ làn, kiểm soát tốc độ thông minh và an toàn chủ động.";
+      } else if (/dịch vụ thông minh/i.test(title)) {
+        desc = "Hệ sinh thái kết nối và dịch vụ tiên tiến trên xe.";
+      } else {
+        desc = lead || desc || title;
+      }
+    }
+    return { icon: t.icon || "drive", title, desc };
+  });
 }
 
 function specTableToGroups(specTable) {
@@ -155,23 +198,23 @@ function buildCarOverride(detail, galleries, colorImages) {
     };
   }
 
-  const exterior = mapFeatureCards(
-    pdp.exterior ?? detail.exterior,
-    gallery.filter((_, i) => i % 2 === 0),
-    fallback,
-  );
+  const exterior = expandExterior(pdp.exterior ?? detail.exterior, gallery, fallback);
   if (exterior?.length) override.exterior = exterior;
 
   const interior = mapFeatureCards(
     pdp.interior ?? detail.interior,
-    gallery.filter((_, i) => i % 2 === 1),
+    galleryByPattern(gallery, /interior/i).length
+      ? galleryByPattern(gallery, /interior/i)
+      : gallery.filter((_, i) => i % 2 === 1),
     gallery[1] ?? fallback,
   );
   if (interior?.length) override.interior = interior;
 
-  if (pdp.technology?.length || detail.technology?.length) {
-    override.technology = (pdp.technology ?? detail.technology).slice(0, 6);
-  }
+  const technology = mapTechnologyItems(
+    pdp.technology ?? detail.technology,
+    pdp.technologyLead ?? detail.technologyLead,
+  );
+  if (technology?.length) override.technology = technology;
   if (pdp.technologyLead) {
     override.technologySubtitle = sanitizeText(pdp.technologyLead, 220);
   }
@@ -196,15 +239,36 @@ function buildCarOverride(detail, galleries, colorImages) {
 
   if (pdp.safety || detail.safety) {
     const safe = pdp.safety ?? detail.safety;
-    override.safety = {
-      title: sanitizeText(safe.title, 80) || "AN TOÀN & ĐẶC QUYỀN",
-      subtitle: sanitizeText(safe.subtitle, 200) || "Tiêu chuẩn an toàn và dịch vụ cao cấp",
+    const block = {
+      title: sanitizeText(safe.title, 80) || "Đặc quyền",
+      subtitle: sanitizeText(safe.subtitle, 200) || "Tiêu chuẩn dịch vụ cao cấp",
       image: gallery[3] ?? gallery[0] ?? fallback,
-      features: (safe.features ?? []).slice(0, 5).map((f) => ({
-        title: f.title.slice(0, 80),
-        desc: f.desc.slice(0, 220),
+      features: (safe.features ?? []).slice(0, 6).map((f) => ({
+        title: f.title.slice(0, 100),
+        desc: f.desc.slice(0, 400),
       })),
-      highlights: (safe.highlights ?? []).slice(0, 4),
+      highlights: (safe.highlights ?? []).slice(0, 6),
+    };
+    if (/đặc quyền/i.test(block.title)) {
+      override.privileges = {
+        title: block.title,
+        subtitle: block.subtitle,
+        image: block.image,
+        highlights: block.highlights,
+        features:
+          mapFeatureCards(safe.features, gallery, gallery[3] ?? gallery[0] ?? fallback) ??
+          block.features,
+      };
+    } else {
+      override.safety = block;
+    }
+  }
+
+  if (pdp.charging?.title) {
+    override.charging = {
+      title: sanitizeText(pdp.charging.title, 80),
+      desc: sanitizeText(pdp.charging.desc, 400),
+      image: gallery[4] ?? gallery[1] ?? fallback,
     };
   }
 

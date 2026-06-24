@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import HomePage from "@/components/home/HomePage";
+import { SHOWROOM_ADDRESS, SHOWROOM_EMAIL, SHOWROOM_PHONE } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "VF Ngọc Anh — Đại lý chính thức VinFast Cà Mau",
@@ -38,16 +39,17 @@ export default function Page() {
     image: "https://vinfast3scamau.com/images/cars/oto-hero.jpg",
     "@id": "https://vinfast3scamau.com/#dealer",
     url: "https://vinfast3scamau.com",
-    telephone: "19009270",
+    telephone: SHOWROOM_PHONE.replace(/\s/g, ""),
     priceRange: "$$$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Số 90, đường Lý Thường Kiệt, Phường Tân Thành",
+      streetAddress: SHOWROOM_ADDRESS,
       addressLocality: "Thành phố Cà Mau",
       addressRegion: "Tỉnh Cà Mau",
       postalCode: "94000",
       addressCountry: "VN",
     },
+    email: SHOWROOM_EMAIL,
     geo: {
       "@type": "GeoCoordinates",
       latitude: 9.1764,

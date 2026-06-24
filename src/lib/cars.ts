@@ -41,7 +41,7 @@ export type CarModel = {
 
 export const CAR_IMAGES = {
   hero: "/images/showroom.jpg",
-  promoTestDrive: "/images/cars/promo-test-drive.jpg",
+  promoTestDrive: "/images/about/showroom-ngoc-anh-camau.png",
   promoFinance: "/images/cars/promo-finance.jpg",
 } as const;
 

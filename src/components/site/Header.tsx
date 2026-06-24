@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { IMAGES } from "@/lib/images";
+import { buttonHover, buttonTap, springSnappy } from "@/lib/motion";
 
 const NAV = [
   { label: "Giới thiệu", href: "/gioi-thieu" },
@@ -17,20 +21,16 @@ const NAV = [
   { label: "Lưu trữ năng lượng", href: "/luu-tru-nang-luong" },
 ] as const;
 
-function Logo() {
+function BrandLogo({ className }: { className?: string }) {
   return (
-    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-brand-dark">
-      <svg viewBox="0 0 32 32" className="h-5 w-5" aria-hidden="true">
-        <path
-          d="M6 24 L16 6 L26 24 Z"
-          fill="none"
-          stroke="white"
-          strokeWidth="2.5"
-          strokeLinejoin="round"
-        />
-        <path d="M11 24 L21 24" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
-    </div>
+    <Image
+      src={IMAGES.vinfastLogo}
+      alt="VinFast — Đại lý VF Ngọc Anh"
+      width={140}
+      height={32}
+      priority
+      className={className ?? "h-7 w-auto sm:h-8"}
+    />
   );
 }
 
@@ -52,39 +52,57 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 border-b bg-white transition-colors ${scrolled ? "border-border/60" : "border-transparent"}`}
+      <motion.header
+        initial={{ y: -64, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ ...springSnappy, delay: 0.05 }}
+        className={`fixed inset-x-0 top-0 z-50 border-b bg-white/95 backdrop-blur-md transition-shadow duration-300 ${scrolled ? "border-border/60 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08)]" : "border-transparent"}`}
       >
         <div className="container-vf flex h-14 items-center justify-between gap-3 lg:gap-6">
-          <Link href="/" className="flex shrink-0 items-center gap-2">
-            <Logo />
-            <span className="text-sm font-black tracking-tight text-brand-dark">VF NGỌC ANH</span>
-          </Link>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Link href="/" className="flex shrink-0 items-center">
+              <BrandLogo />
+            </Link>
+          </motion.div>
 
           <nav className="hidden flex-1 items-center justify-center gap-6 xl:gap-8 lg:flex">
-            {NAV.map(({ label, href }) => {
+            {NAV.map(({ label, href }, i) => {
               const active = pathname === href;
               return (
-                <Link
+                <motion.div
                   key={label}
-                  href={href}
-                  className={`relative whitespace-nowrap pb-0.5 text-xs font-medium transition-colors hover:text-brand ${
-                    active ? "text-brand" : "text-foreground/80"
-                  }`}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ ...springSnappy, delay: 0.1 + i * 0.07 }}
                 >
-                  {label}
-                  {active && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-brand" />
-                  )}
-                </Link>
+                  <Link
+                    href={href}
+                    className={`relative whitespace-nowrap pb-0.5 text-xs font-medium transition-colors hover:text-brand ${
+                      active ? "text-brand" : "text-foreground/80"
+                    }`}
+                  >
+                    {label}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active-indicator"
+                        className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-brand"
+                        transition={springSnappy}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
               );
             })}
           </nav>
 
           <div className="flex items-center gap-2">
-            <button className="hidden items-center rounded-md bg-brand px-3.5 py-2 text-[11px] font-semibold tracking-wide text-white shadow-sm transition-colors hover:bg-[#0046cc] sm:inline-flex">
+            <motion.button
+              whileHover={buttonHover}
+              whileTap={buttonTap}
+              className="hidden items-center rounded-md bg-brand px-3.5 py-2 text-[11px] font-semibold tracking-wide text-white shadow-sm shadow-brand/20 transition-colors hover:bg-[#0046cc] sm:inline-flex"
+            >
               ĐĂNG KÝ LÁI THỬ
-            </button>
+            </motion.button>
 
             <button
               type="button"
@@ -112,20 +130,23 @@ export default function Header() {
             </SheetClose>
 
             <SheetHeader className="border-b border-border/60 px-5 py-4 text-left">
-              <div className="flex items-center gap-2.5 pr-10">
-                <Logo />
-                <SheetTitle className="text-[15px] font-black tracking-tight text-brand-dark">
-                  VF NGỌC ANH
-                </SheetTitle>
+              <SheetTitle className="sr-only">Menu điều hướng VF Ngọc Anh</SheetTitle>
+              <div className="flex items-center pr-10">
+                <BrandLogo />
               </div>
             </SheetHeader>
 
             <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Menu điều hướng">
               <ul className="space-y-1">
-                {NAV.map(({ label, href }) => {
+                {NAV.map(({ label, href }, i) => {
                   const active = pathname === href;
                   return (
-                    <li key={label}>
+                    <motion.li
+                      key={label}
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ ...springSnappy, delay: i * 0.08 }}
+                    >
                       <SheetClose asChild>
                         <Link
                           href={href}
@@ -138,7 +159,7 @@ export default function Header() {
                           {label}
                         </Link>
                       </SheetClose>
-                    </li>
+                    </motion.li>
                   );
                 })}
               </ul>
@@ -156,7 +177,7 @@ export default function Header() {
             </div>
           </SheetContent>
         </Sheet>
-      </header>
+      </motion.header>
       <div className="h-14 shrink-0" aria-hidden />
     </>
   );

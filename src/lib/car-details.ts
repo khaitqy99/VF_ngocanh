@@ -48,8 +48,16 @@ export type SafetySection = {
   title: string;
   subtitle: string;
   image: string;
-  features: { title: string; desc: string }[];
+  features: { title: string; desc: string; image?: string }[];
   highlights: string[];
+};
+
+export type PrivilegesSection = SafetySection;
+
+export type ChargingHighlight = {
+  title: string;
+  desc: string;
+  image: string;
 };
 
 export type SpecGroup = {
@@ -96,7 +104,9 @@ export type CarDetail = Omit<CarModel, "colors"> & {
   technology: TechFeature[];
   technologySubtitle?: string;
   performance: PerformanceSection;
+  privileges?: PrivilegesSection;
   safety: SafetySection;
+  charging?: ChargingHighlight;
   specGroups: SpecGroup[];
   accessories: AccessoryItem[];
   reviews: ReviewsSection;
@@ -316,6 +326,11 @@ function buildDefaultDetail(car: CarModel): CarDetail {
     ],
     performance: buildPerformance(car),
     safety: buildSafety(car),
+    charging: {
+      title: "Giải pháp Pin và Trạm sạc",
+      desc: `VinFast cung cấp đa dạng giải pháp sạc cho ${car.name}, đáp ứng nhu cầu sử dụng thuận tiện nhất.`,
+      image: "/images/vinfast/charging/pin-oto.webp",
+    },
     specGroups: buildSpecGroups(car),
     accessories: buildAccessories(car),
     reviews: buildReviews(car),

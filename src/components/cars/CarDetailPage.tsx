@@ -64,8 +64,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
+import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
+import {
+  PdpQuickSpecBar,
+  PdpSectionTitle,
+  PdpSplitOverview,
+  PdpImageFeatureGrid,
+  PdpTechIconGrid,
+  PdpPerformanceShowcase,
+  PdpSafetyShowcase,
+  PdpChargingShowcase,
+  buildPerformanceMetrics,
+  DEFAULT_CHARGING_SOLUTIONS,
+  expandGalleryToGrid,
+} from "@/components/shared/PdpContentBlocks";
+import { IMAGES } from "@/lib/images";
 import { getCarDetailAccessories } from "@/lib/accessories";
-import { type CarDetail, formatPrice, getRelatedCars, type TechFeature } from "@/lib/car-details";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import {
+  type CarDetail,
+  formatPrice,
+  getRelatedCars,
+  type PrivilegesSection as PrivilegesSectionData,
+  type TechFeature,
+  type ChargingHighlight,
+} from "@/lib/car-details";
 
 type SectionId =
   | "tong-quan"
@@ -73,7 +96,9 @@ type SectionId =
   | "noi-that"
   | "cong-nghe"
   | "van-hanh"
+  | "dac-quyen"
   | "an-toan"
+  | "pin-sac"
   | "thong-so"
   | "phu-kien"
   | "tai-chinh"
@@ -81,7 +106,7 @@ type SectionId =
 
 const SERVICE_BAR = [
   { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 10 năm hoặc 200.000 km" },
-  { icon: Headphones, title: "Cứu hộ 24/7", sub: "Hỗ trợ mọi lúc, mọi nơi" },
+  { icon: Headphones, title: "Cứu hộ 24/7", sub: HOTLINE },
   { icon: MapPin, title: "Showroom Cà Mau", sub: "Tư vấn & giao xe tận nơi" },
   { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Vay 80%, trả góp lãi suất thấp" },
 ] as const;
@@ -135,6 +160,41 @@ export default function CarDetailPage({ detail }: Props) {
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
   const related = getRelatedCars(detail.id);
+
+  const sectionNavItems = useMemo(() => {
+    const items: { id: SectionId; label: string }[] = [
+      { id: "tong-quan", label: "Tổng quan" },
+      { id: "ngoai-that", label: "Ngoại thất" },
+      { id: "noi-that", label: "Nội thất" },
+      { id: "cong-nghe", label: "Công nghệ" },
+      { id: "van-hanh", label: "Vận hành" },
+    ];
+    if (detail.privileges) items.push({ id: "dac-quyen", label: "Đặc quyền" });
+    items.push({ id: "an-toan", label: "An toàn" });
+    if (detail.charging) items.push({ id: "pin-sac", label: "Pin & Sạc" });
+    items.push(
+      { id: "thong-so", label: "Thông số" },
+      { id: "phu-kien", label: "Phụ kiện" },
+      { id: "tai-chinh", label: "Tài chính" },
+    );
+    return items;
+  }, [detail.privileges, detail.charging]);
+
+  const quickSpecItems = useMemo(
+    () => [
+      { icon: Gauge, label: "Quãng đường WLTP", value: `${detail.quickSpecs.range} km` },
+      { icon: Zap, label: "Công suất tối đa", value: `${detail.quickSpecs.power} Hp` },
+      { icon: Wind, label: "Mô-men xoắn", value: `${detail.quickSpecs.torque} Nm` },
+      {
+        icon: Timer,
+        label: "Tăng tốc 0–100 km/h",
+        value: detail.quickSpecs.acceleration.replace(/\s*\(.*\)/, ""),
+      },
+      { icon: Gauge, label: "Tốc độ tối đa", value: `${detail.quickSpecs.topSpeed} km/h` },
+      { icon: BatteryCharging, label: "Sạc nhanh", value: detail.quickSpecs.fastCharge },
+    ],
+    [detail.quickSpecs],
+  );
 
   const displayGallery = useMemo(() => {
     const colorImage = selectedColorObj?.image;
@@ -265,11 +325,8 @@ export default function CarDetailPage({ detail }: Props) {
                   )}
                 </div>
 
-                <p className="text-[11px] font-bold tracking-widest text-brand uppercase sm:text-xs">
-                  VinFast {detail.name}
-                </p>
                 <h1 className="mt-1 break-words text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-4xl">
-                  {detail.tagline}
+                  {detail.name}
                 </h1>
 
                 <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
@@ -350,41 +407,7 @@ export default function CarDetailPage({ detail }: Props) {
                   </button>
                 </div>
 
-                {/* Quick specs — lấp cột gallery */}
-                <div className="mt-4 rounded-2xl border border-border/60 px-4 py-4 sm:mt-6 sm:px-5 sm:py-5">
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-                    <SpecItem
-                      icon={Gauge}
-                      label="Quãng đường"
-                      value={`${detail.quickSpecs.range} km`}
-                    />
-                    <SpecItem
-                      icon={Zap}
-                      label="Công suất"
-                      value={`${detail.quickSpecs.power} Hp`}
-                    />
-                    <SpecItem
-                      icon={Wind}
-                      label="Mô-men xoắn"
-                      value={`${detail.quickSpecs.torque} Nm`}
-                    />
-                    <SpecItem
-                      icon={Timer}
-                      label="Tăng tốc 0–100"
-                      value={detail.quickSpecs.acceleration}
-                    />
-                    <SpecItem
-                      icon={Gauge}
-                      label="Tốc độ tối đa"
-                      value={`${detail.quickSpecs.topSpeed} km/h`}
-                    />
-                    <SpecItem
-                      icon={BatteryCharging}
-                      label="Sạc nhanh"
-                      value={detail.quickSpecs.fastCharge}
-                    />
-                  </div>
-                </div>
+                <PdpQuickSpecBar specs={quickSpecItems} embedded />
               </div>
 
               {/* Purchase panel — sticky on desktop */}
@@ -601,6 +624,8 @@ export default function CarDetailPage({ detail }: Props) {
           </div>
         </section>
 
+        <PdpSectionNav items={sectionNavItems} />
+
         {/* All content sections */}
         <div className="bg-white">
           <SectionWrap id="tong-quan">
@@ -619,15 +644,27 @@ export default function CarDetailPage({ detail }: Props) {
             <TechnologySection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap id="van-hanh">
+          <SectionWrap id="van-hanh" alt>
             <PerformanceSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap id="an-toan" alt>
+          {detail.privileges && (
+            <SectionWrap id="dac-quyen" alt>
+              <PrivilegesSection privileges={detail.privileges} />
+            </SectionWrap>
+          )}
+
+          <SectionWrap id="an-toan" alt={!detail.privileges}>
             <SafetySection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap id="thong-so">
+          {detail.charging && (
+            <SectionWrap id="pin-sac">
+              <ChargingSection charging={detail.charging} />
+            </SectionWrap>
+          )}
+
+          <SectionWrap id="thong-so" alt={!!detail.charging}>
             <SpecsSection detail={detail} />
           </SectionWrap>
 
@@ -672,7 +709,7 @@ export default function CarDetailPage({ detail }: Props) {
             <p className="mx-auto mt-2 max-w-lg text-center text-sm text-muted-foreground">
               Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn
             </p>
-            <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3">
+            <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
               {related.map((car) => (
                 <CarCatalogCard
                   key={car.id}
@@ -729,10 +766,10 @@ export default function CarDetailPage({ detail }: Props) {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href="tel:19002323"
+                href={HOTLINE_TEL}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-xs font-black text-brand-dark transition hover:bg-white/90"
               >
-                <Phone className="size-4" /> Gọi 1900 2323
+                <Phone className="size-4" /> Gọi {HOTLINE}
               </a>
               <button
                 type="button"
@@ -970,237 +1007,193 @@ export default function CarDetailPage({ detail }: Props) {
 function SectionWrap({
   id,
   alt,
+  dark,
   children,
 }: {
   id: SectionId;
   alt?: boolean;
+  dark?: boolean;
   children: React.ReactNode;
 }) {
+  const bg = dark
+    ? "bg-gradient-to-b from-[#0a1628] to-[#0f1f3d] text-white"
+    : alt
+      ? "bg-[#f8f9fc]"
+      : "bg-white";
+
   return (
-    <section
-      id={id}
-      className={`scroll-mt-20 section-y lg:scroll-mt-24 ${alt ? "bg-surface" : "bg-white"}`}
-    >
+    <section id={id} className={`scroll-mt-[7.25rem] section-y lg:scroll-mt-28 ${bg}`}>
       <div className="container-vf">{children}</div>
     </section>
   );
 }
 
+const EXTERIOR_GRID_LABELS = [
+  "Đầu xe ấn tượng",
+  "Thân xe sang trọng",
+  "Đuôi xe tinh tế",
+  "Chi tiết la-zăng",
+];
+
 function OverviewSection({ detail }: { detail: CarDetail }) {
-  const highlights = [
-    { label: "Quãng đường", value: `${detail.quickSpecs.range} km` },
-    { label: "Công suất", value: `${detail.quickSpecs.power} Hp` },
-    { label: "Tăng tốc", value: detail.quickSpecs.acceleration },
-  ];
   const overviewImage =
     detail.overview.image !== "/images/cars/oto-hero.jpg"
       ? detail.overview.image
       : (detail.gallery[0] ?? detail.overview.image);
 
   return (
-    <>
-      <div className="max-w-2xl">
-        <p className="text-[11px] font-bold tracking-[0.18em] text-brand uppercase">Tổng quan</p>
-        <h2 className={`mt-2 text-left ${sectionHeading}`}>{detail.overview.title}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          {detail.overview.subtitle}
-        </p>
-      </div>
-
-      <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12 lg:gap-10">
-        <div className="order-1 lg:col-span-7">
-          <div className="overflow-hidden rounded-2xl bg-surface/50 p-2 sm:p-3">
-            <img
-              src={overviewImage}
-              alt={detail.overview.title}
-              className="aspect-[16/10] w-full rounded-xl object-contain bg-[#f4f6fa] p-2"
-            />
-          </div>
-        </div>
-
-        <div className="order-2 flex flex-col justify-center gap-4 lg:col-span-5 sm:gap-5">
-          <dl className="grid grid-cols-3 gap-2 sm:gap-3">
-            {highlights.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl border border-border/60 px-3 py-2.5 text-center sm:px-4 sm:py-3"
-              >
-                <dt className="text-[10px] font-semibold text-muted-foreground uppercase">
-                  {item.label}
-                </dt>
-                <dd className="mt-0.5 text-sm font-black text-brand-dark">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <div className="overflow-hidden rounded-2xl border border-border/60">
-            <ul className="divide-y divide-border/50">
-              {detail.overview.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 px-4 py-3.5 sm:px-5 sm:py-4">
-                  <Check size={14} className="mt-0.5 shrink-0 text-brand" strokeWidth={2.5} />
-                  <span className="text-sm leading-relaxed text-foreground/85">{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
+    <PdpSplitOverview
+      eyebrow="Tổng quan"
+      title={detail.overview.title}
+      description={detail.overview.subtitle}
+      bullets={detail.overview.bullets}
+      image={overviewImage}
+      imageAlt={detail.overview.title}
+    />
   );
 }
 
 function ExteriorSection({ detail }: { detail: CarDetail }) {
-  const lead = detail.exterior[0];
+  const items = expandGalleryToGrid(detail.exterior, EXTERIOR_GRID_LABELS);
+
   return (
     <>
-      <SectionHeader
+      <PdpSectionTitle
         title="Ngoại thất"
-        subtitle={lead?.desc?.slice(0, 120) ?? "Thiết kế ấn tượng, khí động học tối ưu"}
+        subtitle="Phong cách mạnh mẽ, sang trọng"
+        actionHref="#thong-so"
       />
-      {lead && lead.desc.length > 80 && (
-        <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
-          {lead.desc}
-        </p>
-      )}
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        {detail.exterior.map((item) => (
-          <FeatureCard key={item.title} {...item} />
-        ))}
-      </div>
+      <PdpImageFeatureGrid items={items} />
     </>
   );
 }
 
 function InteriorSection({ detail }: { detail: CarDetail }) {
-  const lead = detail.interior[0];
   return (
     <>
-      <SectionHeader
+      <PdpSectionTitle
         title="Nội thất"
-        subtitle={lead?.desc?.slice(0, 120) ?? "Không gian cabin cao cấp, tiện nghi vượt trội"}
+        subtitle="Không gian cabin cao cấp, tiện nghi vượt trội"
+        actionHref="#thong-so"
       />
-      {lead && lead.desc.length > 80 && (
-        <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
-          {lead.desc}
-        </p>
-      )}
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        {detail.interior.map((item) => (
-          <FeatureCard key={item.title} {...item} />
-        ))}
-      </div>
+      <PdpImageFeatureGrid items={detail.interior} />
     </>
   );
 }
 
 function TechnologySection({ detail }: { detail: CarDetail }) {
+  const items = detail.technology.map((item) => ({
+    icon: TECH_ICONS[item.icon],
+    title: item.title,
+    desc: item.desc,
+  }));
+
   return (
     <>
-      <SectionHeader
+      <PdpSectionTitle
         title="Công nghệ thông minh"
         subtitle={detail.technologySubtitle ?? "Hệ sinh thái kết nối toàn diện"}
-        center
       />
-      <div className="mt-6 overflow-hidden rounded-2xl border border-border/60 bg-white sm:mt-8">
-        <ul className="divide-y divide-border/50">
-          {detail.technology.map((tech) => {
-            const Icon = TECH_ICONS[tech.icon];
-            return (
-              <li key={tech.title} className="flex items-start gap-3.5 px-4 py-3.5 sm:px-5 sm:py-4">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/5 text-brand">
-                  <Icon className="size-4" strokeWidth={1.5} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-sm font-bold text-brand-dark">{tech.title}</h3>
-                  <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-                    {tech.desc}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <PdpTechIconGrid items={items} />
     </>
   );
 }
 
 function PerformanceSection({ detail }: { detail: CarDetail }) {
+  const perfImage =
+    detail.performance.image !== detail.image
+      ? detail.performance.image
+      : (detail.gallery[2] ?? detail.gallery[0] ?? detail.image);
+
   return (
     <>
-      <SectionHeader
-        title={detail.performance.title}
-        subtitle={detail.performance.subtitle}
-        center
+      <PdpSectionTitle title={detail.performance.title} subtitle={detail.performance.subtitle} />
+      <PdpPerformanceShowcase
+        lead={detail.performance.subtitle}
+        image={perfImage}
+        imageAlt={detail.performance.title}
+        metrics={buildPerformanceMetrics(detail.quickSpecs)}
+        driveModes={detail.performance.driveModes}
       />
-      <div className="mt-8 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-        <div className="overflow-hidden rounded-2xl shadow-card">
-          <img
-            src={detail.performance.image}
-            alt={detail.performance.title}
-            className="aspect-[4/3] w-full object-cover"
-          />
-        </div>
-        <div className="space-y-3">
-          {detail.performance.features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-xl border border-border/60 bg-white p-4 shadow-soft"
-            >
-              <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        {detail.performance.driveModes.map((mode) => (
-          <div
-            key={mode.name}
-            className="rounded-2xl border border-brand/20 bg-brand/5 p-5 text-center"
-          >
-            <p className="text-base font-black text-brand">{mode.name}</p>
-            <p className="mt-1.5 text-xs text-muted-foreground">{mode.desc}</p>
-          </div>
-        ))}
-      </div>
     </>
   );
 }
 
-function SafetySection({ detail }: { detail: CarDetail }) {
+function PrivilegesSection({ privileges }: { privileges: PrivilegesSectionData }) {
   return (
     <>
-      <SectionHeader title={detail.safety.title} subtitle={detail.safety.subtitle} center />
-      <div className="mt-4 flex flex-wrap justify-center gap-2">
-        {detail.safety.highlights.map((h) => (
+      <PdpSectionTitle title={privileges.title} subtitle={privileges.subtitle} />
+      <div className="mt-5 flex flex-wrap gap-2">
+        {privileges.highlights.map((h) => (
           <span
             key={h}
-            className="rounded-full border border-brand/20 px-3 py-1 text-[11px] font-semibold text-brand"
+            className="rounded-full border border-amber-300/40 bg-amber-50 px-3 py-1 text-[11px] font-semibold text-amber-900"
           >
             {h}
           </span>
         ))}
       </div>
-      <div className="mt-6 grid items-start gap-6 sm:mt-8 lg:grid-cols-2 lg:gap-10">
-        <ul className="order-2 divide-y divide-border/50 overflow-hidden rounded-2xl border border-border/60 bg-white lg:order-1">
-          {detail.safety.features.map((f) => (
-            <li key={f.title} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
-              <Shield className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.5} />
-              <div className="min-w-0">
-                <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="order-1 overflow-hidden rounded-2xl border border-border/60 lg:order-2">
-          <img
-            src={detail.safety.image}
-            alt={detail.safety.title}
-            className="aspect-[4/3] w-full object-cover"
-          />
-        </div>
-      </div>
+      <PdpImageFeatureGrid
+        items={privileges.features.map((f) => ({
+          title: f.title,
+          desc: f.desc,
+          image: f.image ?? privileges.image,
+        }))}
+      />
+    </>
+  );
+}
+
+function ChargingSection({ charging }: { charging: ChargingHighlight }) {
+  const solutions = DEFAULT_CHARGING_SOLUTIONS({
+    station: IMAGES.chargingStations,
+    home: charging.image,
+    portable: IMAGES.portableCharger,
+  });
+
+  return (
+    <PdpChargingShowcase
+      title={charging.title}
+      description={charging.desc}
+      heroImage={charging.image}
+      solutions={solutions}
+    />
+  );
+}
+
+function safetyIconFor(title: string): React.ElementType {
+  const t = title.toLowerCase();
+  if (/camera|360|quan sát/i.test(t)) return Monitor;
+  if (/phanh|khẩn cấp/i.test(t)) return Shield;
+  if (/va chạm|cảnh báo/i.test(t)) return Radar;
+  if (/làn|lệch làn/i.test(t)) return Navigation;
+  if (/túi khí|khung/i.test(t)) return Shield;
+  return Shield;
+}
+
+function SafetySection({ detail }: { detail: CarDetail }) {
+  const safetyImage =
+    detail.safety.image !== detail.image
+      ? detail.safety.image
+      : (detail.gallery[1] ?? detail.gallery[0] ?? detail.image);
+
+  const items = detail.safety.features.map((f) => ({
+    icon: safetyIconFor(f.title),
+    title: f.title,
+    desc: f.desc,
+  }));
+
+  return (
+    <>
+      <PdpSectionTitle title={detail.safety.title} subtitle={detail.safety.subtitle} />
+      <PdpSafetyShowcase
+        title={detail.safety.title}
+        subtitle={detail.safety.subtitle}
+        image={safetyImage}
+        imageAlt={detail.safety.title}
+        highlights={detail.safety.highlights}
+        features={items}
+      />
     </>
   );
 }
@@ -1210,8 +1203,8 @@ function SpecsSection({ detail }: { detail: CarDetail }) {
 
   return (
     <>
-      <SectionHeader title="Thông số kỹ thuật" subtitle="Thông tin chi tiết đầy đủ" center />
-      <div className="mx-auto mt-8 max-w-3xl space-y-3">
+      <PdpSectionTitle title="Thông số kỹ thuật" subtitle="Thông tin chi tiết đầy đủ" />
+      <div className="mx-auto mt-8 max-w-3xl space-y-3 lg:mt-10">
         {detail.specGroups.map((group) => {
           const isOpen = expanded === group.category;
           return (
@@ -1244,7 +1237,7 @@ function SpecsSection({ detail }: { detail: CarDetail }) {
                           className="flex flex-col gap-1 px-5 py-3 sm:flex-row sm:items-center sm:justify-between"
                         >
                           <span className="text-xs text-muted-foreground">{item.label}</span>
-                          <span className="text-xs font-semibold text-brand-dark">
+                          <span className="text-xs font-semibold text-brand-dark sm:text-right">
                             {item.value}
                           </span>
                         </div>
@@ -1266,7 +1259,7 @@ function AccessoriesSection({ detail }: { detail: CarDetail }) {
 
   return (
     <>
-      <SectionHeader title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
+      <PdpSectionTitle title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
       <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
         {products.map((product) => (
           <AccessoryProductCard key={product.id} product={product} />
@@ -1764,16 +1757,22 @@ function SectionHeader({
   title,
   subtitle,
   center,
+  light,
 }: {
   title: string;
   subtitle?: string;
   center?: boolean;
+  light?: boolean;
 }) {
   return (
-    <div className={center ? "text-center" : ""}>
-      <h2 className={sectionHeading}>{title}</h2>
+    <div className={center ? "mx-auto max-w-3xl text-center" : ""}>
+      <h2 className={`${sectionHeading} ${light ? "text-white" : ""}`}>{title}</h2>
       {subtitle && (
-        <p className={`mt-2 text-sm text-muted-foreground ${center ? "mx-auto max-w-xl" : ""}`}>
+        <p
+          className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+            light ? "text-white/70" : "text-muted-foreground"
+          } ${center ? "mx-auto max-w-2xl" : ""}`}
+        >
           {subtitle}
         </p>
       )}
@@ -1826,26 +1825,6 @@ function StarRating({
           }
         />
       ))}
-    </div>
-  );
-}
-
-function FeatureCard({ title, desc, image }: { title: string; desc: string; image: string }) {
-  return (
-    <div className="catalog-card rounded-xl border border-border/60 bg-white sm:rounded-2xl">
-      <img
-        src={image}
-        alt={title}
-        className="aspect-[4/3] w-full rounded-t-xl bg-slate-100 object-cover sm:rounded-t-2xl"
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="p-3 sm:p-4">
-        <h3 className="text-xs font-bold text-brand-dark sm:text-sm">{title}</h3>
-        <p className="mt-1 text-[10px] leading-relaxed text-muted-foreground sm:mt-1.5 sm:text-xs">
-          {desc}
-        </p>
-      </div>
     </div>
   );
 }

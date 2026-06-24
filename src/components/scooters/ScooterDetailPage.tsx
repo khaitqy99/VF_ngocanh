@@ -71,6 +71,7 @@ import {
   getRelatedScooters,
   type TechFeature,
 } from "@/lib/scooter-details";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 
 type SectionId =
   | "tong-quan"
@@ -86,7 +87,7 @@ type SectionId =
 
 const SERVICE_BAR = [
   { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000 km" },
-  { icon: Headphones, title: "Cứu hộ 24/7", sub: "Hỗ trợ mọi lúc, mọi nơi" },
+  { icon: Headphones, title: "Cứu hộ 24/7", sub: HOTLINE },
   { icon: MapPin, title: "Showroom Cà Mau", sub: "Tư vấn & giao xe tận nơi" },
   { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Trả góp 0%, lãi suất thấp" },
 ] as const;
@@ -246,11 +247,8 @@ export default function ScooterDetailPage({ detail }: Props) {
                   )}
                 </div>
 
-                <p className="text-[11px] font-bold tracking-widest text-brand uppercase sm:text-xs">
-                  VinFast {detail.name}
-                </p>
                 <h1 className="mt-1 break-words text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-4xl">
-                  {detail.tagline}
+                  {detail.name}
                 </h1>
 
                 <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
@@ -690,10 +688,10 @@ export default function ScooterDetailPage({ detail }: Props) {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href="tel:19002323"
+                href={HOTLINE_TEL}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-xs font-black text-brand-dark transition hover:bg-white/90"
               >
-                <Phone className="size-4" /> Gọi 1900 2323
+                <Phone className="size-4" /> Gọi {HOTLINE}
               </a>
               <button
                 type="button"

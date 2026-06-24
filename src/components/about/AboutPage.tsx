@@ -39,6 +39,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { IMAGES } from "@/lib/images";
+import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import {
+  FeatureCarouselSection,
+  type FeatureCarouselSlide,
+} from "@/components/shared/FeatureCarouselSection";
+import { FadeIn, StaggerGrid, StaggerItem } from "@/components/motion";
 
 const STATS = [
   { icon: Award, value: "5+", label: "Năm kinh nghiệm đồng hành cùng VinFast" },
@@ -51,7 +57,7 @@ const MILESTONES = [
     year: "2019",
     title: "Đặt Nền Móng Khởi Đầu",
     desc: "Thành lập VF Ngọc Anh, chính thức bắt tay cùng VinFast trên hành trình khai phá thị trường xe điện Việt Nam đầy tiềm năng.",
-    image: IMAGES.showroom,
+    image: IMAGES.aboutShowroomBanner,
   },
   {
     year: "2020",
@@ -75,7 +81,7 @@ const MILESTONES = [
     year: "2024 - Nay",
     title: "Vững Bước Kỷ Nguyên Di Chuyển Xanh",
     desc: "Hoàn thiện hệ sinh thái xanh toàn diện gồm xe ô tô điện, xe máy điện, bộ sạc treo tường thông minh tại nhà và giải pháp lưu trữ ESS.",
-    image: IMAGES.vf9Suv,
+    image: IMAGES.newsletterBg,
   },
 ] as const;
 
@@ -114,6 +120,28 @@ const CORE_VALUES = [
   "Đổi mới sáng tạo - Làm chủ công nghệ",
   "Kiên định đồng hành xây dựng tương lai xanh",
 ] as const;
+
+const ABOUT_CTA_SLIDES: FeatureCarouselSlide[] = [
+  {
+    title: "Sẵn sàng trải nghiệm",
+    subtitle: "Kỷ nguyên di chuyển xanh?",
+    description:
+      "Hãy đăng ký lái thử trực tuyến ngay hôm nay để trực tiếp cảm nhận sức mạnh, sự êm ái và các công nghệ ADAS tự lái thông minh tiên phong từ các dòng ô tô điện VinFast thế hệ mới.",
+    image: "/images/vinfast/cars/vf9.webp",
+    imageAlt: "VF 9",
+    imageClass: "h-full w-full object-contain object-left",
+    specs: [
+      { value: "3S", label: "Đại lý ủy quyền" },
+      { value: "Cà Mau", label: "Showroom & xưởng dịch vụ" },
+      { value: "24/7", label: "Hỗ trợ khách hàng" },
+      { value: HOTLINE, label: "Hotline cứu hộ", highlight: true },
+    ],
+    primaryCta: "KHÁM PHÁ NGAY",
+    secondaryCta: "ĐẶT LỊCH LÁI THỬ",
+    href: "/oto",
+    detailHref: HOTLINE_TEL,
+  },
+];
 
 const sectionHeading =
   "text-center text-xl font-black leading-tight tracking-tight text-brand-dark sm:text-2xl md:text-3xl lg:text-4xl";
@@ -180,14 +208,14 @@ function BreadcrumbBar() {
 
 function HeroSection() {
   return (
-    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
+    <section className="page-hero relative flex min-h-[380px] items-center overflow-hidden bg-slate-950 text-white sm:min-h-[440px] lg:min-h-[520px]">
       <div className="absolute inset-0">
         <img
-          src={IMAGES.showroom}
-          alt="Showroom VF Ngọc Anh"
-          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
+          src={IMAGES.aboutShowroomBanner}
+          alt="Showroom VinFast Ngọc Anh - Cà Mau"
+          className="h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-black/70 lg:bg-gradient-to-r lg:from-black/85 lg:via-black/55 lg:to-black/25" />
       </div>
 
       <div className="container-vf relative z-10 text-white">
@@ -205,14 +233,13 @@ function HeroSection() {
             <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
               SHOWROOM VF NGỌC ANH <br />
               <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
-                ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH
+                CÀ MAU — ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH
               </span>
             </h1>
             <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              Tọa lạc tại vị trí đắc địa Long Biên, VF Ngọc Anh tự hào là mảnh ghép chiến lược trong
-              mạng lưới đại lý 3S ủy quyền chính thức của VinFast Việt Nam. Chúng tôi cam kết mang
-              tới cho hàng vạn gia đình Việt những chiếc ô tô điện, xe máy điện thông minh đỉnh cao
-              đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội.
+              Tọa lạc tại Cà Mau, VF Ngọc Anh tự hào là đại lý ủy quyền 3S chính thức của VinFast
+              Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe
+              máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -223,10 +250,10 @@ function HeroSection() {
                 Khám phá dòng xe <ChevronRight className="size-4" />
               </Link>
               <a
-                href="tel:1900232389"
+                href={HOTLINE_TEL}
                 className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
               >
-                <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: 1900 2323 89
+                <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: {HOTLINE}
               </a>
             </div>
 
@@ -257,66 +284,72 @@ function MissionSection() {
   return (
     <section className="bg-slate-50 section-y border-b border-slate-200/60">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
+        <FadeIn className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
             Kim chỉ nam hoạt động
           </span>
           <h2 className={sectionHeading + " mt-2"}>SỨ MỆNH - TẦM NHÌN - GIÁ TRỊ CỐT LÕI</h2>
           <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        </FadeIn>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <StaggerGrid className="grid gap-6 md:grid-cols-3">
           {/* Mission card */}
-          <div className="flex flex-col items-center text-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
-            <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
-              <Target className="size-7" strokeWidth={1.5} />
+          <StaggerItem>
+            <div className="flex flex-col items-center text-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group h-full">
+              <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
+                <Target className="size-7" strokeWidth={1.5} />
+              </div>
+              <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase">
+                SỨ MỆNH CỐT LÕI
+              </h3>
+              <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold">
+                Xây dựng chiếc cầu nối vững chắc đưa các giải pháp di chuyển xanh, xe điện thông
+                minh thân thiện môi trường của VinFast tới tay mỗi người dân Việt Nam, kiến tạo lối
+                sống văn minh, bền vững.
+              </p>
             </div>
-            <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase">
-              SỨ MỆNH CỐT LÕI
-            </h3>
-            <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold">
-              Xây dựng chiếc cầu nối vững chắc đưa các giải pháp di chuyển xanh, xe điện thông minh
-              thân thiện môi trường của VinFast tới tay mỗi người dân Việt Nam, kiến tạo lối sống
-              văn minh, bền vững.
-            </p>
-          </div>
+          </StaggerItem>
 
           {/* Vision card */}
-          <div className="flex flex-col items-center text-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
-            <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
-              <Eye className="size-7" strokeWidth={1.5} />
+          <StaggerItem>
+            <div className="flex flex-col items-center text-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group h-full">
+              <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
+                <Eye className="size-7" strokeWidth={1.5} />
+              </div>
+              <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase">
+                TẦM NHÌN CHIẾN LƯỢC
+              </h3>
+              <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold">
+                Trở thành biểu tượng showroom 3S dẫn đầu cả nước về quy mô doanh số lẫn chỉ số hài
+                lòng của khách hàng (CSI), là địa chỉ tin cậy hàng đầu khi nhắc đến thương hiệu xe
+                điện VinFast.
+              </p>
             </div>
-            <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase">
-              TẦM NHÌN CHIẾN LƯỢC
-            </h3>
-            <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold">
-              Trở thành biểu tượng showroom 3S dẫn đầu cả nước về quy mô doanh số lẫn chỉ số hài
-              lòng của khách hàng (CSI), là địa chỉ tin cậy hàng đầu khi nhắc đến thương hiệu xe
-              điện VinFast.
-            </p>
-          </div>
+          </StaggerItem>
 
           {/* Core Values card */}
-          <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
-            <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
-              <Gem className="size-7" strokeWidth={1.5} />
+          <StaggerItem>
+            <div className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group h-full">
+              <div className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300 shadow-sm">
+                <Gem className="size-7" strokeWidth={1.5} />
+              </div>
+              <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase text-center">
+                GIÁ TRỊ CỐT LÕI
+              </h3>
+              <ul className="mt-5 space-y-3.5 w-full border-t border-slate-100 pt-4">
+                {CORE_VALUES.map((v) => (
+                  <li
+                    key={v}
+                    className="flex items-center gap-2.5 text-[11px] text-slate-500 font-bold"
+                  >
+                    <Check size={14} className="shrink-0 text-brand" strokeWidth={3} />
+                    <span>{v}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h3 className="mt-6 text-xs font-black tracking-widest text-brand-dark uppercase text-center">
-              GIÁ TRỊ CỐT LÕI
-            </h3>
-            <ul className="mt-5 space-y-3.5 w-full border-t border-slate-100 pt-4">
-              {CORE_VALUES.map((v) => (
-                <li
-                  key={v}
-                  className="flex items-center gap-2.5 text-[11px] text-slate-500 font-bold"
-                >
-                  <Check size={14} className="shrink-0 text-brand" strokeWidth={3} />
-                  <span>{v}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -407,45 +440,47 @@ function WhyChooseSection() {
   return (
     <section className="bg-slate-50 section-y">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
+        <FadeIn className="max-w-2xl mx-auto text-center mb-12">
           <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
             Trải nghiệm khác biệt
           </span>
           <h2 className={sectionHeading + " mt-2"}>VÌ SAO LỰA CHỌN VF NGỌC ANH?</h2>
           <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        </FadeIn>
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3] w-full border border-slate-200 shadow-soft group">
+          <FadeIn
+            direction="left"
+            className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3] w-full border border-slate-200 shadow-soft group"
+          >
             {/* Dynamic diagonal blue background overlay */}
             <div className="absolute inset-0 bg-brand-dark/5 group-hover:bg-brand-dark/15 transition-all duration-300 pointer-events-none z-10" />
             <img
-              src={IMAGES.vf9Suv}
-              alt="VinFast SUV"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              src={IMAGES.aboutShowroomBanner}
+              alt="Showroom VinFast Ngọc Anh - Cà Mau"
+              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-          </div>
-          <ul className="space-y-6">
+          </FadeIn>
+          <StaggerGrid className="space-y-6">
             {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
-              <li
-                key={title}
-                className="flex gap-4 items-start bg-white p-5 rounded-2xl border border-slate-200 shadow-soft"
-              >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
-                    {desc}
-                  </p>
-                </div>
-              </li>
+              <StaggerItem key={title}>
+                <li className="flex gap-4 items-start bg-white p-5 rounded-2xl border border-slate-200 shadow-soft list-none">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                      {title}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
+                      {desc}
+                    </p>
+                  </div>
+                </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerGrid>
         </div>
       </div>
     </section>
@@ -454,47 +489,6 @@ function WhyChooseSection() {
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark section-y text-white">
-      {/* Background neon effect overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
-
-      <div className="container-vf relative z-10 text-center lg:text-left">
-        <div className="grid items-center gap-8 lg:grid-cols-12">
-          <div className="text-white lg:col-span-7">
-            <h2 className="text-2xl font-black leading-tight tracking-tight sm:text-3xl md:text-4xl uppercase text-white">
-              SẴN SÀNG TRẢI NGHIỆM
-              <span className="block mt-1 text-brand">KỶ NGUYÊN DI CHUYỂN XANH?</span>
-            </h2>
-            <p className="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-slate-300 font-medium mx-auto lg:mx-0">
-              Hãy đăng ký lái thử trực tuyến ngay hôm nay để trực tiếp cảm nhận sức mạnh, sự êm ái
-              và các công nghệ ADAS tự lái thông minh tiên phong từ các dòng ô tô điện VinFast thế
-              hệ mới.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-              <Link
-                href="/oto"
-                className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all uppercase"
-              >
-                Khám phá dòng xe <ChevronRight className="size-4" />
-              </Link>
-              <a
-                href="tel:1900232389"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all hover:bg-white/20"
-              >
-                <Phone className="size-4 text-accent-yellow" /> GỌI 1900 2323 89
-              </a>
-            </div>
-          </div>
-          <div className="hidden justify-end lg:flex lg:col-span-5">
-            <img
-              src={IMAGES.vfMpv7}
-              alt="Dòng xe VinFast"
-              className="max-h-[220px] w-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+    <FeatureCarouselSection slides={ABOUT_CTA_SLIDES} imageSide="left" imageAspect="2544/1500" />
   );
 }

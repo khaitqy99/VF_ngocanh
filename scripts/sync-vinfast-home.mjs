@@ -316,7 +316,7 @@ function specsToFeatureSpecs(specs, type) {
     ) {
       result.push({ value: spec.value, label: spec.label });
     } else if (label.includes("giá")) {
-      result.push({ value: spec.value, label: spec.label, highlight: true });
+      result.push({ value: spec.value, label: "Giá niêm yết", highlight: true });
     } else if (type === "car" && label.includes("dòng xe")) {
       // segment shown as subtitle
     }
@@ -370,8 +370,8 @@ function toSlide(item, type) {
         ? "h-full w-full object-contain object-left"
         : "h-full w-full object-contain object-right",
     specs: specsToFeatureSpecs(item.specs, type),
-    primaryCta: type === "car" ? "KHÁM PHÁ NGAY" : "MUA NGAY",
-    secondaryCta: type === "car" ? "ĐẶT LỊCH LÁI THỬ" : "XEM CHI TIẾT",
+    primaryCta: "ĐẶT CỌC",
+    secondaryCta: "KHÁM PHÁ NGAY",
     href: item.localId ? `${localPath}/${item.localId}` : item.detailHref,
     detailHref: item.detailHref,
   };

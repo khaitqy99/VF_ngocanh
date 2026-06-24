@@ -187,7 +187,7 @@ function parsePrivilegeSection(html) {
     highlights.push(featureTitle.slice(0, 60));
     features.push({
       title: featureTitle.slice(0, 80),
-      desc: desc.slice(0, 320),
+      desc: desc.slice(0, 500),
     });
   }
 
@@ -278,10 +278,22 @@ function mapTechnology(techParsed, fallbackSection) {
   const lead = techParsed?.lead || fallbackSection?.desc || "";
 
   for (const tab of techParsed?.tabs ?? []) {
+    let desc = "";
+    if (/trợ lý/i.test(tab)) {
+      desc =
+        "Trợ lý ảo AI hỗ trợ tiếng Việt, điều khiển giọng nói thông minh và kết nối dịch vụ thông minh trên xe.";
+    } else if (/trợ lái/i.test(tab)) {
+      desc =
+        "Hệ thống trợ lái nâng cao cấp độ 2 với các tính năng an toàn chủ động và hỗ trợ lái thông minh.";
+    } else if (/dịch vụ/i.test(tab)) {
+      desc = "Hệ sinh thái kết nối và dịch vụ tiên tiến trên xe.";
+    } else {
+      desc = lead.slice(0, 200) || tab;
+    }
     items.push({
       icon: techIconFor(tab, lead),
       title: tab.slice(0, 80),
-      desc: lead.slice(0, 200) || tab,
+      desc,
     });
   }
 
