@@ -1,6 +1,6 @@
 // Auto-synced from VinFast — scripts/sync-vinfast-catalog.mjs
 // Source: https://vinfastauto.com/vn_vi
-// Last synced: 2026-06-23T10:01:37.904Z
+// Last synced: 2026-06-26T11:30:11.826Z
 
 export type CarSegment = "suv" | "suv-nho" | "suv-c" | "suv-d" | "suv-e" | "mpv";
 
@@ -41,69 +41,11 @@ export type CarModel = {
 
 export const CAR_IMAGES = {
   hero: "/images/showroom.jpg",
-  promoTestDrive: "/images/about/showroom-ngoc-anh-camau.png",
+  promoTestDrive: "/images/cars/promo-test-drive.jpg",
   promoFinance: "/images/cars/promo-finance.jpg",
 } as const;
 
 export const CARS: CarModel[] = [
-  {
-    id: "vf9",
-    name: "VF 9",
-    subtitle: "SUV điện cao cấp hạng E",
-    image: "/images/vinfast/cars/vf9.webp",
-    price: 1_274_150_000,
-    seats: 7,
-    range: 626,
-    power: 402,
-    segment: "suv-e",
-    drive: "awd",
-    rangeBucket: "over600",
-    torque: 620,
-    batteryCapacity: 123,
-    chargingTime: "35 phút (10-70%)",
-    dimensions: "5.118 x 2.254 x 1.696 mm",
-    batteryPurchasePrice: 218_000_000,
-    rentBatteryPrice: 3_200_000,
-    acceleration: "7.5 giây (0-100 km/h)",
-    colors: [
-      {
-        name: "Jet Black",
-        hex: "#111827",
-        image: "/images/vinfast/colors/vf9/jet-black.webp",
-      },
-      {
-        name: "Infinity Blanc",
-        hex: "#FFFFFF",
-        image: "/images/vinfast/colors/vf9/infinity-blanc.webp",
-      },
-      {
-        name: "Zenith Grey",
-        hex: "#6B7280",
-        image: "/images/vinfast/colors/vf9/zenith-grey.webp",
-      },
-      {
-        name: "Urban Mint",
-        hex: "#34D399",
-        image: "/images/vinfast/colors/vf9/urban-mint.webp",
-      },
-      {
-        name: "Ivy Green",
-        hex: "#065F46",
-        image: "/images/vinfast/colors/vf9/ivy-green.webp",
-      },
-      {
-        name: "Desat Silver",
-        hex: "#D1D5DB",
-        image: "/images/vinfast/colors/vf9/desat-silver.webp",
-      },
-      {
-        name: "Crimson Red",
-        hex: "#B91C1C",
-        image: "/images/vinfast/colors/vf9/crimson-red.webp",
-      },
-    ],
-    isBestSeller: true,
-  },
   {
     id: "vf8-all-new",
     name: "VF 8 All New",
@@ -464,9 +406,9 @@ export const CARS: CarModel[] = [
     segment: "suv-c",
     drive: "fwd",
     rangeBucket: "400-600",
-    torque: 250,
+    torque: 310,
     batteryCapacity: 59.6,
-    chargingTime: "30 phút (10-70%)",
+    chargingTime: "25 phút (10%-70%)",
     dimensions: "4.238 x 1.820 x 1.594 mm",
     batteryPurchasePrice: 90_000_000,
     rentBatteryPrice: 1_800_000,
@@ -554,14 +496,14 @@ export const CARS: CarModel[] = [
     image: "/images/vinfast/cars/vf8.webp",
     price: 866_150_000,
     seats: 5,
-    range: 471,
+    range: 562,
     power: 402,
     segment: "suv-d",
     drive: "awd",
     rangeBucket: "400-600",
     torque: 620,
     batteryCapacity: 88.3,
-    chargingTime: "31 phút (10-70%)",
+    chargingTime: "31 phút (10%-70%)",
     dimensions: "4.750 x 1.934 x 1.667 mm",
     batteryPurchasePrice: 159_000_000,
     rentBatteryPrice: 2_900_000,
@@ -600,6 +542,64 @@ export const CARS: CarModel[] = [
         name: "Crimson Red",
         hex: "#B91C1C",
         image: "/images/vinfast/colors/vf8/crimson-red.webp",
+      },
+    ],
+    isBestSeller: true,
+  },
+  {
+    id: "vf9",
+    name: "VF 9",
+    subtitle: "SUV điện cao cấp hạng E",
+    image: "/images/vinfast/cars/vf9.webp",
+    price: 1_274_150_000,
+    seats: 7,
+    range: 626,
+    power: 402,
+    segment: "suv-e",
+    drive: "awd",
+    rangeBucket: "over600",
+    torque: 620,
+    batteryCapacity: 123,
+    chargingTime: "35 phút (10%-70%)",
+    dimensions: "5.119 x 2.254 x 1.697 mm",
+    batteryPurchasePrice: 218_000_000,
+    rentBatteryPrice: 3_200_000,
+    acceleration: "7.5 giây (0-100 km/h)",
+    colors: [
+      {
+        name: "Jet Black",
+        hex: "#111827",
+        image: "/images/vinfast/colors/vf9/jet-black.webp",
+      },
+      {
+        name: "Infinity Blanc",
+        hex: "#FFFFFF",
+        image: "/images/vinfast/colors/vf9/infinity-blanc.webp",
+      },
+      {
+        name: "Zenith Grey",
+        hex: "#6B7280",
+        image: "/images/vinfast/colors/vf9/zenith-grey.webp",
+      },
+      {
+        name: "Urban Mint",
+        hex: "#34D399",
+        image: "/images/vinfast/colors/vf9/urban-mint.webp",
+      },
+      {
+        name: "Ivy Green",
+        hex: "#065F46",
+        image: "/images/vinfast/colors/vf9/ivy-green.webp",
+      },
+      {
+        name: "Desat Silver",
+        hex: "#D1D5DB",
+        image: "/images/vinfast/colors/vf9/desat-silver.webp",
+      },
+      {
+        name: "Crimson Red",
+        hex: "#B91C1C",
+        image: "/images/vinfast/colors/vf9/crimson-red.webp",
       },
     ],
     isBestSeller: true,

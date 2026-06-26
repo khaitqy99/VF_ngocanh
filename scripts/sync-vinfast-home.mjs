@@ -485,6 +485,32 @@ async function main() {
 
   console.log(`Found ${banners.length} banners, ${cars.length} cars, ${scooters.length} scooters`);
 
+  const vehiclesJson = {
+    syncedAt: new Date().toISOString(),
+    source: VINFAST_HOME,
+    banners,
+    cars: cars.map((c) => ({
+      name: c.name,
+      imageSrc: c.imageSrc,
+      specs: c.specs,
+      detailHref: c.detailHref,
+      localId: c.localId,
+    })),
+    scooters: scooters.map((s) => ({
+      name: s.name,
+      imageSrc: s.imageSrc,
+      specs: s.specs,
+      detailHref: s.detailHref,
+      localId: s.localId,
+    })),
+  };
+  fs.writeFileSync(
+    path.join(ROOT, "scripts", "vinfast-vehicles.json"),
+    JSON.stringify(vehiclesJson, null, 2),
+    "utf8",
+  );
+  console.log(`Wrote ${path.join(ROOT, "scripts", "vinfast-vehicles.json")}`);
+
   console.log("\nDownloading images...");
   const data = await processImages(banners, cars, scooters);
   generateTs(data);

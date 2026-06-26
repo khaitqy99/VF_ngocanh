@@ -37,7 +37,6 @@ import {
   Percent,
   Info,
   Phone,
-  Sparkles,
   ChevronDown,
   Share2,
 } from "lucide-react";
@@ -65,6 +64,8 @@ import {
 } from "@/components/ui/select";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
+import { PdpHeroHeader } from "@/components/shared/PdpHeroHeader";
+import { PdpSection } from "@/components/shared/PdpSectionShell";
 import {
   PdpQuickSpecBar,
   PdpSectionTitle,
@@ -81,6 +82,19 @@ import {
 import { IMAGES } from "@/lib/images";
 import { getCarDetailAccessories } from "@/lib/accessories";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import {
+  detailBreadcrumb,
+  detailGalleryImage,
+  detailHeroCol,
+  detailHeroStagger,
+  detailPricePulse,
+  detailRelatedCard,
+  detailServiceItem,
+  detailThumbDot,
+  detailViewport,
+} from "@/lib/detail-motion";
+import { modalVariants, overlayVariants } from "@/lib/motion";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import {
   type CarDetail,
   formatPrice,
@@ -136,6 +150,7 @@ type Props = { detail: CarDetail };
 
 export default function CarDetailPage({ detail }: Props) {
   const router = useRouter();
+  const reduced = useReducedMotion();
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -294,48 +309,42 @@ export default function CarDetailPage({ detail }: Props) {
       <Header />
       <Toaster position="top-center" richColors />
       <main>
-        <BreadcrumbBar carName={detail.name} variantName={variant.name} />
+        <BreadcrumbBar carName={detail.name} variantName={variant.name} reduced={reduced} />
+
+        <PdpHeroHeader
+          tagline={detail.tagline}
+          name={detail.name}
+          slogan={detail.slogan}
+          badges={detail.badges}
+          isNew={detail.isNew}
+          isBestSeller={detail.isBestSeller}
+        />
 
         {/* Hero */}
-        <section className="relative overflow-x-hidden border-b border-border/40 bg-gradient-to-b from-slate-50 to-white">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,87,255,0.06),transparent_60%)]" />
-          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-12">
+        <section className="relative overflow-x-hidden border-b border-border/40 bg-white">
+          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-10">
             <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12 lg:gap-10">
               {/* Gallery */}
-              <div className="min-w-0 w-full lg:col-span-7">
-                <div className="mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 sm:gap-2">
-                  {detail.badges.map((badge) => (
-                    <span
-                      key={badge}
-                      className="inline-flex max-w-full items-center gap-1 rounded-full border border-brand/20 bg-brand/5 px-2 py-0.5 text-[10px] font-bold text-brand sm:px-3 sm:py-1"
-                    >
-                      <Sparkles className="size-3 shrink-0" />
-                      <span className="truncate">{badge}</span>
-                    </span>
-                  ))}
-                  {detail.isNew && (
-                    <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-bold text-white sm:px-3 sm:py-1">
-                      MỚI
-                    </span>
-                  )}
-                  {detail.isBestSeller && (
-                    <span className="rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] font-bold text-brand-dark sm:px-3 sm:py-1">
-                      BÁN CHẠY
-                    </span>
-                  )}
-                </div>
-
-                <h1 className="mt-1 break-words text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-4xl">
-                  {detail.name}
-                </h1>
-
-                <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
+              <motion.div
+                className="min-w-0 w-full lg:col-span-7"
+                variants={reduced ? undefined : detailHeroStagger}
+                initial={reduced ? false : "hidden"}
+                animate={reduced ? undefined : "visible"}
+              >
+                <div className="relative w-full max-w-full overflow-hidden rounded-3xl bg-[#eef2f8] shadow-card ring-1 ring-border/40">
                   <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
-                    <img
-                      src={displayGallery[activeImage]}
-                      alt={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"} ${activeImage + 1}`}
-                      className="h-full w-full object-contain p-2 transition-transform duration-300 hover:scale-[1.02] sm:p-4"
-                    />
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={activeImage}
+                        src={displayGallery[activeImage]}
+                        alt={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"} ${activeImage + 1}`}
+                        className="absolute inset-0 h-full w-full object-contain p-2 sm:p-4"
+                        variants={reduced ? undefined : detailGalleryImage}
+                        initial={reduced ? false : "enter"}
+                        animate={reduced ? undefined : "center"}
+                        exit={reduced ? undefined : "exit"}
+                      />
+                    </AnimatePresence>
                   </div>
                   <button
                     type="button"
@@ -379,11 +388,13 @@ export default function CarDetailPage({ detail }: Props) {
                     className="flex gap-2 overflow-x-auto scroll-smooth px-9 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
                   >
                     {displayGallery.map((img, i) => (
-                      <button
+                      <motion.button
                         key={i}
                         type="button"
                         onClick={() => setActiveImage(i)}
-                        className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:size-[72px] sm:rounded-xl ${
+                        animate={reduced ? undefined : activeImage === i ? "active" : "inactive"}
+                        variants={reduced ? undefined : detailThumbDot}
+                        className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 sm:size-[72px] sm:rounded-xl ${
                           activeImage === i
                             ? "border-brand ring-2 ring-brand/20"
                             : "border-border/40 hover:border-border"
@@ -394,7 +405,7 @@ export default function CarDetailPage({ detail }: Props) {
                           alt=""
                           className="h-full w-full object-contain bg-[#f4f6fa] p-0.5"
                         />
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
                   <button
@@ -408,20 +419,33 @@ export default function CarDetailPage({ detail }: Props) {
                 </div>
 
                 <PdpQuickSpecBar specs={quickSpecItems} embedded />
-              </div>
+              </motion.div>
 
               {/* Purchase panel — sticky on desktop */}
-              <div className="min-w-0 w-full lg:col-span-5">
-                <div className="box-border w-full min-w-0 max-w-full rounded-2xl border border-border/60 bg-white p-4 shadow-card sm:p-5 lg:sticky lg:top-24 lg:p-6">
+              <motion.div
+                className="min-w-0 w-full lg:col-span-5"
+                variants={reduced ? undefined : detailHeroCol}
+                initial={reduced ? false : "hidden"}
+                animate={reduced ? undefined : "visible"}
+              >
+                <div className="box-border w-full min-w-0 max-w-full rounded-3xl border border-border/50 bg-white p-4 shadow-card ring-1 ring-black/[0.03] sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Giá niêm yết từ
+                        Giá bán từ
                       </p>
                       <div className="mt-0.5">
-                        <span className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl">
-                          {formatPrice(variant.price)}
-                        </span>
+                        <AnimatePresence mode="wait">
+                          <motion.span
+                            key={selectedVariant}
+                            variants={reduced ? undefined : detailPricePulse}
+                            initial={reduced ? false : "hidden"}
+                            animate={reduced ? undefined : "visible"}
+                            className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl"
+                          >
+                            {formatPrice(variant.price)}
+                          </motion.span>
+                        </AnimatePresence>
                         <span className="mt-0.5 block text-xs font-bold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline sm:text-base">
                           VND
                         </span>
@@ -619,7 +643,7 @@ export default function CarDetailPage({ detail }: Props) {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -709,16 +733,28 @@ export default function CarDetailPage({ detail }: Props) {
             <p className="mx-auto mt-2 max-w-lg text-center text-sm text-muted-foreground">
               Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn
             </p>
-            <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
-              {related.map((car) => (
-                <CarCatalogCard
+            <motion.div
+              className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5"
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={detailViewport}
+              variants={reduced ? undefined : { hidden: {}, visible: {} }}
+            >
+              {related.map((car, i) => (
+                <motion.div
                   key={car.id}
-                  car={car}
-                  onBookDrive={() => openBooking(`Đăng ký lái thử ${car.name}`)}
-                  onEstimatePrice={() => router.push(`/oto/${car.id}#tai-chinh`)}
-                />
+                  custom={i}
+                  variants={reduced ? undefined : detailRelatedCard}
+                  className="h-full"
+                >
+                  <CarCatalogCard
+                    car={car}
+                    onBookDrive={() => openBooking(`Đăng ký lái thử ${car.name}`)}
+                    onEstimatePrice={() => router.push(`/oto/${car.id}#tai-chinh`)}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
             <div className="mt-8 text-center">
               <Link
                 href="/oto"
@@ -733,10 +769,18 @@ export default function CarDetailPage({ detail }: Props) {
         {/* Service bar */}
         <section className="section-y border-t border-border/40 bg-white">
           <div className="container-vf">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {SERVICE_BAR.map(({ icon: Icon, title, sub }) => (
-                <div
+            <motion.div
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={detailViewport}
+              variants={reduced ? undefined : { hidden: {}, visible: {} }}
+            >
+              {SERVICE_BAR.map(({ icon: Icon, title, sub }, i) => (
+                <motion.div
                   key={title}
+                  custom={i}
+                  variants={reduced ? undefined : detailServiceItem}
                   className="flex items-center gap-4 rounded-2xl border border-border/50 bg-surface p-4 transition hover:shadow-soft"
                 >
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/5">
@@ -746,9 +790,9 @@ export default function CarDetailPage({ detail }: Props) {
                     <p className="text-xs font-bold text-brand-dark">{title}</p>
                     <p className="text-[11px] text-muted-foreground">{sub}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -816,9 +860,10 @@ export default function CarDetailPage({ detail }: Props) {
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={overlayVariants}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
             onClick={() => setLightboxOpen(false)}
           >
@@ -839,9 +884,14 @@ export default function CarDetailPage({ detail }: Props) {
             >
               <ChevronLeft className="size-6" />
             </button>
-            <img
+            <motion.img
+              key={activeImage}
               src={displayGallery[activeImage]}
               alt={detail.name}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={modalVariants}
               className="max-h-[85vh] max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}
             />
@@ -863,15 +913,19 @@ export default function CarDetailPage({ detail }: Props) {
       <AnimatePresence>
         {bookingOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={overlayVariants}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            onClick={() => setBookingOpen(false)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={modalVariants}
+              onClick={(e) => e.stopPropagation()}
               className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
             >
               <div className="flex items-center justify-between bg-brand-dark p-5 text-white">
@@ -1015,16 +1069,11 @@ function SectionWrap({
   dark?: boolean;
   children: React.ReactNode;
 }) {
-  const bg = dark
-    ? "bg-gradient-to-b from-[#0a1628] to-[#0f1f3d] text-white"
-    : alt
-      ? "bg-[#f8f9fc]"
-      : "bg-white";
-
+  const variant = dark ? "dark" : alt ? "muted" : "default";
   return (
-    <section id={id} className={`scroll-mt-[7.25rem] section-y lg:scroll-mt-28 ${bg}`}>
-      <div className="container-vf">{children}</div>
-    </section>
+    <PdpSection id={id} variant={variant}>
+      {children}
+    </PdpSection>
   );
 }
 
@@ -1033,6 +1082,13 @@ const EXTERIOR_GRID_LABELS = [
   "Thân xe sang trọng",
   "Đuôi xe tinh tế",
   "Chi tiết la-zăng",
+];
+
+const INTERIOR_GRID_LABELS = [
+  "Không gian cabin",
+  "Ghế ngồi tiện nghi",
+  "Màn hình & điều khiển",
+  "Chi tiết nội thất",
 ];
 
 function OverviewSection({ detail }: { detail: CarDetail }) {
@@ -1076,7 +1132,7 @@ function InteriorSection({ detail }: { detail: CarDetail }) {
         subtitle="Không gian cabin cao cấp, tiện nghi vượt trội"
         actionHref="#thong-so"
       />
-      <PdpImageFeatureGrid items={detail.interior} />
+      <PdpImageFeatureGrid items={expandGalleryToGrid(detail.interior, INTERIOR_GRID_LABELS)} />
     </>
   );
 }
@@ -1498,7 +1554,7 @@ function FinanceSection({
           <div className="bg-surface p-4 sm:p-6 lg:col-span-7">
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
-                <CostRow label="Giá niêm yết xe" value={formatPrice(variant.price)} />
+                <CostRow label="Giá bán xe" value={formatPrice(variant.price)} />
                 {batteryMode === "purchase" && (
                   <CostRow
                     label="Mua đứt pin"
@@ -1668,9 +1724,22 @@ function ReviewsSection({ detail }: { detail: CarDetail }) {
 
 /* ─── Shared UI atoms ─── */
 
-function BreadcrumbBar({ carName, variantName }: { carName: string; variantName: string }) {
+function BreadcrumbBar({
+  carName,
+  variantName,
+  reduced,
+}: {
+  carName: string;
+  variantName: string;
+  reduced: boolean;
+}) {
   return (
-    <div className="border-b border-border/40 bg-white">
+    <motion.div
+      className="border-b border-border/40 bg-white"
+      initial={reduced ? false : "hidden"}
+      animate={reduced ? undefined : "visible"}
+      variants={reduced ? undefined : detailBreadcrumb}
+    >
       <div className="container-vf overflow-x-auto py-2.5 sm:py-3 scrollbar-none">
         <Breadcrumb>
           <BreadcrumbList className="flex-nowrap">
@@ -1704,7 +1773,7 @@ function BreadcrumbBar({ carName, variantName }: { carName: string; variantName:
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

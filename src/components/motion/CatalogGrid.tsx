@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { HTMLAttributes, ReactNode } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
-import { catalogGridItem, STAGGER_STEP } from "@/lib/motion";
+import { catalogGridItem, catalogItemViewport, STAGGER_STEP } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type CatalogGridProps = HTMLAttributes<HTMLDivElement> & {
@@ -33,10 +33,13 @@ export function CatalogGridItem({
   children,
   className,
   index = 0,
+  inView = false,
 }: {
   children: ReactNode;
   className?: string;
   index?: number;
+  /** Animate khi scroll vào viewport (trang chủ) thay vì mount ngay */
+  inView?: boolean;
 }) {
   const reduced = useReducedMotion();
   const staggerDelay = (index % 6) * STAGGER_STEP;
@@ -47,11 +50,12 @@ export function CatalogGridItem({
 
   return (
     <motion.div
-      layout
+      layout={!inView}
       variants={catalogGridItem}
       initial="hidden"
-      animate="visible"
-      exit="exit"
+      {...(inView
+        ? { whileInView: "visible", viewport: catalogItemViewport }
+        : { animate: "visible", exit: "exit" })}
       transition={{ delay: staggerDelay }}
       className={cn("h-full origin-top", className)}
     >

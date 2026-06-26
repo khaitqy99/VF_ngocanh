@@ -86,7 +86,7 @@ export function CatalogHeroIntro({
           <FadeIn direction="right" delay={0.12} className="flex flex-col gap-4">
             <StaggerGrid className="grid grid-cols-3 gap-2 sm:gap-3">
               {highlights.map((item, index) => (
-                <StaggerItem key={item.label} index={index}>
+                <StaggerItem key={item.label} index={index} variant="home">
                   <div className="rounded-xl border border-slate-200/80 bg-white/90 px-2 py-3 text-center shadow-sm backdrop-blur-sm sm:rounded-2xl sm:px-3 sm:py-4">
                     <p className="text-base font-black tabular-nums text-brand sm:text-lg lg:text-xl">
                       {item.value}

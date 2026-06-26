@@ -1,5 +1,6 @@
 import { CARS, type CarModel, formatPrice } from "./cars";
 import { VINFAST_CAR_DETAIL_OVERRIDES } from "./vinfast-detail-overrides";
+import { CAR_DETAIL_PATCHES } from "./vinfast-car-detail-patch";
 import { getCarGallery } from "./vinfast-galleries";
 
 export type CarVariant = {
@@ -265,6 +266,7 @@ function buildReviews(car: CarModel): ReviewsSection {
 
 const DETAIL_OVERRIDES: Partial<Record<string, Partial<CarDetail>>> = {
   ...(VINFAST_CAR_DETAIL_OVERRIDES as Partial<Record<string, Partial<CarDetail>>>),
+  ...CAR_DETAIL_PATCHES,
 };
 
 function buildDefaultDetail(car: CarModel): CarDetail {

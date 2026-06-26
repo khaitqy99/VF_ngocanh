@@ -1,6 +1,6 @@
 // Auto-synced from VinFast — scripts/sync-vinfast-catalog.mjs
 // Source: https://vinfastauto.com/vn_vi
-// Last synced: 2026-06-23T10:01:37.907Z
+// Last synced: 2026-06-26T11:30:11.844Z
 
 export type ScooterType = "xe-dap-dien" | "xe-co-ban" | "xe-the-thao" | "xe-ga" | "xe-ga-cao-cap";
 
@@ -41,48 +41,11 @@ export type ScooterModel = {
 
 export const SCOOTER_IMAGES = {
   hero: "/images/charging-scooter.jpg",
-  promoTestDrive: "/images/about/showroom-ngoc-anh-camau.png",
+  promoTestDrive: "/images/charging-scooter.jpg",
   promoFinance: "/images/portable-charger.jpg",
 } as const;
 
 export const SCOOTERS: ScooterModel[] = [
-  {
-    id: "evo-lite-neo",
-    name: "EVO Lite Neo",
-    subtitle:
-      "Thân xe được thiết kế công thái học tối ưu, tạo cảm giác thoải mái cho người lái và người ngồi sau, giúp người lái xe có",
-    image: "/images/vinfast/scooters/evo-lite-neo.png",
-    price: 14_400_000,
-    range: 78,
-    topSpeed: 49,
-    trunk: 17,
-    type: "xe-co-ban",
-    rangeBucket: "50-80",
-    speedBucket: "under50",
-    motorPower: 1500,
-    batteryType: "LFP",
-    chargingTime: "4 giờ (0-100%)",
-    dimensions: "1.750 x 680 x 1.100 mm",
-    weight: 105,
-    batteryPurchasePrice: 12_000_000,
-    rentBatteryPrice: 150_000,
-    acceleration: "0-45 km/h trong 8 giây",
-    colors: [
-      {
-        name: "Cam Sunset",
-        hex: "#EA580C",
-      },
-      {
-        name: "Xanh dương",
-        hex: "#1D4ED8",
-      },
-      {
-        name: "Trắng",
-        hex: "#FFFFFF",
-      },
-    ],
-    isNew: true,
-  },
   {
     id: "flazz-max",
     name: "FLAZZ MAX",
@@ -212,7 +175,7 @@ export const SCOOTERS: ScooterModel[] = [
   {
     id: "viper",
     name: "Viper",
-    subtitle: "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h.",
+    subtitle: "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h, quãng đường ~156 km/lần sạc.",
     image: "/images/vinfast/scooters/viper.webp",
     price: 39_900_000,
     range: 156,
@@ -308,7 +271,7 @@ export const SCOOTERS: ScooterModel[] = [
     id: "zgoo",
     name: "zgoo",
     subtitle:
-      "Hệ thống giảm chấm thủy lực giúp xe di chuyển ổn định trên mọi địa hình, từ đường phố đông đúc đến những cung đường gồ g",
+      "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ",
     image: "/images/vinfast/scooters/zgoo.webp",
     price: 15_900_000,
     range: 70,
@@ -340,7 +303,7 @@ export const SCOOTERS: ScooterModel[] = [
     id: "flazz",
     name: "Flazz",
     subtitle:
-      "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp. LỰA CHỌN LÝ TƯỞNG CHO ĐÔ ",
+      "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ,",
     image: "/images/vinfast/scooters/flazz.webp",
     price: 16_900_000,
     range: 135,
@@ -372,7 +335,7 @@ export const SCOOTERS: ScooterModel[] = [
     id: "vero-x",
     name: "Vero X",
     subtitle:
-      "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp. QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY",
+      "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu.",
     image: "/images/vinfast/scooters/vero-x.webp",
     price: 34_900_000,
     range: 262,
@@ -405,7 +368,7 @@ export const SCOOTERS: ScooterModel[] = [
     id: "feliz-2025",
     name: "Feliz 2025",
     subtitle:
-      "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp. QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY",
+      "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích",
     image: "/images/vinfast/scooters/feliz-2025.webp",
     price: 27_900_000,
     range: 262,
@@ -438,7 +401,7 @@ export const SCOOTERS: ScooterModel[] = [
     id: "evo-grand",
     name: "Evo Grand",
     subtitle:
-      'Đăng k&yacute; nhận th&ocirc;ng tin chương tr&igrave;nh khuyến m&atilde;i, dịch vụ VinFast <input type="email" name="ema',
+      "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km",
     image: "/images/vinfast/scooters/evo-grand.webp",
     price: 23_900_000,
     range: 262,
@@ -469,8 +432,7 @@ export const SCOOTERS: ScooterModel[] = [
   {
     id: "evo-grand-lite",
     name: "Evo Grand Lite",
-    subtitle:
-      'Đăng k&yacute; nhận th&ocirc;ng tin chương tr&igrave;nh khuyến m&atilde;i, dịch vụ VinFast <input type="email" name="ema',
+    subtitle: "Xe ga điện tiết kiệm, quãng đường lên tới 198 km (2 pin).",
     image: "/images/vinfast/scooters/evo-grand-lite.webp",
     price: 19_900_000,
     range: 198,
@@ -501,8 +463,7 @@ export const SCOOTERS: ScooterModel[] = [
   {
     id: "drgnfly",
     name: "DrgnFly",
-    subtitle:
-      "Những th&ocirc;ng tin n&oacute;ng hổi nhất về chiếc xe VF 3 sẽ được gửi tới h&ograve;m email của Qu&yacute; kh&aacute;ch",
+    subtitle: "Xe đạp điện VF DrgnFly",
     image: "/images/vinfast/scooters/drgnfly.png",
     price: 18_690_000,
     range: 110,
@@ -527,6 +488,43 @@ export const SCOOTERS: ScooterModel[] = [
       {
         name: "Xám",
         hex: "#6B7280",
+      },
+    ],
+    isNew: true,
+  },
+  {
+    id: "evo-lite-neo",
+    name: "EVO Lite Neo",
+    subtitle:
+      "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ t",
+    image: "/images/vinfast/scooters/evo-lite-neo.png",
+    price: 14_400_000,
+    range: 78,
+    topSpeed: 49,
+    trunk: 17,
+    type: "xe-co-ban",
+    rangeBucket: "50-80",
+    speedBucket: "under50",
+    motorPower: 1500,
+    batteryType: "LFP",
+    chargingTime: "4 giờ (0-100%)",
+    dimensions: "1.750 x 680 x 1.100 mm",
+    weight: 105,
+    batteryPurchasePrice: 12_000_000,
+    rentBatteryPrice: 150_000,
+    acceleration: "0-45 km/h trong 8 giây",
+    colors: [
+      {
+        name: "Cam Sunset",
+        hex: "#EA580C",
+      },
+      {
+        name: "Xanh dương",
+        hex: "#1D4ED8",
+      },
+      {
+        name: "Trắng",
+        hex: "#FFFFFF",
       },
     ],
     isNew: true,

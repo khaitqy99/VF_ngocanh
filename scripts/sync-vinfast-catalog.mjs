@@ -530,6 +530,15 @@ function parsePrice(text) {
   return digits ? Number(digits) : 0;
 }
 
+/** Giá bán từ trên vinfastauto.com (ưu tiên giá đã giảm, không lấy giá gạch ngang) */
+function parseCatalogPrice(specs) {
+  const spec = specs.find((s) => /giá/i.test(s.label));
+  if (!spec) return 0;
+  const sale = parsePrice(spec.value);
+  if (sale) return sale;
+  return parsePrice(spec.listPrice);
+}
+
 function parseRange(text) {
   const rangeMatch = text.match(/(\d+(?:[.,]\d+)?)\s*-\s*(\d+(?:[.,]\d+)?)/);
   if (rangeMatch) {
@@ -737,7 +746,7 @@ function buildCarModel(raw, details, colorImages) {
   const line = specValue(raw.specs, /dòng xe/i);
   const seats = parseSeats(specValue(raw.specs, /chỗ ngồi/i));
   const range = parseRange(specValue(raw.specs, /quãng đường/i));
-  const price = parsePrice(specValue(raw.specs, /giá/i));
+  const price = parseCatalogPrice(raw.specs);
   const segment = segmentFromLine(line);
   const imageFile = CAR_IMAGE_FILES[id];
   const image = imageFile ? `/images/vinfast/cars/${imageFile}` : `/images/cars/${id}.jpg`;
@@ -786,7 +795,7 @@ function buildScooterModel(raw, details) {
   if (fields.weight) enrich.weight = fields.weight;
   if (fields.chargingTime) enrich.chargingTime = fields.chargingTime;
   if (detail?.overview?.subtitle) enrich.subtitle = detail.overview.subtitle.slice(0, 120);
-  const price = parsePrice(specValue(raw.specs, /giá/i));
+  const price = parseCatalogPrice(raw.specs);
   const range = parseScooterRange(raw.specs);
   const topSpeed = parseTopSpeed(raw.specs);
   const motorPower = parseMotorPower(raw.specs);

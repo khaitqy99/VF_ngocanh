@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
@@ -37,7 +37,6 @@ import {
   Percent,
   Info,
   Phone,
-  Sparkles,
   ChevronDown,
   Share2,
 } from "lucide-react";
@@ -72,6 +71,36 @@ import {
   type TechFeature,
 } from "@/lib/scooter-details";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import {
+  detailBreadcrumb,
+  detailGalleryImage,
+  detailHeroCol,
+  detailHeroStagger,
+  detailPricePulse,
+  detailRelatedCard,
+  detailServiceItem,
+  detailThumbDot,
+  detailViewport,
+} from "@/lib/detail-motion";
+import { modalVariants, overlayVariants } from "@/lib/motion";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
+import { PdpHeroHeader } from "@/components/shared/PdpHeroHeader";
+import { PdpSection } from "@/components/shared/PdpSectionShell";
+import {
+  PdpQuickSpecBar,
+  PdpSectionTitle,
+  PdpSplitOverview,
+  PdpImageFeatureGrid,
+  PdpTechIconGrid,
+  PdpPerformanceShowcase,
+  PdpSafetyShowcase,
+  PdpChargingShowcase,
+  buildScooterPerformanceMetrics,
+  DEFAULT_CHARGING_SOLUTIONS,
+  expandGalleryToGrid,
+} from "@/components/shared/PdpContentBlocks";
+import { IMAGES } from "@/lib/images";
 
 type SectionId =
   | "tong-quan"
@@ -80,6 +109,7 @@ type SectionId =
   | "cong-nghe"
   | "van-hanh"
   | "an-toan"
+  | "pin-sac"
   | "thong-so"
   | "phu-kien"
   | "tai-chinh"
@@ -115,6 +145,7 @@ type Props = { detail: ScooterDetail };
 
 export default function ScooterDetailPage({ detail }: Props) {
   const router = useRouter();
+  const reduced = useReducedMotion();
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -127,6 +158,7 @@ export default function ScooterDetailPage({ detail }: Props) {
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
+  const thumbStripRef = useRef<HTMLDivElement>(null);
 
   const [estimatorLocation, setEstimatorLocation] = useState("camau");
   const [estimatorTab, setEstimatorTab] = useState<"rolling" | "installment">("rolling");
@@ -137,6 +169,42 @@ export default function ScooterDetailPage({ detail }: Props) {
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
   const related = getRelatedScooters(detail.id);
+
+  const sectionNavItems = useMemo(
+    () => [
+      { id: "tong-quan" as const, label: "Tổng quan" },
+      { id: "ngoai-that" as const, label: "Ngoại thất" },
+      { id: "thiet-ke" as const, label: "Thiết kế" },
+      { id: "cong-nghe" as const, label: "Công nghệ" },
+      { id: "van-hanh" as const, label: "Vận hành" },
+      { id: "an-toan" as const, label: "An toàn" },
+      { id: "pin-sac" as const, label: "Pin & Sạc" },
+      { id: "thong-so" as const, label: "Thông số" },
+      { id: "phu-kien" as const, label: "Phụ kiện" },
+      { id: "tai-chinh" as const, label: "Tài chính" },
+    ],
+    [],
+  );
+
+  const quickSpecItems = useMemo(
+    () => [
+      { icon: Gauge, label: "Quãng đường", value: `${detail.quickSpecs.range} km` },
+      { icon: Zap, label: "Tốc độ tối đa", value: `${detail.quickSpecs.topSpeed} km/h` },
+      { icon: Bike, label: "Công suất", value: `${detail.quickSpecs.motorPower} W` },
+      {
+        icon: Package,
+        label: "Cốp xe",
+        value: detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk} lít` : "Móc treo",
+      },
+      { icon: Scale, label: "Trọng lượng", value: `${detail.quickSpecs.weight} kg` },
+      {
+        icon: BatteryCharging,
+        label: "Thời gian sạc",
+        value: detail.quickSpecs.chargingTime.split(" (")[0],
+      },
+    ],
+    [detail.quickSpecs],
+  );
 
   const basePrice =
     batteryMode === "purchase" ? variant.price + detail.batteryPurchasePrice : variant.price;
@@ -195,6 +263,20 @@ export default function ScooterDetailPage({ detail }: Props) {
   const prevImage = () => setActiveImage((i) => (i === 0 ? detail.gallery.length - 1 : i - 1));
   const nextImage = () => setActiveImage((i) => (i === detail.gallery.length - 1 ? 0 : i + 1));
 
+  const scrollThumbs = useCallback((direction: -1 | 1) => {
+    const el = thumbStripRef.current;
+    if (!el) return;
+    const thumb = el.querySelector<HTMLElement>("button");
+    const step = thumb ? thumb.offsetWidth + 8 : 80;
+    el.scrollBy({ left: direction * step * 3, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    const el = thumbStripRef.current;
+    const active = el?.children[activeImage] as HTMLElement | undefined;
+    active?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeImage]);
+
   const openBooking = (service: string) => {
     setBookingService(service);
     setBookingSubmitted(false);
@@ -216,48 +298,42 @@ export default function ScooterDetailPage({ detail }: Props) {
       <Header />
       <Toaster position="top-center" richColors />
       <main>
-        <BreadcrumbBar scooterName={detail.name} variantName={variant.name} />
+        <BreadcrumbBar scooterName={detail.name} variantName={variant.name} reduced={reduced} />
+
+        <PdpHeroHeader
+          tagline={detail.tagline}
+          name={detail.name}
+          slogan={detail.slogan}
+          badges={detail.badges}
+          isNew={detail.isNew}
+          isBestSeller={detail.isBestSeller}
+        />
 
         {/* Hero */}
-        <section className="relative overflow-x-hidden border-b border-border/40 bg-gradient-to-b from-slate-50 to-white">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,87,255,0.06),transparent_60%)]" />
-          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-12">
+        <section className="relative overflow-x-hidden border-b border-border/40 bg-white">
+          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-10">
             <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12 lg:gap-10">
               {/* Gallery */}
-              <div className="min-w-0 w-full lg:col-span-7">
-                <div className="mb-3 flex flex-wrap items-center gap-1.5 sm:mb-4 sm:gap-2">
-                  {detail.badges.map((badge) => (
-                    <span
-                      key={badge}
-                      className="inline-flex max-w-full items-center gap-1 rounded-full border border-brand/20 bg-brand/5 px-2 py-0.5 text-[10px] font-bold text-brand sm:px-3 sm:py-1"
-                    >
-                      <Sparkles className="size-3 shrink-0" />
-                      <span className="truncate">{badge}</span>
-                    </span>
-                  ))}
-                  {detail.isNew && (
-                    <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-bold text-white sm:px-3 sm:py-1">
-                      MỚI
-                    </span>
-                  )}
-                  {detail.isBestSeller && (
-                    <span className="rounded-full bg-accent-yellow px-2 py-0.5 text-[10px] font-bold text-brand-dark sm:px-3 sm:py-1">
-                      BÁN CHẠY
-                    </span>
-                  )}
-                </div>
-
-                <h1 className="mt-1 break-words text-xl font-black tracking-tight text-brand-dark sm:text-2xl lg:text-4xl">
-                  {detail.name}
-                </h1>
-
-                <div className="relative mt-4 w-full max-w-full overflow-hidden rounded-xl border border-border/50 bg-[#f4f6fa] shadow-card sm:mt-6 sm:rounded-2xl">
+              <motion.div
+                className="min-w-0 w-full lg:col-span-7"
+                variants={reduced ? undefined : detailHeroStagger}
+                initial={reduced ? false : "hidden"}
+                animate={reduced ? undefined : "visible"}
+              >
+                <div className="relative w-full max-w-full overflow-hidden rounded-3xl bg-[#eef2f8] shadow-card ring-1 ring-border/40">
                   <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
-                    <img
-                      src={detail.gallery[activeImage]}
-                      alt={`${detail.name} - ảnh ${activeImage + 1}`}
-                      className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
-                    />
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={activeImage}
+                        src={detail.gallery[activeImage]}
+                        alt={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"} ${activeImage + 1}`}
+                        className="absolute inset-0 h-full w-full object-contain p-2 sm:p-4"
+                        variants={reduced ? undefined : detailGalleryImage}
+                        initial={reduced ? false : "enter"}
+                        animate={reduced ? undefined : "center"}
+                        exit={reduced ? undefined : "exit"}
+                      />
+                    </AnimatePresence>
                   </div>
                   <button
                     type="button"
@@ -287,74 +363,78 @@ export default function ScooterDetailPage({ detail }: Props) {
                   </div>
                 </div>
 
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-                  {detail.gallery.map((img, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActiveImage(i)}
-                      className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:size-[72px] sm:rounded-xl ${
-                        activeImage === i
-                          ? "border-brand ring-2 ring-brand/20"
-                          : "border-border/40 hover:border-border"
-                      }`}
-                    >
-                      <img src={img} alt="" className="h-full w-full object-cover" />
-                    </button>
-                  ))}
+                <div className="relative mt-3">
+                  <button
+                    type="button"
+                    onClick={() => scrollThumbs(-1)}
+                    className="absolute top-1/2 left-0 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:size-8"
+                    aria-label="Cuộn ảnh trước"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <div
+                    ref={thumbStripRef}
+                    className="flex gap-2 overflow-x-auto scroll-smooth px-9 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
+                  >
+                    {detail.gallery.map((img, i) => (
+                      <motion.button
+                        key={i}
+                        type="button"
+                        onClick={() => setActiveImage(i)}
+                        animate={reduced ? undefined : activeImage === i ? "active" : "inactive"}
+                        variants={reduced ? undefined : detailThumbDot}
+                        className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 sm:size-[72px] sm:rounded-xl ${
+                          activeImage === i
+                            ? "border-brand ring-2 ring-brand/20"
+                            : "border-border/40 hover:border-border"
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt=""
+                          className="h-full w-full object-contain bg-[#f4f6fa] p-0.5"
+                        />
+                      </motion.button>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => scrollThumbs(1)}
+                    className="absolute top-1/2 right-0 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white shadow-md transition hover:border-brand hover:text-brand sm:size-8"
+                    aria-label="Cuộn ảnh sau"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
                 </div>
 
-                {/* Quick specs — lấp cột gallery */}
-                <div className="mt-4 rounded-2xl border border-border/60 px-4 py-4 sm:mt-6 sm:px-5 sm:py-5">
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-                    <SpecItem
-                      icon={Gauge}
-                      label="Quãng đường"
-                      value={`${detail.quickSpecs.range} km`}
-                    />
-                    <SpecItem
-                      icon={Zap}
-                      label="Tốc độ tối đa"
-                      value={`${detail.quickSpecs.topSpeed} km/h`}
-                    />
-                    <SpecItem
-                      icon={Bike}
-                      label="Công suất"
-                      value={`${detail.quickSpecs.motorPower} W`}
-                    />
-                    <SpecItem
-                      icon={Package}
-                      label="Cốp xe"
-                      value={
-                        detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk} lít` : "Móc treo"
-                      }
-                    />
-                    <SpecItem
-                      icon={Scale}
-                      label="Trọng lượng"
-                      value={`${detail.quickSpecs.weight} kg`}
-                    />
-                    <SpecItem
-                      icon={BatteryCharging}
-                      label="Thời gian sạc"
-                      value={detail.quickSpecs.chargingTime.split(" (")[0]}
-                    />
-                  </div>
-                </div>
-              </div>
+                <PdpQuickSpecBar specs={quickSpecItems} embedded />
+              </motion.div>
 
               {/* Purchase panel — sticky on desktop */}
-              <div className="min-w-0 w-full lg:col-span-5">
-                <div className="box-border w-full min-w-0 max-w-full rounded-2xl border border-border/60 bg-white p-4 shadow-card sm:p-5 lg:sticky lg:top-24 lg:p-6">
+              <motion.div
+                className="min-w-0 w-full lg:col-span-5"
+                variants={reduced ? undefined : detailHeroCol}
+                initial={reduced ? false : "hidden"}
+                animate={reduced ? undefined : "visible"}
+              >
+                <div className="box-border w-full min-w-0 max-w-full rounded-3xl border border-border/50 bg-white p-4 shadow-card ring-1 ring-black/[0.03] sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Giá niêm yết (chưa pin)
+                        Giá bán từ (chưa pin)
                       </p>
                       <div className="mt-0.5">
-                        <span className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl">
-                          {formatPrice(variant.price)}
-                        </span>
+                        <AnimatePresence mode="wait">
+                          <motion.span
+                            key={selectedVariant}
+                            variants={reduced ? undefined : detailPricePulse}
+                            initial={reduced ? false : "hidden"}
+                            animate={reduced ? undefined : "visible"}
+                            className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl"
+                          >
+                            {formatPrice(variant.price)}
+                          </motion.span>
+                        </AnimatePresence>
                         <span className="mt-0.5 block text-xs font-bold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline sm:text-base">
                           VND
                         </span>
@@ -558,10 +638,12 @@ export default function ScooterDetailPage({ detail }: Props) {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
+
+        <PdpSectionNav items={sectionNavItems} />
 
         {/* All content sections */}
         <div className="bg-white">
@@ -581,12 +663,16 @@ export default function ScooterDetailPage({ detail }: Props) {
             <TechnologySection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap id="van-hanh">
+          <SectionWrap id="van-hanh" alt>
             <PerformanceSection detail={detail} />
           </SectionWrap>
 
-          <SectionWrap id="an-toan" alt>
+          <SectionWrap id="an-toan">
             <SafetySection detail={detail} />
+          </SectionWrap>
+
+          <SectionWrap id="pin-sac" alt>
+            <ChargingSection detail={detail} />
           </SectionWrap>
 
           <SectionWrap id="thong-so">
@@ -631,16 +717,28 @@ export default function ScooterDetailPage({ detail }: Props) {
             <p className="mx-auto mt-2 max-w-lg text-center text-sm text-muted-foreground">
               Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn
             </p>
-            <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3">
-              {related.map((scooter) => (
-                <ScooterCatalogCard
+            <motion.div
+              className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5"
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={detailViewport}
+              variants={reduced ? undefined : { hidden: {}, visible: {} }}
+            >
+              {related.map((scooter, i) => (
+                <motion.div
                   key={scooter.id}
-                  scooter={scooter}
-                  onBookDrive={() => openBooking(`Đặt mua ${scooter.name}`)}
-                  onEstimatePrice={() => router.push(`/xe-may-dien/${scooter.id}#tai-chinh`)}
-                />
+                  custom={i}
+                  variants={reduced ? undefined : detailRelatedCard}
+                  className="h-full"
+                >
+                  <ScooterCatalogCard
+                    scooter={scooter}
+                    onBookDrive={() => openBooking(`Đặt mua ${scooter.name}`)}
+                    onEstimatePrice={() => router.push(`/xe-may-dien/${scooter.id}#tai-chinh`)}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
             <div className="mt-8 text-center">
               <Link
                 href="/xe-may-dien"
@@ -655,10 +753,18 @@ export default function ScooterDetailPage({ detail }: Props) {
         {/* Service bar */}
         <section className="section-y border-t border-border/40 bg-white">
           <div className="container-vf">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {SERVICE_BAR.map(({ icon: Icon, title, sub }) => (
-                <div
+            <motion.div
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={detailViewport}
+              variants={reduced ? undefined : { hidden: {}, visible: {} }}
+            >
+              {SERVICE_BAR.map(({ icon: Icon, title, sub }, i) => (
+                <motion.div
                   key={title}
+                  custom={i}
+                  variants={reduced ? undefined : detailServiceItem}
                   className="flex items-center gap-4 rounded-2xl border border-border/50 bg-surface p-4 transition hover:shadow-soft"
                 >
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/5">
@@ -668,9 +774,9 @@ export default function ScooterDetailPage({ detail }: Props) {
                     <p className="text-xs font-bold text-brand-dark">{title}</p>
                     <p className="text-[11px] text-muted-foreground">{sub}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -738,9 +844,10 @@ export default function ScooterDetailPage({ detail }: Props) {
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={overlayVariants}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
             onClick={() => setLightboxOpen(false)}
           >
@@ -761,9 +868,14 @@ export default function ScooterDetailPage({ detail }: Props) {
             >
               <ChevronLeft className="size-6" />
             </button>
-            <img
+            <motion.img
+              key={activeImage}
               src={detail.gallery[activeImage]}
               alt={detail.name}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={modalVariants}
               className="max-h-[85vh] max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}
             />
@@ -785,15 +897,19 @@ export default function ScooterDetailPage({ detail }: Props) {
       <AnimatePresence>
         {bookingOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={overlayVariants}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            onClick={() => setBookingOpen(false)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={modalVariants}
+              onClick={(e) => e.stopPropagation()}
               className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
             >
               <div className="flex items-center justify-between bg-brand-dark p-5 text-white">
@@ -929,223 +1045,166 @@ export default function ScooterDetailPage({ detail }: Props) {
 function SectionWrap({
   id,
   alt,
+  dark,
   children,
 }: {
   id: SectionId;
   alt?: boolean;
+  dark?: boolean;
   children: React.ReactNode;
 }) {
+  const variant = dark ? "dark" : alt ? "muted" : "default";
   return (
-    <section
-      id={id}
-      className={`scroll-mt-20 section-y lg:scroll-mt-24 ${alt ? "bg-surface" : "bg-white"}`}
-    >
-      <div className="container-vf">{children}</div>
-    </section>
+    <PdpSection id={id} variant={variant}>
+      {children}
+    </PdpSection>
   );
 }
 
+const EXTERIOR_GRID_LABELS = [
+  "Đầu xe ấn tượng",
+  "Thân xe thon gọn",
+  "Đuôi xe tinh tế",
+  "Chi tiết thiết kế",
+];
+
+const DESIGN_GRID_LABELS = [
+  "Không gian ngồi",
+  "Cốp & tiện ích",
+  "Bảng đồng hồ",
+  "Chi tiết tiện nghi",
+];
+
 function OverviewSection({ detail }: { detail: ScooterDetail }) {
-  const highlights = [
-    { label: "Quãng đường", value: `${detail.quickSpecs.range} km` },
-    { label: "Tốc độ max", value: `${detail.quickSpecs.topSpeed} km/h` },
-    { label: "Công suất", value: `${detail.quickSpecs.motorPower} W` },
-  ];
+  const overviewImage = detail.overview.image || detail.gallery[0] || detail.image;
 
   return (
-    <>
-      <div className="max-w-2xl">
-        <p className="text-[11px] font-bold tracking-[0.18em] text-brand uppercase">Tổng quan</p>
-        <h2 className={`mt-2 text-left ${sectionHeading}`}>{detail.overview.title}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          {detail.overview.subtitle}
-        </p>
-      </div>
-
-      <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12 lg:gap-10">
-        <div className="order-1 lg:col-span-7">
-          <div className="overflow-hidden rounded-2xl bg-surface/50 p-2 sm:p-3">
-            <img
-              src={detail.overview.image}
-              alt={detail.overview.title}
-              className="aspect-[16/10] w-full rounded-xl object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="order-2 flex flex-col justify-center gap-4 lg:col-span-5 sm:gap-5">
-          <dl className="grid grid-cols-3 gap-2 sm:gap-3">
-            {highlights.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl border border-border/60 px-3 py-2.5 text-center sm:px-4 sm:py-3"
-              >
-                <dt className="text-[10px] font-semibold text-muted-foreground uppercase">
-                  {item.label}
-                </dt>
-                <dd className="mt-0.5 text-sm font-black text-brand-dark">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <div className="overflow-hidden rounded-2xl border border-border/60">
-            <ul className="divide-y divide-border/50">
-              {detail.overview.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 px-4 py-3.5 sm:px-5 sm:py-4">
-                  <Check size={14} className="mt-0.5 shrink-0 text-brand" strokeWidth={2.5} />
-                  <span className="text-sm leading-relaxed text-foreground/85">{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
+    <PdpSplitOverview
+      eyebrow="Tổng quan"
+      title={detail.overview.title}
+      description={detail.overview.subtitle}
+      bullets={detail.overview.bullets}
+      image={overviewImage}
+      imageAlt={detail.overview.title}
+    />
   );
 }
 
 function ExteriorSection({ detail }: { detail: ScooterDetail }) {
-  return (
-    <>
-      <SectionHeader title="Ngoại thất" subtitle="Thiết kế ấn tượng, khí động học tối ưu" />
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        {detail.exterior.map((item) => (
-          <FeatureCard key={item.title} {...item} />
-        ))}
-      </div>
-    </>
-  );
-}
+  const items = expandGalleryToGrid(detail.exterior, EXTERIOR_GRID_LABELS);
 
-function InteriorSection({ detail }: { detail: ScooterDetail }) {
   return (
     <>
-      <SectionHeader
-        title="Thiết kế & Tiện nghi"
-        subtitle="Thiết kế ergonomic, tiện dụng cho đô thị"
+      <PdpSectionTitle
+        title="Ngoại thất"
+        subtitle="Thiết kế ấn tượng, khí động học tối ưu"
+        actionHref="#thong-so"
       />
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        {detail.design.map((item) => (
-          <FeatureCard key={item.title} {...item} />
-        ))}
-      </div>
+      <PdpImageFeatureGrid items={items} />
     </>
   );
 }
 
 function DesignSection({ detail }: { detail: ScooterDetail }) {
-  return <InteriorSection detail={detail} />;
+  return (
+    <>
+      <PdpSectionTitle
+        title="Thiết kế & Tiện nghi"
+        subtitle="Thiết kế ergonomic, tiện dụng cho đô thị"
+        actionHref="#thong-so"
+      />
+      <PdpImageFeatureGrid items={expandGalleryToGrid(detail.design, DESIGN_GRID_LABELS)} />
+    </>
+  );
 }
 
 function TechnologySection({ detail }: { detail: ScooterDetail }) {
+  const items = detail.technology.map((item) => ({
+    icon: TECH_ICONS[item.icon],
+    title: item.title,
+    desc: item.desc,
+  }));
+
   return (
     <>
-      <SectionHeader
-        title="Công nghệ thông minh"
-        subtitle="Hệ sinh thái kết nối toàn diện"
-        center
-      />
-      <div className="mt-6 overflow-hidden rounded-2xl border border-border/60 bg-white sm:mt-8">
-        <ul className="divide-y divide-border/50">
-          {detail.technology.map((tech) => {
-            const Icon = TECH_ICONS[tech.icon];
-            return (
-              <li key={tech.title} className="flex items-start gap-3.5 px-4 py-3.5 sm:px-5 sm:py-4">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/5 text-brand">
-                  <Icon className="size-4" strokeWidth={1.5} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-sm font-bold text-brand-dark">{tech.title}</h3>
-                  <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-                    {tech.desc}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <PdpSectionTitle title="Công nghệ thông minh" subtitle="Hệ sinh thái kết nối toàn diện" />
+      <PdpTechIconGrid items={items} />
     </>
   );
 }
 
 function PerformanceSection({ detail }: { detail: ScooterDetail }) {
+  const perfImage =
+    detail.performance.image !== detail.image
+      ? detail.performance.image
+      : (detail.gallery[2] ?? detail.gallery[0] ?? detail.image);
+
   return (
     <>
-      <SectionHeader
-        title={detail.performance.title}
-        subtitle={detail.performance.subtitle}
-        center
+      <PdpSectionTitle title={detail.performance.title} subtitle={detail.performance.subtitle} />
+      <PdpPerformanceShowcase
+        lead={detail.performance.subtitle}
+        image={perfImage}
+        imageAlt={detail.performance.title}
+        metrics={buildScooterPerformanceMetrics(detail.quickSpecs)}
+        driveModes={detail.performance.driveModes}
       />
-      <div className="mt-8 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-        <div className="overflow-hidden rounded-2xl shadow-card">
-          <img
-            src={detail.performance.image}
-            alt={detail.performance.title}
-            className="aspect-[4/3] w-full object-cover"
-          />
-        </div>
-        <div className="space-y-3">
-          {detail.performance.features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-xl border border-border/60 bg-white p-4 shadow-soft"
-            >
-              <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        {detail.performance.driveModes.map((mode) => (
-          <div
-            key={mode.name}
-            className="rounded-2xl border border-brand/20 bg-brand/5 p-5 text-center"
-          >
-            <p className="text-base font-black text-brand">{mode.name}</p>
-            <p className="mt-1.5 text-xs text-muted-foreground">{mode.desc}</p>
-          </div>
-        ))}
-      </div>
     </>
   );
 }
 
+function safetyIconFor(title: string): React.ElementType {
+  const t = title.toLowerCase();
+  if (/đèn|led/i.test(t)) return Monitor;
+  if (/phanh|abs/i.test(t)) return Shield;
+  if (/va chạm|cảnh báo/i.test(t)) return Shield;
+  if (/khóa|gps|chống trộm/i.test(t)) return Navigation;
+  if (/khung|nước|ip67/i.test(t)) return Shield;
+  return Shield;
+}
+
 function SafetySection({ detail }: { detail: ScooterDetail }) {
+  const safetyImage =
+    detail.safety.image !== detail.image
+      ? detail.safety.image
+      : (detail.gallery[1] ?? detail.gallery[0] ?? detail.image);
+
+  const items = detail.safety.features.map((f) => ({
+    icon: safetyIconFor(f.title),
+    title: f.title,
+    desc: f.desc,
+  }));
+
   return (
     <>
-      <SectionHeader title={detail.safety.title} subtitle={detail.safety.subtitle} center />
-      <div className="mt-4 flex flex-wrap justify-center gap-2">
-        {detail.safety.highlights.map((h) => (
-          <span
-            key={h}
-            className="rounded-full border border-brand/20 px-3 py-1 text-[11px] font-semibold text-brand"
-          >
-            {h}
-          </span>
-        ))}
-      </div>
-      <div className="mt-6 grid items-start gap-6 sm:mt-8 lg:grid-cols-2 lg:gap-10">
-        <ul className="order-2 divide-y divide-border/50 overflow-hidden rounded-2xl border border-border/60 bg-white lg:order-1">
-          {detail.safety.features.map((f) => (
-            <li key={f.title} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
-              <Shield className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.5} />
-              <div className="min-w-0">
-                <h3 className="text-sm font-bold text-brand-dark">{f.title}</h3>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{f.desc}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="order-1 overflow-hidden rounded-2xl border border-border/60 lg:order-2">
-          <img
-            src={detail.safety.image}
-            alt={detail.safety.title}
-            className="aspect-[4/3] w-full object-cover"
-          />
-        </div>
-      </div>
+      <PdpSectionTitle title={detail.safety.title} subtitle={detail.safety.subtitle} />
+      <PdpSafetyShowcase
+        title={detail.safety.title}
+        subtitle={detail.safety.subtitle}
+        image={safetyImage}
+        imageAlt={detail.safety.title}
+        highlights={detail.safety.highlights}
+        features={items}
+      />
     </>
+  );
+}
+
+function ChargingSection({ detail }: { detail: ScooterDetail }) {
+  const heroImage = detail.gallery[0] ?? detail.image;
+  const solutions = DEFAULT_CHARGING_SOLUTIONS({
+    station: IMAGES.chargingStations,
+    home: IMAGES.chargingScooter,
+    portable: IMAGES.portableCharger,
+  });
+
+  return (
+    <PdpChargingShowcase
+      title="Pin & Sạc"
+      description={`Pin ${detail.batteryType} — sạc đầy trong ${detail.quickSpecs.chargingTime}. Hỗ trợ sạc tại nhà và trạm V-Green trên toàn quốc.`}
+      heroImage={heroImage}
+      solutions={solutions}
+    />
   );
 }
 
@@ -1154,8 +1213,8 @@ function SpecsSection({ detail }: { detail: ScooterDetail }) {
 
   return (
     <>
-      <SectionHeader title="Thông số kỹ thuật" subtitle="Thông tin chi tiết đầy đủ" center />
-      <div className="mx-auto mt-8 max-w-3xl space-y-3">
+      <PdpSectionTitle title="Thông số kỹ thuật" subtitle="Thông tin chi tiết đầy đủ" />
+      <div className="mx-auto mt-8 max-w-3xl space-y-3 lg:mt-10">
         {detail.specGroups.map((group) => {
           const isOpen = expanded === group.category;
           return (
@@ -1188,7 +1247,7 @@ function SpecsSection({ detail }: { detail: ScooterDetail }) {
                           className="flex flex-col gap-1 px-5 py-3 sm:flex-row sm:items-center sm:justify-between"
                         >
                           <span className="text-xs text-muted-foreground">{item.label}</span>
-                          <span className="text-xs font-semibold text-brand-dark">
+                          <span className="text-xs font-semibold text-brand-dark sm:text-right">
                             {item.value}
                           </span>
                         </div>
@@ -1210,7 +1269,7 @@ function AccessoriesSection({ detail: _detail }: { detail: ScooterDetail }) {
 
   return (
     <>
-      <SectionHeader title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
+      <PdpSectionTitle title="Phụ kiện chính hãng" subtitle="Nâng tầm trải nghiệm lái xe" />
       <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
         {products.map((product) => (
           <AccessoryProductCard key={product.id} product={product} />
@@ -1601,9 +1660,22 @@ function ReviewsSection({ detail }: { detail: ScooterDetail }) {
 
 /* ─── Shared UI atoms ─── */
 
-function BreadcrumbBar({ scooterName, variantName }: { scooterName: string; variantName: string }) {
+function BreadcrumbBar({
+  scooterName,
+  variantName,
+  reduced,
+}: {
+  scooterName: string;
+  variantName: string;
+  reduced: boolean;
+}) {
   return (
-    <div className="border-b border-border/40 bg-white">
+    <motion.div
+      className="border-b border-border/40 bg-white"
+      initial={reduced ? false : "hidden"}
+      animate={reduced ? undefined : "visible"}
+      variants={reduced ? undefined : detailBreadcrumb}
+    >
       <div className="container-vf overflow-x-auto py-2.5 sm:py-3 scrollbar-none">
         <Breadcrumb>
           <BreadcrumbList className="flex-nowrap">
@@ -1640,7 +1712,7 @@ function BreadcrumbBar({ scooterName, variantName }: { scooterName: string; vari
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1755,26 +1827,6 @@ function StarRating({
           }
         />
       ))}
-    </div>
-  );
-}
-
-function FeatureCard({ title, desc, image }: { title: string; desc: string; image: string }) {
-  return (
-    <div className="catalog-card rounded-xl border border-border/60 bg-white sm:rounded-2xl">
-      <img
-        src={image}
-        alt={title}
-        className="aspect-[4/3] w-full rounded-t-xl bg-slate-100 object-cover sm:rounded-t-2xl"
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="p-3 sm:p-4">
-        <h3 className="text-xs font-bold text-brand-dark sm:text-sm">{title}</h3>
-        <p className="mt-1 text-[10px] leading-relaxed text-muted-foreground sm:mt-1.5 sm:text-xs">
-          {desc}
-        </p>
-      </div>
     </div>
   );
 }

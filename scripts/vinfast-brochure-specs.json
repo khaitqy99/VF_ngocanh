@@ -1,0 +1,2885 @@
+{
+  "cars": [
+    {
+      "id": "vf3",
+      "type": "car",
+      "error": "PDF has no extractable text (image-only brochure)",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/vfvn-brochure-vf-3-ban-ngang.pdf"
+    },
+    {
+      "id": "vf5",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/09042026/VFVN_VF%205_Brochure%20B%E1%BA%A3n%20s%E1%BB%ADa%20290126_1333PM.pdf",
+      "specTable": [
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "100"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "135"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "326"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "VF 5",
+        "slogan": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5",
+        "overview": {
+          "title": "VF 5",
+          "subtitle": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5",
+          "bullets": [
+            "Công suất tối đa 100 kW (134 HP",
+            "Mô men xoắn cực đại 135 Nm",
+            "06 TÚI KHÍ"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "2Các tính năng, đặc điểm, thông số kỹ",
+            "desc": "thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với thực tế 3Các tính năng, đặc điểm, thông số kỹ thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với thực tế"
+          },
+          {
+            "title": "4Các tính năng, đặc điểm, thông số kỹ",
+            "desc": "thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với thực tế"
+          },
+          {
+            "title": "5Các tính năngȚ đïc điểmȚ thông số kǑ",
+            "desc": "thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với"
+          },
+          {
+            "title": "Thiết kế hiện đại, độc đáo, được trang bị công nghệ và tính năng",
+            "desc": "Thiết kế hiện đại, độc đáo, được trang bị công nghệ và tính năng"
+          },
+          {
+            "title": "điện đô thị lý tưởng Xe đô thị",
+            "desc": "lý tưởng Dải màu phong cách Ngoại thất ấn tượng Nội thất tinh tế Vận hành êm ái Khả năng vận hành An toàn vượt trội Thông số kỹ thuật Hậu mãi cực tố t"
+          },
+          {
+            "title": "6Các tính năng, đặc điểm, thông số kỹ",
+            "desc": "thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với thực tế 7Các tính năng, đặc điểm, thông số kỹ thuật của xe có thể được điều chỉnh bởi Nhà Sản Xuất mà không thông báo trước. Hình ảnh mang tính chất minh họa và có thể khác so với thực tế"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5",
+            "desc": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5"
+          },
+          {
+            "icon": "voice",
+            "title": "hội tụ đầy đủ các yếu tố người trẻ năng động tìm kiếm một chiếc xe",
+            "desc": "hội tụ đầy đủ các yếu tố người trẻ năng động tìm kiếm một chiếc xe"
+          }
+        ],
+        "technologyLead": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5",
+        "performance": null,
+        "safety": null,
+        "highlights": [
+          "Công suất tối đa 100 kW (134 HP",
+          "Mô men xoắn cực đại 135 Nm",
+          "06 TÚI KHÍ"
+        ]
+      },
+      "fields": {
+        "power": 134,
+        "powerKw": 100,
+        "torque": 135,
+        "range": 326
+      },
+      "fetchedAt": "2026-06-26T10:39:40.269Z"
+    },
+    {
+      "id": "vf6",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/14052026/VF 6_Brochure_Final_130526 (12AM)_compressed.pdf",
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "17 inch"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "Có"
+        },
+        {
+          "label": "Khoảng sáng gầm xe không tải (mm)",
+          "value": "Có"
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Có"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "25 phút (từ 10% - 70%)"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "18 inch"
+        },
+        {
+          "label": "Quãng đường chạy một lần sạc đầy (km) (NEDC)",
+          "value": "Có"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "Có"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ! — VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo ",
+        "slogan": "VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo bởi",
+        "overview": {
+          "title": "SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ! — VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo ",
+          "subtitle": "VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo bởi",
+          "bullets": [
+            "Công Suất Tối Đa 150 kW/201 hp",
+            "công suất vượt trội đến 150kW/201 hp",
+            "Mô Men Xoắn Cực Đại 310Nm",
+            "7 túi khí"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Từng đường nét đều toát lên sự đột phá, phù hợp với phong cách của",
+            "desc": "Từng đường nét đều toát lên sự đột phá, phù hợp với phong cách của"
+          },
+          {
+            "title": "MẠNH MẼ, NĂNG ĐỘNG, SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ!",
+            "desc": "TRẢI NGHIỆM THƯ THÁI THOẢI MÁI KHÔNG GIAN Chiều dài cơ sở 2.730mm La-zăng Hợp Kim Nhôm 18 inch* Đèn Pha tự động* Dải Đèn Định Vị LED"
+          },
+          {
+            "title": "VF 6 sở hữu ngoại thất tinh tế, năng động, ấn tượng ngay",
+            "desc": "VF 6 sở hữu ngoại thất tinh tế, năng động, ấn tượng ngay"
+          },
+          {
+            "title": "từ ánh nhìn đầu tiên, cân bằng hoàn hảo giữa sự phóng khoáng và tinh tế,",
+            "desc": "từ ánh nhìn đầu tiên, cân bằng hoàn hảo giữa sự phóng khoáng và tinh tế,"
+          },
+          {
+            "title": "5 màu ngoại thấtDịch vụ thông minh bao",
+            "desc": "gồm các gói Cơ bản (miễn phí) & Nâng cao (trả phí) với loạt tính năng đỉnh cao:"
+          }
+        ],
+        "interior": [
+          {
+            "title": "gia đình trẻ",
+            "desc": "VỚI KIỂU DÁNG ĐƯƠNG ĐẠI Ý TRONG KHÔNG GIAN NHƯ NGÔI NHÀ THỨ 2 TIỆN NGHI"
+          },
+          {
+            "title": "Không gian nội thất rộng rãi, tinh tế của VF 6 mang đến cảm giác",
+            "desc": "Không gian nội thất rộng rãi, tinh tế của VF 6 mang đến cảm giác"
+          },
+          {
+            "title": "thoải mái và sang trọng, như một ngôi nhà thứ hai lý tưởng cho",
+            "desc": "thoải mái và sang trọng, như một ngôi nhà thứ hai lý tưởng cho"
+          },
+          {
+            "title": "Giải thưởng do Người tiêu dùng và Hội đồng thẩm định bình chọn",
+            "desc": "Giải thưởng do Người tiêu dùng và Hội đồng thẩm định bình chọn"
+          },
+          {
+            "title": "Sở hữu 7 túi khí vượt trội và",
+            "desc": "hệ thống tính năng ADAS thông minh, mang đến sự an toàn và tiện nghi vượt trội trong phân khúc B-SUV."
+          },
+          {
+            "title": "*Phiên bản VF 6 Plus KHÔNG GIAN THOẢI",
+            "desc": "MÁI SỐNG TRỌN MỌI KHOẢNH KHẮC Màn hình giải trí 12.9 inch kết nối Apple CarPlay & Android Auto Dung tích cốp 1.576L khi gập hàng ghế cuối Ghế lái chỉnh điện 8 hướng* tiện nghi, đẳng cấp Hệ thống lọc Combi 1.0* điều hoà không khí và lọc bụi mịn Ghế ngồi với chất liệu da nhân tạo"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "công nghệ và con người",
+            "desc": "HÚT VẠN ÁNH NHÌN THIẾT KẾ TINH TẾ Cải thiện tầm nhìn ban đêm và giảm lóa cho phương tiện đối diện Tạo Hình Cánh Chim Biểu tượng của VinFast tỏa sáng và đầy tinh tế Khỏe khoắn & cứng cáp *Phiên bản VF 6 Plus *Phiên bản VF 6 Plus **Phiên bản VF 6 Eco **Theo tiêu chuẩn NEDC Công Suất Tối Đa 150 kW/201 hp* 3 Chế Độ Lái ECO / NORMAL / SPORT MẠNH MẼ VẬN HÀNH ĐÍCH THỰC PHIÊU LƯU Cảm nhận sức mạnh vận hành vượt trội Thỏa mãn đam mê cầm lái với công suất vượt trội đến 150kW/201 hp* hàng đầu phân khúc. Ph"
+          },
+          {
+            "icon": "voice",
+            "title": "*Phiên bản VF 6 Plus KẾT NỐI THÔNG",
+            "desc": "MINH CHO TRẢI NGHIỆM THÊM LIỀN MẠCH BẢNG MÀU PHONG PHÚ CHO GIA ĐÌNH LỰA CHỌN DẢI MÀU ĐA DẠNG"
+          }
+        ],
+        "technologyLead": "HÚT VẠN ÁNH NHÌN THIẾT KẾ TINH TẾ Cải thiện tầm nhìn ban đêm và giảm lóa cho phương tiện đối diện Tạo Hình Cánh Chim Biểu tượng của VinFast tỏa sáng và đầy tinh tế Khỏe khoắn & cứng cáp *Phiên bản VF 6 Plus *Phiên bản VF",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "MẠNH MẼ, NĂNG ĐỘNG, SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ!",
+          "features": [
+            {
+              "title": "MẠNH MẼ, NĂNG ĐỘNG, SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ!",
+              "desc": "MẠNH MẼ, NĂNG ĐỘNG, SỰ LỰA CHỌN LÝ TƯỞNG CỦA GIA ĐÌNH TRẺ!"
+            },
+            {
+              "title": "VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo bởi",
+              "desc": "VF 6 mang đậm dấu ấn hiện đại và thanh lịch, được sáng tạo bởi"
+            },
+            {
+              "title": "Studio Torino Design – những chuyên gia hàng đầu thế giới.",
+              "desc": "Studio Torino Design – những chuyên gia hàng đầu thế giới."
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "điện, tích hợp báo rẽ, sấy mặt gương, tự động chỉnh khi lùi HỆ THỐNG TREO SAU ĐA ĐIỂM Lái hiện đại MÀN HÌNH HUD* Bao trọn tầm nhìn CAMERA 360* HỆ THỐNG CHỐNG LẬT ROM Giám sát hành trình thích ứng* Pha",
+          "features": [
+            {
+              "title": "GƯƠNG CHIẾU HẬU TÍCH HỢP* Chỉnh điện, gập",
+              "desc": "điện, tích hợp báo rẽ, sấy mặt gương, tự động chỉnh khi lùi HỆ THỐNG TREO SAU ĐA ĐIỂM Lái hiện đại MÀN HÌNH HUD* Bao trọn tầm nhìn CAMERA 360* HỆ THỐNG CHỐNG LẬT ROM Giám sát hành trình thích ứng* Phanh tự động khẩn cấp trước* Cảnh báo điểm mù Nhận biết biển báo giao thông*"
+            },
+            {
+              "title": "Để biết chi tiết hơn về hệ thống ADAS trên VF 6, khách hàng vui lòng liên hệ",
+              "desc": "Để biết chi tiết hơn về hệ thống ADAS trên VF 6, khách hàng vui lòng liên hệ"
+            }
+          ],
+          "highlights": [
+            "7 túi khí"
+          ]
+        },
+        "highlights": [
+          "Công Suất Tối Đa 150 kW/201 hp",
+          "công suất vượt trội đến 150kW/201 hp",
+          "Mô Men Xoắn Cực Đại 310Nm",
+          "7 túi khí"
+        ]
+      },
+      "fields": {
+        "power": 34,
+        "powerKw": 25,
+        "torque": 18,
+        "dimensions": "17 inch"
+      },
+      "fetchedAt": "2026-06-26T10:39:46.326Z"
+    },
+    {
+      "id": "vf7",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/09042026/VF%207_Brochure%2008042026.pdf",
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4,545 x 1,890 x 1,635.75"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2,840"
+        },
+        {
+          "label": "Khoảng sáng gầm xe không tải (mm)",
+          "value": "190"
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "130"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "250"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "440"
+        },
+        {
+          "label": "Quãng đường chạy một lần sạc đầy (km) (NEDC)**",
+          "value": "59,6"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "Phụ kiện (AFS 3,5 kW)"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất (phút)",
+          "value": "Phụ kiện (AFS 7,4 kW)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "25 phút (từ 10% - 70%)"
+        },
+        {
+          "label": "Kích thước la-zăng",
+          "value": "Cầu trước (FWD)"
+        },
+        {
+          "label": "Đèn hậu",
+          "value": "19 inch"
+        },
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "130"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "VinFast VF 7",
+        "slogan": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu.",
+        "overview": {
+          "title": "VinFast VF 7",
+          "subtitle": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu.",
+          "bullets": [
+            "Mô men xoắn cực đại 500 NM",
+            "7 túi khí"
+          ]
+        },
+        "interior": [
+          {
+            "title": "Sự kết hợp hoàn hảo giữa thoái mái và tiện nghi: màn",
+            "desc": "Sự kết hợp hoàn hảo giữa thoái mái và tiện nghi: màn"
+          },
+          {
+            "title": "hình HUD* hiện đại, vô lăng D-cut thể thao, và khoang",
+            "desc": "hình HUD* hiện đại, vô lăng D-cut thể thao, và khoang"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "chứa đồ rộng lên tới 1.576L",
+            "desc": "*Phiên bản VF 7 Plus **Phiên bản VF 7 Plus AWD Mô men xoắn cực đại 500 NM** 3 chế độ lái tùy chỉnh Eco/Normal/Sport Hệ thống treo đa điểm 260kW** Công suất tối đa Phanh tái sinh tiết kiệm năng lượng & giảm khí thải từ 10-70% Sạc đầy PIN (công suất sạc siêu nhanh) trong 28 phút* *Phiên bản VF 7 Plus 7AN TÂM MỌI HÀNH TRÌNH* SỞ HỮU TÚI KHÍ AN TÂM MỌI HÀNH TRÌNH CÔNG NGHỆ TIÊN TIẾN *Phiên bản VF 7 Plus 7 túi khí ADAS 20 Phanh tự động khẩn cấp SAU Phanh tự động khẩn cấp TRƯỚC Giám sát hành trình thíc"
+          }
+        ],
+        "technologyLead": "*Phiên bản VF 7 Plus **Phiên bản VF 7 Plus AWD Mô men xoắn cực đại 500 NM** 3 chế độ lái tùy chỉnh Eco/Normal/Sport Hệ thống treo đa điểm 260kW** Công suất tối đa Phanh tái sinh tiết kiệm năng lượng & giảm khí thải từ 10",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu.",
+          "features": [
+            {
+              "title": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu.",
+              "desc": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu."
+            },
+            {
+              "title": "*Phiên bản VF 7 Plus inch Màn hình",
+              "desc": "1.576L lên tới *Phiên bản VF 7 Plus trần kính **Phiên bản VF 7 Plus **Phiên bản VF 7 Plus AWD *Phiên bản VF 7 Plus"
+            },
+            {
+              "title": "* Phiên bản VF 7 Plus Công suất",
+              "desc": "cực đại Mô men xoắn tối đa Hệ dẫn động Quãng đường di chuyển/1 lần sạc đầy Dung lượng pin khả dụng Chi phí sạc pin 130 kW / 174 hp 250 Nm Dẫn động cầu trước (FWD) 440 km (NEDC) 59,6 kWh 0 VNĐ 150 kW / 201 hp 310 Nm Dẫn đ"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "7 * * BETTER CHOICE AWARDS 2024 * Gương chiếu hậu chống chói tự động hiện đại & an toàn (*) 1.635,75 mm 1.890 mm 4.545 mm 2.840 mm Đèn pha LED tự động bật/ tắt chế độ chiếu xa* Tay nắm ẩn trong thân x",
+          "features": [
+            {
+              "title": "MẪU XE HÀNG ĐẦU PHÂN KHÚC VinFast VF",
+              "desc": "7 * * BETTER CHOICE AWARDS 2024 * Gương chiếu hậu chống chói tự động hiện đại & an toàn (*) 1.635,75 mm 1.890 mm 4.545 mm 2.840 mm Đèn pha LED tự động bật/ tắt chế độ chiếu xa* Tay nắm ẩn trong thân xe tạo ra sự liền mạch Kiểu dáng vuốt coupe tối ưu khí động học Lazang hợp kim 20 inch(*) sang trọng & thể thao"
+            },
+            {
+              "title": "Kiểu dáng vuốt khí động học, lazang 20 inch* thể thao,",
+              "desc": "Kiểu dáng vuốt khí động học, lazang 20 inch* thể thao,"
+            },
+            {
+              "title": "“Để biết chi tiết hơn về hệ thống ADAS trên VF 7, khách hàng vui lòng liên hệ",
+              "desc": "“Để biết chi tiết hơn về hệ thống ADAS trên VF 7, khách hàng vui lòng liên hệ"
+            }
+          ],
+          "highlights": [
+            "7 túi khí"
+          ]
+        },
+        "highlights": [
+          "Mô men xoắn cực đại 500 NM",
+          "7 túi khí"
+        ]
+      },
+      "fields": {
+        "power": 335,
+        "powerKw": 250,
+        "torque": 440,
+        "range": 59,
+        "batteryCapacity": 3.5,
+        "chargingTime": "Phụ kiện (AFS 7,4 kW)",
+        "dimensions": "4,545 x 1,890 x 1,635.75",
+        "drive": "25 phút (từ 10% - 70%)"
+      },
+      "fetchedAt": "2026-06-26T10:39:49.314Z"
+    },
+    {
+      "id": "vf8",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/VF8_Brochure_03022026.pdf",
+      "specTable": [
+        {
+          "label": "Quãng đường chạy tối đa",
+          "value": "Sự kết hợp giữa một số màu nội thất và ngoại thất có thể không khả dụng."
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "562"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "SỰ LỰA CHỌN XỨNG TẦM",
+        "slogan": "Mẫu ô tô điện thông minh VF 8 sở hữu thiết kế",
+        "overview": {
+          "title": "SỰ LỰA CHỌN XỨNG TẦM",
+          "subtitle": "Mẫu ô tô điện thông minh VF 8 sở hữu thiết kế",
+          "bullets": [
+            "Công suất tối đa của động cơ 300 kW",
+            "Thời gian nạp pin nhanh nhất (từ 10 đến 70%) (phút",
+            "11 TÚI KHÍ"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "ĐẶT CỌC NGAY TRONG PHÂN KHÚC SUV 5",
+            "desc": "CHỖ SỰ LỰA CHỌN XỨNG TẦM 03 Mẫu ô tô điện thông minh VF 8 sở hữu thiết kế hiện đại theo triết lý ”Cân bằng động”. Những khối cong mềm mại chấm phá bởi các đường sắc nét tạo nên ấn tượng mạnh mẽ, mang đầy hơi thở của tương lai. Các đường nét cân đối với nhau tạo nên sự hài hoà cho chính chiếc xe và môi trường xung quanh. Full LED Tính năng phiên bản VF 8 PLUS Điều hoà tự động 2 vùng tích hợp kiểm soát chất lượng không khí, kèm chức năng i-on hoá, lọc không khí cabin Combi 1.0. Ghế phụ chỉnh điện "
+          }
+        ],
+        "performance": null,
+        "safety": null,
+        "highlights": [
+          "Công suất tối đa của động cơ 300 kW",
+          "Thời gian nạp pin nhanh nhất (từ 10 đến 70%) (phút",
+          "11 TÚI KHÍ"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:00.798Z"
+    },
+    {
+      "id": "vf8-all-new",
+      "type": "car",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/250618_vf8_vn_1.5_svc30000460aa.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+          "bullets": [
+            "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF 8.",
+            "cấp một lần cho xe ô tô VinFast VF 8 của khách hàng và là căn cứ để khách hàng nhận được đầy đủ",
+            "3. ĐIỀU KIỆN BẢO HÀNH",
+            "II. Chính sách bảo hành 4. THỪA KẾ BẢO HÀNH"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "P/N: SVC30000460AA Version: 1.5 MỤC LỤC I ",
+            "desc": "T h ô n g t i n h ỗ t r ợ k h á c h h à n g I I . C h í n h s á c h b ả o h à n h 05 06 LỜI NÓI ĐẦU"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN"
+          },
+          {
+            "title": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF 8.",
+            "desc": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF 8."
+          },
+          {
+            "title": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắ",
+            "desc": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắt là “VinFast”)"
+          },
+          {
+            "title": "cấp một lần cho xe ô tô VinFast VF 8 của khách hàng và là căn cứ để khách hàng n",
+            "desc": "cấp một lần cho xe ô tô VinFast VF 8 của khách hàng và là căn cứ để khách hàng nhận được đầy đủ"
+          },
+          {
+            "title": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện b",
+            "desc": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện bởi:"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "• Bảo hành là công việc sửa chữa,",
+            "desc": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,"
+          },
+          {
+            "icon": "voice",
+            "title": "khuyết tật của vật liệu hoặc lỗi trong",
+            "desc": "quá trình lắp ráp với điều kiện sản phẩm được sử dụng và bảo dưỡng đúng cách."
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ",
+            "desc": "ngày VinFast giao xe tới chủ sở hữu đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo",
+            "desc": "hành là những chi tiết, linh kiện chính hãng nhỏ nhất được VinFast cung cấp."
+          },
+          {
+            "icon": "voice",
+            "title": "• Bảo hành có hiệu lực trên toàn",
+            "desc": "lãnh thổ Việt Nam, chỉ được áp dụng và thực hiện tại các XDV/ĐLPP của VinFast. Tuy"
+          },
+          {
+            "icon": "voice",
+            "title": "nhiên, để được áp dụng bảo hành, Quý",
+            "desc": "Khách hàng cần đảm bảo các dịch vụ và sửa chữa cho xe đều được thực hiện"
+          }
+        ],
+        "technologyLead": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi",
+              "desc": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này"
+            },
+            {
+              "title": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pi",
+              "desc": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "riêng)",
+              "desc": "6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+            },
+            {
+              "title": "• Ngoại trừ trường hợp khách hàng sử",
+              "desc": "dụng xe cho mục đích dịch vụ thương mại (nêu dưới đây), pin có thời hạn bảo"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất",
+              "desc": "định, Khách hàng cần đặc biệt chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường",
+              "desc": "có muối hoặc gần biển, hãy rửa gầm xe nếu cần bằng nước sạch (ít nhất là"
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy thông thoáng."
+            },
+            {
+              "title": "• Nếu lớp sơn hoặc lớp hoàn thiện",
+              "desc": "của xe bị hư hỏng do bất kỳ loại tai nạn hoặc sự kiện nào khác, cần mang xe tới"
+            },
+            {
+              "title": "• Nếu chở hàng hóa đặc biệt, chẳng",
+              "desc": "hạn như hóa chất, phân bón, muối khử băng hoặc các chất ăn mòn khác, hãy"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:02.051Z"
+    },
+    {
+      "id": "vf9",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/VF%209_%20Brochure.pdf",
+      "specTable": [
+        {
+          "label": "ĐÈN PHA",
+          "value": "Có"
+        },
+        {
+          "label": "Đèn pha tự động bật/tắt",
+          "value": "LED, tích hợp cùng đèn chiếu sáng ban ngày"
+        },
+        {
+          "label": "Điều chỉnh cốp sau",
+          "value": "Có"
+        },
+        {
+          "label": "Đóng/Mở cốp đá chân",
+          "value": "Có"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "3.149"
+        },
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "5.119 x 2.254 x 1.697"
+        },
+        {
+          "label": "Khoảng sáng gầm xe không tải (mm)",
+          "value": "174"
+        },
+        {
+          "label": "Dung tích khoang chứa hành lý (L) - Có hàng ghế cuối",
+          "value": "212"
+        },
+        {
+          "label": "Dung tích khoang chứa hành lý (L) - Gập hàng ghế cuối",
+          "value": "926"
+        },
+        {
+          "label": "Dung tích khoang chứa hành lý (L) - Phía trước",
+          "value": "100"
+        },
+        {
+          "label": "Trọng lượng không tải (kg)",
+          "value": "2.911"
+        },
+        {
+          "label": "Tải trọng (kg)",
+          "value": "550"
+        },
+        {
+          "label": "Công suất tối đa (hp/kW)",
+          "value": "402/300"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "620"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "200"
+        },
+        {
+          "label": "Loại pin",
+          "value": "CATL"
+        },
+        {
+          "label": "Dung lượng pin (kWh) - khả dụng",
+          "value": "123"
+        },
+        {
+          "label": "Công suất sạc AC tối đa (kW)",
+          "value": "6,6 kW 1 pha, 11 kW 3 pha"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất (phút)",
+          "value": "Có (Tắt, Thấp, Trung bình, Cao)"
+        },
+        {
+          "label": "Cách chuyển số",
+          "value": "35 phút (10 - 70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "AWD/2 cầu toàn thời gian"
+        },
+        {
+          "label": "Chọn chế độ lái",
+          "value": "Có"
+        },
+        {
+          "label": "GIẢM XÓC",
+          "value": "20 Inch"
+        },
+        {
+          "label": "Chiều dài (mm)",
+          "value": "5.119"
+        },
+        {
+          "label": "Chiều rộng (mm)",
+          "value": "2.254"
+        },
+        {
+          "label": "Chiều cao (mm)",
+          "value": "1.697"
+        },
+        {
+          "label": "Công suất tối đa (hp)",
+          "value": "402"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "626"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "SỰ LỰA CHỌN — Bản lĩnh dẫn đầu",
+        "slogan": "",
+        "overview": {
+          "title": "SỰ LỰA CHỌN — Bản lĩnh dẫn đầu",
+          "subtitle": "SỰ LỰA CHỌN CỦA NGƯỜI THÀNH ĐẠT, TIÊN PHONG Bản lĩnh dẫn đầu Mẫu SUV hạng E Cảm hứng thiết kế",
+          "bullets": [
+            "Công suất tối đa 402 hp",
+            "11 túi khí"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "SỰ LỰA CHỌN CỦA NGƯỜI THÀNH ĐẠT, TIÊN PHONG Bản lĩnh dẫn đầu Mẫu SUV hạng E Cảm ",
+            "desc": "SỰ LỰA CHỌN CỦA NGƯỜI THÀNH ĐẠT, TIÊN PHONG Bản lĩnh dẫn đầu Mẫu SUV hạng E Cảm hứng thiết kế"
+          },
+          {
+            "title": "VinFast VF 9 là mẫu SUV cỡ lớn",
+            "desc": "hạng sang của VinFast, được chắp bút bởi một trong những studio thiết kế xe hơi lâu đời và lừng danh nhất thế giới -"
+          },
+          {
+            "title": "Pininfarina",
+            "desc": "Thiết kế ấn tượng của VF 9 được lấy cảm hứng từ du thuyền sang trọng mà vẫn giữ nét đặc trưng của VinFast với những đường nét ấn tượng,"
+          },
+          {
+            "title": "năng động",
+            "desc": "Cân bằng động Nóc xe nghiêng dần về phía sau như thiết kế tầng nóc của một chiếc Logo hình chữ V nổi bật và dải đèn LED nhận diện thương hiệu Hốc gió độc đáo trên ca-pô và cản trước tối ưu trong bất kỳ điều kiện ánh sáng nào du thuyền hạng sang bắt mắt tính khí động học Chiều rộng 2.254 mm Chiều dài cơ sở 3.149 mm Chiều cao 1.697 mm Chiều dài 5.119 mm * Phiên bản ECO pin CATL Công suất tối đa 402 hp Mô men xoắn cực đại Hệ dẫn động toàn thời gian (AWD) HAI CẦU 620 Nm Mạnh mẽ Khả năng tăng tốc vượ"
+          }
+        ],
+        "performance": null,
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Nhờ những trang bị an toàn vượt trội và Hệ thống hỗ trợ người lái nâng cao",
+          "features": [
+            {
+              "title": "Nhờ những trang bị an toàn vượt trội và Hệ thống hỗ trợ người lái nâng cao",
+              "desc": "Nhờ những trang bị an toàn vượt trội và Hệ thống hỗ trợ người lái nâng cao"
+            },
+            {
+              "title": "(ADAS) tiên tiến, người cầm lái và hành khách trên xe VF 9 có thể hoàn toàn an",
+              "desc": "(ADAS) tiên tiến, người cầm lái và hành khách trên xe VF 9 có thể hoàn toàn an"
+            },
+            {
+              "title": "Được thiết kế và trang bị để hướng tới tiêu chuẩn an toàn quốc tế cao nhất",
+              "desc": "Được thiết kế và trang bị để hướng tới tiêu chuẩn an toàn quốc tế cao nhất"
+            },
+            {
+              "title": "11 túi khí An toàn quốc tế Đạt chuẩn",
+              "desc": "11 túi khí An toàn quốc tế Đạt chuẩn"
+            }
+          ],
+          "highlights": [
+            "11 túi khí"
+          ]
+        },
+        "highlights": [
+          "Công suất tối đa 402 hp",
+          "11 túi khí"
+        ]
+      },
+      "fields": {
+        "power": 402,
+        "torque": 620,
+        "range": 626,
+        "batteryCapacity": 123,
+        "chargingTime": "Có (Tắt, Thấp, Trung bình, Cao)",
+        "dimensions": "5.119 x 2.254 x 1.697",
+        "drive": "AWD/2 cầu toàn thời gian"
+      },
+      "fetchedAt": "2026-06-26T10:40:03.581Z"
+    },
+    {
+      "id": "vf-mpv7",
+      "type": "car",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/260325_wb_mpv7_vn_vi_1.0.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+          "bullets": [
+            "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF MPV 7.",
+            "một lần cho xe ô tô VinFast VF MPV 7 của khách hàng và là căn cứ để khách hàng nhận được đầy",
+            "I. Thông tin hỗ trợ khách hàng 1. ĐỐI TƯỢNG ÁP DỤNG",
+            "3. ĐIỀU KIỆN BẢO HÀNH"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "P/N: Version: 1.0 MỤC LỤC I ",
+            "desc": "T h ô n g t i n h ỗ t r ợ k h á c h h à n g I I . C h í n h s á c h b ả o h à n h 05 06 LỜI NÓI ĐẦU"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN"
+          },
+          {
+            "title": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF MPV 7.",
+            "desc": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST VF MPV 7."
+          },
+          {
+            "title": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắ",
+            "desc": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắt là “VinFast”) cấp"
+          },
+          {
+            "title": "một lần cho xe ô tô VinFast VF MPV 7 của khách hàng và là căn cứ để khách hàng n",
+            "desc": "một lần cho xe ô tô VinFast VF MPV 7 của khách hàng và là căn cứ để khách hàng nhận được đầy"
+          },
+          {
+            "title": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện b",
+            "desc": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện bởi:"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "• Bảo hành là công việc sửa chữa,",
+            "desc": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,"
+          },
+          {
+            "icon": "voice",
+            "title": "khuyết tật của vật liệu hoặc lỗi trong",
+            "desc": "quá trình lắp ráp với điều kiện sản phẩm được sử dụng và bảo dưỡng đúng cách."
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ",
+            "desc": "ngày VinFast giao xe tới chủ sở hữu đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo",
+            "desc": "hành là những chi tiết, linh kiện chính hãng nhỏ nhất được VinFast cung cấp."
+          },
+          {
+            "icon": "voice",
+            "title": "• Bảo hành có hiệu lực trên toàn",
+            "desc": "lãnh thổ Việt Nam, chỉ được áp dụng và thực hiện tại các XDV/ĐLPP của VinFast. Tuy"
+          },
+          {
+            "icon": "voice",
+            "title": "nhiên, để được áp dụng bảo hành, Quý",
+            "desc": "Khách hàng cần đảm bảo các dịch vụ và sửa chữa cho xe đều được thực hiện"
+          }
+        ],
+        "technologyLead": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi",
+              "desc": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này"
+            },
+            {
+              "title": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pi",
+              "desc": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "riêng)",
+              "desc": "6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+            },
+            {
+              "title": "• Pin có thời hạn bảo hành là",
+              "desc": "8 năm kể từ Ngày Kích Hoạt Bảo Hành hoặc 160.000 km tùy theo điều kiện nào đến trước."
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất",
+              "desc": "định, Khách hàng cần đặc biệt chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường",
+              "desc": "có muối hoặc gần biển, hãy rửa gầm xe nếu cần bằng nước sạch (ít nhất là"
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy thông thoáng."
+            },
+            {
+              "title": "• Nếu lớp sơn hoặc lớp hoàn thiện",
+              "desc": "của xe bị hư hỏng do bất kỳ loại tai nạn hoặc sự kiện nào khác, cần mang xe tới"
+            },
+            {
+              "title": "• Nếu chở hàng hóa đặc biệt, chẳng",
+              "desc": "hạn như hóa chất, phân bón, muối khử băng hoặc các chất ăn mòn khác, hãy"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:04.258Z"
+    },
+    {
+      "id": "ec-van",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/10012026/Brochure%20EC%20Van%20090126.pdf",
+      "specTable": [
+        {
+          "label": "Kích thước xe (Dài x Rộng x Cao) (mm)",
+          "value": "3.767 × 1.680 x 1.790"
+        },
+        {
+          "label": "Kích thước lốp",
+          "value": "175/80 R14"
+        },
+        {
+          "label": "Hệ thống chống bó cứng phanh (ABS)",
+          "value": "Có"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "30"
+        },
+        {
+          "label": "Đèn hậu",
+          "value": "Halogen"
+        },
+        {
+          "label": "Mô-men xoắn cực đại:",
+          "value": "110 Nm*"
+        },
+        {
+          "label": "Dung lượng pin: 18,3kWh",
+          "value": "tầm di chuyển lên đến 175 km"
+        },
+        {
+          "label": "Công suất tối đa (kW) 30",
+          "value": "110 Mô men xoắn cực đại (Nm)"
+        },
+        {
+          "label": "Đèn hậu Halogen",
+          "value": "Có Đèn định vị"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "175"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "EC VAN",
+        "slogan": "về chi phí và hiệu quả, EC VAN chính là người cộng sự",
+        "overview": {
+          "title": "EC VAN",
+          "subtitle": "về chi phí và hiệu quả, EC VAN chính là người cộng sự",
+          "bullets": [
+            "Công suất tối đa: 30 kW",
+            "Mô-men xoắn cực đại: 110 Nm",
+            "Dung lượng pin: 18,3kWh"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Hình ảnh xe là phiên bản tiền thương mại",
+            "desc": "Phiên bản thương mại có thế có một số điểm khác biệt"
+          },
+          {
+            "title": "ĐỎ TRẮNG VÀNG Giải Pháp Tối Ưu Cho Vận Tải Nội Đô Thời Đại Mới",
+            "desc": "ĐỎ TRẮNG VÀNG Giải Pháp Tối Ưu Cho Vận Tải Nội Đô Thời Đại Mới"
+          },
+          {
+            "title": "Trong thời đại mỗi chuyến giao hàng là một cuộc đua",
+            "desc": "Trong thời đại mỗi chuyến giao hàng là một cuộc đua"
+          },
+          {
+            "title": "về chi phí và hiệu quả, EC VAN chính là người cộng sự",
+            "desc": "về chi phí và hiệu quả, EC VAN chính là người cộng sự"
+          },
+          {
+            "title": "bền bỉ và đáng tin cậy dành cho các doanh nghiệp, đối tác vận tải hoặc hộ kinh d",
+            "desc": "bền bỉ và đáng tin cậy dành cho các doanh nghiệp, đối tác vận tải hoặc hộ kinh doanh cá thể!"
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Vận hành bền bỉ, tiết kiệm nhiên liệu cùng khoang chứa",
+          "features": [
+            {
+              "title": "Vận hành bền bỉ, tiết kiệm nhiên liệu cùng khoang chứa",
+              "desc": "Vận hành bền bỉ, tiết kiệm nhiên liệu cùng khoang chứa"
+            },
+            {
+              "title": "rộng rãi - EC VAN giúp tối ưu chi phí trên mỗi chuyến hàng.",
+              "desc": "rộng rãi - EC VAN giúp tối ưu chi phí trên mỗi chuyến hàng."
+            },
+            {
+              "title": "Thiết kế nhỏ gọn giúp xe dễ dàng xoay trở trong nội đô,",
+              "desc": "Thiết kế nhỏ gọn giúp xe dễ dàng xoay trở trong nội đô,"
+            },
+            {
+              "title": "tiện lợi cả khi đi phố lẫn giao hàng đường dài",
+              "desc": "Nổi bật với Dải Màu Đa Dạng XANH Thiết Kế Tối Ưu Cho Vận Chuyển Dung tích khoang chứa hàng m3 2,6"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "Công suất tối đa: 30 kW",
+          "Mô-men xoắn cực đại: 110 Nm",
+          "Dung lượng pin: 18,3kWh"
+        ]
+      },
+      "fields": {
+        "power": 40,
+        "powerKw": 30,
+        "range": 175,
+        "batteryCapacity": 175,
+        "dimensions": "3.767 × 1.680 x 1.790"
+      },
+      "fetchedAt": "2026-06-26T10:40:05.812Z"
+    },
+    {
+      "id": "minio-green",
+      "type": "car",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/251108_WB_Mgreen_VN_VI_2.0.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN — LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST MINIO GREEN.",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN — LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST MINIO GREEN.",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN",
+          "bullets": [
+            "P/N: Version: 2.0 MỤC LỤC",
+            "I. Thông tin hỗ trợ Khách hàng..............................5",
+            "II. Chính sách bảo hành...........................................6",
+            "3. ĐIỀU KIỆN BẢO HÀNH"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "I",
+            "desc": "Thông tin hỗ trợ Khách hàng..............................5"
+          },
+          {
+            "title": "II",
+            "desc": "Chính sách bảo hành...........................................6"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN"
+          },
+          {
+            "title": "TRÂN TRỌNG CẢM ƠN QUÝ KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFA",
+            "desc": "TRÂN TRỌNG CẢM ƠN QUÝ KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST MINIO GREEN."
+          },
+          {
+            "title": "Sổ bảo hành này được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau",
+            "desc": "Sổ bảo hành này được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau"
+          },
+          {
+            "title": "đây viết tắt là “VinFast”) cấp một lần cho xe ô tô VinFast Minio Green của",
+            "desc": "đây viết tắt là “VinFast”) cấp một lần cho xe ô tô VinFast Minio Green của"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "mềm điều khiển cho các hư hỏng do lỗi phần mềm, khuyết tật của vật",
+            "desc": "mềm điều khiển cho các hư hỏng do lỗi phần mềm, khuyết tật của vật"
+          },
+          {
+            "icon": "voice",
+            "title": "liệu hoặc lỗi trong quá trình lắp ráp với điều kiện sản phẩm được sử",
+            "desc": "liệu hoặc lỗi trong quá trình lắp ráp với điều kiện sản phẩm được sử"
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ ngày VinFast giao xe tới chủ sở hữu",
+            "desc": "• Thời hạn bảo hành được tính từ ngày VinFast giao xe tới chủ sở hữu"
+          },
+          {
+            "icon": "voice",
+            "title": "đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo Hành”)",
+            "desc": "đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo Hành”)"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo hành là những chi tiết, linh kiện chính",
+            "desc": "• Phụ tùng thay thế trong bảo hành là những chi tiết, linh kiện chính"
+          },
+          {
+            "icon": "voice",
+            "title": "hãng nhỏ nhất được VinFast cung cấp.",
+            "desc": "hãng nhỏ nhất được VinFast cung cấp."
+          }
+        ],
+        "technologyLead": "mềm điều khiển cho các hư hỏng do lỗi phần mềm, khuyết tật của vật",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "• Pin điện áp cao (sau đây gọi tắt là “pin”) của xe nếu thuộc dịch vụ thuê",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi tắt là “pin”) của xe nếu thuộc dịch vụ thuê",
+              "desc": "• Pin điện áp cao (sau đây gọi tắt là “pin”) của xe nếu thuộc dịch vụ thuê"
+            },
+            {
+              "title": "pin sẽ không thuộc chính sách bảo hành này và được quy định theo",
+              "desc": "pin sẽ không thuộc chính sách bảo hành này và được quy định theo"
+            },
+            {
+              "title": "các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin.",
+              "desc": "các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "• Bảo hành là công việc sửa chữa, thay thế chi tiết hoặc cập nhật phần",
+              "desc": "• Bảo hành là công việc sửa chữa, thay thế chi tiết hoặc cập nhật phần"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất định, Khách hàng cần đặc biệt",
+              "desc": "Ngoài ra, trong một số điều kiện nhất định, Khách hàng cần đặc biệt"
+            },
+            {
+              "title": "chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:",
+              "desc": "chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường có muối hoặc gần biển, hãy",
+              "desc": "• Nếu thường xuyên lái xe trên đường có muối hoặc gần biển, hãy"
+            },
+            {
+              "title": "rửa gầm xe nếu cần bằng nước sạch (ít nhất là mỗi tháng một lần).",
+              "desc": "rửa gầm xe nếu cần bằng nước sạch (ít nhất là mỗi tháng một lần)."
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:06.828Z"
+    },
+    {
+      "id": "herio-green",
+      "type": "car",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/250618_herio_vn_vn_1.2_svc73000217aa.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+          "bullets": [
+            "I. Thông tin hỗ trợ khách hàng 1. ĐỐI TƯỢNG ÁP DỤNG",
+            "3. ĐIỀU KIỆN BẢO HÀNH",
+            "II. Chính sách bảo hành 4. THỪA KẾ BẢO HÀNH",
+            "5. THỜI HẠN BẢO HÀNH XE MỚI"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "SỔ BẢO HÀNH P/N: SVC73000217AA Version: 1.2 MỤC LỤC I ",
+            "desc": "T h ô n g t i n h ỗ t r ợ k h á c h h à n g I I . C h í n h s á c h b ả o h à n h 05 06 LỜI NÓI ĐẦU"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN"
+          },
+          {
+            "title": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST HERIO GREEN.",
+            "desc": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST HERIO GREEN."
+          },
+          {
+            "title": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắ",
+            "desc": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắt là “VinFast”) cấp"
+          },
+          {
+            "title": "một lần cho xe ô tô VinFast Herio Green của khách hàng và là căn cứ để khách hàn",
+            "desc": "một lần cho xe ô tô VinFast Herio Green của khách hàng và là căn cứ để khách hàng nhận được đầy"
+          },
+          {
+            "title": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện b",
+            "desc": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện bởi:"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "• Bảo hành là công việc sửa chữa,",
+            "desc": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,"
+          },
+          {
+            "icon": "voice",
+            "title": "khuyết tật của vật liệu hoặc lỗi trong",
+            "desc": "quá trình lắp ráp với điều kiện sản phẩm được sử dụng và bảo dưỡng đúng cách."
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ",
+            "desc": "ngày VinFast giao xe tới chủ sở hữu đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo",
+            "desc": "hành là những chi tiết, linh kiện chính hãng nhỏ nhất được VinFast cung cấp."
+          },
+          {
+            "icon": "voice",
+            "title": "• Bảo hành có hiệu lực trên toàn",
+            "desc": "lãnh thổ Việt Nam, chỉ được áp dụng và thực hiện tại các XDV/ĐLPP của VinFast. Tuy"
+          },
+          {
+            "icon": "voice",
+            "title": "nhiên, để được áp dụng bảo hành, Quý",
+            "desc": "Khách hàng cần đảm bảo các dịch vụ và sửa chữa cho xe đều được thực hiện"
+          }
+        ],
+        "technologyLead": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi",
+              "desc": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này"
+            },
+            {
+              "title": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pi",
+              "desc": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "riêng)",
+              "desc": "6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+            },
+            {
+              "title": "• Pin có thời hạn bảo hành là",
+              "desc": "8 năm kể từ Ngày Kích Hoạt Bảo Hành hoặc 160.000 km tùy theo điều kiện nào đến trước."
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất",
+              "desc": "định, Khách hàng cần đặc biệt chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường",
+              "desc": "có muối hoặc gần biển, hãy rửa gầm xe nếu cần bằng nước sạch (ít nhất là"
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy thông thoáng."
+            },
+            {
+              "title": "• Nếu lớp sơn hoặc lớp hoàn thiện",
+              "desc": "của xe bị hư hỏng do bất kỳ loại tai nạn hoặc sự kiện nào khác, cần mang xe tới"
+            },
+            {
+              "title": "• Nếu chở hàng hóa đặc biệt, chẳng",
+              "desc": "hạn như hóa chất, phân bón, muối khử băng hoặc các chất ăn mòn khác, hãy"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:07.998Z"
+    },
+    {
+      "id": "nerio-green",
+      "type": "car",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/250618_nerio-green_vn_vi_1.1_svc20000368aa.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST — CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN ",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST — CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN ",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST",
+          "bullets": [
+            "I. Thông tin hỗ trợ khách hàng II. Chính sách bảo hành 1. ĐỐI TƯỢNG ÁP DỤNG",
+            "3. ĐIỀU KIỆN BẢO HÀNH",
+            "5. THỜI HẠN BẢO HÀNH XE MỚI",
+            "riêng). 6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "SỔ BẢO HÀNH CÔNG TY CỔ PHẦN SẢN",
+            "desc": "XUẤT VÀ KINH DOANH VINFAST P/N: SVC20000368AA Version: 1.1 MỤC LỤC I . T h ô n g t i n h ỗ t r ợ k h á c h h à n g I I . C h í n h s á c h b ả o h à n h 05 06 LỜI NÓI ĐẦU"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN"
+          },
+          {
+            "title": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST NERIO GREEN.",
+            "desc": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST NERIO GREEN."
+          },
+          {
+            "title": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắ",
+            "desc": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắt là “VinFast”) cấp"
+          },
+          {
+            "title": "một lần cho xe ô tô VinFast Nerio Green của khách hàng và là căn cứ để khách hàn",
+            "desc": "một lần cho xe ô tô VinFast Nerio Green của khách hàng và là căn cứ để khách hàng nhận được đầy"
+          },
+          {
+            "title": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện b",
+            "desc": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện bởi:"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "• Bảo hành là công việc sửa chữa,",
+            "desc": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,"
+          },
+          {
+            "icon": "voice",
+            "title": "khuyết tật của vật liệu hoặc lỗi trong",
+            "desc": "quá trình lắp ráp với điều kiện sản phẩm được sử dụng và bảo dưỡng đúng cách."
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ",
+            "desc": "ngày VinFast giao xe tới chủ sở hữu đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo",
+            "desc": "hành là những chi tiết, linh kiện chính hãng nhỏ nhất được VinFast cung cấp."
+          },
+          {
+            "icon": "voice",
+            "title": "• Bảo hành có hiệu lực trên toàn",
+            "desc": "lãnh thổ Việt Nam, chỉ được áp dụng và thực hiện tại các XDV/ĐLPP của VinFast. Tuy"
+          },
+          {
+            "icon": "voice",
+            "title": "nhiên, để được áp dụng bảo hành, Quý",
+            "desc": "Khách hàng cần đảm bảo các dịch vụ và sửa chữa cho xe đều được thực hiện"
+          }
+        ],
+        "technologyLead": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi",
+              "desc": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này"
+            },
+            {
+              "title": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pi",
+              "desc": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "riêng)",
+              "desc": "6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+            },
+            {
+              "title": "• Pin có thời hạn bảo hành là",
+              "desc": "8 năm kể từ Ngày Kích Hoạt Bảo Hành hoặc 160.000 km tùy theo điều kiện nào đến trước."
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất",
+              "desc": "định, Khách hàng cần đặc biệt chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường",
+              "desc": "có muối hoặc gần biển, hãy rửa gầm xe nếu cần bằng nước sạch (ít nhất là"
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy thông thoáng."
+            },
+            {
+              "title": "• Nếu lớp sơn hoặc lớp hoàn thiện",
+              "desc": "của xe bị hư hỏng do bất kỳ loại tai nạn hoặc sự kiện nào khác, cần mang xe tới"
+            },
+            {
+              "title": "• Nếu chở hàng hóa đặc biệt, chẳng",
+              "desc": "hạn như hóa chất, phân bón, muối khử băng hoặc các chất ăn mòn khác, hãy"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:09.282Z"
+    },
+    {
+      "id": "limo-green",
+      "type": "car",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/250618_wb_limogreen_vn_vi_1.0.pdf",
+      "specTable": [
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "70"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+        "slogan": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+        "overview": {
+          "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN — KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰ",
+          "subtitle": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+          "bullets": [
+            "I. Thông tin hỗ trợ khách hàng 1. ĐỐI TƯỢNG ÁP DỤNG",
+            "3. ĐIỀU KIỆN BẢO HÀNH",
+            "II. Chính sách bảo hành 4. THỪA KẾ BẢO HÀNH",
+            "5. THỜI HẠN BẢO HÀNH XE MỚI"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "P/N: SVC32000003AA Version: 1.0 MỤC LỤC I ",
+            "desc": "T h ô n g t i n h ỗ t r ợ k h á c h h à n g I I . C h í n h s á c h b ả o h à n h 05 06 LỜI NÓI ĐẦU"
+          },
+          {
+            "title": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN",
+            "desc": "CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST XIN TRÂN TRỌNG CẢM ƠN"
+          },
+          {
+            "title": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST LIMO GREEN.",
+            "desc": "KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀ LỰA CHỌN SẢN PHẨM XE Ô TÔ VINFAST LIMO GREEN."
+          },
+          {
+            "title": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắ",
+            "desc": "Sổ bảo hành được Công ty Cổ phần Sản xuất và Kinh doanh VinFast (sau đây viết tắt là “VinFast”) cấp"
+          },
+          {
+            "title": "một lần cho xe ô tô VinFast Limo Green của khách hàng và là căn cứ để khách hàng",
+            "desc": "một lần cho xe ô tô VinFast Limo Green của khách hàng và là căn cứ để khách hàng nhận được đầy"
+          },
+          {
+            "title": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện b",
+            "desc": "Việc bảo hành, bảo dưỡng, sửa chữa xe VinFast của khách hàng sẽ được thực hiện bởi:"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "• Bảo hành là công việc sửa chữa,",
+            "desc": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,"
+          },
+          {
+            "icon": "voice",
+            "title": "khuyết tật của vật liệu hoặc lỗi trong",
+            "desc": "quá trình lắp ráp với điều kiện sản phẩm được sử dụng và bảo dưỡng đúng cách."
+          },
+          {
+            "icon": "voice",
+            "title": "• Thời hạn bảo hành được tính từ",
+            "desc": "ngày VinFast giao xe tới chủ sở hữu đầu tiên (sau đây gọi là “Ngày Kích Hoạt Bảo"
+          },
+          {
+            "icon": "voice",
+            "title": "• Phụ tùng thay thế trong bảo",
+            "desc": "hành là những chi tiết, linh kiện chính hãng nhỏ nhất được VinFast cung cấp."
+          },
+          {
+            "icon": "voice",
+            "title": "• Bảo hành có hiệu lực trên toàn",
+            "desc": "lãnh thổ Việt Nam, chỉ được áp dụng và thực hiện tại các XDV/ĐLPP của VinFast. Tuy"
+          },
+          {
+            "icon": "voice",
+            "title": "nhiên, để được áp dụng bảo hành, Quý",
+            "desc": "Khách hàng cần đảm bảo các dịch vụ và sửa chữa cho xe đều được thực hiện"
+          }
+        ],
+        "technologyLead": "thay thế chi tiết hoặc cập nhật phần mềm điều khiển cho các hư hỏng do lỗi phần mềm,",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này",
+          "features": [
+            {
+              "title": "• Pin điện áp cao (sau đây gọi",
+              "desc": "tắt là “pin”) của xe nếu thuộc dịch vụ thuê pin sẽ không thuộc chính sách bảo hành này"
+            },
+            {
+              "title": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pi",
+              "desc": "và được quy định theo các điều khoản và điều kiện tương ứng của Hợp đồng thuê pin."
+            },
+            {
+              "title": "riêng)",
+              "desc": "6. PHỤ TÙNG XE MỚI BẢO HÀNH GIỚI HẠN  PIN (MUA LẦN ĐẦU THEO XE MỚI):"
+            },
+            {
+              "title": "• Pin có thời hạn bảo hành là",
+              "desc": "8 năm kể từ Ngày Kích Hoạt Bảo Hành hoặc 160.000 km tùy theo điều kiện nào đến trước."
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+          "features": [
+            {
+              "title": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức.",
+              "desc": "xước trên lớp sơn hoặc lớp phủ bảo vệ, hãy xử lý chúng ngay lập tức."
+            },
+            {
+              "title": "Ngoài ra, trong một số điều kiện nhất",
+              "desc": "định, Khách hàng cần đặc biệt chú ý để bảo vệ xe VinFast khỏi bị ăn mòn:"
+            },
+            {
+              "title": "• Nếu thường xuyên lái xe trên đường",
+              "desc": "có muối hoặc gần biển, hãy rửa gầm xe nếu cần bằng nước sạch (ít nhất là"
+            },
+            {
+              "title": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy",
+              "desc": "• Điều quan trọng là phải giữ cho các lỗ thoát nước ở các cạnh dưới của thân máy thông thoáng."
+            },
+            {
+              "title": "• Nếu lớp sơn hoặc lớp hoàn thiện",
+              "desc": "của xe bị hư hỏng do bất kỳ loại tai nạn hoặc sự kiện nào khác, cần mang xe tới"
+            },
+            {
+              "title": "• Nếu chở hàng hóa đặc biệt, chẳng",
+              "desc": "hạn như hóa chất, phân bón, muối khử băng hoặc các chất ăn mòn khác, hãy"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {
+        "batteryCapacity": 70
+      },
+      "fetchedAt": "2026-06-26T10:40:10.164Z"
+    }
+  ],
+  "scooters": [
+    {
+      "id": "evo-lite-neo",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/hdsd/BOL00011233%20-%20EVO%20LITE%20NEO.pdf",
+      "specTable": [],
+      "brochureContent": {
+        "tagline": "XE MÁY ĐIỆN VINFAST EVO LITE NEO",
+        "slogan": "5.1. Ắc-quy chì a-xít ........................................................ 26",
+        "overview": {
+          "title": "XE MÁY ĐIỆN VINFAST EVO LITE NEO",
+          "subtitle": "5.1. Ắc-quy chì a-xít ........................................................ 26",
+          "bullets": [
+            "5.1. Ắc-quy chì a-xít ........................................................ 26",
+            "5.2. Bộ sạc kèm theo xe .............................................. 27",
+            "5.3. Sạc ắc-quy chì a-xít............................................... 28",
+            "5.3.1. Sạc ắc-quy chì a-xít trên xe ....................... 29"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "HƯỚNG DẪN SỬ DỤNG XE MÁY ĐIỆN",
+            "desc": "VINFAST EVO LITE NEO HƯỚNG DẪN SỬ DỤNG EVO LITE NEO BOL00011233-06 MỤC LỤC Mục lục.2"
+          },
+          {
+            "title": "5.1",
+            "desc": "Ắc-quy chì a-xít ........................................................ 26"
+          },
+          {
+            "title": "5.2",
+            "desc": "Bộ sạc kèm theo xe .............................................. 27"
+          },
+          {
+            "title": "5.3",
+            "desc": "Sạc ắc-quy chì a-xít............................................... 28"
+          },
+          {
+            "title": "5.3.1",
+            "desc": "Sạc ắc-quy chì a-xít trên xe ....................... 29"
+          },
+          {
+            "title": "5.3.2",
+            "desc": "Chỉ thị trên HMI............................................... 29"
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường xe chạy hoặc thời gian sử dụng tùy theo điều kiện nào đến trước",
+          "features": [
+            {
+              "title": "Quãng đường xe chạy hoặc thời gian sử dụng tùy theo điều kiện nào đến trước",
+              "desc": "Quãng đường xe chạy hoặc thời gian sử dụng tùy theo điều kiện nào đến trước"
+            },
+            {
+              "title": "x 1000 km 1 5 10 15 20",
+              "desc": "25 30 35 40 45 50 Tháng thứ 1 6 12 18 24 30 36 42 48 54 60 Áp suất hơi KT KT KT KT KT KT KT KT KT KT KT 18 Giảm xóc sau KT KT KT KT KT KT KT KT KT KT KT 19 Động cơ - KT KT KT KT KT KT KT KT KT KT 20 Phớt động cơ KT KT KT"
+            },
+            {
+              "title": "Ghi chú: KT = Kiểm tra, BT = Bôi trơn bằng mỡ, TT = Thay thế",
+              "desc": "Ghi chú: KT = Kiểm tra, BT = Bôi trơn bằng mỡ, TT = Thay thế"
+            },
+            {
+              "title": "• Với quãng đường trên HMI đọc được cao hơn quãng đường được đề cập trên lịch bả",
+              "desc": "• Với quãng đường trên HMI đọc được cao hơn quãng đường được đề cập trên lịch bảo dưỡng thì lặp lại"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Kiểm tra phanh trước và sau ................... 33",
+          "features": [
+            {
+              "title": "6.2.1",
+              "desc": "Kiểm tra phanh trước và sau ................... 33"
+            },
+            {
+              "title": "6.2.2",
+              "desc": "Kiểm tra mức dầu phanh.......................... 35"
+            },
+            {
+              "title": "6.2.3",
+              "desc": "Thay dầu phanh ............................................. 36"
+            },
+            {
+              "title": "6.2.4",
+              "desc": "Kiểm tra và bôi trơn tay phanh trái-phải"
+            },
+            {
+              "title": "................................................................................",
+              "desc": ".............................................................................................. 37"
+            },
+            {
+              "title": "6.2.5",
+              "desc": "Kiểm tra độ rơ của tay phanh................. 37"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": []
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:28.003Z"
+    },
+    {
+      "id": "flazz-max",
+      "type": "scooter",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/espcnf2bol001-01-flazz_max_vn_espc_bol_owner_manual.pdf",
+      "specTable": [
+        {
+          "label": "MCU Bộ điều khiển động cơ",
+          "value": "Mỗi pin Lithium-ion được tích hợp một hệ thống quản lý pin BMS để giám sát tình trạng hoạt động của"
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Loại động cơ Động cơ điện một chiều không chổi than"
+        },
+        {
+          "label": "Khoảng sáng gầm xe 137 mm",
+          "value": "Chiều cao yên 760 mm"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "XE MÁY ĐIỆN VINFAST FLAZZ — HƯỚNG DẪN SỬ DỤNG VINFAST FLAZZ",
+        "slogan": "1.1. Thông điệp từ VinFast .............................................. 1",
+        "overview": {
+          "title": "XE MÁY ĐIỆN VINFAST FLAZZ — HƯỚNG DẪN SỬ DỤNG VINFAST FLAZZ",
+          "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
+          "bullets": [
+            "công suất điện tối đa khoảng 210W"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "HƯỚNG DẪN SỬ DỤNG XE MÁY ĐIỆN",
+            "desc": "VINFAST FLAZZ HƯỚNG DẪN SỬ DỤNG VINFAST FLAZZ ESPCNF2BOL001/01 MỤC LỤC Mục lục.1 MỤC LỤC"
+          },
+          {
+            "title": "1",
+            "desc": "Giới thiệu .............................................................................1"
+          },
+          {
+            "title": "1.1",
+            "desc": "Thông điệp từ VinFast .............................................. 1"
+          },
+          {
+            "title": "1.2",
+            "desc": "Hướng dẫn sử dụng tài liệu ................................ 2"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "3.14",
+            "desc": "Cổng kết nối pin.................................................... 22"
+          },
+          {
+            "icon": "voice",
+            "title": "3.15",
+            "desc": "Ứng dụng điện thoại ......................................... 24"
+          },
+          {
+            "icon": "voice",
+            "title": "3.16",
+            "desc": "Cập nhật phần mềm .......................................... 25"
+          },
+          {
+            "icon": "voice",
+            "title": "tài sản khác",
+            "desc": "Viết tắt Giải nghĩa HMI Cụm đồng hồ đa chức năng MCU Bộ điều khiển động cơ SCU Bộ điều khiển tính năng thông minh SOC Dung lượng pin Lithium-ion còn lại BMS Hệ thống quản lý pin Lithium-ion Chế độ Parking Chế độ vô hiệu hóa tay ga THÔNG TIN AN TOÀN 2. THÔNG TIN AN TOÀN 2.1. Vị trí các nhãn mác quan trọng"
+          },
+          {
+            "icon": "voice",
+            "title": "Đọc và hiểu tất cả các nhãn mác trên xe",
+            "desc": "Những nhãn mác này chứa các thông tin quan trọng để bạn vận"
+          },
+          {
+            "icon": "voice",
+            "title": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạ",
+            "desc": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạn đồng thời sử dụng"
+          }
+        ],
+        "technologyLead": "Cổng kết nối pin.................................................... 22",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Khởi động và vận hành............................................ 26",
+          "features": [
+            {
+              "title": "4",
+              "desc": "Khởi động và vận hành............................................ 26"
+            },
+            {
+              "title": "4.1",
+              "desc": "Thao tác cơ bản........................................................ 26"
+            },
+            {
+              "title": "4.2",
+              "desc": "Kiểm tra trước khi vận hành............................ 26"
+            },
+            {
+              "title": "4.3",
+              "desc": "Khóa/mở khóa hệ thống điện ........................ 27"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Thông tin an toàn .......................................................... 3",
+          "features": [
+            {
+              "title": "2",
+              "desc": "Thông tin an toàn .......................................................... 3"
+            },
+            {
+              "title": "2.1",
+              "desc": "Vị trí các nhãn mác quan trọng ........................ 3"
+            },
+            {
+              "title": "2.2",
+              "desc": "Thông tin an toàn ..................................................... 5"
+            },
+            {
+              "title": "2.2.1",
+              "desc": "An toàn cho người sử dụng ........................ 5"
+            },
+            {
+              "title": "2.2.2",
+              "desc": "An toàn cho xe ................................................... 6"
+            },
+            {
+              "title": "2.2.3",
+              "desc": "An toàn cháy nổ và bảo vệ môi trường 7"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": [
+          "công suất điện tối đa khoảng 210W"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:29.932Z"
+    },
+    {
+      "id": "amio-s",
+      "type": "scooter",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/espcnf1bol003-01-hs_bol_owner_manual_amio_s_ver01.pdf",
+      "specTable": [
+        {
+          "label": "MCU Bộ điều khiển động cơ",
+          "value": "Khi khối pin Lithium-ion gặp sự cố, cần liên hệ ĐLPP và XDV của VinFast để được hỗ trợ."
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Loại động cơ Động cơ điện một chiều không chổi than"
+        },
+        {
+          "label": "Khoảng sáng gầm xe 123 mm",
+          "value": "Chiều cao yên 750 mm"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "XE MÁY ĐIỆN VINFAST AMIO S — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO S",
+        "slogan": "1.1. Thông điệp từ VinFast .............................................. 1",
+        "overview": {
+          "title": "XE MÁY ĐIỆN VINFAST AMIO S — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO S",
+          "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
+          "bullets": [
+            "công suất điện tối đa khoảng 210W"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Vẽ HƯỚNG DẪN SỬ DỤNG XE MÁY ĐIỆN",
+            "desc": "VINFAST AMIO S HƯỚNG DẪN SỬ DỤNG VINFAST AMIO S ESPCNF1BOL003/01 MỤC LỤC Mục lục.1 MỤC LỤC"
+          },
+          {
+            "title": "1",
+            "desc": "Giới thiệu .............................................................................1"
+          },
+          {
+            "title": "1.1",
+            "desc": "Thông điệp từ VinFast .............................................. 1"
+          },
+          {
+            "title": "1.2",
+            "desc": "Hướng dẫn sử dụng tài liệu ................................ 2"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "3.14",
+            "desc": "Cập nhật phần mềm (với xe được trang bị"
+          },
+          {
+            "icon": "voice",
+            "title": "tài sản khác",
+            "desc": "Viết tắt Giải nghĩa HMI Cụm đồng hồ đa chức năng MCU Bộ điều khiển động cơ SCU Bộ điều khiển tính năng thông minh SOC Dung lượng pin Lithium-ion còn lại BMS Hệ thống quản lý pin Lithium-ion Chế độ Parking Chế độ vô hiệu hóa tay ga THÔNG TIN AN TOÀN 2. THÔNG TIN AN TOÀN 2.1. Vị trí các nhãn mác quan trọng"
+          },
+          {
+            "icon": "voice",
+            "title": "Đọc và hiểu tất cả các nhãn mác trên xe",
+            "desc": "Những nhãn mác này chứa các thông tin quan trọng để bạn vận"
+          },
+          {
+            "icon": "voice",
+            "title": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạ",
+            "desc": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạn đồng thời sử dụng"
+          },
+          {
+            "icon": "voice",
+            "title": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoà",
+            "desc": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoàn toàn, vì chân"
+          },
+          {
+            "icon": "voice",
+            "title": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát.",
+            "desc": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát."
+          }
+        ],
+        "technologyLead": "Cập nhật phần mềm (với xe được trang bị",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Khởi động và vận hành............................................ 22",
+          "features": [
+            {
+              "title": "4",
+              "desc": "Khởi động và vận hành............................................ 22"
+            },
+            {
+              "title": "4.1",
+              "desc": "Thao tác cơ bản........................................................ 22"
+            },
+            {
+              "title": "4.2",
+              "desc": "Kiểm tra trước khi vận hành............................ 22"
+            },
+            {
+              "title": "4.3",
+              "desc": "Khóa/mở khóa hệ thống điện ........................ 23"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Thông tin an toàn .......................................................... 3",
+          "features": [
+            {
+              "title": "2",
+              "desc": "Thông tin an toàn .......................................................... 3"
+            },
+            {
+              "title": "2.1",
+              "desc": "Vị trí các nhãn mác quan trọng ........................ 3"
+            },
+            {
+              "title": "2.2",
+              "desc": "Thông tin an toàn ..................................................... 5"
+            },
+            {
+              "title": "2.2.1",
+              "desc": "An toàn cho người sử dụng ........................ 5"
+            },
+            {
+              "title": "2.2.2",
+              "desc": "An toàn cho xe ................................................... 6"
+            },
+            {
+              "title": "2.2.3",
+              "desc": "An toàn cháy nổ và bảo vệ môi trường 7"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": [
+          "công suất điện tối đa khoảng 210W"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:31.461Z"
+    },
+    {
+      "id": "evo-lite",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00009869-User%20manual%20EVO%20200%20LITE_Rev%2008-HDSD%20xe%20Evo200%20Lite.pdf",
+      "specTable": [],
+      "brochureContent": {
+        "tagline": "EVO Lite",
+        "slogan": "",
+        "overview": {
+          "title": "EVO Lite",
+          "subtitle": "",
+          "bullets": []
+        },
+        "performance": null,
+        "safety": null,
+        "highlights": []
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:56.252Z"
+    },
+    {
+      "id": "amio",
+      "type": "scooter",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/espcnf1bol00201-hs_bol_owner_manual_ver02.pdf",
+      "specTable": [
+        {
+          "label": "MCU Bộ điều khiển động cơ",
+          "value": "Mỗi pin Lithium-ion được tích hợp một hệ thống quản lý pin BMS để giám sát tình trạng hoạt động của"
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Loại động cơ Động cơ điện một chiều không chổi than"
+        },
+        {
+          "label": "Khoảng sáng gầm xe 123 mm",
+          "value": "Chiều cao yên 750 mm"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "XE MÁY ĐIỆN VINFAST AMIO — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO",
+        "slogan": "1.1. Thông điệp từ VinFast .............................................. 1",
+        "overview": {
+          "title": "XE MÁY ĐIỆN VINFAST AMIO — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO",
+          "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
+          "bullets": [
+            "công suất điện tối đa khoảng 210W"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Vẽ HƯỚNG DẪN SỬ DỤNG XE MÁY",
+            "desc": "ĐIỆN VINFAST AMIO HƯỚNG DẪN SỬ DỤNG VINFAST AMIO ESPCNF1BOL002/02 MỤC LỤC Mục lục.1 MỤC LỤC"
+          },
+          {
+            "title": "1",
+            "desc": "Giới thiệu .............................................................................1"
+          },
+          {
+            "title": "1.1",
+            "desc": "Thông điệp từ VinFast .............................................. 1"
+          },
+          {
+            "title": "1.2",
+            "desc": "Hướng dẫn sử dụng tài liệu ................................. 1"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "3.14",
+            "desc": "Cập nhật phần mềm (với xe được trang bị"
+          },
+          {
+            "icon": "voice",
+            "title": "tài sản khác",
+            "desc": "Viết tắt Giải nghĩa HMI Cụm đồng hồ đa chức năng MCU Bộ điều khiển động cơ SCU Bộ điều khiển tính năng thông minh SOC Dung lượng pin Lithium-ion còn lại BMS Hệ thống quản lý pin Lithium-ion Chế độ Parking Chế độ vô hiệu hóa tay ga THÔNG TIN AN TOÀN 2. THÔNG TIN AN TOÀN 2.1. Vị trí các nhãn mác quan trọng"
+          },
+          {
+            "icon": "voice",
+            "title": "Đọc và hiểu tất cả các nhãn mác trên xe",
+            "desc": "Những nhãn mác này chứa các thông tin quan trọng để bạn vận"
+          },
+          {
+            "icon": "voice",
+            "title": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạ",
+            "desc": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạn đồng thời sử dụng"
+          },
+          {
+            "icon": "voice",
+            "title": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoà",
+            "desc": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoàn toàn, vì chân"
+          },
+          {
+            "icon": "voice",
+            "title": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát.",
+            "desc": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát."
+          }
+        ],
+        "technologyLead": "Cập nhật phần mềm (với xe được trang bị",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Khởi động và vận hành............................................ 22",
+          "features": [
+            {
+              "title": "4",
+              "desc": "Khởi động và vận hành............................................ 22"
+            },
+            {
+              "title": "4.1",
+              "desc": "Thao tác cơ bản........................................................ 22"
+            },
+            {
+              "title": "4.2",
+              "desc": "Kiểm tra trước khi vận hành............................ 22"
+            },
+            {
+              "title": "4.3",
+              "desc": "Khóa/mở khóa hệ thống điện ........................ 23"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Thông tin an toàn .......................................................... 3",
+          "features": [
+            {
+              "title": "2",
+              "desc": "Thông tin an toàn .......................................................... 3"
+            },
+            {
+              "title": "2.1",
+              "desc": "Vị trí các nhãn mác quan trọng ........................ 3"
+            },
+            {
+              "title": "2.2",
+              "desc": "Thông tin an toàn ..................................................... 5"
+            },
+            {
+              "title": "2.2.1",
+              "desc": "An toàn cho người sử dụng ........................ 5"
+            },
+            {
+              "title": "2.2.2",
+              "desc": "An toàn cho xe ................................................... 6"
+            },
+            {
+              "title": "2.2.3",
+              "desc": "An toàn cháy nổ và bảo vệ môi trường 7"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": [
+          "công suất điện tối đa khoảng 210W"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:40:58.642Z"
+    },
+    {
+      "id": "viper",
+      "type": "scooter",
+      "error": "Cannot read properties of undefined (reading 'slice')",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/espcne9bol001-06-evo_max_vn_owner_manual_vie.pdf"
+    },
+    {
+      "id": "feliz-ii",
+      "type": "scooter",
+      "brochureUrl": "https://static-cms-prod.vinfastauto.com/feliz-s-2022.pdf",
+      "specTable": [
+        {
+          "label": "giảm xóc.",
+          "value": "4.7. Bánh xe và áp suất lốp"
+        },
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Loại động cơ Động cơ điện một chiều không chổi than"
+        },
+        {
+          "label": "Khoảng sáng gầm xe 135 mm",
+          "value": "Chiều cao yên 770 mm"
+        },
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "."
+        }
+      ],
+      "brochureContent": {
+        "tagline": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
+        "slogan": "1.1. Thông điệp từ VinFast .............................................. 1",
+        "overview": {
+          "title": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
+          "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
+          "bullets": [
+            "công suất điện tối đa khoảng 1000W"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "NHÃN HIỆU: VINFAST SỐ LOẠI: FELIZ S HƯỚNG DẪN SỬ DỤNG BOL00008955-07 MỤC LỤC Mục",
+            "desc": "NHÃN HIỆU: VINFAST SỐ LOẠI: FELIZ S HƯỚNG DẪN SỬ DỤNG BOL00008955-07 MỤC LỤC Mục lục.1 MỤC LỤC"
+          },
+          {
+            "title": "1",
+            "desc": "Giới thiệu ............................................................................ 1"
+          },
+          {
+            "title": "1.1",
+            "desc": "Thông điệp từ VinFast .............................................. 1"
+          },
+          {
+            "title": "1.2",
+            "desc": "Hướng dẫn sử dụng tài liệu .................................. 1"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "3.15",
+            "desc": "Cập nhật phần mềm .......................................... 22"
+          },
+          {
+            "icon": "voice",
+            "title": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạ",
+            "desc": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạn đồng thời sử dụng"
+          },
+          {
+            "icon": "voice",
+            "title": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoà",
+            "desc": "Không điều khiển xe khi chân chống cạnh chưa được gạt lên hoặc gạt lên không hoàn toàn, vì chân"
+          },
+          {
+            "icon": "voice",
+            "title": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát.",
+            "desc": "chống cạnh có thể chạm đất và dẫn đến xảy ra mất kiểm soát."
+          },
+          {
+            "icon": "voice",
+            "title": "Ứng dụng điện thoại hỗ trợ người dùng kết nối với xe và thực hiện các tác vụ nân",
+            "desc": "Ứng dụng điện thoại hỗ trợ người dùng kết nối với xe và thực hiện các tác vụ nâng cao."
+          },
+          {
+            "icon": "voice",
+            "title": "Ứng dụng điện thoại luôn sẵn sàng",
+            "desc": "trên App Store và Google Play Store, bạn có thể tải và cài đặt miễn phí"
+          }
+        ],
+        "technologyLead": "Cập nhật phần mềm .......................................... 22",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Khởi động và vận hành ............................................ 23",
+          "features": [
+            {
+              "title": "4",
+              "desc": "Khởi động và vận hành ............................................ 23"
+            },
+            {
+              "title": "4.1",
+              "desc": "Thao tác cơ bản ....................................................... 23"
+            },
+            {
+              "title": "4.2",
+              "desc": "Kiểm tra trước khi vận hành ........................... 23"
+            },
+            {
+              "title": "4.3",
+              "desc": "Khóa/mở khóa hệ thống điện ........................ 24"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Thông tin an toàn ......................................................... 3",
+          "features": [
+            {
+              "title": "2",
+              "desc": "Thông tin an toàn ......................................................... 3"
+            },
+            {
+              "title": "2.1",
+              "desc": "Vị trí các nhãn mác quan trọng ........................ 3"
+            },
+            {
+              "title": "2.2",
+              "desc": "Thông tin an toàn ..................................................... 5"
+            },
+            {
+              "title": "2.2.1",
+              "desc": "An toàn cho người sử dụng ......................... 5"
+            },
+            {
+              "title": "2.2.2",
+              "desc": "An toàn cho xe.................................................... 6"
+            },
+            {
+              "title": "2.2.3",
+              "desc": "An toàn cháy nổ và bảo vệ môi trường 7"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": [
+          "công suất điện tối đa khoảng 1000W"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:41:03.136Z"
+    },
+    {
+      "id": "evo",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/hdsd/BOL00009361-%20EVO%20200.pdf",
+      "specTable": [
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "Loại động cơ Động cơ điện một chiều không chổi than"
+        },
+        {
+          "label": "Khoảng sáng gầm xe 150 mm",
+          "value": "Chiều cao yên 750 mm"
+        },
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "."
+        }
+      ],
+      "brochureContent": {
+        "tagline": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
+        "slogan": "1.1. Thông điệp từ VinFast .............................................. 1",
+        "overview": {
+          "title": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
+          "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
+          "bullets": [
+            "công suất điện tối đa khoảng 400W"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "NHÃN HIỆU: VINFAST SỐ LOẠI: EVO 200 HƯỚNG DẪN SỬ DỤNG BOL00009361-07 MỤC LỤC Mục",
+            "desc": "NHÃN HIỆU: VINFAST SỐ LOẠI: EVO 200 HƯỚNG DẪN SỬ DỤNG BOL00009361-07 MỤC LỤC Mục lục.1 MỤC LỤC"
+          },
+          {
+            "title": "1",
+            "desc": "Giới thiệu ............................................................................ 1"
+          },
+          {
+            "title": "1.1",
+            "desc": "Thông điệp từ VinFast .............................................. 1"
+          },
+          {
+            "title": "1.2",
+            "desc": "Hướng dẫn sử dụng tài liệu .................................. 1"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "3.14",
+            "desc": "Cập nhật phần mềm ......................................... 22"
+          },
+          {
+            "icon": "voice",
+            "title": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạ",
+            "desc": "đổi làn đường, chắc chắn rằng những người điều khiển xe khác có thể nhìn thấy bạn đồng thời sử dụng"
+          },
+          {
+            "icon": "voice",
+            "title": "mạch bên trong và phát sinh sự cố cháy nổ",
+            "desc": "TÌM HIỂU CÁC TÍNH NĂNG CỦA XE 3. TÌM HIỂU CÁC TÍNH NĂNG CỦA XE 3.1. Góc nhìn phía trước A. Tay phanh phải B. Đèn xi-nhan trước phải C. Đèn pha D. Đèn xi-nhan trước trái E. Tay phanh trái C B A D E TÌM HIỂU CÁC TÍNH NĂNG CỦA XE 3.2. Góc nhìn từ vị trí người lái A. Gương chiếu hậu trái B. Cụm công tắc trái C. Cụm đồng hồ đa chức năng D. Cụm công tắc phải E. Gương chiếu hậu phải F. Tay ga G. Cụm ổ khóa H. Móc treo đồ C B A D E H G F TÌM HIỂU CÁC TÍNH NĂNG CỦA XE 10 3.3. Góc nhìn bên trái A. Đèn xi-"
+          },
+          {
+            "icon": "voice",
+            "title": "chiếu xa trên HMI tắt đi",
+            "desc": "B. Công tắc đèn xi-nhan Công tắc có thể lựa chọn giữa 3 vị trí: C B A D E F G TÌM HIỂU CÁC TÍNH NĂNG CỦA XE 16"
+          },
+          {
+            "icon": "voice",
+            "title": "Bật đèn xi-nhan trái Khi gạt công tắc sang trái, xe sẽ nhấp nháy đồng thời cả 3",
+            "desc": "Bật đèn xi-nhan trái Khi gạt công tắc sang trái, xe sẽ nhấp nháy đồng thời cả 3"
+          },
+          {
+            "icon": "voice",
+            "title": "đèn: Đèn xi-nhan trái trước, đèn xi-nhan sau trái và đèn chỉ",
+            "desc": "đèn: Đèn xi-nhan trái trước, đèn xi-nhan sau trái và đèn chỉ"
+          }
+        ],
+        "technologyLead": "Cập nhật phần mềm ......................................... 22",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Khởi động và vận hành ........................................... 23",
+          "features": [
+            {
+              "title": "4",
+              "desc": "Khởi động và vận hành ........................................... 23"
+            },
+            {
+              "title": "4.1",
+              "desc": "Thao tác cơ bản ....................................................... 23"
+            },
+            {
+              "title": "4.2",
+              "desc": "Kiểm tra trước khi vận hành ........................... 23"
+            },
+            {
+              "title": "4.3",
+              "desc": "Khóa/mở khóa hệ thống điện ........................ 24"
+            }
+          ]
+        },
+        "safety": {
+          "title": "AN TOÀN VƯỢT TRỘI",
+          "subtitle": "Thông tin an toàn......................................................... 3",
+          "features": [
+            {
+              "title": "2",
+              "desc": "Thông tin an toàn......................................................... 3"
+            },
+            {
+              "title": "2.1",
+              "desc": "Vị trí các nhãn mác quan trọng ........................ 3"
+            },
+            {
+              "title": "2.2",
+              "desc": "Thông tin an toàn ..................................................... 5"
+            },
+            {
+              "title": "2.2.1",
+              "desc": "An toàn cho người sử dụng ......................... 5"
+            },
+            {
+              "title": "2.2.2",
+              "desc": "An toàn cho xe.................................................... 6"
+            },
+            {
+              "title": "2.2.3",
+              "desc": "An toàn cháy nổ và bảo vệ môi trường 7"
+            }
+          ],
+          "highlights": []
+        },
+        "highlights": [
+          "công suất điện tối đa khoảng 400W"
+        ]
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:41:07.089Z"
+    },
+    {
+      "id": "zgoo",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/05022026/Brochure Flazz ZGoo.pdf",
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa 39km/h",
+          "value": "(không giới hạn km)"
+        },
+        {
+          "label": "Trọng lượng Xe và Pin",
+          "value": "10 x 3.0"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "1100"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "zgoo",
+        "slogan": "",
+        "overview": {
+          "title": "zgoo",
+          "subtitle": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ",
+          "bullets": [
+            "CÔNG SUẤT TỐI ĐA 1100 KW",
+            "Tốc độ tối đa 39km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An",
+            "desc": "toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ nét. FLazz sinh ra dành cho bạn! Mê di chuyển, thích vibe linh hoạt. ZGoo luôn là trợ thủ chuẩn bài! CHÍNH SÁCH GIÁ TỐT Giá niêm yết (bao gồm VAT, 1 pin, 1 sạc) Thêm pin phụ với +3.500.000 VNĐ Vi vu thoải mái hơn mỗi lần sạc 16.900.000 VNĐ CH"
+          },
+          {
+            "title": "Duy trì dung lượng trên 20% trong quá trình sử dụng.",
+            "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng."
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Không nên sạc khi nhiệt độ Pin cao hơn 45°C,",
+          "features": [
+            {
+              "title": "Cắm sạc khi dung lượng Pin thấp hơn 20%",
+              "desc": "Không nên sạc khi nhiệt độ Pin cao hơn 45°C,"
+            },
+            {
+              "title": "hệ thống sẽ không nhận sạc khi Pin nóng ở nhiệt độ 50°C.",
+              "desc": "hệ thống sẽ không nhận sạc khi Pin nóng ở nhiệt độ 50°C."
+            },
+            {
+              "title": "Thời gian sạc đầy tối ưu: Khoảng 6h30",
+              "desc": "phút từ 0 - 100% PIN LFP VƯỢT TRỘI, TỐI ƯU HIỆU SUẤT Ổn định và an toàn hơn, chống cháy nổ. *Thông số theo điều kiện tiêu chuẩn của VinFast, khi gắn thêm pin phụ. Một lần sạc đầy cho hành trình vi vu trọn 70 km. Thêm pin"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "CÔNG SUẤT TỐI ĐA 1100 KW",
+          "Tốc độ tối đa 39km/h"
+        ]
+      },
+      "fields": {
+        "motorPower": 1100
+      },
+      "fetchedAt": "2026-06-26T10:41:39.450Z"
+    },
+    {
+      "id": "flazz",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/05022026/Brochure Flazz ZGoo.pdf",
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa 39km/h",
+          "value": "(không giới hạn km)"
+        },
+        {
+          "label": "Trọng lượng Xe và Pin",
+          "value": "10 x 3.0"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "1100"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "Flazz",
+        "slogan": "",
+        "overview": {
+          "title": "Flazz",
+          "subtitle": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ",
+          "bullets": [
+            "CÔNG SUẤT TỐI ĐA 1100 KW",
+            "Tốc độ tối đa 39km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An",
+            "desc": "toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ nét. FLazz sinh ra dành cho bạn! Mê di chuyển, thích vibe linh hoạt. ZGoo luôn là trợ thủ chuẩn bài! CHÍNH SÁCH GIÁ TỐT Giá niêm yết (bao gồm VAT, 1 pin, 1 sạc) Thêm pin phụ với +3.500.000 VNĐ Vi vu thoải mái hơn mỗi lần sạc 16.900.000 VNĐ CH"
+          },
+          {
+            "title": "Duy trì dung lượng trên 20% trong quá trình sử dụng.",
+            "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng."
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Không nên sạc khi nhiệt độ Pin cao hơn 45°C,",
+          "features": [
+            {
+              "title": "Cắm sạc khi dung lượng Pin thấp hơn 20%",
+              "desc": "Không nên sạc khi nhiệt độ Pin cao hơn 45°C,"
+            },
+            {
+              "title": "hệ thống sẽ không nhận sạc khi Pin nóng ở nhiệt độ 50°C.",
+              "desc": "hệ thống sẽ không nhận sạc khi Pin nóng ở nhiệt độ 50°C."
+            },
+            {
+              "title": "Thời gian sạc đầy tối ưu: Khoảng 6h30",
+              "desc": "phút từ 0 - 100% PIN LFP VƯỢT TRỘI, TỐI ƯU HIỆU SUẤT Ổn định và an toàn hơn, chống cháy nổ. *Thông số theo điều kiện tiêu chuẩn của VinFast, khi gắn thêm pin phụ. Một lần sạc đầy cho hành trình vi vu trọn 70 km. Thêm pin"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "CÔNG SUẤT TỐI ĐA 1100 KW",
+          "Tốc độ tối đa 39km/h"
+        ]
+      },
+      "fields": {
+        "motorPower": 1100
+      },
+      "fetchedAt": "2026-06-26T10:42:06.798Z"
+    },
+    {
+      "id": "vero-x",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/120226_VinFast_VEROX_Brochure.pdf",
+      "specTable": [
+        {
+          "label": "ĐỘNG CƠ",
+          "value": "92 kg (110 kg khi lắp Pin phụ)"
+        },
+        {
+          "label": "Màn hình",
+          "value": "70 km/ h"
+        },
+        {
+          "label": "Công suất danh định",
+          "value": "Có"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "10 km/h"
+        },
+        {
+          "label": "Loại động cơ",
+          "value": "Có"
+        },
+        {
+          "label": "Loại Pin",
+          "value": "Có"
+        },
+        {
+          "label": "Dung lượng Pin",
+          "value": "Có"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc",
+          "value": "(Điều kiệu tiêu chuẩn 30 km/h, 1 người nặng 65 kg)"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "262"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "(*) Theo điều kiện tiêu chuẩn của VinFast",
+        "slogan": "(*) Theo điều kiện tiêu chuẩn của VinFast",
+        "overview": {
+          "title": "(*) Theo điều kiện tiêu chuẩn của VinFast",
+          "subtitle": "(*) Theo điều kiện tiêu chuẩn của VinFast",
+          "bullets": [
+            "Quãng đường di chuyển tới 262 km",
+            "Tốc độ tối đa đến 70 km/h"
+          ]
+        },
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "BẢO HÀNH HỆ THỐNG TRẠM SẠC & ĐẠI",
+            "desc": "LÝ PHÂN PHỐI XE 6 NĂM PIN 8 NĂM (KHÔNG GIỚI HẠN KM) (KHÔNG GIỚI HẠN KM) Hệ thống 100,000 cổng sạc trên toàn quốc Đã có trên 600 đại lý phân phối. *tính đến tháng 10/2025 HOTLINE: LÁI THÔNG MINH (*) Theo điều kiện tiêu chuẩn của VinFast Smart key một chạm thay thế khoá cơ truyền thống, dễ dàng bật, tắt Chức năng định vị theo âm thanh chuẩn xác giúp tìm xe nhanh chóng ở những bãi đỗ rộng và đông đúc. Màn hình TFT sắc nét với độ phân giải và tương phản cao, hiển thị thông số sống động."
+          },
+          {
+            "icon": "voice",
+            "title": "Quãng đường di chuyển tới 262 km/lần sạc",
+            "desc": "(*) Tốc độ tối đa đến 70 km/h LÁI ẤN TƯỢNG X2 Giá niêm yết: 34,900,000 VNĐ (Đã bao gồm VAT, 01 Pin và 01 bộ sạc) LÁI ƯU VIỆT Công nghệ Pin LFP tăng công suất động cơ, giúp xe vận hành mạnh mẽ, tiết kiệm, an toàn và ổn định. Hướng dẫn bảo quản thông minh:"
+          },
+          {
+            "icon": "voice",
+            "title": "Duy trì dung lượng trên 20% trong quá trình sử dụng.",
+            "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng."
+          }
+        ],
+        "technologyLead": "LÝ PHÂN PHỐI XE 6 NĂM PIN 8 NĂM (KHÔNG GIỚI HẠN KM) (KHÔNG GIỚI HẠN KM) Hệ thống 100,000 cổng sạc trên toàn quốc Đã có trên 600 đại lý phân phối. *tính đến tháng 10/2025 HOTLINE: LÁI THÔNG MINH (*) Theo điều kiện tiêu ch",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Hệ thống Pin kép được nâng cấp linh hoạt, vượt trội trong",
+          "features": [
+            {
+              "title": "Hệ thống Pin kép được nâng cấp linh hoạt, vượt trội trong",
+              "desc": "Hệ thống Pin kép được nâng cấp linh hoạt, vượt trội trong"
+            },
+            {
+              "title": "mọi hành trình gồm 1 Pin dưới sàn xe & 1 Pin tháo rời đặt trong cốp.",
+              "desc": "mọi hành trình gồm 1 Pin dưới sàn xe & 1 Pin tháo rời đặt trong cốp."
+            },
+            {
+              "title": "khi nhiệt độ Pin cao hơn 45°C, hệ thống sẽ không nhận sạc",
+              "desc": "khi nhiệt độ Pin cao hơn 45°C, hệ thống sẽ không nhận sạc"
+            },
+            {
+              "title": "khi Pin nóng ở nhiệt độ 55±5°C",
+              "desc": "(*) Thời gian sạc đầy tối ưu: Khoảng 6h30 phút từ 0 - 100%. TIÊU CHUẨN IP67 CHỐNG NƯỚC động cơ vượt trội ở mức nước ngập sâu 0,5 m trong 30 Phút. LÁI THƯ THÁI Thể tích cốp 35L thoáng rộng, tối ưu sức chứa các vật dụng cầ"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "Quãng đường di chuyển tới 262 km",
+          "Tốc độ tối đa đến 70 km/h"
+        ]
+      },
+      "fields": {
+        "range": 30
+      },
+      "fetchedAt": "2026-06-26T10:42:07.967Z"
+    },
+    {
+      "id": "feliz-2025",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/05022026/030226_Vinfast_Feliz_Brochure_FA.pdf",
+      "specTable": [
+        {
+          "label": "Kích thước lốp Trước - Sau",
+          "value": "Thể tích cốp rộng 34 L, linh hoạt tối ưu sức chứa các vật dụng"
+        },
+        {
+          "label": "Trọng lượng Xe và Pin",
+          "value": "ngọc trai (chỉ có trên bản"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "262"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "Feliz 2025",
+        "slogan": "Hệ thống Pin kép tiên tiến, gồm 1 Pin cố định dưới sàn xe và",
+        "overview": {
+          "title": "Feliz 2025",
+          "subtitle": "Hệ thống Pin kép tiên tiến, gồm 1 Pin cố định dưới sàn xe và",
+          "bullets": [
+            "Quãng đường di chuyển ấn tượng đạt tới 262 km",
+            "công suất tối đa đến 2800 W",
+            "Tốc độ tối đa 70 km/h",
+            "Tốc độ tối đa 48 km/h"
+          ]
+        },
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Đã có trên 600 đại lý phân phối. * Tính đến tháng 10/2025 THÊM PHIÊN BẢN KHÔNG YÊU CẦU BẰNG LÁI Trang bị vượt trội CHÍNH SÁCH GIÁ TỐT VẬN HÀNH BỀN BỈ Động cơ được trang bị toàn diện, tăng công suất tối đa đến 2800 W Feli",
+          "features": [
+            {
+              "title": "HOTLINE HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc",
+              "desc": "Đã có trên 600 đại lý phân phối. * Tính đến tháng 10/2025 THÊM PHIÊN BẢN KHÔNG YÊU CẦU BẰNG LÁI Trang bị vượt trội CHÍNH SÁCH GIÁ TỐT VẬN HÀNH BỀN BỈ Động cơ được trang bị toàn diện, tăng công suất tối đa đến 2800 W Feli"
+            },
+            {
+              "title": "Hệ thống Pin kép tiên tiến, gồm 1 Pin cố định dưới sàn xe và",
+              "desc": "Hệ thống Pin kép tiên tiến, gồm 1 Pin cố định dưới sàn xe và"
+            },
+            {
+              "title": "1 Pin tháo rời đặt trong cốp, tăng gấp đôi hiệu suất",
+              "desc": "1 Pin tháo rời đặt trong cốp, tăng gấp đôi hiệu suất"
+            },
+            {
+              "title": "Quãng đường di chuyển ấn tượng đạt tới 262 km/lần sạc(*),",
+              "desc": "Quãng đường di chuyển ấn tượng đạt tới 262 km/lần sạc(*),"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "Quãng đường di chuyển ấn tượng đạt tới 262 km",
+          "công suất tối đa đến 2800 W",
+          "Tốc độ tối đa 70 km/h",
+          "Tốc độ tối đa 48 km/h"
+        ]
+      },
+      "fields": {
+        "range": 262
+      },
+      "fetchedAt": "2026-06-26T10:42:28.078Z"
+    },
+    {
+      "id": "evo-grand",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/05022026/030226_Vinfast_EvoGrand_Brochure.pdf",
+      "specTable": [
+        {
+          "label": "(có thể lắp thêm pin phụ 2,4 kWh)",
+          "value": "(có thể lắp thêm pin phụ 2,4 kWh)"
+        },
+        {
+          "label": "(+18 kg nếu lắp thêm pin phụ)",
+          "value": "(+18kg nếu lắp thêm pin phụ)"
+        },
+        {
+          "label": "pin phụ đặt ở cốp",
+          "value": "pin phụ đặt ở cốp"
+        },
+        {
+          "label": "giảm xóc đôi, giảm chấn thủy lực",
+          "value": "giảm xóc đôi, giảm chấn thủy lực"
+        },
+        {
+          "label": "Kích thước lốp Trước - Sau 12 inch",
+          "value": "12 inch"
+        },
+        {
+          "label": "(100kg khi lắp thêm pin phụ)",
+          "value": "(110kg khi lắp thêm pin phụ)"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "1"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "VINFAST SỬ DỤNG PIN LFP",
+        "slogan": "Với trang bị tiên tiến đáp ứng linh hoạt mọi nhu cầu, EVO GRAND sẽ định hình",
+        "overview": {
+          "title": "VINFAST SỬ DỤNG PIN LFP",
+          "subtitle": "Với trang bị tiên tiến đáp ứng linh hoạt mọi nhu cầu, EVO GRAND sẽ định hình",
+          "bullets": [
+            "QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC 262 KM",
+            "QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC 198 KM",
+            "Quãng đường đi được Khoảng 70 km",
+            "Quãng đường đi được Khoảng 50 km",
+            "CÔNG SUẤT TỐI ĐA 2250W"
+          ]
+        },
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "ĐIỆN VINFAST SỬ DỤNG PIN LFP NĂM CHO XE 8NĂM CHO PIN (KHÔNG GIỚI HẠN KM) (KHÔNG GIỚI HẠN KM) Hệ thống trạm sạc & đại lý phân phối Hệ thống 100.000 cổng sạc trên toàn quốc Đã có trên 600 đại lý phân phối MÓI VÂN HÀNH BÊN ",
+          "features": [
+            {
+              "title": "BẢO HÀNH ĐỐI VỚI CÁC DÒNG XE MÁY",
+              "desc": "ĐIỆN VINFAST SỬ DỤNG PIN LFP NĂM CHO XE 8NĂM CHO PIN (KHÔNG GIỚI HẠN KM) (KHÔNG GIỚI HẠN KM) Hệ thống trạm sạc & đại lý phân phối Hệ thống 100.000 cổng sạc trên toàn quốc Đã có trên 600 đại lý phân phối MÓI VÂN HÀNH BÊN "
+            },
+            {
+              "title": "Với trang bị tiên tiến đáp ứng linh hoạt mọi nhu cầu, EVO GRAND sẽ định hình",
+              "desc": "Với trang bị tiên tiến đáp ứng linh hoạt mọi nhu cầu, EVO GRAND sẽ định hình"
+            },
+            {
+              "title": "chuẩn mực mới cho lối sống hiện đại, tiến bước vững chắc trên hành trình sống xa",
+              "desc": "chuẩn mực mới cho lối sống hiện đại, tiến bước vững chắc trên hành trình sống xanh."
+            },
+            {
+              "title": "EVO GRAND QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC",
+              "desc": "262 KM* VẬN TỐC TỐI ĐA 70 KM/H CÔNG SUẤT TỐI ĐA 2250W Vận hành bền bỉ Chinh phục mọi hành trình EVO GRAND LITE QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC 198 KM* VẬN TỐC TỐI ĐA 48 KM/H CÔNG SUẤT TỐI ĐA 1900W * Thông số khi lắp thêm pi"
+            }
+          ]
+        },
+        "safety": null,
+        "highlights": [
+          "QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC 262 KM",
+          "QUÃNG ĐƯỜNG TỐI ĐA/1 LẦN SẠC 198 KM",
+          "Quãng đường đi được Khoảng 70 km",
+          "Quãng đường đi được Khoảng 50 km",
+          "CÔNG SUẤT TỐI ĐA 2250W"
+        ]
+      },
+      "fields": {
+        "range": 1
+      },
+      "fetchedAt": "2026-06-26T10:42:44.986Z"
+    },
+    {
+      "id": "evo-grand-lite",
+      "type": "scooter",
+      "error": "PDF has no extractable text (image-only brochure)",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/10012026/Brochure%20EvoGrand.pdf"
+    },
+    {
+      "id": "drgnfly",
+      "type": "scooter",
+      "brochureUrl": "https://storage.googleapis.com/vinfast-data-01/brochure/240726_VIE_TSKT_VF_DrgnFly_VN.pdf",
+      "specTable": [
+        {
+          "label": "Phanh trước/sau",
+          "value": "Phanh đĩa thủy lực"
+        },
+        {
+          "label": "Màn hình",
+          "value": "CÓ"
+        },
+        {
+          "label": "Động cơ",
+          "value": "795 mm"
+        },
+        {
+          "label": "Chiều cao đến yên xe – Tối da",
+          "value": "32 kg"
+        },
+        {
+          "label": "Loại vành bánh xe",
+          "value": "3,2 kg"
+        },
+        {
+          "label": "Trọng lượng xe bao gồm Pin",
+          "value": "130 kg"
+        },
+        {
+          "label": "Trọng lượng Pin",
+          "value": "Thép"
+        },
+        {
+          "label": "Điều chỉnh chế độ trợ lực",
+          "value": "1.730 x 720 x 1.056 mm"
+        },
+        {
+          "label": "Phanh trước/sau Phanh đĩa thủy lực",
+          "value": "CÓ"
+        }
+      ],
+      "brochureContent": {
+        "tagline": "DrgnFly",
+        "slogan": "",
+        "overview": {
+          "title": "DrgnFly",
+          "subtitle": "",
+          "bullets": []
+        },
+        "performance": null,
+        "safety": null,
+        "highlights": []
+      },
+      "fields": {},
+      "fetchedAt": "2026-06-26T10:42:48.366Z"
+    }
+  ],
+  "syncedAt": "2026-06-26T10:39:36.038Z"
+}

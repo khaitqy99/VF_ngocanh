@@ -1,31 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, Check, ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Check } from "lucide-react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
-import {
-  CatalogGrid,
-  CatalogGridItem,
-  FadeIn,
-  RevealImage,
-  StaggerGrid,
-  StaggerItem,
-} from "@/components/motion";
+import { CatalogGrid, CatalogGridItem, FadeIn, StaggerItem } from "@/components/motion";
+import { MotionButton } from "@/components/motion/MotionButton";
 import { ACCESSORIES } from "@/lib/accessories";
-import { HERO_BANNERS, IMAGES } from "@/lib/images";
-import { springSnappy } from "@/lib/motion";
+import { IMAGES } from "@/lib/images";
+import {
+  homeBrandClip,
+  homeBrandLine,
+  homeNewsletterBlock,
+  homeNewsletterChild,
+  homeSectionRule,
+  homeSectionTitle,
+  homeViewport,
+} from "@/lib/home-motion";
 import { FeatureCarouselSection, FeatureSpec } from "@/components/shared/FeatureCarouselSection";
 import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
 import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 import { VINFAST_FEATURED_CARS, VINFAST_FEATURED_SCOOTERS } from "@/lib/vinfast-home";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { Toaster } from "sonner";
+
+import { HomeHero } from "./HomeHero";
+import { HomeOverlayCard } from "./HomeOverlayCard";
 
 const featureCopy = "relative z-10 w-full min-w-0";
 const warrantyTitle =
@@ -65,7 +70,7 @@ export default function HomePage() {
       <Header />
       <main>
         <h1 className="sr-only">VF Ngọc Anh — Đại lý ủy quyền chính thức VinFast Cà Mau</h1>
-        <Hero />
+        <HomeHero />
         <FeaturedVehicle onDeposit={(slide) => openDepositModal(slide, "car")} />
         <ScooterSection onDeposit={(slide) => openDepositModal(slide, "scooter")} />
         <Accessories />
@@ -86,85 +91,6 @@ export default function HomePage() {
         serviceOptions={bookingKind === "scooter" ? SCOOTER_BOOKING_SERVICES : undefined}
       />
     </div>
-  );
-}
-
-const carouselNavBtn =
-  "flex items-center justify-center rounded-full border border-slate-200/80 bg-white/70 text-slate-500 shadow-sm transition hover:border-brand/30 hover:bg-white hover:text-brand active:scale-95";
-const carouselNavBtnSize = `${carouselNavBtn} h-8 w-8 md:h-9 md:w-9`;
-
-function Hero() {
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % HERO_BANNERS.length), 5500);
-    return () => clearInterval(t);
-  }, []);
-
-  return (
-    <section className="relative w-full overflow-hidden bg-white">
-      <div className="relative w-full aspect-[5/8] lg:aspect-video">
-        {HERO_BANNERS.map((slide, i) => (
-          <div
-            key={slide.desktop}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              i === idx ? "z-[1] opacity-100" : "pointer-events-none opacity-0"
-            }`}
-            aria-hidden={i !== idx}
-          >
-            <Image
-              src={slide.mobile}
-              alt={slide.alt}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="object-cover lg:hidden"
-            />
-            <Image
-              src={slide.desktop}
-              alt={slide.alt}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="hidden object-cover lg:block"
-            />
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => setIdx((i) => (i - 1 + HERO_BANNERS.length) % HERO_BANNERS.length)}
-          className={`absolute top-1/2 left-3 z-10 -translate-y-1/2 md:left-5 ${carouselNavBtnSize}`}
-          aria-label="Previous"
-        >
-          <ChevronLeft size={18} strokeWidth={1.75} />
-        </button>
-        <button
-          type="button"
-          onClick={() => setIdx((i) => (i + 1) % HERO_BANNERS.length)}
-          className={`absolute top-1/2 right-3 z-10 -translate-y-1/2 md:right-5 ${carouselNavBtnSize}`}
-          aria-label="Next"
-        >
-          <ChevronRight size={18} strokeWidth={1.75} />
-        </button>
-        <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 md:bottom-4">
-          {HERO_BANNERS.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIdx(i)}
-              className="p-1"
-              aria-label={`Slide ${i + 1}`}
-            >
-              <span
-                className={`block h-1.5 rounded-full transition-all duration-300 ${
-                  i === idx ? "w-6 bg-brand" : "w-1.5 bg-slate-300"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -202,12 +128,34 @@ const HOME_FEATURED_ACCESSORIES = HOME_FEATURED_ACCESSORY_IDS.map(
 ).filter(Boolean);
 
 function SectionHeader({ title, viewAllHref }: { title: string; viewAllHref?: string }) {
+  const reduced = useReducedMotion();
+
   return (
-    <FadeIn
-      blur
+    <motion.div
+      initial={reduced ? false : "hidden"}
+      whileInView={reduced ? undefined : "visible"}
+      viewport={homeViewport}
+      variants={
+        reduced
+          ? undefined
+          : {
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.12, delayChildren: 0.04 } },
+            }
+      }
       className="relative mb-8 flex flex-col items-center gap-3 sm:mb-10 lg:min-h-10 lg:justify-center"
     >
-      <h2 className={`${sectionHeading} w-full px-2 sm:px-4 lg:px-20 xl:px-24`}>{title}</h2>
+      <motion.h2
+        variants={reduced ? undefined : homeSectionTitle}
+        className={`${sectionHeading} w-full px-2 sm:px-4 lg:px-20 xl:px-24`}
+      >
+        {title}
+      </motion.h2>
+      <motion.span
+        variants={reduced ? undefined : homeSectionRule}
+        className="h-0.5 w-12 origin-center rounded-full bg-brand"
+        aria-hidden
+      />
       {viewAllHref ? (
         <Link
           href={viewAllHref}
@@ -223,7 +171,7 @@ function SectionHeader({ title, viewAllHref }: { title: string; viewAllHref?: st
           Xem tất cả
         </a>
       )}
-    </FadeIn>
+    </motion.div>
   );
 }
 
@@ -234,7 +182,7 @@ function Accessories() {
         <SectionHeader title="PHỤ KIỆN CHÍNH HÃNG" viewAllHref="/phu-kien" />
         <CatalogGrid className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
           {HOME_FEATURED_ACCESSORIES.map((product, index) => (
-            <CatalogGridItem key={product.id} index={index}>
+            <CatalogGridItem key={product.id} index={index} inView>
               <AccessoryProductCard product={product} />
             </CatalogGridItem>
           ))}
@@ -254,7 +202,7 @@ const CHARGING_TILES = [
     desc: CHARGING_DESC,
     href: "/pin-va-tram-sac",
     aspect: "aspect-[21/9] sm:aspect-[2.2/1]",
-    theme: "dark",
+    theme: "dark" as const,
   },
   {
     img: IMAGES.chargingScooter,
@@ -262,7 +210,7 @@ const CHARGING_TILES = [
     desc: CHARGING_DESC,
     href: "/pin-va-tram-sac",
     aspect: "aspect-[21/9] sm:aspect-[2.2/1]",
-    theme: "dark",
+    theme: "dark" as const,
   },
   {
     img: IMAGES.portableCharger,
@@ -270,9 +218,9 @@ const CHARGING_TILES = [
     desc: "VinFast cung cấp đa dạng giải pháp sạc để đáp ứng nhu cầu sử dụng của khách hàng một cách thuận tiện nhất.",
     href: "/pin-va-tram-sac#san-pham-sac",
     aspect: "min-h-[320px] h-full sm:min-h-[360px] lg:min-h-full",
-    theme: "light",
+    theme: "light" as const,
   },
-] as const;
+];
 
 const chargingOverlayDark =
   "absolute inset-x-0 bottom-0 w-full translate-y-[65%] bg-[linear-gradient(359deg,#000_0.54%,rgba(0,0,0,0)_98.5%)] p-[30px] text-white transition-transform duration-500 ease-in-out group-hover:translate-y-0";
@@ -280,47 +228,32 @@ const chargingOverlayDark =
 const chargingOverlayLight =
   "absolute inset-x-0 bottom-0 w-full translate-y-[65%] bg-[linear-gradient(359deg,#f7f9f9_0.54%,rgba(247,249,249,0)_98.5%)] p-[30px] text-[#3c3c3c] transition-transform duration-500 ease-in-out group-hover:translate-y-0";
 
-function ChargingCard({
-  img,
-  title,
-  desc,
-  href,
-  aspect,
-  theme = "dark",
-}: (typeof CHARGING_TILES)[number]) {
-  const overlay = theme === "light" ? chargingOverlayLight : chargingOverlayDark;
-  const fillHeight = aspect.includes("min-h");
+function ChargingCard({ item, index }: { item: (typeof CHARGING_TILES)[number]; index: number }) {
+  const overlay = item.theme === "light" ? chargingOverlayLight : chargingOverlayDark;
+  const fillHeight = item.aspect.includes("min-h");
 
   return (
-    <motion.a
-      href={href}
-      whileHover={{ y: -5, scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      transition={springSnappy}
-      className={`group relative block overflow-hidden rounded-xl shadow-soft transition hover:shadow-card ${
-        fillHeight ? "h-full" : ""
-      }`}
-    >
-      <div className={`relative w-full overflow-hidden bg-[#e8ecf2] ${aspect}`}>
-        <img
-          src={img}
-          alt={title}
-          className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        <div className={overlay}>
-          <h3 className="text-base font-bold md:text-lg">{title}</h3>
-          <p className="pt-4 text-xs leading-relaxed opacity-90 sm:text-sm">{desc}</p>
-          <span
-            className={`mt-0 block pt-4 text-xs font-bold uppercase tracking-[0.075em] ${
-              theme === "light" ? "text-brand" : ""
-            }`}
-          >
-            Xem chi tiết
-          </span>
-        </div>
-      </div>
-    </motion.a>
+    <StaggerItem variant="home" index={index}>
+      <HomeOverlayCard
+        href={item.href}
+        title={item.title}
+        image={item.img}
+        imageAlt={item.title}
+        overlayClass={overlay}
+        aspectClass={item.aspect}
+        fillHeight={fillHeight}
+      >
+        <h3 className="text-base font-bold md:text-lg">{item.title}</h3>
+        <p className="pt-4 text-xs leading-relaxed opacity-90 sm:text-sm">{item.desc}</p>
+        <span
+          className={`mt-0 block pt-4 text-xs font-bold uppercase tracking-[0.075em] ${
+            item.theme === "light" ? "text-brand" : ""
+          }`}
+        >
+          Xem chi tiết
+        </span>
+      </HomeOverlayCard>
+    </StaggerItem>
   );
 }
 
@@ -333,20 +266,13 @@ function ChargingEcosystem() {
         <SectionHeader title="PIN & TRẠM SẠC" />
 
         <div className="grid gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-5">
-          <StaggerGrid className="flex flex-col gap-4 lg:gap-5">
-            {leftTiles.map((item) => (
-              <StaggerItem key={item.title}>
-                <ChargingCard {...item} />
-              </StaggerItem>
+          <div className="flex flex-col gap-4 lg:gap-5">
+            {leftTiles.map((item, index) => (
+              <ChargingCard key={item.title} item={item} index={index} />
             ))}
-          </StaggerGrid>
+          </div>
 
-          <FadeIn
-            direction="right"
-            className="relative min-h-[320px] sm:min-h-[360px] lg:min-h-0 lg:h-full"
-          >
-            <ChargingCard {...portableTile} />
-          </FadeIn>
+          <ChargingCard item={portableTile} index={2} />
         </div>
       </div>
     </section>
@@ -358,7 +284,10 @@ function WarrantyService() {
     <section id="block-service" className="relative w-full overflow-hidden bg-white">
       <div className="relative w-full bg-gradient-to-br from-[#f4f6fa] via-[#f8f9fc] to-white">
         <div className="relative z-10">
-          <div className="relative aspect-[2544/1065] w-full overflow-hidden bg-[#f4f6fa] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-1/2">
+          <FadeIn
+            direction="right"
+            className="relative aspect-[2544/1065] w-full overflow-hidden bg-[#f4f6fa] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-1/2"
+          >
             <img
               src={IMAGES.warrantyService}
               alt="Bảo hành và dịch vụ VinFast"
@@ -373,14 +302,14 @@ function WarrantyService() {
               aria-hidden
               className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-28 bg-gradient-to-l from-transparent via-[#f8f9fc]/70 to-[#f8f9fc] lg:block lg:w-40 xl:w-52"
             />
-          </div>
+          </FadeIn>
 
           <div className={warrantyPanel}>
             <div
               aria-hidden
               className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-16 bg-gradient-to-r from-transparent to-[#f8f9fc]/80 lg:block lg:w-24 xl:w-32"
             />
-            <FadeIn direction="left" className={`${featureCopy} lg:overflow-hidden`}>
+            <FadeIn direction="left" blur className={`${featureCopy} lg:overflow-hidden`}>
               <h2 className={warrantyTitle}>Bảo hành & Dịch vụ</h2>
               <p className={warrantySubtitle}>
                 VinFast đã đầu tư nghiêm túc và bài bản để phát triển hệ thống Showroom, Nhà phân
@@ -418,11 +347,25 @@ function WarrantyService() {
   );
 }
 
+const BRAND_POINTS = [
+  "Công nghệ đẳng cấp thế giới",
+  "Sản xuất tại Việt Nam - Chuỗi giá trị nội địa",
+  "Vì tương lai xanh - Bền vững",
+];
+
 function BrandStory() {
+  const reduced = useReducedMotion();
+
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-24">
       <div className="container-vf">
-        <RevealImage className="relative min-h-[480px] rounded-xl shadow-card sm:min-h-[500px] lg:h-[560px]">
+        <motion.div
+          initial={reduced ? false : "hidden"}
+          whileInView={reduced ? undefined : "visible"}
+          viewport={homeViewport}
+          variants={reduced ? undefined : homeBrandClip}
+          className="relative min-h-[480px] overflow-hidden rounded-xl shadow-card sm:min-h-[500px] lg:h-[560px]"
+        >
           <img
             src={IMAGES.brandStory}
             alt="VinFast - Vì một Việt Nam mạnh mẽ"
@@ -432,28 +375,57 @@ function BrandStory() {
           <div className="absolute inset-0 bg-[linear-gradient(270deg,rgba(22,22,0,0.8)_8.43%,rgba(22,22,0,0)_100%)]" />
           <div className="absolute inset-0 flex items-center px-5 py-8 sm:px-8 sm:py-10 lg:px-14 lg:py-12">
             <div className="ml-auto max-w-xl text-white lg:max-w-md xl:max-w-lg">
-              <h3 className="text-lg font-bold md:text-xl">VinFast - Vì một Việt Nam mạnh mẽ</h3>
-              <p className="mt-2 text-sm opacity-90 md:mt-2.5">Tự hào thương hiệu Việt</p>
+              <motion.h3
+                custom={0}
+                initial={reduced ? false : "hidden"}
+                whileInView={reduced ? undefined : "visible"}
+                viewport={homeViewport}
+                variants={reduced ? undefined : homeBrandLine}
+                className="text-lg font-bold md:text-xl"
+              >
+                VinFast - Vì một Việt Nam mạnh mẽ
+              </motion.h3>
+              <motion.p
+                custom={1}
+                initial={reduced ? false : "hidden"}
+                whileInView={reduced ? undefined : "visible"}
+                viewport={homeViewport}
+                variants={reduced ? undefined : homeBrandLine}
+                className="mt-2 text-sm opacity-90 md:mt-2.5"
+              >
+                Tự hào thương hiệu Việt
+              </motion.p>
               <ul className="mt-5 space-y-3 text-sm md:mt-6 md:space-y-3.5">
-                {[
-                  "Công nghệ đẳng cấp thế giới",
-                  "Sản xuất tại Việt Nam - Chuỗi giá trị nội địa",
-                  "Vì tương lai xanh - Bền vững",
-                ].map((t) => (
-                  <li key={t} className="flex items-start gap-2.5">
+                {BRAND_POINTS.map((t, i) => (
+                  <motion.li
+                    key={t}
+                    custom={i + 2}
+                    initial={reduced ? false : "hidden"}
+                    whileInView={reduced ? undefined : "visible"}
+                    viewport={homeViewport}
+                    variants={reduced ? undefined : homeBrandLine}
+                    className="flex items-start gap-2.5"
+                  >
                     <Check size={16} className="mt-0.5 shrink-0 text-[#FFD500]" />
                     <span>{t}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-              <div className="mt-6 flex justify-center md:mt-8">
-                <button className="rounded-md bg-brand px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#0046cc]">
+              <motion.div
+                custom={5}
+                initial={reduced ? false : "hidden"}
+                whileInView={reduced ? undefined : "visible"}
+                viewport={homeViewport}
+                variants={reduced ? undefined : homeBrandLine}
+                className="mt-6 flex justify-center md:mt-8"
+              >
+                <MotionButton className="rounded-md bg-brand px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#0046cc]">
                   TÌM HIỂU THÊM
-                </button>
-              </div>
+                </MotionButton>
+              </motion.div>
             </div>
           </div>
-        </RevealImage>
+        </motion.div>
       </div>
     </section>
   );
@@ -483,46 +455,39 @@ function ShowroomCommunity() {
 
   return (
     <section className="bg-white pb-12 sm:pb-16 lg:pb-20">
-      <StaggerGrid className="container-vf grid gap-4 sm:grid-cols-2 sm:gap-5">
-        {cards.map((card) => (
-          <StaggerItem key={card.title}>
-            <motion.a
+      <div className="container-vf grid gap-4 sm:grid-cols-2 sm:gap-5">
+        {cards.map((card, index) => (
+          <StaggerItem key={card.title} variant="home" index={index}>
+            <HomeOverlayCard
               href={card.href}
-              {...(card.external
-                ? {
-                    target: "_blank",
-                    rel:
-                      "nofollow" in card && card.nofollow
-                        ? "nofollow noopener noreferrer"
-                        : "noopener noreferrer",
-                  }
-                : {})}
-              whileHover={{ y: -5, scale: 1.01 }}
-              transition={springSnappy}
-              className="group relative block h-[280px] overflow-hidden rounded-xl shadow-soft sm:h-[320px] md:h-[354px]"
+              title={card.title}
+              image={card.img}
+              imageAlt={card.title}
+              overlayClass={aftersalesOverlay}
+              aspectClass="h-full"
+              heightClass="h-[280px] sm:h-[320px] md:h-[354px]"
+              external={card.external}
+              rel={
+                "nofollow" in card && card.nofollow
+                  ? "nofollow noopener noreferrer"
+                  : "noopener noreferrer"
+              }
             >
-              <img
-                src={card.img}
-                alt={card.title}
-                className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className={aftersalesOverlay}>
-                <h3 className="text-base font-bold md:text-lg">{card.title}</h3>
-                <span className="mt-4 inline-block text-xs font-bold uppercase tracking-[0.075em]">
-                  {card.cta}
-                </span>
-              </div>
-            </motion.a>
+              <h3 className="text-base font-bold md:text-lg">{card.title}</h3>
+              <span className="mt-4 inline-block text-xs font-bold uppercase tracking-[0.075em]">
+                {card.cta}
+              </span>
+            </HomeOverlayCard>
           </StaggerItem>
         ))}
-      </StaggerGrid>
+      </div>
     </section>
   );
 }
 
 function Newsletter() {
   const [email, setEmail] = useState("");
+  const reduced = useReducedMotion();
 
   return (
     <section
@@ -531,12 +496,27 @@ function Newsletter() {
       style={{ backgroundImage: `url(${IMAGES.newsletterBg})` }}
     >
       <div className="container-vf">
-        <FadeIn blur className="mx-auto max-w-[668px] text-center">
-          <p className="text-2xl font-semibold leading-9 text-white">Đăng ký nhận thông tin</p>
-          <p className="mt-4 text-lg leading-[27px] text-white">
+        <motion.div
+          initial={reduced ? false : "hidden"}
+          whileInView={reduced ? undefined : "visible"}
+          viewport={homeViewport}
+          variants={reduced ? undefined : homeNewsletterBlock}
+          className="mx-auto max-w-[668px] text-center"
+        >
+          <motion.p
+            variants={reduced ? undefined : homeNewsletterChild}
+            className="text-2xl font-semibold leading-9 text-white"
+          >
+            Đăng ký nhận thông tin
+          </motion.p>
+          <motion.p
+            variants={reduced ? undefined : homeNewsletterChild}
+            className="mt-4 text-lg leading-[27px] text-white"
+          >
             Đăng ký nhận thông tin chương trình khuyến mãi, dịch vụ VinFast.
-          </p>
-          <form
+          </motion.p>
+          <motion.form
+            variants={reduced ? undefined : homeNewsletterChild}
             onSubmit={(e) => {
               e.preventDefault();
               setEmail("");
@@ -552,15 +532,18 @@ function Newsletter() {
                 placeholder="Nhập email của bạn"
                 className="block h-12 w-full bg-white px-4 text-base font-semibold text-[#495057] outline-none placeholder:font-normal placeholder:text-[#495057]/70 md:pr-[200px]"
               />
-              <button
+              <MotionButton
                 type="submit"
-                className="mt-2.5 h-12 w-full bg-[#1464f4] text-xs font-bold leading-[15px] text-white transition hover:bg-[#1258d9] md:absolute md:right-0 md:top-1/2 md:mt-0 md:w-[200px] md:-translate-y-1/2"
+                className="mt-2.5 h-12 w-full bg-[#1464f4] text-xs font-bold leading-[15px] text-white hover:bg-[#1258d9] md:absolute md:right-0 md:top-1/2 md:mt-0 md:w-[200px] md:-translate-y-1/2"
               >
                 Đăng ký
-              </button>
+              </MotionButton>
             </div>
-          </form>
-          <p className="mt-4 text-xs leading-[18px] text-white">
+          </motion.form>
+          <motion.p
+            variants={reduced ? undefined : homeNewsletterChild}
+            className="mt-4 text-xs leading-[18px] text-white"
+          >
             Bằng cách đăng ký, Quý khách xác nhận đã đọc, hiểu và đồng ý với{" "}
             <a
               href="https://vinfastauto.com/vn_vi/dieu-khoan-phap-ly"
@@ -571,8 +554,8 @@ function Newsletter() {
               Chính sách Quyền riêng tư
             </a>{" "}
             của VinFast.
-          </p>
-        </FadeIn>
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );

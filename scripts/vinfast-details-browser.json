@@ -249,7 +249,7 @@
       ],
       "fields": { "topSpeed": 49, "range": 165, "motorPower": 2300 },
       "tagline": "EVO LITE",
-      "slogan": "Sống xanh, đi chất"
+      "slogan": "Sống xanh, đi chất — quãng đường lên tới ~165 km/lần sạc"
     },
     {
       "id": "amio",
@@ -274,8 +274,16 @@
       "type": "scooter",
       "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-viper",
       "variants": [{ "name": "Viper", "price": 39900000 }],
-      "overview": { "title": "VIPER", "subtitle": "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h." },
-      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~156 km/lần sạc", "Công suất 3000 W"],
+      "overview": {
+        "title": "VIPER",
+        "subtitle": "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h, quãng đường ~156 km/lần sạc."
+      },
+      "highlights": [
+        "Tốc độ tối đa 70 km/h",
+        "Quãng đường ~156 km/lần sạc",
+        "Công suất 3000 W",
+        "Khóa thông minh Smart Key"
+      ],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "70" },
         { "label": "Quãng đường 1 lần sạc (km)", "value": "~156" },
@@ -283,7 +291,93 @@
       ],
       "fields": { "topSpeed": 70, "range": 156, "motorPower": 3000 },
       "tagline": "VIPER",
-      "slogan": "Bứt phá hiệu suất"
+      "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+      "pdpContent": {
+        "tagline": "VIPER",
+        "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+        "overview": {
+          "title": "Xe máy điện VinFast Viper",
+          "subtitle": "Xe máy điện hiệu suất cao với động cơ BLDC Inhub, màn hình TFT và khả năng linh hoạt nâng cấp 2 pin.",
+          "bullets": [
+            "Tốc độ tối đa 70 km/h",
+            "Quãng đường ~156 km/lần sạc",
+            "Công suất tối đa 3000 W",
+            "Khóa thông minh Smart Key"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+          },
+          {
+            "title": "HIỆU SUẤT ẤN TƯỢNG",
+            "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+          },
+          {
+            "title": "Màn hình TFT hiện đại",
+            "desc": "Màn hình TFT hiện đại, đem tới độ phân giải và tương phản cao, giúp hiển thị thông số rõ ràng, sống động."
+          },
+          {
+            "title": "Cốp xe rộng rãi",
+            "desc": "Cốp xe rộng rãi, tối ưu không gian chứa pin và các vật dụng cần thiết."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Sàn để chân rộng rãi",
+            "desc": "Sàn để chân rộng rãi và vị trí để chân sau tách rời, giúp tư thế ngồi thư thái và thoải mái."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+            "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ. Quãng đường khoảng 82 km (+74 km khi lắp pin phụ) theo điều kiện tiêu chuẩn VinFast."
+          },
+          {
+            "icon": "drive",
+            "title": "Hệ thống phanh an toàn",
+            "desc": "Trang bị phanh đĩa trước, phanh cơ bánh sau đảm bảo an toàn trên mọi hành trình."
+          },
+          {
+            "icon": "app",
+            "title": "Khóa thông minh",
+            "desc": "Khóa xe Smart Key tiện lợi, an toàn."
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường ~156 km/lần sạc — Công suất 3000 W",
+          "features": [
+            { "title": "Tốc độ tối đa", "desc": "70 km/h" },
+            { "title": "Quãng đường 1 lần sạc", "desc": "~156 km" },
+            { "title": "Công suất tối đa", "desc": "3000 W" }
+          ]
+        }
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+        },
+        {
+          "title": "HIỆU SUẤT ẤN TƯỢNG",
+          "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+          "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ."
+        },
+        {
+          "icon": "drive",
+          "title": "Hệ thống phanh an toàn",
+          "desc": "Phanh đĩa trước, phanh cơ bánh sau."
+        }
+      ]
     },
     {
       "id": "feliz-ii",
@@ -318,6 +412,27 @@
       "fields": { "topSpeed": 70, "range": 165, "trunk": 12 },
       "tagline": "EVO",
       "slogan": "Đa dụng — bền bỉ"
+    },
+    {
+      "id": "evo-grand-lite",
+      "name": "Evo Grand Lite",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand-lite.html",
+      "variants": [{ "name": "Evo Grand Lite", "price": 23900000 }],
+      "overview": {
+        "title": "EVO GRAND LITE",
+        "subtitle": "Xe ga điện tiết kiệm, quãng đường lên tới 198 km (2 pin)."
+      },
+      "highlights": ["Tốc độ tối đa 48 km/h", "Quãng đường 198 km (2 pin)", "Cốp xe 35 lít"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "48" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "198" },
+        { "label": "Thể tích cốp (L)", "value": "35" },
+        { "label": "Công suất động cơ (W)", "value": "2500" }
+      ],
+      "fields": { "topSpeed": 48, "range": 198, "trunk": 35, "motorPower": 2500 },
+      "tagline": "EVO GRAND LITE",
+      "slogan": "Tiết kiệm — dễ sử dụng"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { parseShopPdpContent, decodeHtml } from "./parse-shop-pdp-content.mjs";
+import { parseShopPdpContent, parseShopListingProduct, decodeHtml } from "./parse-shop-pdp-content.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const VEHICLES_FILE = path.join(__dirname, "vinfast-vehicles.json");
@@ -276,6 +276,58 @@ function extractScooterFields(specs, text) {
   };
 }
 
+const SCOOTER_LISTING_URL = "https://shop.vinfastauto.com/vn_vi/xe-may-dien-vinfast.html";
+const LISTING_PRODUCT_MAP = {
+  "evo-lite": "EvoLite",
+};
+
+function mergePdpFields(detail, pdpContent) {
+  if (!pdpContent) return detail;
+  return {
+    ...detail,
+    pdpContent,
+    exterior: pdpContent.exterior?.length ? pdpContent.exterior : detail.exterior,
+    interior: pdpContent.interior?.length ? pdpContent.interior : detail.interior,
+    technology: pdpContent.technology?.length ? pdpContent.technology : detail.technology,
+    performance: pdpContent.performance ?? detail.performance,
+    safety: pdpContent.safety ?? detail.safety,
+    tagline: pdpContent.tagline || detail.tagline,
+    slogan:
+      detail.slogan &&
+      detail.slogan.length < 100 &&
+      !/đèn Full LED|thông số, giá bán/i.test(detail.slogan)
+        ? detail.slogan
+        : pdpContent.slogan || detail.slogan,
+    overview: pdpContent.overview ?? detail.overview,
+    highlights: pdpContent.overview?.bullets?.length
+      ? pdpContent.overview.bullets
+      : detail.highlights,
+  };
+}
+
+function supplementFromListing(detail, listingHtml) {
+  const listingKey = LISTING_PRODUCT_MAP[detail.id];
+  if (!listingKey || !listingHtml) return detail;
+  if (detail.pdpContent?.exterior?.length >= 2) return detail;
+  const listingPdp = parseShopListingProduct(listingHtml, listingKey);
+  if (!listingPdp) return detail;
+  const pdpContent = {
+    ...(detail.pdpContent ?? {}),
+    ...listingPdp,
+    exterior: listingPdp.exterior?.length
+      ? listingPdp.exterior
+      : detail.pdpContent?.exterior,
+    interior: listingPdp.interior?.length
+      ? listingPdp.interior
+      : detail.pdpContent?.interior,
+    technology: listingPdp.technology?.length
+      ? listingPdp.technology
+      : detail.pdpContent?.technology,
+    overview: listingPdp.overview ?? detail.pdpContent?.overview ?? detail.overview,
+  };
+  return mergePdpFields(detail, pdpContent);
+}
+
 function colorsToHex(names) {
   return names.map((name) => ({ name, hex: COLOR_HEX[name] ?? "#888888" }));
 }
@@ -339,9 +391,20 @@ function mergeBrowserPatch(results) {
   for (const item of [...(patch.cars ?? []), ...(patch.scooters ?? [])]) {
     if (!item.id || item.error) continue;
     const list = item.type === "car" ? results.cars : results.scooters;
-    const idx = list.findIndex((x) => x.id === item.id);
-    if (idx >= 0) list[idx] = { ...list[idx], ...item, error: undefined };
-    else list.push(item);
+    const idx = list.findIndex((x) => x?.id === item.id);
+    const existing = idx >= 0 ? list[idx] : null;
+    const merged = existing
+      ? {
+          ...existing,
+          ...item,
+          error: undefined,
+          pdpContent: item.pdpContent
+            ? { ...(existing.pdpContent ?? {}), ...item.pdpContent }
+            : existing.pdpContent,
+        }
+      : { ...item, error: undefined };
+    if (idx >= 0) list[idx] = merged;
+    else list.push(merged);
   }
   console.log(`Merged browser patch from ${BROWSER_PATCH}`);
 }
@@ -369,6 +432,36 @@ async function main() {
   }
 
   mergeBrowserPatch(results);
+
+  let listingHtml = null;
+  try {
+    listingHtml = await fetchPage(SCOOTER_LISTING_URL);
+    console.log("Loaded scooter listing page for PDP supplement");
+  } catch (err) {
+    console.warn(`  listing page skip: ${err.message}`);
+  }
+
+  if (listingHtml) {
+    results.scooters = results.scooters.map((s) =>
+      s && !s.error ? supplementFromListing(s, listingHtml) : s,
+    );
+  }
+
+  if (fs.existsSync(OUT_FILE)) {
+    const prev = JSON.parse(fs.readFileSync(OUT_FILE, "utf8"));
+    for (const item of [...results.cars, ...results.scooters]) {
+      if (!item || item.error) continue;
+      const list = item.type === "car" ? prev.cars : prev.scooters;
+      const old = list?.find((x) => x?.id === item.id);
+      if (!old) continue;
+      if (!item.specTable?.length && old.specTable?.length) item.specTable = old.specTable;
+      if (!item.brochureContent && old.brochureContent) item.brochureContent = old.brochureContent;
+      if (old.brochureUrl && !item.brochureUrl) item.brochureUrl = old.brochureUrl;
+      item.fields = { ...(old.fields ?? {}), ...(item.fields ?? {}) };
+      if (!item.variants?.length && old.variants?.length) item.variants = old.variants;
+    }
+  }
+
   fs.writeFileSync(OUT_FILE, JSON.stringify(results, null, 2), "utf8");
   const okCars = results.cars.filter((c) => c && !c.error).length;
   const okScooters = results.scooters.filter((s) => s && !s.error).length;

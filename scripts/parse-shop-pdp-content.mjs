@@ -505,26 +505,250 @@ function parseLegacyPdpContent(html, carName) {
   };
 }
 
-function mergePdpContent(modern, legacy, carName) {
-  if (!modern && !legacy) return null;
-  if (!modern) return legacy;
-  if (!legacy) return modern;
+function mergePdpContent(...sources) {
+  const valid = sources.filter(Boolean);
+  if (!valid.length) return null;
+  if (valid.length === 1) return valid[0];
 
-  const pick = (a, b) => (a?.length ? a : b);
-  const pickObj = (a, b) => (a && Object.keys(a).length ? a : b);
+  const pick = (key) => {
+    if (key === "tagline" || key === "slogan") {
+      for (const src of valid) {
+        const val = src[key];
+        if (typeof val === "string" && val && !isNoise(val) && !/thông số, giá bán mới nhất/i.test(val)) {
+          return val;
+        }
+      }
+    }
+    if (key === "exterior" || key === "interior" || key === "technology") {
+      let best = [];
+      for (const src of valid) {
+        const val = src[key];
+        if (Array.isArray(val) && val.length > best.length) best = val;
+      }
+      return best;
+    }
+    for (const src of valid) {
+      const val = src[key];
+      if (Array.isArray(val) && val.length) return val;
+      if (val && typeof val === "object" && Object.keys(val).length) return val;
+      if (typeof val === "string" && val && !isNoise(val)) return val;
+    }
+    return valid[0][key];
+  };
 
   return {
-    tagline: modern.tagline && !isNoise(modern.tagline) ? modern.tagline : legacy.tagline,
-    slogan: modern.slogan || legacy.slogan,
-    overview: modern.overview ?? legacy.overview,
-    exterior: pick(modern.exterior, legacy.exterior),
-    interior: pick(modern.interior, legacy.interior),
-    technology: pick(modern.technology, legacy.technology),
-    technologyLead: modern.technologyLead || legacy.technologyLead,
-    performance: pickObj(modern.performance, legacy.performance),
-    safety: modern.safety ?? legacy.safety,
-    charging: modern.charging ?? legacy.charging,
+    tagline: pick("tagline"),
+    slogan: pick("slogan"),
+    overview: pick("overview"),
+    exterior: pick("exterior") ?? [],
+    interior: pick("interior") ?? [],
+    technology: pick("technology") ?? [],
+    technologyLead: pick("technologyLead") ?? "",
+    performance: pick("performance"),
+    safety: pick("safety"),
+    charging: pick("charging"),
   };
+}
+
+/** Trang shop listing (xe-may-dien-vinfast.html) — block bestSale/discover theo data-nameproduct */
+export function parseShopListingProduct(html, dataNameProduct) {
+  const blockRe = new RegExp(
+    `data-nameproduct="${dataNameProduct}"[\\s\\S]*?(?=data-nameproduct="|</section>\\s*<section class="section-discover")`,
+    "i",
+  );
+  const block = html.match(blockRe)?.[0];
+  if (!block) return null;
+
+  const productName = stripHtml(
+    block.match(/class="bestSale-name"[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ??
+      block.match(/class="discover-name"[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ??
+      "",
+  ).replace(/\s+/g, " ").trim();
+  const shortTag = stripHtml(block.match(/class="discover-info"[\s\S]*?<p class="desc">([^<]+)/i)?.[1] ?? "");
+
+  const exterior = [];
+  for (const m of block.matchAll(
+    /class="bestSale-iimg"[\s\S]*?alt="([^"]*)"[\s\S]*?class="bestSale-iidesc">\s*([\s\S]*?)\s*<\/div>/gi,
+  )) {
+    const alt = stripHtml(m[1]).replace(/VinFast\s*/gi, "").trim();
+    const desc = stripHtml(m[2]).replace(/\s+/g, " ").trim();
+    if (desc.length < 15 || isNoise(desc)) continue;
+    const title =
+      alt.length > 8 && alt.length < 80 ? alt : desc.split(/[,.]/)[0].trim().slice(0, 60);
+    exterior.push({ title, desc: desc.slice(0, 400) });
+  }
+
+  if (!exterior.length && !productName) return null;
+
+  const bullets = exterior.map((f) => f.desc).slice(0, 4);
+  const tagline = shortTag || productName.split(" ").slice(-2).join(" ").toUpperCase() || dataNameProduct;
+
+  return {
+    tagline: tagline.slice(0, 100),
+    slogan: exterior[0]?.desc?.slice(0, 220) ?? productName.slice(0, 220),
+    overview: {
+      title: productName.slice(0, 120) || tagline,
+      subtitle: exterior[0]?.desc?.slice(0, 400) ?? productName,
+      bullets,
+    },
+    exterior,
+    interior: [],
+    technology: exterior.slice(0, 3).map((f) => ({
+      icon: techIconFor(f.title, f.desc),
+      title: f.title.slice(0, 80),
+      desc: f.desc.slice(0, 200),
+    })),
+    technologyLead: exterior[0]?.desc?.slice(0, 220) ?? "",
+    performance: bullets.length
+      ? {
+          title: "HIỆU SUẤT VƯỢT TRỘI",
+          subtitle: bullets[0],
+          features: bullets.slice(0, 3).map((b) => ({
+            title: b.split(/[,.]/)[0].slice(0, 60),
+            desc: b.slice(0, 220),
+          })),
+        }
+      : null,
+    safety: null,
+    charging: null,
+  };
+}
+
+function parseXmdPdpPage(html, productName) {
+  if (!html.includes('id="pdp-page"') && !html.includes('class="pdp-page')) return null;
+
+  const modelName = stripHtml(html.match(/class="top-main-htitle"[^>]*>([^<]+)/i)?.[1] ?? productName);
+  const heroLine = stripHtml(html.match(/class="top-main-pt1[^"]*"[^>]*>([^<]+)/i)?.[1] ?? "");
+  const tagline = heroLine || modelName;
+  const metaLead = parseMetaLead(html);
+
+  const bullets = [];
+  for (const m of html.matchAll(
+    /class="top-main-item"[\s\S]*?<p class="no">([^<]+)<[\s\S]*?<p class="text">([\s\S]*?)<\/p>/gi,
+  )) {
+    const val = stripHtml(m[1]);
+    const label = stripHtml(m[2].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+    if (val && label) bullets.push(`${label}: ${val}`);
+  }
+
+  const exterior = [];
+  for (const m of html.matchAll(
+    /class="connect-name"[^>]*>([^<]+)<[\s\S]*?class="connect-desc"[^>]*>([\s\S]*?)<\/p>/gi,
+  )) {
+    const title = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    const desc = stripHtml(m[2]).replace(/\s+/g, " ").trim();
+    if (title && desc.length > 20) exterior.push({ title, desc: desc.slice(0, 400) });
+  }
+
+  for (const m of html.matchAll(
+    /class="banner-info-item"[\s\S]*?class="banner-info-name"[^>]*>[\s\S]*?>([^<]+)<[\s\S]*?class="banner-info-desc"[^>]*>([\s\S]*?)<\/p>/gi,
+  )) {
+    const title = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    const desc = stripHtml(m[2]).replace(/\s+/g, " ").trim();
+    if (title && desc.length > 10) exterior.push({ title, desc: desc.slice(0, 400) });
+  }
+
+  for (const m of html.matchAll(/class="parts-bike__item"[\s\S]*?<p>([^<]+)<\/p>/gi)) {
+    const desc = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    if (desc.length > 15) {
+      exterior.push({
+        title: desc.split(/[,.]/)[0].slice(0, 60) || "Tính năng",
+        desc: desc.slice(0, 400),
+      });
+    }
+  }
+
+  const technology = [];
+  for (const m of html.matchAll(
+    /class="battery-technology-iname"[^>]*>([^<]+)<[\s\S]*?<ul>([\s\S]*?)<\/ul>/gi,
+  )) {
+    const title = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    const items = [...m[2].matchAll(/<li>([\s\S]*?)<\/li>/gi)]
+      .map((li) => stripHtml(li[1]).replace(/\s+/g, " ").trim())
+      .filter((t) => t.length > 10);
+    const desc = items.join(" ").slice(0, 300);
+    if (title && desc) technology.push({ icon: techIconFor(title, desc), title, desc });
+  }
+
+  const uniqueExterior = uniqueCards(exterior);
+  const slogan = metaLead || heroLine || uniqueExterior[0]?.desc?.slice(0, 220) || "";
+
+  if (!uniqueExterior.length && !bullets.length && !tagline) return null;
+
+  return {
+    tagline: tagline.slice(0, 100),
+    slogan: slogan.slice(0, 220),
+    overview: {
+      title: modelName.slice(0, 120) || tagline,
+      subtitle: (metaLead || slogan).slice(0, 400),
+      bullets: bullets.length ? bullets : uniqueExterior.map((f) => f.desc).slice(0, 4),
+    },
+    exterior: uniqueExterior,
+    interior: [],
+    technology,
+    technologyLead: technology[0]?.desc?.slice(0, 220) ?? "",
+    performance: buildPerformanceFromBullets(bullets),
+    safety: null,
+    charging: null,
+  };
+}
+
+function parseXmdLandingPage(html, productName) {
+  if (!html.includes("section-specs-1") && !html.includes("section-brief")) return null;
+
+  const bullets = [];
+  const briefBlock = html.match(/<section class="section-brief"[\s\S]*?<\/section>/i)?.[0] ?? "";
+  for (const m of briefBlock.matchAll(
+    /<div class="items">\s*([^<]+)[\s\S]*?<div class="sub">\s*([^<]+)/gi,
+  )) {
+    const val = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    const label = stripHtml(m[2]).replace(/\s+/g, " ").trim();
+    if (val && label) bullets.push(`${label}: ${val.replace(/\*/g, "")}`);
+  }
+
+  const exterior = [];
+  const specsBlock = html.match(/<section class="section-specs-1"[\s\S]*?<\/section>/i)?.[0] ?? "";
+  for (const m of specsBlock.matchAll(/<p>([^<]+)<\/p>/gi)) {
+    const desc = stripHtml(m[1]).replace(/\s+/g, " ").trim();
+    if (desc.length > 15 && !isNoise(desc)) {
+      exterior.push({
+        title: desc.split(/[,.–-]/)[0].trim().slice(0, 60) || "Tính năng",
+        desc: desc.slice(0, 400),
+      });
+    }
+  }
+
+  const metaLead = parseMetaLead(html);
+  const productTitle = stripHtml(
+    html.match(/<title>([^<|]+)/i)?.[1]?.replace(/VinFast/gi, "").trim() ?? productName,
+  );
+
+  if (!exterior.length && !bullets.length) return null;
+
+  return {
+    tagline: productTitle.slice(0, 100) || productName,
+    slogan: (metaLead || exterior[0]?.desc || "").slice(0, 220),
+    overview: {
+      title: productTitle.slice(0, 120) || productName,
+      subtitle: (metaLead || exterior[0]?.desc || "").slice(0, 400),
+      bullets: bullets.length ? bullets : exterior.map((f) => f.desc).slice(0, 4),
+    },
+    exterior: uniqueCards(exterior),
+    interior: [],
+    technology: exterior.slice(0, 3).map((f) => ({
+      icon: techIconFor(f.title, f.desc),
+      title: f.title.slice(0, 80),
+      desc: f.desc.slice(0, 200),
+    })),
+    technologyLead: metaLead.slice(0, 220),
+    performance: buildPerformanceFromBullets(bullets),
+    safety: null,
+    charging: null,
+  };
+}
+
+function parseXmdShopPdp(html, productName) {
+  return parseXmdPdpPage(html, productName) ?? parseXmdLandingPage(html, productName);
 }
 
 function parseModernPdpContent(html, carName) {
@@ -578,5 +802,6 @@ export function parseShopPdpContent(html, carName) {
   if (!html || html.length < 5000) return null;
   const modern = parseModernPdpContent(html, carName);
   const legacy = parseLegacyPdpContent(html, carName);
-  return mergePdpContent(modern, legacy, carName);
+  const xmd = parseXmdShopPdp(html, carName);
+  return mergePdpContent(modern, legacy, xmd);
 }

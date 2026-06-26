@@ -16,7 +16,7 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
         ([entry]) => {
           if (entry.isIntersecting) setActive(item.id);
         },
-        { rootMargin: "-28% 0px -58% 0px", threshold: 0 },
+        { rootMargin: "-30% 0px -55% 0px", threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -27,31 +27,35 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
   return (
     <nav
       aria-label="Mục nội dung sản phẩm"
-      className="sticky top-14 z-30 border-b border-slate-200/90 bg-white/95 shadow-[0_1px_0_rgba(0,0,0,0.04)] backdrop-blur-md supports-[backdrop-filter]:bg-white/85"
+      className="sticky top-14 z-30 border-b border-border/40 bg-white/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80"
     >
-      <div className="container-vf overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <ul className="flex min-w-max gap-0">
-          {items.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
-                  setActive(item.id);
-                }}
-                className={`relative block whitespace-nowrap px-4 py-3.5 text-xs font-semibold tracking-wide transition sm:px-5 sm:text-[13px] ${
-                  active === item.id ? "text-brand" : "text-slate-500 hover:text-brand-dark"
-                }`}
-              >
-                {item.label}
-                {active === item.id && (
-                  <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-brand sm:inset-x-4" />
-                )}
-              </a>
-            </li>
-          ))}
-        </ul>
+      <div className="container-vf py-2.5 sm:py-3">
+        <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <ul className="flex min-w-max items-center gap-1.5 sm:gap-2">
+            {items.map((item) => {
+              const isActive = active === item.id;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+                      setActive(item.id);
+                    }}
+                    className={`inline-flex items-center rounded-full px-4 py-2 text-[11px] font-bold tracking-wide transition sm:px-5 sm:text-xs ${
+                      isActive
+                        ? "bg-brand text-white shadow-md shadow-brand/25"
+                        : "bg-surface text-muted-foreground hover:bg-brand/5 hover:text-brand-dark"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </nav>
   );

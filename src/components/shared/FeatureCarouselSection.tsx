@@ -1,9 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import {
+  homeCarouselImage,
+  homeCarouselText,
+  homeNavBtn,
+  homeSpecItem,
+  homeSpecStagger,
+  homeViewport,
+} from "@/lib/home-motion";
 import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 
 export type FeatureCarouselSlide = VinFastHomeSlide & {
@@ -43,10 +53,20 @@ export function FeatureCarouselSection({
   /** Mở modal / xử lý nút chính (vd. ĐẶT CỌC) thay vì điều hướng */
   onPrimaryClick?: (slide: FeatureCarouselSlide) => void;
 }) {
+  const reduced = useReducedMotion();
   const [idx, setIdx] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const goPrev = () => setIdx((i) => (i - 1 + slides.length) % slides.length);
-  const goNext = () => setIdx((i) => (i + 1) % slides.length);
+  const goTo = useCallback(
+    (next: number) => {
+      setDirection(next > idx ? 1 : -1);
+      setIdx(next);
+    },
+    [idx],
+  );
+
+  const goPrev = () => goTo((idx - 1 + slides.length) % slides.length);
+  const goNext = () => goTo((idx + 1) % slides.length);
 
   const aspectClass =
     imageAspect === "2544/1500" ? "aspect-[2544/1500] w-full" : "aspect-[2/1] w-full";
@@ -69,112 +89,156 @@ export function FeatureCarouselSection({
     imageSide === "left" ? "object-left" : "object-right"
   }`;
 
+  const activeSlide = slides[idx];
+
   return (
-    <section className="relative w-full overflow-hidden bg-white">
+    <motion.section
+      className="relative w-full overflow-hidden bg-white"
+      initial={reduced ? false : { opacity: 0, y: 40 }}
+      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      viewport={homeViewport}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+    >
       <div className="relative w-full bg-gradient-to-br from-[#f4f6fa] via-[#f8f9fc] to-white">
         <div className="relative z-10">
           <div className={imageWrapClass}>
-            {slides.map((s, i) => (
-              <div
-                key={`img-${s.image}`}
-                className={`absolute inset-0 transition-opacity duration-700 ${
-                  i === idx ? "z-[1] opacity-100" : "pointer-events-none opacity-0"
-                }`}
-                aria-hidden={i !== idx}
-              >
-                <div className={featureImageInset}>
-                  <img
-                    src={s.image}
-                    alt={s.imageAlt}
-                    className={s.imageClass ?? defaultImageClass}
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              {activeSlide && (
+                <motion.div
+                  key={`img-${activeSlide.image}`}
+                  custom={direction}
+                  variants={reduced ? undefined : homeCarouselImage}
+                  initial={reduced ? false : "enter"}
+                  animate={reduced ? undefined : "center"}
+                  exit={reduced ? undefined : "exit"}
+                  className="absolute inset-0 z-[1]"
+                >
+                  <div className={featureImageInset}>
+                    <img
+                      src={activeSlide.image}
+                      alt={activeSlide.imageAlt}
+                      className={activeSlide.imageClass ?? defaultImageClass}
+                    />
+                  </div>
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent lg:hidden"
                   />
-                </div>
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-[#f8f9fc] to-transparent lg:hidden"
-                />
-                <div aria-hidden className={imageFadeEdge} />
-              </div>
-            ))}
-            {slides.length > 1 && <CarouselArrows onImage onPrev={goPrev} onNext={goNext} />}
+                  <div aria-hidden className={imageFadeEdge} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {slides.length > 1 && (
+              <CarouselArrows reduced={reduced} onImage onPrev={goPrev} onNext={goNext} />
+            )}
           </div>
 
           <div className="relative grid lg:absolute lg:inset-0">
-            {slides.map((s, i) => (
-              <div
-                key={`text-${s.title}`}
-                className={`col-start-1 row-start-1 transition-opacity duration-700 lg:absolute lg:inset-0 ${
-                  i === idx ? "z-[1] opacity-100" : "pointer-events-none opacity-0"
-                }`}
-                aria-hidden={i !== idx}
-              >
-                <div className={textPanelClass}>
-                  <div aria-hidden className={textFadeEdge} />
-                  <div className={featureCopy}>
-                    <h2 className={featureTitle}>{s.title}</h2>
-                    {s.subtitle && <p className={featureSubtitle}>{s.subtitle}</p>}
-                    {s.description && <p className={featureDescription}>{s.description}</p>}
-                    <div className={featureSpecGrid}>
-                      {(() => {
-                        const priceSpec = s.specs.find((spec) =>
-                          isPriceSpec(spec.label, spec.value),
-                        );
-                        const otherSpecs = s.specs.filter(
-                          (spec) => !isPriceSpec(spec.label, spec.value),
-                        );
-
-                        return (
-                          <>
-                            {otherSpecs.map((spec) => (
-                              <FeatureSpec
-                                key={`${spec.value}-${spec.label}`}
-                                feature
-                                icon={
-                                  spec.seats ? (
-                                    <Users className="size-4 shrink-0 text-brand lg:size-3.5 xl:size-4" />
-                                  ) : undefined
-                                }
-                                value={spec.value}
-                                label={spec.label}
-                                highlight={spec.highlight}
-                              />
-                            ))}
-                            {priceSpec && (
-                              <FeaturePriceBlock
-                                feature
-                                label={priceSpec.label}
-                                value={priceSpec.value}
-                                listPrice={priceSpec.listPrice}
-                                className={
-                                  otherSpecs.length <= 2 ? "col-span-2 xl:col-span-1" : undefined
-                                }
-                              />
-                            )}
-                          </>
-                        );
-                      })()}
-                    </div>
-                    <div className={featureActions}>
-                      <FeatureCta
-                        variant="primary"
-                        feature
-                        href={onPrimaryClick ? undefined : s.href}
-                        onClick={onPrimaryClick ? () => onPrimaryClick(s) : undefined}
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              {activeSlide && (
+                <motion.div
+                  key={`text-${activeSlide.title}`}
+                  custom={direction}
+                  variants={reduced ? undefined : homeCarouselText}
+                  initial={reduced ? false : "enter"}
+                  animate={reduced ? undefined : "center"}
+                  exit={reduced ? undefined : "exit"}
+                  className="col-start-1 row-start-1 z-[1] lg:absolute lg:inset-0"
+                >
+                  <div className={textPanelClass}>
+                    <div aria-hidden className={textFadeEdge} />
+                    <div className={featureCopy}>
+                      <h2 className={featureTitle}>{activeSlide.title}</h2>
+                      {activeSlide.subtitle && (
+                        <p className={featureSubtitle}>{activeSlide.subtitle}</p>
+                      )}
+                      {activeSlide.description && (
+                        <p className={featureDescription}>{activeSlide.description}</p>
+                      )}
+                      <motion.div
+                        className={featureSpecGrid}
+                        variants={reduced ? undefined : homeSpecStagger}
+                        initial={reduced ? false : "hidden"}
+                        animate={reduced ? undefined : "visible"}
                       >
-                        {s.primaryCta}
-                      </FeatureCta>
-                      <FeatureCta href={s.href} variant="outline" feature>
-                        {s.secondaryCta}
-                      </FeatureCta>
+                        {(() => {
+                          const priceSpec = activeSlide.specs.find((spec) =>
+                            isPriceSpec(spec.label, spec.value),
+                          );
+                          const otherSpecs = activeSlide.specs.filter(
+                            (spec) => !isPriceSpec(spec.label, spec.value),
+                          );
+
+                          return (
+                            <>
+                              {otherSpecs.map((spec) => (
+                                <motion.div
+                                  key={`${spec.value}-${spec.label}`}
+                                  variants={reduced ? undefined : homeSpecItem}
+                                >
+                                  <FeatureSpec
+                                    feature
+                                    icon={
+                                      spec.seats ? (
+                                        <Users className="size-4 shrink-0 text-brand lg:size-3.5 xl:size-4" />
+                                      ) : undefined
+                                    }
+                                    value={spec.value}
+                                    label={spec.label}
+                                    highlight={spec.highlight}
+                                  />
+                                </motion.div>
+                              ))}
+                              {priceSpec && (
+                                <motion.div
+                                  variants={reduced ? undefined : homeSpecItem}
+                                  className={
+                                    otherSpecs.length <= 2 ? "col-span-2 xl:col-span-1" : undefined
+                                  }
+                                >
+                                  <FeaturePriceBlock
+                                    feature
+                                    label={priceSpec.label}
+                                    value={priceSpec.value}
+                                    listPrice={priceSpec.listPrice}
+                                  />
+                                </motion.div>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </motion.div>
+                      <motion.div
+                        className={featureActions}
+                        variants={reduced ? undefined : homeSpecStagger}
+                        initial={reduced ? false : "hidden"}
+                        animate={reduced ? undefined : "visible"}
+                      >
+                        <motion.div variants={reduced ? undefined : homeSpecItem}>
+                          <FeatureCta
+                            variant="primary"
+                            feature
+                            href={onPrimaryClick ? undefined : activeSlide.href}
+                            onClick={onPrimaryClick ? () => onPrimaryClick(activeSlide) : undefined}
+                          >
+                            {activeSlide.primaryCta}
+                          </FeatureCta>
+                        </motion.div>
+                        <motion.div variants={reduced ? undefined : homeSpecItem}>
+                          <FeatureCta href={activeSlide.href} variant="outline" feature>
+                            {activeSlide.secondaryCta}
+                          </FeatureCta>
+                        </motion.div>
+                      </motion.div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -339,32 +403,42 @@ function CarouselArrows({
   onImage,
   onPrev,
   onNext,
+  reduced = false,
 }: {
   onImage?: boolean;
   onPrev: () => void;
   onNext: () => void;
+  reduced?: boolean;
 }) {
   const pos = onImage ? "left-2 sm:left-3" : "left-2 lg:left-3";
   const posR = onImage ? "right-2 sm:right-3" : "right-2 lg:right-3";
 
   return (
     <>
-      <button
+      <motion.button
         type="button"
         onClick={onPrev}
+        initial="rest"
+        whileHover={reduced ? undefined : "hover"}
+        whileTap={reduced ? undefined : "tap"}
+        variants={homeNavBtn}
         className={`absolute top-1/2 z-20 -translate-y-1/2 ${carouselNavBtnSize} ${pos}`}
         aria-label="Slide trước"
       >
         <ChevronLeft size={18} strokeWidth={1.75} />
-      </button>
-      <button
+      </motion.button>
+      <motion.button
         type="button"
         onClick={onNext}
+        initial="rest"
+        whileHover={reduced ? undefined : "hover"}
+        whileTap={reduced ? undefined : "tap"}
+        variants={homeNavBtn}
         className={`absolute top-1/2 z-20 -translate-y-1/2 ${carouselNavBtnSize} ${posR}`}
         aria-label="Slide sau"
       >
         <ChevronRight size={18} strokeWidth={1.75} />
-      </button>
+      </motion.button>
     </>
   );
 }
