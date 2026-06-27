@@ -24,19 +24,15 @@ const BANNERS = [
     id: "01-tram-sac-vinfast",
     alt: "Hệ thống trạm sạc VinFast — Lợi ích thuê pin & sạc công cộng",
     source: "https://vinfastauto.com/vn_vi/dich-vu-pin-oto-dien",
-    desktop:
-      "https://storage.googleapis.com/vinfast-data-01/banner-tramsac_1660273569.png",
-    mobile:
-      "https://storage.googleapis.com/vinfast-data-01/banner-tramsac-mobi_1660273591.png",
+    desktop: "https://storage.googleapis.com/vinfast-data-01/banner-tramsac_1660273569.png",
+    mobile: "https://storage.googleapis.com/vinfast-data-01/banner-tramsac-mobi_1660273591.png",
   },
   {
     id: "02-quy-hoach-tram-sac",
     alt: "Quy hoạch trạm sạc VinFast toàn quốc",
     source: "https://vinfastauto.com/vn_vi/dich-vu-pin-oto-dien",
-    desktop:
-      "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.png",
-    mobile:
-      "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.png",
+    desktop: "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.png",
+    mobile: "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.png",
   },
   {
     id: "03-pin-xe-may-dien",
@@ -62,7 +58,7 @@ const PAGES = [
 
 function extFromUrl(url) {
   const m = url.match(/\.(\w+)(?:\?|$)/);
-  return m?.[1]?.toLowerCase() === "jpeg" ? "jpg" : m?.[1]?.toLowerCase() ?? "png";
+  return m?.[1]?.toLowerCase() === "jpeg" ? "jpg" : (m?.[1]?.toLowerCase() ?? "png");
 }
 
 async function cachePages() {

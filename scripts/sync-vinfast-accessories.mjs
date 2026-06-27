@@ -46,7 +46,12 @@ function decodeHtml(text) {
 }
 
 function stripTags(html) {
-  return decodeHtml(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  return decodeHtml(
+    html
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function slugifyPid(pid) {
@@ -227,14 +232,11 @@ for (let i = 0; i < products.length; i += CONCURRENCY) {
       const localFile = `${p.id}.${ext}`;
       const localPath = path.join(IMG_DIR, localFile);
       const ok = await downloadImage(p.imageUrl, localPath);
-      p.image = ok
-        ? `/images/vinfast/accessories/${localFile}`
-        : "/images/vinfast/showroom.webp";
+      p.image = ok ? `/images/vinfast/accessories/${localFile}` : "/images/vinfast/showroom.webp";
 
       const desc = await fetchDescription(p.href);
       p.description =
-        desc ||
-        `${p.name} — phụ kiện chính hãng VinFast, phân phối tại đại lý VF Ngọc Anh.`;
+        desc || `${p.name} — phụ kiện chính hãng VinFast, phân phối tại đại lý VF Ngọc Anh.`;
 
       if (/mô hình|bán chạy/i.test(p.name) && p.name.toLowerCase().includes("vf 3")) {
         p.badge = "Bán chạy";

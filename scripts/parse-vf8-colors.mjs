@@ -4,7 +4,9 @@ const html = await (
   })
 ).text();
 
-const products = [...html.matchAll(/reserves\/VF8\/exterior\/product-([^."']+)\.webp/g)].map((m) => m[1]);
+const products = [...html.matchAll(/reserves\/VF8\/exterior\/product-([^."']+)\.webp/g)].map(
+  (m) => m[1],
+);
 console.log("product codes:", [...new Set(products)]);
 
 for (const code of [...new Set(products)]) {

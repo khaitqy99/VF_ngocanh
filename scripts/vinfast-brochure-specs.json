@@ -30,11 +30,7 @@
         "overview": {
           "title": "VF 5",
           "subtitle": "thông minh vượt trội, khả năng vận hành mạnh mẽ, an toàn, VF 5",
-          "bullets": [
-            "Công suất tối đa 100 kW (134 HP",
-            "Mô men xoắn cực đại 135 Nm",
-            "06 TÚI KHÍ"
-          ]
+          "bullets": ["Công suất tối đa 100 kW (134 HP", "Mô men xoắn cực đại 135 Nm", "06 TÚI KHÍ"]
         },
         "exterior": [
           {
@@ -234,9 +230,7 @@
               "desc": "Để biết chi tiết hơn về hệ thống ADAS trên VF 6, khách hàng vui lòng liên hệ"
             }
           ],
-          "highlights": [
-            "7 túi khí"
-          ]
+          "highlights": ["7 túi khí"]
         },
         "highlights": [
           "Công Suất Tối Đa 150 kW/201 hp",
@@ -317,10 +311,7 @@
         "overview": {
           "title": "VinFast VF 7",
           "subtitle": "đèn chữ V mạnh mẽ, tất cả đã tạo nên VF 7 tỏa sáng ở bất cứ đâu.",
-          "bullets": [
-            "Mô men xoắn cực đại 500 NM",
-            "7 túi khí"
-          ]
+          "bullets": ["Mô men xoắn cực đại 500 NM", "7 túi khí"]
         },
         "interior": [
           {
@@ -375,14 +366,9 @@
               "desc": "“Để biết chi tiết hơn về hệ thống ADAS trên VF 7, khách hàng vui lòng liên hệ"
             }
           ],
-          "highlights": [
-            "7 túi khí"
-          ]
+          "highlights": ["7 túi khí"]
         },
-        "highlights": [
-          "Mô men xoắn cực đại 500 NM",
-          "7 túi khí"
-        ]
+        "highlights": ["Mô men xoắn cực đại 500 NM", "7 túi khí"]
       },
       "fields": {
         "power": 335,
@@ -705,10 +691,7 @@
         "overview": {
           "title": "SỰ LỰA CHỌN — Bản lĩnh dẫn đầu",
           "subtitle": "SỰ LỰA CHỌN CỦA NGƯỜI THÀNH ĐẠT, TIÊN PHONG Bản lĩnh dẫn đầu Mẫu SUV hạng E Cảm hứng thiết kế",
-          "bullets": [
-            "Công suất tối đa 402 hp",
-            "11 túi khí"
-          ]
+          "bullets": ["Công suất tối đa 402 hp", "11 túi khí"]
         },
         "exterior": [
           {
@@ -750,14 +733,9 @@
               "desc": "11 túi khí An toàn quốc tế Đạt chuẩn"
             }
           ],
-          "highlights": [
-            "11 túi khí"
-          ]
+          "highlights": ["11 túi khí"]
         },
-        "highlights": [
-          "Công suất tối đa 402 hp",
-          "11 túi khí"
-        ]
+        "highlights": ["Công suất tối đa 402 hp", "11 túi khí"]
       },
       "fields": {
         "power": 402,
@@ -1726,9 +1704,7 @@
         "overview": {
           "title": "XE MÁY ĐIỆN VINFAST FLAZZ — HƯỚNG DẪN SỬ DỤNG VINFAST FLAZZ",
           "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
-          "bullets": [
-            "công suất điện tối đa khoảng 210W"
-          ]
+          "bullets": ["công suất điện tối đa khoảng 210W"]
         },
         "exterior": [
           {
@@ -1834,9 +1810,7 @@
           ],
           "highlights": []
         },
-        "highlights": [
-          "công suất điện tối đa khoảng 210W"
-        ]
+        "highlights": ["công suất điện tối đa khoảng 210W"]
       },
       "fields": {},
       "fetchedAt": "2026-06-26T10:40:29.932Z"
@@ -1865,9 +1839,7 @@
         "overview": {
           "title": "XE MÁY ĐIỆN VINFAST AMIO S — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO S",
           "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
-          "bullets": [
-            "công suất điện tối đa khoảng 210W"
-          ]
+          "bullets": ["công suất điện tối đa khoảng 210W"]
         },
         "exterior": [
           {
@@ -1973,9 +1945,7 @@
           ],
           "highlights": []
         },
-        "highlights": [
-          "công suất điện tối đa khoảng 210W"
-        ]
+        "highlights": ["công suất điện tối đa khoảng 210W"]
       },
       "fields": {},
       "fetchedAt": "2026-06-26T10:40:31.461Z"
@@ -2024,9 +1994,7 @@
         "overview": {
           "title": "XE MÁY ĐIỆN VINFAST AMIO — HƯỚNG DẪN SỬ DỤNG VINFAST AMIO",
           "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
-          "bullets": [
-            "công suất điện tối đa khoảng 210W"
-          ]
+          "bullets": ["công suất điện tối đa khoảng 210W"]
         },
         "exterior": [
           {
@@ -2132,9 +2100,7 @@
           ],
           "highlights": []
         },
-        "highlights": [
-          "công suất điện tối đa khoảng 210W"
-        ]
+        "highlights": ["công suất điện tối đa khoảng 210W"]
       },
       "fields": {},
       "fetchedAt": "2026-06-26T10:40:58.642Z"
@@ -2173,9 +2139,7 @@
         "overview": {
           "title": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
           "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
-          "bullets": [
-            "công suất điện tối đa khoảng 1000W"
-          ]
+          "bullets": ["công suất điện tối đa khoảng 1000W"]
         },
         "exterior": [
           {
@@ -2281,9 +2245,7 @@
           ],
           "highlights": []
         },
-        "highlights": [
-          "công suất điện tối đa khoảng 1000W"
-        ]
+        "highlights": ["công suất điện tối đa khoảng 1000W"]
       },
       "fields": {},
       "fetchedAt": "2026-06-26T10:41:03.136Z"
@@ -2312,9 +2274,7 @@
         "overview": {
           "title": "NHÃN HIỆU: VINFAST — 1.1. Thông điệp từ VinFast .............................................. 1",
           "subtitle": "1.1. Thông điệp từ VinFast .............................................. 1",
-          "bullets": [
-            "công suất điện tối đa khoảng 400W"
-          ]
+          "bullets": ["công suất điện tối đa khoảng 400W"]
         },
         "exterior": [
           {
@@ -2420,9 +2380,7 @@
           ],
           "highlights": []
         },
-        "highlights": [
-          "công suất điện tối đa khoảng 400W"
-        ]
+        "highlights": ["công suất điện tối đa khoảng 400W"]
       },
       "fields": {},
       "fetchedAt": "2026-06-26T10:41:07.089Z"
@@ -2451,10 +2409,7 @@
         "overview": {
           "title": "zgoo",
           "subtitle": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ",
-          "bullets": [
-            "CÔNG SUẤT TỐI ĐA 1100 KW",
-            "Tốc độ tối đa 39km/h"
-          ]
+          "bullets": ["CÔNG SUẤT TỐI ĐA 1100 KW", "Tốc độ tối đa 39km/h"]
         },
         "exterior": [
           {
@@ -2485,10 +2440,7 @@
           ]
         },
         "safety": null,
-        "highlights": [
-          "CÔNG SUẤT TỐI ĐA 1100 KW",
-          "Tốc độ tối đa 39km/h"
-        ]
+        "highlights": ["CÔNG SUẤT TỐI ĐA 1100 KW", "Tốc độ tối đa 39km/h"]
       },
       "fields": {
         "motorPower": 1100
@@ -2519,10 +2471,7 @@
         "overview": {
           "title": "Flazz",
           "subtitle": "*Tính đến tháng 10/2025 HOTLINE Pin LFP An toàn yên tâm vượt trội Không yêu cầu bằng lái Tốc độ tối đa 39km/h (không giới hạn km) Bảo hành HỆ THỐNG TRẠM SẠC & ĐẠI LÝ PHÂN PHỐI Hệ thống 100.000 cổng sạc trên toàn quốc Hệ thống gần 600 Đại lý phân phối uỷ quyền Vibe thể thao, dáng lái khoẻ, cá tính rõ",
-          "bullets": [
-            "CÔNG SUẤT TỐI ĐA 1100 KW",
-            "Tốc độ tối đa 39km/h"
-          ]
+          "bullets": ["CÔNG SUẤT TỐI ĐA 1100 KW", "Tốc độ tối đa 39km/h"]
         },
         "exterior": [
           {
@@ -2553,10 +2502,7 @@
           ]
         },
         "safety": null,
-        "highlights": [
-          "CÔNG SUẤT TỐI ĐA 1100 KW",
-          "Tốc độ tối đa 39km/h"
-        ]
+        "highlights": ["CÔNG SUẤT TỐI ĐA 1100 KW", "Tốc độ tối đa 39km/h"]
       },
       "fields": {
         "motorPower": 1100
@@ -2611,10 +2557,7 @@
         "overview": {
           "title": "(*) Theo điều kiện tiêu chuẩn của VinFast",
           "subtitle": "(*) Theo điều kiện tiêu chuẩn của VinFast",
-          "bullets": [
-            "Quãng đường di chuyển tới 262 km",
-            "Tốc độ tối đa đến 70 km/h"
-          ]
+          "bullets": ["Quãng đường di chuyển tới 262 km", "Tốc độ tối đa đến 70 km/h"]
         },
         "technology": [
           {
@@ -2657,10 +2600,7 @@
           ]
         },
         "safety": null,
-        "highlights": [
-          "Quãng đường di chuyển tới 262 km",
-          "Tốc độ tối đa đến 70 km/h"
-        ]
+        "highlights": ["Quãng đường di chuyển tới 262 km", "Tốc độ tối đa đến 70 km/h"]
       },
       "fields": {
         "range": 30

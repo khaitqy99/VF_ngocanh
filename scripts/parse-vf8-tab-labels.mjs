@@ -7,13 +7,15 @@ const html = await (
 const tabs = [...html.matchAll(/id="colorExterior([^"]+)-tab"[^>]*>[\s\S]*?<\/button>/gi)];
 for (const m of tabs) {
   const id = m[1];
-  const label = m[0].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const label = m[0]
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   const img = html.match(new RegExp(`colorExterior${id}[^]*?product-([^."']+)\\.webp`))?.[1];
   console.log(id, "|", label.slice(-60), "|", img);
 }
 
-const imgRe =
-  /reserves\/(VF\d[^/]*)\/exterior\/product-([^."']+)\.webp/g;
+const imgRe = /reserves\/(VF\d[^/]*)\/exterior\/product-([^."']+)\.webp/g;
 const byModel = {};
 let m;
 while ((m = imgRe.exec(html)) !== null) {

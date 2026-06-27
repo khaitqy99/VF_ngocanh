@@ -21,7 +21,14 @@ async function probe(id, url) {
       if (m[2].length < 50 && /[A-Za-z]/.test(m[2])) colors.push({ id: m[1], name: m[2] });
     }
     const vf8 = [...html.matchAll(/data-variant-label:([^,\s]+)/g)].map((x) => x[1]);
-    console.log(id, res.status, has360 ? "360" : "-", colors.length, template?.slice(-40) ?? "", vf8.length ? `vf8:${vf8.length}` : "");
+    console.log(
+      id,
+      res.status,
+      has360 ? "360" : "-",
+      colors.length,
+      template?.slice(-40) ?? "",
+      vf8.length ? `vf8:${vf8.length}` : "",
+    );
     return { id, url, template, folder, colors, html: has360 ? html : null };
   } catch (e) {
     console.log(id, "ERR", e.message);
@@ -34,5 +41,8 @@ for (const [id, url] of Object.entries(pdp.cars)) {
   const r = await probe(id, url);
   if (r?.colors?.length) results[id] = r;
 }
-fs.writeFileSync(path.join(__dirname, "vinfast-color-probe.json"), JSON.stringify(results, null, 2));
+fs.writeFileSync(
+  path.join(__dirname, "vinfast-color-probe.json"),
+  JSON.stringify(results, null, 2),
+);
 console.log("saved", Object.keys(results).length, "models with colors");

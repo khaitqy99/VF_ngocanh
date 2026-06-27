@@ -10,8 +10,7 @@ const URLS = [
 ];
 
 const HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
   Referer: "https://vinfastauto.com/vn_vi",
 };
 
@@ -19,7 +18,11 @@ for (const url of URLS) {
   try {
     const res = await fetch(url, { headers: HEADERS });
     const html = await res.text();
-    const slug = url.split("/").pop().replace(/\.html$/, "") || "home";
+    const slug =
+      url
+        .split("/")
+        .pop()
+        .replace(/\.html$/, "") || "home";
     fs.writeFileSync(`scripts/vinfast-probe-${slug}.html`, html.slice(0, 300000));
 
     const imgs = [
@@ -30,9 +33,7 @@ for (const url of URLS) {
       ),
     );
 
-    const bgUrls = [
-      ...html.matchAll(/url\((['"]?)(https?:\/\/[^)'"]+)\1\)/gi),
-    ].map((m) => m[2]);
+    const bgUrls = [...html.matchAll(/url\((['"]?)(https?:\/\/[^)'"]+)\1\)/gi)].map((m) => m[2]);
 
     const swiper = html.includes("swiper-wrapper");
     const blockIds = [...html.matchAll(/id="(block-[^"]+)"/g)].map((m) => m[1]);

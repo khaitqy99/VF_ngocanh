@@ -24,7 +24,9 @@ if (nextData) {
 }
 
 // Look for API endpoints in inline scripts
-const apiMatches = [...html.matchAll(/https?:\/\/[^"'\s]+(?:api|graphql)[^"'\s]*/gi)].map((m) => m[0]);
+const apiMatches = [...html.matchAll(/https?:\/\/[^"'\s]+(?:api|graphql)[^"'\s]*/gi)].map(
+  (m) => m[0],
+);
 console.log("\n=== API URLs ===");
 [...new Set(apiMatches)].slice(0, 20).forEach((u) => console.log(u));
 

@@ -205,7 +205,9 @@ export function ScootersPromoBanners() {
               <span className="mb-3 self-start rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
                 Lái thử miễn phí
               </span>
-              <h3 className="text-xl font-black uppercase leading-tight">Hành trình xanh — Lái thử ngay</h3>
+              <h3 className="text-xl font-black uppercase leading-tight">
+                Hành trình xanh — Lái thử ngay
+              </h3>
               <p className="mt-2 text-xs font-medium leading-relaxed text-slate-300">
                 Trải nghiệm khả năng tăng tốc mượt mà, công nghệ định vị thông minh của xe máy điện
                 VinFast tại Showroom VF Ngọc Anh hoàn toàn miễn phí.

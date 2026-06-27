@@ -206,8 +206,7 @@ function mapTechnologyItems(items, technologyLead) {
     const title = sanitizeText(t.title, 80) || t.title;
     let desc = sanitizeText(t.desc, 400);
     const looksDuplicated =
-      desc &&
-      (/^Hợp tác cùng những đối tác/i.test(desc) || desc.endsWith(",") || desc.length < 35);
+      desc && (/^Hợp tác cùng những đối tác/i.test(desc) || desc.endsWith(",") || desc.length < 35);
     if (looksDuplicated) {
       if (/trợ lý/i.test(title)) {
         desc =
@@ -280,8 +279,10 @@ function buildCarOverride(detail, galleries, colorImages, homepagePrices) {
     sanitizeText(detail.name, 80) ||
     detail.name;
   const slogan =
-    sanitizeText(brochure.slogan || pdp.slogan || detail.slogan || detail.overview?.subtitle, 220) ||
-    sanitizeText(detail.overview?.subtitle, 220);
+    sanitizeText(
+      brochure.slogan || pdp.slogan || detail.slogan || detail.overview?.subtitle,
+      220,
+    ) || sanitizeText(detail.overview?.subtitle, 220);
 
   const badgeSource = useBrochure
     ? (brochure.highlights ?? brochure.overview?.bullets ?? detail.highlights)
@@ -305,14 +306,10 @@ function buildCarOverride(detail, galleries, colorImages, homepagePrices) {
       price: standardVariantPrice(v, homepagePrice, singleVariant),
     }));
   } else if (homepagePrice) {
-    override.variants = [
-      { id: detail.id, name: detail.name, price: homepagePrice },
-    ];
+    override.variants = [{ id: detail.id, name: detail.name, price: homepagePrice }];
   }
 
-  const overviewSource = useBrochure
-    ? brochure.overview
-    : (pdp.overview ?? detail.overview);
+  const overviewSource = useBrochure ? brochure.overview : (pdp.overview ?? detail.overview);
   if (overviewSource?.title || tagline) {
     override.overview = {
       title: sanitizeText(brochure.tagline || overviewSource?.title || tagline, 120) || detail.name,
@@ -359,10 +356,7 @@ function buildCarOverride(detail, galleries, colorImages, homepagePrices) {
     override.technologySubtitle = sanitizeText(techLead, 220);
   }
 
-  const perfSource =
-    brochure.performance ??
-    pdp.performance ??
-    detail.performance;
+  const perfSource = brochure.performance ?? pdp.performance ?? detail.performance;
   if (perfSource) {
     override.performance = {
       title: sanitizeText(perfSource.title, 80) || "HIỆU SUẤT VƯỢT TRỘI",
@@ -489,9 +483,7 @@ function buildScooterOverride(detail, homepagePrices) {
     override.variants = [{ id: detail.id, name: detail.name, price: homepagePrice }];
   }
 
-  const overviewSource = useBrochure
-    ? brochure.overview
-    : (pdp.overview ?? detail.overview);
+  const overviewSource = useBrochure ? brochure.overview : (pdp.overview ?? detail.overview);
   if (overviewSource?.title || override.tagline) {
     const o = overviewSource ?? {};
     override.overview = {

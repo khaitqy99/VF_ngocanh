@@ -182,8 +182,7 @@ const CATALOG = {
   },
 };
 
-const BAD_RE =
-  /đặt cọc|xem bảng giá|tại đây|100\s*km\/h|-->|\blocalStorage\b|nhận báo giá/i;
+const BAD_RE = /đặt cọc|xem bảng giá|tại đây|100\s*km\/h|-->|\blocalStorage\b|nhận báo giá/i;
 
 function clean(text, max = 280) {
   if (!text) return "";
@@ -231,10 +230,7 @@ function slugify(name) {
 }
 
 function buildBadges(meta) {
-  return [
-    `Quãng đường ${meta.range} km`,
-    `Công suất ${meta.power} hp / ${meta.torque} Nm`,
-  ];
+  return [`Quãng đường ${meta.range} km`, `Công suất ${meta.power} hp / ${meta.torque} Nm`];
 }
 
 function buildOverviewBullets(meta) {
@@ -438,25 +434,18 @@ function buildPatch(id, detail, gallery) {
   );
 
   const exterior =
-    mapFeatureCards(
-      pdp.exterior || detail?.exterior,
-      imgs,
-      meta.image,
-    ) ?? defaultExterior(name, imgs);
+    mapFeatureCards(pdp.exterior || detail?.exterior, imgs, meta.image) ??
+    defaultExterior(name, imgs);
 
   const interior =
-    mapFeatureCards(
-      pdp.interior || detail?.interior,
-      imgs,
-      meta.image,
-    ) ?? defaultInterior(name, imgs);
+    mapFeatureCards(pdp.interior || detail?.interior, imgs, meta.image) ??
+    defaultInterior(name, imgs);
 
   const highlights = (detail?.highlights || pdp.overview?.bullets || [])
     .map((h) => clean(h, 80))
     .filter((h) => h.length > 10 && !BAD_RE.test(h));
 
-  const bullets =
-    highlights.length >= 2 ? highlights.slice(0, 4) : buildOverviewBullets(meta);
+  const bullets = highlights.length >= 2 ? highlights.slice(0, 4) : buildOverviewBullets(meta);
 
   const patch = {
     tagline: cleanCopy(pdp.tagline || detail?.tagline, meta.tagline, 80) || meta.tagline,
@@ -533,7 +522,9 @@ function main() {
     // Export vf8 từ file TS hiện có lần đầu
     const vf8Ts = path.join(ROOT, "src", "lib", "vinfast-vf8-detail-patch.ts");
     if (fs.existsSync(vf8Ts)) {
-      console.log("Note: Tạo scripts/car-detail-patch-manual.json từ vf8 patch — dùng file hiện tại.");
+      console.log(
+        "Note: Tạo scripts/car-detail-patch-manual.json từ vf8 patch — dùng file hiện tại.",
+      );
     }
   }
 

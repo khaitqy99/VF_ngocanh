@@ -19,7 +19,9 @@ for (const url of cssFiles) {
     .filter((u) => /service|aftersales|baohanh|bao-hanh|dvhm|warranty|showroom/i.test(u));
   console.log(`\n=== ${res.status} ${url.split("/").pop()} ===`);
   console.log(hits);
-  const blocks = [...css.matchAll(/#(?:block-service|aftersales[^\s{]*|block-aftersales)[^{]*\{[^}]+\}/g)];
+  const blocks = [
+    ...css.matchAll(/#(?:block-service|aftersales[^\s{]*|block-aftersales)[^{]*\{[^}]+\}/g),
+  ];
   blocks.slice(0, 5).forEach((b) => console.log(b[0].slice(0, 300)));
 }
 

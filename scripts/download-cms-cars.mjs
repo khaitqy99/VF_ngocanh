@@ -7,7 +7,10 @@ const OUT = path.join(__dirname, "..", "public", "images", "vinfast", "cars");
 
 const CMS_CARS = [
   { id: "vf8-all-new", url: "https://static-cms-prod.vinfastauto.com/vf8-all-new.png" },
-  { id: "vf-mpv7", url: "https://storage.googleapis.com/vinfast-data-01/pdp/vf_mpv_7/Homepage_MPV7.webp" },
+  {
+    id: "vf-mpv7",
+    url: "https://storage.googleapis.com/vinfast-data-01/pdp/vf_mpv_7/Homepage_MPV7.webp",
+  },
   { id: "ec-van", url: "https://static-cms-prod.vinfastauto.com/ecvan-02.webp" },
   { id: "herio-green", url: "https://static-cms-prod.vinfastauto.com/he.png" },
   { id: "limo-green", url: "https://static-cms-prod.vinfastauto.com/limo.png" },

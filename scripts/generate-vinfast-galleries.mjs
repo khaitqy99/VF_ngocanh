@@ -20,7 +20,10 @@ function main() {
 
   const data = JSON.parse(fs.readFileSync(GALLERY_JSON, "utf8"));
   const lines = Object.entries(data.cars ?? {})
-    .map(([id, images]) => `  ${JSON.stringify(id)}: ${JSON.stringify(images, null, 4).replace(/\n/g, "\n  ")},`)
+    .map(
+      ([id, images]) =>
+        `  ${JSON.stringify(id)}: ${JSON.stringify(images, null, 4).replace(/\n/g, "\n  ")},`,
+    )
     .join("\n");
 
   const content = `// Auto-generated — scripts/generate-vinfast-galleries.mjs

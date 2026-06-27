@@ -4,7 +4,10 @@ const NOISE_RE =
   /^\*+.*hình ảnh|phiên bản cho thị trường|chỉ mang tính chất minh họa|\d+\s*\|\s*VinFast$|^--\s*\d+|^\d+\s+of\s+\d+|vinfastauto\.com|1900\s*23\s*23\s*89|thông số kỹ thuật có thể thay đổi/i;
 
 const SECTION_RULES = [
-  { key: "exterior", re: /cảm hứng thiết kế|ngoại thất|diện mạo|thiết kế ngoại|đường nét|dải đèn|cản trước|nóc xe/i },
+  {
+    key: "exterior",
+    re: /cảm hứng thiết kế|ngoại thất|diện mạo|thiết kế ngoại|đường nét|dải đèn|cản trước|nóc xe/i,
+  },
   { key: "interior", re: /nội thất|buồng lái|hàng ghế|không gian rộng|tiện nghi|ghế ngồi/i },
   {
     key: "technology",
@@ -174,9 +177,7 @@ export function parseBrochureContent(text, name) {
   const overviewBullets =
     highlights.length > 0
       ? highlights
-      : paragraphs
-          .filter((p) => /\d/.test(p) && p.length < 100)
-          .slice(0, 4);
+      : paragraphs.filter((p) => /\d/.test(p) && p.length < 100).slice(0, 4);
 
   const performance =
     sections.performance.length > 0

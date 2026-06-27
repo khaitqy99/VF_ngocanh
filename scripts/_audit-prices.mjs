@@ -7,7 +7,10 @@ const ROOT = path.resolve(__dirname, "..");
 const VEHICLES = JSON.parse(fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"));
 const CARS_TS = fs.readFileSync(path.join(ROOT, "src/lib/cars.ts"), "utf8");
 const SCOOTERS_TS = fs.readFileSync(path.join(ROOT, "src/lib/scooters.ts"), "utf8");
-const OVERRIDES_TS = fs.readFileSync(path.join(ROOT, "src/lib/vinfast-detail-overrides.ts"), "utf8");
+const OVERRIDES_TS = fs.readFileSync(
+  path.join(ROOT, "src/lib/vinfast-detail-overrides.ts"),
+  "utf8",
+);
 
 function parsePrice(s) {
   const n = String(s ?? "").replace(/[^\d]/g, "");
@@ -24,7 +27,8 @@ function extractCatalog(ts) {
     const id = block.match(/id:\s*["']?([^"',\n]+)["']?/)?.[1];
     const name = block.match(/name:\s*"([^"]+)"/)?.[1];
     const price = block.match(/price:\s*([\d_]+)/)?.[1];
-    if (id && name && price) models.push({ id, name, price: parseInt(price.replace(/_/g, ""), 10) });
+    if (id && name && price)
+      models.push({ id, name, price: parseInt(price.replace(/_/g, ""), 10) });
   }
   return models;
 }
@@ -89,7 +93,8 @@ for (const m of catalog) {
   const minVar = variants.length ? Math.min(...variants.map((v) => v.price)) : null;
 
   const saleOk = home?.sale && m.price === home.sale;
-  const varOk = !variants.length || minVar === m.price || (variants.length === 1 && minVar === home?.sale);
+  const varOk =
+    !variants.length || minVar === m.price || (variants.length === 1 && minVar === home?.sale);
   const allOk = saleOk && varOk;
 
   if (allOk) ok++;
@@ -107,7 +112,9 @@ for (const m of catalog) {
   );
 
   if (!saleOk && home?.sale) {
-    console.log(`  → Lệch catalog: ${fmt(m.price)} vs sale ${fmt(home.sale)} (list ${home.listRaw ?? "—"})`);
+    console.log(
+      `  → Lệch catalog: ${fmt(m.price)} vs sale ${fmt(home.sale)} (list ${home.listRaw ?? "—"})`,
+    );
   }
   if (variants.length > 1 && minVar !== m.price) {
     console.log(`  → Min variant ${fmt(minVar)} ≠ catalog ${fmt(m.price)}`);

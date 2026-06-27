@@ -56,7 +56,7 @@ function slugify(name) {
 function fileNameFromUrl(url) {
   const u = new URL(url);
   const parts = u.pathname.split("/").filter(Boolean);
-  const base = parts.length >= 2 ? parts.slice(-3).join("-") : parts.at(-1) ?? "image";
+  const base = parts.length >= 2 ? parts.slice(-3).join("-") : (parts.at(-1) ?? "image");
   return base.replace(/[^a-zA-Z0-9._-]/g, "-");
 }
 
@@ -80,7 +80,8 @@ function scoreUrl(url) {
 function parseGalleryUrls(html, carId) {
   const found = [];
   const seen = new Set();
-  const re = /https:\/\/shop\.vinfastauto\.com\/on\/demandware\.static[^"']+\.(webp|jpg|jpeg|png)/gi;
+  const re =
+    /https:\/\/shop\.vinfastauto\.com\/on\/demandware\.static[^"']+\.(webp|jpg|jpeg|png)/gi;
   let m;
   while ((m = re.exec(html)) !== null) {
     const url = m[0].split("?")[0];
@@ -112,7 +113,9 @@ async function downloadFile(url, dest) {
 }
 
 async function main() {
-  const vehicles = JSON.parse(fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"));
+  const vehicles = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"),
+  );
   const result = { cars: {}, syncedAt: new Date().toISOString() };
 
   for (const car of vehicles.cars) {

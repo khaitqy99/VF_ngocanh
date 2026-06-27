@@ -40,9 +40,7 @@ const PAGES = [
     alt: "Bảo dưỡng định kỳ VinFast",
     parse(html) {
       const desktop = html.match(/content-banner[\s\S]*?<img[^>]+src="([^"]+)"/)?.[1];
-      return desktop
-        ? { desktop, mobile: desktop, alt: "Bảo dưỡng định kỳ VinFast" }
-        : null;
+      return desktop ? { desktop, mobile: desktop, alt: "Bảo dưỡng định kỳ VinFast" } : null;
     },
   },
   {
@@ -66,7 +64,7 @@ const PAGES = [
 
 function extFromUrl(url) {
   const m = url.match(/\.(\w+)(?:\?|$)/);
-  return m?.[1]?.toLowerCase() === "jpeg" ? "jpg" : m?.[1]?.toLowerCase() ?? "png";
+  return m?.[1]?.toLowerCase() === "jpeg" ? "jpg" : (m?.[1]?.toLowerCase() ?? "png");
 }
 
 async function loadHtml(page) {
@@ -112,9 +110,7 @@ for (const page of PAGES) {
   const mobileExt = extFromUrl(parsed.mobile);
   const desktopFile = `${page.id}-desktop.${desktopExt}`;
   const mobileFile =
-    parsed.mobile === parsed.desktop
-      ? desktopFile
-      : `${page.id}-mobile.${mobileExt}`;
+    parsed.mobile === parsed.desktop ? desktopFile : `${page.id}-mobile.${mobileExt}`;
 
   await download(parsed.desktop, path.join(OUT_DIR, desktopFile));
   if (mobileFile !== desktopFile) {
@@ -138,6 +134,9 @@ const manifest = {
   banners,
 };
 
-fs.writeFileSync(path.join(ROOT, "scripts", "after-sales-banners.json"), JSON.stringify(manifest, null, 2));
+fs.writeFileSync(
+  path.join(ROOT, "scripts", "after-sales-banners.json"),
+  JSON.stringify(manifest, null, 2),
+);
 console.log(`\nDone: ${banners.length} banners -> public/images/banners/after-sales/`);
 console.log("Manifest: scripts/after-sales-banners.json");

@@ -89,8 +89,7 @@ async function fetchHtml() {
   const headers = {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    Accept:
-      "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
     Referer: "https://www.google.com/",
     "Cache-Control": "no-cache",
@@ -222,10 +221,7 @@ function extractSwiperWrapper(html, blockId) {
   if (wrapperStart === -1) return "";
 
   const contentStart = wrapperStart + '<div class="swiper-wrapper">'.length;
-  const endMarkers = [
-    '<div class="slide-content-navigation">',
-    '<div class="swiper-pagination">',
-  ];
+  const endMarkers = ['<div class="slide-content-navigation">', '<div class="swiper-pagination">'];
 
   let contentEnd = -1;
   for (const marker of endMarkers) {

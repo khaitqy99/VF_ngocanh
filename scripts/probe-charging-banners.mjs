@@ -8,8 +8,7 @@ const URLS = [
 ];
 
 const HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
   Referer: "https://vinfastauto.com/vn_vi",
 };
 
@@ -21,9 +20,10 @@ for (const url of URLS) {
   console.log(`\n=== ${res.status} ${url} (${html.length})`);
 
   const hero =
-    html.match(/block-bike-battery|page-pin|hero|banner|swiper/i.test(html) &&
-      html.match(/content-banner[\s\S]*?src="([^"]+)"/)?.[1]) ??
-    html.match(/field-warranty-main-img[\s\S]*?src="([^"]+)"/)?.[1];
+    html.match(
+      /block-bike-battery|page-pin|hero|banner|swiper/i.test(html) &&
+        html.match(/content-banner[\s\S]*?src="([^"]+)"/)?.[1],
+    ) ?? html.match(/field-warranty-main-img[\s\S]*?src="([^"]+)"/)?.[1];
 
   const desktopSlides = [...html.matchAll(/class="d-none d-lg-block"[^>]*src="([^"]+)"/g)].map(
     (m) => m[1],
@@ -34,11 +34,10 @@ for (const url of URLS) {
 
   const cms = [
     ...new Set(
-      (html.match(/https:\/\/static-cms-prod\.vinfastauto\.com\/[^"'\s>]+\.(?:png|jpg|webp)/gi) ||
+      (
+        html.match(/https:\/\/static-cms-prod\.vinfastauto\.com\/[^"'\s>]+\.(?:png|jpg|webp)/gi) ||
         []
-      ).filter((u) =>
-        /pin|tram|sac|charge|battery|banner|hero|pin-va|charging/i.test(u),
-      ),
+      ).filter((u) => /pin|tram|sac|charge|battery|banner|hero|pin-va|charging/i.test(u)),
     ),
   ];
 

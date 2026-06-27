@@ -32,24 +32,33 @@ const BROCHURE_FALLBACK = {
   "ec-van": "https://static-cms-prod.vinfastauto.com/260115_ecvan-wb_vn_vi_v2.pdf",
   "minio-green": "https://storage.googleapis.com/vinfast-data-01/251108_WB_Mgreen_VN_VI_2.0.pdf",
   "herio-green": "https://static-cms-prod.vinfastauto.com/250618_herio_vn_vn_1.2_svc73000217aa.pdf",
-  "nerio-green": "https://static-cms-prod.vinfastauto.com/250618_nerio-green_vn_vi_1.1_svc20000368aa.pdf",
+  "nerio-green":
+    "https://static-cms-prod.vinfastauto.com/250618_nerio-green_vn_vi_1.1_svc20000368aa.pdf",
   "limo-green": "https://static-cms-prod.vinfastauto.com/250618_wb_limogreen_vn_vi_1.0.pdf",
-  "flazz-max": "https://static-cms-prod.vinfastauto.com/espcnf2bol001-01-flazz_max_vn_espc_bol_owner_manual.pdf",
-  "amio-s": "https://static-cms-prod.vinfastauto.com/espcnf1bol003-01-hs_bol_owner_manual_amio_s_ver01.pdf",
-  "evo-lite": "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00009869-User%20manual%20EVO%20200%20LITE_Rev%2008-HDSD%20xe%20Evo200%20Lite.pdf",
+  "flazz-max":
+    "https://static-cms-prod.vinfastauto.com/espcnf2bol001-01-flazz_max_vn_espc_bol_owner_manual.pdf",
+  "amio-s":
+    "https://static-cms-prod.vinfastauto.com/espcnf1bol003-01-hs_bol_owner_manual_amio_s_ver01.pdf",
+  "evo-lite":
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00009869-User%20manual%20EVO%20200%20LITE_Rev%2008-HDSD%20xe%20Evo200%20Lite.pdf",
   amio: "https://static-cms-prod.vinfastauto.com/espcnf1bol00201-hs_bol_owner_manual_ver02.pdf",
   viper: "https://static-cms-prod.vinfastauto.com/espcne9bol001-06-evo_max_vn_owner_manual_vie.pdf",
   "feliz-ii": "https://static-cms-prod.vinfastauto.com/feliz-s-2022.pdf",
   evo: "https://storage.googleapis.com/vinfast-data-01/hdsd/BOL00009361-%20EVO%20200.pdf",
   zgoo: "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/ESPCNECBOL001-04-DG1_ZGOO_OWNER_MANUAL-HDSD%20xe%20ZGOO.pdf",
-  flazz: "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/ESPCNEDBOL001-04-DG2_FLAZZ_OWNER_MANUAL-HDSD%20xe%20FLAZZ.pdf",
-  "vero-x": "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011310AA-Owner%20Manual%20Vero%20X-rev09-HDSD%20xe%20Vero%20X.pdf",
-  "feliz-2025": "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011287AA-User%20manual%20FELIZ%20NEO_2025-07-HDSD%20xe%20Feliz%202025.pdf",
-  "evo-grand": "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011286AA%20-User%20manual%20EVO%20GRAND-v7-HDSD%20xe%20Evo%20Grand.pdf",
+  flazz:
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/ESPCNEDBOL001-04-DG2_FLAZZ_OWNER_MANUAL-HDSD%20xe%20FLAZZ.pdf",
+  "vero-x":
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011310AA-Owner%20Manual%20Vero%20X-rev09-HDSD%20xe%20Vero%20X.pdf",
+  "feliz-2025":
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011287AA-User%20manual%20FELIZ%20NEO_2025-07-HDSD%20xe%20Feliz%202025.pdf",
+  "evo-grand":
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011286AA%20-User%20manual%20EVO%20GRAND-v7-HDSD%20xe%20Evo%20Grand.pdf",
   "evo-grand-lite":
     "https://storage.googleapis.com/vinfast-data-01/hdsd/26022026/BOL00011314AA%20-User%20manual%20EVO%20GRAND%20Lite_v7-BOL00011314AA%20-HDSD%20xe%20Evo%20Grand%20Lite.pdf",
   drgnfly: "https://static-cms-prod.vinfastauto.com/bol00011007-user-manual-e-bike-vie.pdf",
-  "evo-lite-neo": "https://storage.googleapis.com/vinfast-data-01/hdsd/BOL00011233%20-%20EVO%20LITE%20NEO.pdf",
+  "evo-lite-neo":
+    "https://storage.googleapis.com/vinfast-data-01/hdsd/BOL00011233%20-%20EVO%20LITE%20NEO.pdf",
 };
 
 const DISPLAY_NAMES = {
@@ -144,7 +153,11 @@ const CATEGORY_HEADER_RE =
 function isCategoryHeader(line) {
   const t = line.trim();
   if (!t || t.length > 60) return false;
-  if (/^THÔNG SỐ|^KÍCH THƯỚC|^PIN$|^PHANH$|^KHUNG|^HỆ THỐNG|^VÀNH|^TẢI TRỌNG|^GIẢM XÓC|^TÍNH NĂNG/i.test(t))
+  if (
+    /^THÔNG SỐ|^KÍCH THƯỚC|^PIN$|^PHANH$|^KHUNG|^HỆ THỐNG|^VÀNH|^TẢI TRỌNG|^GIẢM XÓC|^TÍNH NĂNG/i.test(
+      t,
+    )
+  )
     return true;
   return CATEGORY_HEADER_RE.test(t) && !isSpecLabel(t);
 }
@@ -155,7 +168,11 @@ function isStrongValueLine(line) {
   if (isCategoryHeader(t) || isSpecLabel(t) || isVariantMarker(t)) return false;
   if (/^\d+\s*x\s*[\d.]+\s*x\s*[\d.]+/i.test(t)) return true;
   if (/^[\d.,]+\s*(mm|kg|km\/h|km|W|Nm|Wh|V|Ah|phút|Inch)/i.test(t)) return true;
-  if (/Lithium|Thép|Đùi|Cảm biến|^CÓ$|Sạc di động|Vành nhôm|Phanh đĩa|Khung nhôm|Tích hợp|Điều chỉnh chế độ/i.test(t))
+  if (
+    /Lithium|Thép|Đùi|Cảm biến|^CÓ$|Sạc di động|Vành nhôm|Phanh đĩa|Khung nhôm|Tích hợp|Điều chỉnh chế độ/i.test(
+      t,
+    )
+  )
     return true;
   if (/^\d+\s*(\/|\+)/.test(t)) return true;
   return false;
@@ -190,13 +207,18 @@ function isValueLine(line) {
   if (/^--/.test(t)) return false;
   if (/^KÍCH THƯỚC|^PIN$|^PHANH$|^KHUNG|^HỆ THỐNG|^THÔNG SỐ|^VÀNH|^TẢI TRỌNG|^GIẢM XÓC/i.test(t))
     return false;
-  return /[\d]/.test(t) || /km|kW|hp|Nm|AWD|FWD|RWD|Inch|inch|phút|CATL|LFP|Có|Không|ghế|chỗ|W/i.test(t);
+  return (
+    /[\d]/.test(t) || /km|kW|hp|Nm|AWD|FWD|RWD|Inch|inch|phút|CATL|LFP|Có|Không|ghế|chỗ|W/i.test(t)
+  );
 }
 
 function parseTabSeparatedSpecs(text) {
   const specs = [];
   for (const raw of text.split("\n")) {
-    const parts = raw.split("\t").map((s) => s.trim()).filter(Boolean);
+    const parts = raw
+      .split("\t")
+      .map((s) => s.trim())
+      .filter(Boolean);
     if (parts.length !== 2) continue;
     const [label, value] = parts;
     if (label.length > 70 || value.length > 120) continue;
@@ -398,7 +420,11 @@ function extractFields(specs, type) {
     const rangeNum = range.match(/(\d+)/);
     const batteryNum = battery.match(/([\d.,]+)/);
     return {
-      ...(hpNum ? { power: Number(hpNum[1]) } : kwNum ? { power: kwToHp(kwNum[1]), powerKw: Number(kwNum[1]) } : {}),
+      ...(hpNum
+        ? { power: Number(hpNum[1]) }
+        : kwNum
+          ? { power: kwToHp(kwNum[1]), powerKw: Number(kwNum[1]) }
+          : {}),
       ...(torqueNum ? { torque: Number(torqueNum[1]) } : {}),
       ...(rangeNum ? { range: Number(rangeNum[1]) } : {}),
       ...(batteryNum ? { batteryCapacity: parseFloat(batteryNum[1].replace(",", ".")) } : {}),
@@ -463,9 +489,7 @@ function mergeBrowserPatch(details) {
     if (idx >= 0) {
       const merged = { ...list[idx], ...item, error: undefined };
       if (item.specTable?.length) {
-        merged.specTable = sanitizeSpecTable(
-          mergeSpecs(item.specTable, list[idx].specTable ?? []),
-        );
+        merged.specTable = sanitizeSpecTable(mergeSpecs(item.specTable, list[idx].specTable ?? []));
       }
       list[idx] = merged;
     } else {
@@ -518,7 +542,9 @@ async function main() {
   }
 
   const ok = [...results.cars, ...results.scooters].filter((x) => x.specTable?.length).length;
-  console.log(`Vehicles with brochure specs: ${ok}/${results.cars.length + results.scooters.length}`);
+  console.log(
+    `Vehicles with brochure specs: ${ok}/${results.cars.length + results.scooters.length}`,
+  );
 }
 
 main().catch((err) => {

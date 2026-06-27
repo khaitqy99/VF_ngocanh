@@ -15,15 +15,12 @@ const BANNERS = [
     id: "02-xmd-uu-dai-16-1",
     desktop:
       "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-1-desktop.jpg",
-    mobile:
-      "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-1-mobile.jpg",
+    mobile: "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-1-mobile.jpg",
   },
   {
     id: "03-xmd-uu-dai-16",
-    desktop:
-      "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-desktop.jpg",
-    mobile:
-      "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-mobile.jpg",
+    desktop: "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-desktop.jpg",
+    mobile: "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-mobile.jpg",
   },
   {
     id: "04-vinfascination-vinpearl",
@@ -34,17 +31,13 @@ const BANNERS = [
   },
   {
     id: "05-vf3-vinpearl",
-    desktop:
-      "https://static-cms-prod.vinfastauto.com/vinfast-vf3-uu-dai-he-vinpearl-desktop.jpg",
-    mobile:
-      "https://static-cms-prod.vinfastauto.com/vinfast-vf3-uu-dai-he-vinpearl-mobile.jpg",
+    desktop: "https://static-cms-prod.vinfastauto.com/vinfast-vf3-uu-dai-he-vinpearl-desktop.jpg",
+    mobile: "https://static-cms-prod.vinfastauto.com/vinfast-vf3-uu-dai-he-vinpearl-mobile.jpg",
   },
   {
     id: "06-vf-mpv7",
-    desktop:
-      "https://static-cms-prod.vinfastauto.com/vinfast-vf-mpv7-uu-dai-124-trieu-desktop.jpg",
-    mobile:
-      "https://static-cms-prod.vinfastauto.com/vinfast-vf-mpv7-uu-dai-124-trieu-mobile.jpg",
+    desktop: "https://static-cms-prod.vinfastauto.com/vinfast-vf-mpv7-uu-dai-124-trieu-desktop.jpg",
+    mobile: "https://static-cms-prod.vinfastauto.com/vinfast-vf-mpv7-uu-dai-124-trieu-mobile.jpg",
   },
 ];
 

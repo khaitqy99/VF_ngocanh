@@ -359,7 +359,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 12_500_000,
     rentBatteryPrice: 150_000,
     acceleration: "0-45 km/h trong 7.5 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Đen", hex: "#111827" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Đen", hex: "#111827" },
+    ],
   },
   "amio-s": {
     subtitle: "Xe máy điện an toàn tốc độ 25 km/h",
@@ -371,7 +374,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 8_000_000,
     rentBatteryPrice: 120_000,
     acceleration: "0-25 km/h trong 5 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Xanh", hex: "#2563EB" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Xanh", hex: "#2563EB" },
+    ],
   },
   "evo-lite": {
     subtitle: "Xe máy điện phổ thông quãng đường dài",
@@ -383,7 +389,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 250_000,
     acceleration: "0-49 km/h trong 8 giây",
-    colors: [{ name: "Đỏ", hex: "#DC2626" }, { name: "Trắng", hex: "#FFFFFF" }],
+    colors: [
+      { name: "Đỏ", hex: "#DC2626" },
+      { name: "Trắng", hex: "#FFFFFF" },
+    ],
     isBestSeller: true,
   },
   amio: {
@@ -396,7 +405,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 8_600_000,
     rentBatteryPrice: 150_000,
     acceleration: "0-30 km/h trong 5 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Xanh", hex: "#2563EB" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Xanh", hex: "#2563EB" },
+    ],
   },
   viper: {
     subtitle: "Xe máy điện thể thao mạnh mẽ",
@@ -408,7 +420,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 350_000,
     acceleration: "0-50 km/h trong 4.5 giây",
-    colors: [{ name: "Đen", hex: "#111827" }, { name: "Đỏ", hex: "#DC2626" }],
+    colors: [
+      { name: "Đen", hex: "#111827" },
+      { name: "Đỏ", hex: "#DC2626" },
+    ],
   },
   "feliz-ii": {
     subtitle: "Xe ga điện thanh lịch châu Âu",
@@ -420,7 +435,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 350_000,
     acceleration: "0-50 km/h trong 5.8 giây",
-    colors: [{ name: "Xanh lục", hex: "#065F46" }, { name: "Trắng", hex: "#FFFFFF" }],
+    colors: [
+      { name: "Xanh lục", hex: "#065F46" },
+      { name: "Trắng", hex: "#FFFFFF" },
+    ],
     isBestSeller: true,
   },
   evo: {
@@ -433,7 +451,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 250_000,
     acceleration: "0-50 km/h trong 6 giây",
-    colors: [{ name: "Xanh dương", hex: "#1D4ED8" }, { name: "Đỏ", hex: "#DC2626" }],
+    colors: [
+      { name: "Xanh dương", hex: "#1D4ED8" },
+      { name: "Đỏ", hex: "#DC2626" },
+    ],
     isBestSeller: true,
   },
   zgoo: {
@@ -446,7 +467,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 15_000_000,
     rentBatteryPrice: 200_000,
     acceleration: "0-39 km/h trong 7 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Xanh", hex: "#34D399" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Xanh", hex: "#34D399" },
+    ],
   },
   flazz: {
     subtitle: "Xe máy điện phổ thông 2 pin",
@@ -458,7 +482,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 16_000_000,
     rentBatteryPrice: 200_000,
     acceleration: "0-39 km/h trong 7 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Đen", hex: "#111827" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Đen", hex: "#111827" },
+    ],
   },
   "vero-x": {
     subtitle: "Xe ga điện cao cấp quãng đường dài",
@@ -470,7 +497,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 22_000_000,
     rentBatteryPrice: 390_000,
     acceleration: "0-50 km/h trong 4.2 giây",
-    colors: [{ name: "Đen", hex: "#111827" }, { name: "Trắng", hex: "#FFFFFF" }],
+    colors: [
+      { name: "Đen", hex: "#111827" },
+      { name: "Trắng", hex: "#FFFFFF" },
+    ],
     isBestSeller: true,
   },
   "feliz-2025": {
@@ -483,7 +513,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 350_000,
     acceleration: "0-50 km/h trong 5.5 giây",
-    colors: [{ name: "Xanh lục", hex: "#065F46" }, { name: "Đỏ", hex: "#991B1B" }],
+    colors: [
+      { name: "Xanh lục", hex: "#065F46" },
+      { name: "Đỏ", hex: "#991B1B" },
+    ],
     isNew: true,
   },
   "evo-grand": {
@@ -496,7 +529,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 19_900_000,
     rentBatteryPrice: 350_000,
     acceleration: "0-50 km/h trong 5.8 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Đen", hex: "#111827" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Đen", hex: "#111827" },
+    ],
   },
   "evo-grand-lite": {
     subtitle: "Xe ga điện tiết kiệm, dễ sử dụng",
@@ -508,7 +544,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 18_000_000,
     rentBatteryPrice: 300_000,
     acceleration: "0-48 km/h trong 7 giây",
-    colors: [{ name: "Trắng", hex: "#FFFFFF" }, { name: "Xanh", hex: "#2563EB" }],
+    colors: [
+      { name: "Trắng", hex: "#FFFFFF" },
+      { name: "Xanh", hex: "#2563EB" },
+    ],
   },
   drgnfly: {
     subtitle: "Xe đạp điện thông minh đa dụng",
@@ -520,7 +559,10 @@ const SCOOTER_ENRICHMENT = {
     batteryPurchasePrice: 10_000_000,
     rentBatteryPrice: 0,
     acceleration: "Hỗ trợ pedal-assist",
-    colors: [{ name: "Đen", hex: "#111827" }, { name: "Xám", hex: "#6B7280" }],
+    colors: [
+      { name: "Đen", hex: "#111827" },
+      { name: "Xám", hex: "#6B7280" },
+    ],
     isNew: true,
   },
 };
@@ -694,7 +736,8 @@ function mergeEnrichment(enrich, fields, detail) {
   if (fields?.dimensions) merged.dimensions = fields.dimensions;
   if (fields?.drive) merged.drive = fields.drive;
   if (fields?.acceleration) merged.acceleration = fields.acceleration;
-  if (detail?.overview?.subtitle && !merged.subtitle) merged.subtitle = detail.overview.subtitle.slice(0, 120);
+  if (detail?.overview?.subtitle && !merged.subtitle)
+    merged.subtitle = detail.overview.subtitle.slice(0, 120);
   if (detail?.colorHex?.length) merged.colors = detail.colorHex;
   return merged;
 }
@@ -708,7 +751,11 @@ function specsToFeatureSpecs(specs, type) {
       result.push({ value: seats, label: "chỗ ngồi", seats: true });
     } else if (label.includes("quãng đường") || label.includes("tốc độ tối đa")) {
       result.push({ value: spec.value, label: spec.label });
-    } else if (label.includes("công suất") || label.includes("cốp") || label.includes("pin lithium")) {
+    } else if (
+      label.includes("công suất") ||
+      label.includes("cốp") ||
+      label.includes("pin lithium")
+    ) {
       result.push({ value: spec.value, label: spec.label });
     } else if (label.includes("giá")) {
       result.push({
@@ -733,7 +780,8 @@ function formatObject(obj, indent = 2) {
     .map(([k, v]) => {
       if (typeof v === "string") return `${pad}${k}: ${JSON.stringify(v)}`;
       if (typeof v === "boolean") return `${pad}${k}: ${v}`;
-      if (Array.isArray(v)) return `${pad}${k}: ${JSON.stringify(v, null, 2).replace(/\n/g, `\n${pad}`)}`;
+      if (Array.isArray(v))
+        return `${pad}${k}: ${JSON.stringify(v, null, 2).replace(/\n/g, `\n${pad}`)}`;
       return `${pad}${k}: ${typeof v === "number" && v > 999 ? v.toLocaleString("en-US").replace(/,/g, "_") : v}`;
     });
   return `{\n${lines.join(",\n")}\n${" ".repeat(indent - 2)}}`;
@@ -1104,7 +1152,9 @@ function generateVinfastHomeTs(data, cars, scooters) {
     specs: specsToFeatureSpecs(item.specs, type),
     primaryCta: "ĐẶT CỌC",
     secondaryCta: "KHÁM PHÁ NGAY",
-    href: item.localId ? `${type === "car" ? "/oto" : "/xe-may-dien"}/${item.localId}` : item.detailHref,
+    href: item.localId
+      ? `${type === "car" ? "/oto" : "/xe-may-dien"}/${item.localId}`
+      : item.detailHref,
     detailHref: item.detailHref,
   });
 
@@ -1141,9 +1191,17 @@ export type VinFastHeroBanner = {
 
 export const VINFAST_HERO_BANNERS: VinFastHeroBanner[] = ${JSON.stringify(processedBanners, null, 2)};
 
-export const VINFAST_FEATURED_CARS: VinFastHomeSlide[] = ${JSON.stringify(processedCars.map((c) => toSlide(c, "car")), null, 2)};
+export const VINFAST_FEATURED_CARS: VinFastHomeSlide[] = ${JSON.stringify(
+    processedCars.map((c) => toSlide(c, "car")),
+    null,
+    2,
+  )};
 
-export const VINFAST_FEATURED_SCOOTERS: VinFastHomeSlide[] = ${JSON.stringify(processedScooters.map((s) => toSlide(s, "scooter")), null, 2)};
+export const VINFAST_FEATURED_SCOOTERS: VinFastHomeSlide[] = ${JSON.stringify(
+    processedScooters.map((s) => toSlide(s, "scooter")),
+    null,
+    2,
+  )};
 
 export const VINFAST_ALL_CARS = ${JSON.stringify(
     processedCars.map((c) => ({
@@ -1205,7 +1263,9 @@ function main() {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
   const details = loadVinFastDetails();
   const colorImages = loadColorImages();
-  console.log(`Loaded ${data.cars.length} cars, ${data.scooters.length} scooters from ${DATA_FILE}`);
+  console.log(
+    `Loaded ${data.cars.length} cars, ${data.scooters.length} scooters from ${DATA_FILE}`,
+  );
   console.log(
     `VinFast details: ${details.cars?.filter((c) => !c?.error).length ?? 0} cars, ${details.scooters?.filter((s) => !s?.error).length ?? 0} scooters`,
   );

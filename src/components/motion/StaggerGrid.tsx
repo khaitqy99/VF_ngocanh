@@ -5,11 +5,7 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { homeCardReveal, homeViewport } from "@/lib/home-motion";
-import {
-  catalogItemViewport,
-  catalogStaggerItem,
-  STAGGER_STEP,
-} from "@/lib/motion";
+import { catalogItemViewport, catalogStaggerItem, STAGGER_STEP } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type StaggerGridProps = HTMLAttributes<HTMLDivElement> & {

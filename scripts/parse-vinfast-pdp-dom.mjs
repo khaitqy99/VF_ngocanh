@@ -1,9 +1,15 @@
 /** Parse VinFast PDP innerText / DOM extract into detail record shape */
 
 const COLOR_HEX = {
-  "Summer Yellow": "#FBBF24", "Jet Black": "#111827", "Infinity Blanc": "#FFFFFF",
-  "Zenith Grey": "#6B7280", "Urban Mint": "#34D399", "Solar Ruby": "#DC2626",
-  "Starburst Blue": "#2563EB", "Vitality Orange": "#D97706", "Mysterioso Purple": "#7C3AED",
+  "Summer Yellow": "#FBBF24",
+  "Jet Black": "#111827",
+  "Infinity Blanc": "#FFFFFF",
+  "Zenith Grey": "#6B7280",
+  "Urban Mint": "#34D399",
+  "Solar Ruby": "#DC2626",
+  "Starburst Blue": "#2563EB",
+  "Vitality Orange": "#D97706",
+  "Mysterioso Purple": "#7C3AED",
 };
 
 function parsePrice(text) {
@@ -53,9 +59,15 @@ export function domExtractToDetail(meta, catalogVehicle) {
     const l = label.toLowerCase();
     if (l.includes("công suất") && /kW/i.test(label)) {
       const n = value.match(/(\d+)/);
-      if (n) { fields.powerKw = Number(n[1]); fields.power = Math.round(Number(n[1]) * 1.341); }
+      if (n) {
+        fields.powerKw = Number(n[1]);
+        fields.power = Math.round(Number(n[1]) * 1.341);
+      }
     }
-    if (l.includes("mô men")) { const n = value.match(/(\d+)/); if (n) fields.torque = Number(n[1]); }
+    if (l.includes("mô men")) {
+      const n = value.match(/(\d+)/);
+      if (n) fields.torque = Number(n[1]);
+    }
     if (l.includes("quãng đường") || /km/.test(value)) {
       const n = value.match(/(\d+)/);
       if (n) fields.range = Number(n[1]);
@@ -64,8 +76,14 @@ export function domExtractToDetail(meta, catalogVehicle) {
       const n = value.match(/([\d,]+)/);
       if (n) fields.batteryCapacity = parseFloat(n[1].replace(",", "."));
     }
-    if (l.includes("tốc độ")) { const n = value.match(/(\d+)/); if (n) fields.topSpeed = Number(n[1]); }
-    if (l.includes("cốp")) { const n = value.match(/(\d+)/); if (n) fields.trunk = Number(n[1]); }
+    if (l.includes("tốc độ")) {
+      const n = value.match(/(\d+)/);
+      if (n) fields.topSpeed = Number(n[1]);
+    }
+    if (l.includes("cốp")) {
+      const n = value.match(/(\d+)/);
+      if (n) fields.trunk = Number(n[1]);
+    }
     if (l.includes("công suất động cơ") || (l.includes("công suất") && /w/i.test(value))) {
       const n = value.match(/(\d+)/);
       if (n) fields.motorPower = Number(n[1]);

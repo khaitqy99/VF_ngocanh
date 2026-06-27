@@ -1,8 +1,7 @@
 import fs from "fs";
 
 const HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
   Accept: "text/html,application/xhtml+xml",
   "Accept-Language": "vi-VN,vi;q=0.9",
   Referer: "https://vinfastauto.com/vn_vi",
@@ -24,7 +23,9 @@ for (const url of pages) {
     html.match(/warranty-intro-img[\s\S]*?src="([^"]+)"/)?.[1] ??
     html.match(/page-hero[\s\S]*?src="([^"]+)"/)?.[1];
 
-  const slides = [...html.matchAll(/class="d-none d-lg-block"[^>]*src="([^"]+)"/g)].map((m) => m[1]);
+  const slides = [...html.matchAll(/class="d-none d-lg-block"[^>]*src="([^"]+)"/g)].map(
+    (m) => m[1],
+  );
   const mobileSlides = [...html.matchAll(/class="d-block d-lg-none"[^>]*src="([^"]+)"/g)].map(
     (m) => m[1],
   );
@@ -35,7 +36,8 @@ for (const url of pages) {
 
   const cms = [
     ...new Set(
-      (html.match(/https:\/\/static-cms-prod\.vinfastauto\.com\/[^"'\s>]+\.(?:png|jpg|webp)/gi) ||
+      (
+        html.match(/https:\/\/static-cms-prod\.vinfastauto\.com\/[^"'\s>]+\.(?:png|jpg|webp)/gi) ||
         []
       ).filter((u) => /bao-hanh|baohanh|dich-vu|service|dvhm|sua-chua|bao-duong/i.test(u)),
     ),
@@ -52,5 +54,11 @@ const serviceBg = [
   ...css.matchAll(/#block-service[^}]*background(?:-image)?:[^;]+url\((['"]?)([^)'"]+)\1\)/gi),
 ];
 const aftersalesBg = [...css.matchAll(/#aftersales[^}]*background[^}]+/gi)];
-console.log("\n=== homepage-v2.css block-service ===", serviceBg.map((m) => m[2]));
-console.log("aftersales:", aftersalesBg.map((m) => m[0].slice(0, 200)));
+console.log(
+  "\n=== homepage-v2.css block-service ===",
+  serviceBg.map((m) => m[2]),
+);
+console.log(
+  "aftersales:",
+  aftersalesBg.map((m) => m[0].slice(0, 200)),
+);

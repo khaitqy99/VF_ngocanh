@@ -70,5 +70,8 @@ const manifest = {
   localDesktop: `/images/banners/accessories/phu-kien-banner-desktop.${bannerExt}`,
 };
 
-fs.writeFileSync(path.join(ROOT, "scripts", "accessory-banners.json"), JSON.stringify(manifest, null, 2));
+fs.writeFileSync(
+  path.join(ROOT, "scripts", "accessory-banners.json"),
+  JSON.stringify(manifest, null, 2),
+);
 console.log("\nDone. Manifest: scripts/accessory-banners.json");

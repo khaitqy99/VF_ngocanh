@@ -1,5 +1,6 @@
-.slick-prev:before, .slick-next:before {
-  color: #1464F4;
+.slick-prev:before,
+.slick-next:before {
+  color: #1464f4;
 }
 
 .swiper-container-vertical {
@@ -17,14 +18,14 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .swiper-slide {
   width: 100%;
   -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   display: block;
   height: 100%;
   max-height: 100%;
@@ -48,7 +49,7 @@
 
 #fullPage .swiper-slide {
   font-weight: 400;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 @media screen and (max-width: 425px) {
   #fullPage .swiper-slide {
@@ -100,7 +101,7 @@
 }
 
 .node__content {
-  color: #3C3C3C;
+  color: #3c3c3c;
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
@@ -126,11 +127,11 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 .node__content .page-repair-intro .mobile-display img {
   width: 100%;
@@ -181,7 +182,7 @@
   font-size: 56px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
 }
 @media screen and (max-width: 1366px) {
   .node__content .page-repair-intro .field--name-field-dvhm-sc-title div.field__item {
@@ -205,7 +206,7 @@
 }
 .node__content .page-repair-intro .field--name-field-dvhm-sc-link a {
   padding: 14px 40px;
-  background-color: #1464F4;
+  background-color: #1464f4;
   border-radius: 3px;
   font-weight: 700;
   font-size: 16px;
@@ -213,13 +214,13 @@
   text-align: center;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: #ffffff;
   min-width: 285px;
 }
 .node__content .page-repair-intro .field--name-field-dvhm-sc-link a:hover {
-  color: #1464F4;
-  background-color: #FFFFFF;
-  border: #1464F4 1px solid;
+  color: #1464f4;
+  background-color: #ffffff;
+  border: #1464f4 1px solid;
 }
 @media screen and (max-width: 768px) {
   .node__content .page-repair-intro .field--name-field-dvhm-sc-link a {
@@ -266,7 +267,10 @@
     font-size: 14px;
   }
 }
-.node__content .page-repair-procedure .field--name-field-dvhm-sc-services-all .repair-procedure-list {
+.node__content
+  .page-repair-procedure
+  .field--name-field-dvhm-sc-services-all
+  .repair-procedure-list {
   background-repeat: no-repeat;
 }
 @media screen and (max-width: 767px) {
@@ -286,7 +290,7 @@
 }
 .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services #repair-step-content {
   width: 60%;
-  background-color: #F7F9F9;
+  background-color: #f7f9f9;
   margin: 54px auto 0;
   padding: 20px 20px 5px 20px;
 }
@@ -311,92 +315,220 @@
 .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-title {
   margin: 0px 0 50px;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-title .field--name-field-dvhm-sc-services-mtitle div.field__item {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-title
+  .field--name-field-dvhm-sc-services-mtitle
+  div.field__item {
   font-size: 32px;
   margin: 0px 0 10px;
   font-weight: 300;
   line-height: normal;
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-title .field--name-field-dvhm-sc-services-mtitle div.field__item {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-title
+    .field--name-field-dvhm-sc-services-mtitle
+    div.field__item {
     font-size: 28px;
   }
 }
 @media (max-width: 479px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-title .field--name-field-dvhm-sc-services-mtitle div.field__item {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-title
+    .field--name-field-dvhm-sc-services-mtitle
+    div.field__item {
     font-size: 24px;
   }
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item {
   cursor: pointer;
   outline: 0;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item.selected .field--name-field-dvhm-sc-s-svg .field__item {
-  background: #1464F4;
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item.selected
+  .field--name-field-dvhm-sc-s-svg
+  .field__item {
+  background: #1464f4;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item.selected .field--name-field-dvhm-sc-s-svg .field__item img {
-  -webkit-filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg) brightness(110%) contrast(97%);
-          filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg) brightness(110%) contrast(97%);
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item.selected
+  .field--name-field-dvhm-sc-s-svg
+  .field__item
+  img {
+  -webkit-filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%)
+    hue-rotate(186deg) brightness(110%) contrast(97%);
+  filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg)
+    brightness(110%) contrast(97%);
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item :hover .field--name-field-dvhm-sc-s-svg .field__item {
-  background: #1464F4;
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  :hover
+  .field--name-field-dvhm-sc-s-svg
+  .field__item {
+  background: #1464f4;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item :hover .field--name-field-dvhm-sc-s-svg .field__item img {
-  -webkit-filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg) brightness(110%) contrast(97%);
-          filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg) brightness(110%) contrast(97%);
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  :hover
+  .field--name-field-dvhm-sc-s-svg
+  .field__item
+  img {
+  -webkit-filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%)
+    hue-rotate(186deg) brightness(110%) contrast(97%);
+  filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(9%) hue-rotate(186deg)
+    brightness(110%) contrast(97%);
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item:hover, .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item:focus {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item:hover,
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item:focus {
   outline: 0;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-svg {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-svg {
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-svg div.field__item {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-svg
+  div.field__item {
   padding: 10px;
   width: 101px;
   height: 101px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: #F7F9F9;
+  background-color: #f7f9f9;
   border-radius: 5px;
 }
 @media screen and (max-width: 1280px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-svg div.field__item {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-list
+    .field--name-field-dvhm-sc-services-items
+    .repair-procedure-item
+    .field--name-field-dvhm-sc-s-svg
+    div.field__item {
     width: 40px;
     height: 40px;
   }
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-svg div.field__item img {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-svg
+  div.field__item
+  img {
   width: auto;
   height: auto;
   margin: auto;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-step {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-step {
   margin-top: 20px;
-  color: #7A99AC;
+  color: #7a99ac;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-step div.field__item {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-step
+  div.field__item {
   text-transform: uppercase;
   font-size: 16px;
   font-weight: 700;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-title {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-title {
   margin-top: 10px;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-title br {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-list
+  .field--name-field-dvhm-sc-services-items
+  .repair-procedure-item
+  .field--name-field-dvhm-sc-s-title
+  br {
   display: none;
 }
 @media screen and (max-width: 425px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-list .field--name-field-dvhm-sc-services-items .repair-procedure-item .field--name-field-dvhm-sc-s-title div.field__item {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-list
+    .field--name-field-dvhm-sc-services-items
+    .repair-procedure-item
+    .field--name-field-dvhm-sc-s-title
+    div.field__item {
     width: 100%;
     margin: 0 auto;
   }
@@ -406,12 +538,12 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   width: 60%;
   margin: 50px auto 0;
 }
@@ -424,8 +556,8 @@
   .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     width: 100%;
   }
 }
@@ -434,19 +566,32 @@
     margin-top: 20px;
   }
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-slink {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-slink {
   width: calc(50% - 20px);
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-slink {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-links
+    .field--name-field-dvhm-sc-services-slink {
     width: 100%;
     margin: 10px 0;
   }
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-slink a {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-slink
+  a {
   width: 100%;
-  background: #1464F4;
-  color: #FFFFFF;
+  background: #1464f4;
+  color: #ffffff;
   padding: 15px 20px;
   display: inline-block;
   border-radius: 3px;
@@ -456,26 +601,44 @@
   text-align: center;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid #1464F4;
+  border: 1px solid #1464f4;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-slink a:hover {
-  color: #1464F4;
-  background-color: #FFFFFF;
-  border: #1464F4 1px solid;
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-slink
+  a:hover {
+  color: #1464f4;
+  background-color: #ffffff;
+  border: #1464f4 1px solid;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-clink {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-clink {
   width: calc(50% - 20px);
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-clink {
+  .node__content
+    .page-repair-procedure
+    .paragraph--type--dvhm-sc-services
+    .repair-procedure-links
+    .field--name-field-dvhm-sc-services-clink {
     width: 100%;
     margin: 10px 0;
   }
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-clink a {
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-clink
+  a {
   width: 100%;
-  background: #FFFFFF;
-  color: #1464F4;
+  background: #ffffff;
+  color: #1464f4;
   padding: 15px 20px;
   display: inline-block;
   border-radius: 3px;
@@ -485,11 +648,16 @@
   text-align: center;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid #1464F4;
+  border: 1px solid #1464f4;
 }
-.node__content .page-repair-procedure .paragraph--type--dvhm-sc-services .repair-procedure-links .field--name-field-dvhm-sc-services-clink a:hover {
-  color: #FFFFFF;
-  background-color: #1464F4;
+.node__content
+  .page-repair-procedure
+  .paragraph--type--dvhm-sc-services
+  .repair-procedure-links
+  .field--name-field-dvhm-sc-services-clink
+  a:hover {
+  color: #ffffff;
+  background-color: #1464f4;
 }
 .node__content .page-repair-general ul {
   padding: 0;
@@ -500,7 +668,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: normal;
-  color: #3C3C3C;
+  color: #3c3c3c;
   background-image: url("../../img/dvhm/list-icon.svg");
   background-repeat: no-repeat;
   padding-left: 30px;
@@ -536,13 +704,27 @@
 .node__content .page-repair-general .content-wrapper .field--name-field-dvhm-sc-general {
   height: 100%;
 }
-.node__content .page-repair-general .content-wrapper .field--name-field-dvhm-sc-general > .field__item {
+.node__content
+  .page-repair-general
+  .content-wrapper
+  .field--name-field-dvhm-sc-general
+  > .field__item {
   height: 100%;
 }
-.node__content .page-repair-general .content-wrapper .field--name-field-dvhm-sc-general > .field__item .field--name-field-dvhm-sc-g-img {
+.node__content
+  .page-repair-general
+  .content-wrapper
+  .field--name-field-dvhm-sc-general
+  > .field__item
+  .field--name-field-dvhm-sc-g-img {
   height: 100%;
 }
-.node__content .page-repair-general .content-wrapper .field--name-field-dvhm-sc-general > .field__item .paragraph--type--dvhm-sc-general {
+.node__content
+  .page-repair-general
+  .content-wrapper
+  .field--name-field-dvhm-sc-general
+  > .field__item
+  .paragraph--type--dvhm-sc-general {
   height: 100%;
 }
 .node__content .page-repair-general .repair-page-general {
@@ -550,16 +732,16 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   height: 100%;
 }
 @media screen and (max-width: 768px) {
   .node__content .page-repair-general .repair-page-general {
     display: block;
     -webkit-box-pack: unset;
-        -ms-flex-pack: unset;
-            justify-content: unset;
+    -ms-flex-pack: unset;
+    justify-content: unset;
   }
 }
 .node__content .page-repair-general .repair-page-general > div {
@@ -571,11 +753,11 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 @media screen and (max-width: 768px) {
   .node__content .page-repair-general .repair-page-general > div {
@@ -584,8 +766,8 @@
 }
 .node__content .page-repair-general .repair-page-general .repair-page-general-left {
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  -ms-grid-row-align: center;
+  align-self: center;
   text-align: left;
   max-width: 600px;
   margin: auto;
@@ -597,48 +779,94 @@
     padding-right: 50px;
   }
 }
-.node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-title div.field__item {
+.node__content
+  .page-repair-general
+  .repair-page-general
+  .repair-page-general-left
+  .field--name-field-dvhm-sc-g-title
+  div.field__item {
   font-weight: 300;
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
   margin-bottom: 60px;
 }
 @media screen and (max-width: 1600px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-title div.field__item {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-left
+    .field--name-field-dvhm-sc-g-title
+    div.field__item {
     margin-bottom: 50px;
   }
 }
 @media screen and (max-width: 1366px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-title div.field__item {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-left
+    .field--name-field-dvhm-sc-g-title
+    div.field__item {
     font-size: 40px;
     margin-bottom: 40px;
   }
 }
 @media screen and (max-width: 1280px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-title div.field__item {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-left
+    .field--name-field-dvhm-sc-g-title
+    div.field__item {
     font-size: 36px;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-title div.field__item {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-left
+    .field--name-field-dvhm-sc-g-title
+    div.field__item {
     font-size: 28px;
   }
 }
-.node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-items ul {
+.node__content
+  .page-repair-general
+  .repair-page-general
+  .repair-page-general-left
+  .field--name-field-dvhm-sc-g-items
+  ul {
   text-align: left;
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-items ul {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-left
+    .field--name-field-dvhm-sc-g-items
+    ul {
     width: 100%;
   }
 }
-.node__content .page-repair-general .repair-page-general .repair-page-general-left .field--name-field-dvhm-sc-g-items ul .paragraph--type--dvhm-sc-g-item {
+.node__content
+  .page-repair-general
+  .repair-page-general
+  .repair-page-general-left
+  .field--name-field-dvhm-sc-g-items
+  ul
+  .paragraph--type--dvhm-sc-g-item {
   margin-bottom: 13px;
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-general .repair-page-general .repair-page-general-right .field--name-field-dvhm-sc-g-img img {
+  .node__content
+    .page-repair-general
+    .repair-page-general
+    .repair-page-general-right
+    .field--name-field-dvhm-sc-g-img
+    img {
     width: 100%;
   }
 }
@@ -647,8 +875,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 .node__content .repair-page-paint ul {
   padding: 0;
@@ -684,8 +912,8 @@
   .node__content .repair-page-paint {
     display: block;
     -webkit-box-pack: unset;
-        -ms-flex-pack: unset;
-            justify-content: unset;
+    -ms-flex-pack: unset;
+    justify-content: unset;
   }
 }
 .node__content .repair-page-paint > div {
@@ -701,7 +929,7 @@
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
   text-align: left;
   margin-bottom: 40px;
 }
@@ -741,18 +969,18 @@
   }
 }
 .node__content .repair-page-paint .field--name-field-dvhm-sc-p-link div.field__item a {
-  color: #1464F4;
+  color: #1464f4;
   font-size: 12px;
   font-weight: 700;
   line-height: normal;
   text-transform: uppercase;
-  border: #1464F4 1px solid;
+  border: #1464f4 1px solid;
   padding: 10px 20px;
   border-radius: 3px;
 }
 .node__content .repair-page-paint .field--name-field-dvhm-sc-p-link div.field__item a:hover {
-  color: #FFFFFF;
-  background-color: #1464F4;
+  color: #ffffff;
+  background-color: #1464f4;
 }
 @media screen and (max-width: 425px) {
   .node__content .repair-page-paint .field--name-field-dvhm-sc-p-link div.field__item a {
@@ -828,7 +1056,10 @@
     overflow-y: auto;
     padding-right: 20px;
   }
-  .node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs:after {
+  .node__content
+    .repair-page-paint
+    .repair-page-paint-right
+    .field--name-field-dvhm-sc-p-subs:after {
     display: block;
     position: absolute;
     width: 100%;
@@ -836,10 +1067,16 @@
     left: 0;
     content: "";
     height: 70px;
-    background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(rgba(255, 255, 255, 0)));
-    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(#ffffff),
+      to(rgba(255, 255, 255, 0))
+    );
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
     -webkit-transform: rotate(-180deg);
-            transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
 }
 @media screen and (max-width: 425px) {
@@ -848,38 +1085,73 @@
     margin-top: 30px;
   }
 }
-.node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub {
+.node__content
+  .repair-page-paint
+  .repair-page-paint-right
+  .field--name-field-dvhm-sc-p-subs
+  .paragraph--type--dvhm-sc-p-sub {
   text-align: left;
   width: 80%;
   margin-bottom: 30px;
 }
-.node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub .repair-paint-list {
+.node__content
+  .repair-page-paint
+  .repair-page-paint-right
+  .field--name-field-dvhm-sc-p-subs
+  .paragraph--type--dvhm-sc-p-sub
+  .repair-paint-list {
   margin-bottom: 15px;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub {
+  .node__content
+    .repair-page-paint
+    .repair-page-paint-right
+    .field--name-field-dvhm-sc-p-subs
+    .paragraph--type--dvhm-sc-p-sub {
     margin-bottom: 10px;
     width: 100%;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub {
+  .node__content
+    .repair-page-paint
+    .repair-page-paint-right
+    .field--name-field-dvhm-sc-p-subs
+    .paragraph--type--dvhm-sc-p-sub {
     width: 100%;
   }
 }
-.node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub .field--name-field-dvhm-sc-p-s-title div.field__item {
+.node__content
+  .repair-page-paint
+  .repair-page-paint-right
+  .field--name-field-dvhm-sc-p-subs
+  .paragraph--type--dvhm-sc-p-sub
+  .field--name-field-dvhm-sc-p-s-title
+  div.field__item {
   font-weight: 600;
   margin-bottom: 16px;
   font-size: 16px;
   line-height: normal;
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub .field--name-field-dvhm-sc-p-s-title div.field__item {
+  .node__content
+    .repair-page-paint
+    .repair-page-paint-right
+    .field--name-field-dvhm-sc-p-subs
+    .paragraph--type--dvhm-sc-p-sub
+    .field--name-field-dvhm-sc-p-s-title
+    div.field__item {
     margin-bottom: 20px;
   }
 }
 @media screen and (max-width: 425px) {
-  .node__content .repair-page-paint .repair-page-paint-right .field--name-field-dvhm-sc-p-subs .paragraph--type--dvhm-sc-p-sub .field--name-field-dvhm-sc-p-s-title div.field__item {
+  .node__content
+    .repair-page-paint
+    .repair-page-paint-right
+    .field--name-field-dvhm-sc-p-subs
+    .paragraph--type--dvhm-sc-p-sub
+    .field--name-field-dvhm-sc-p-s-title
+    div.field__item {
     font-size: 14px;
   }
 }
@@ -892,12 +1164,12 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 .node__content .repair-page-balance ul {
   padding: 0;
@@ -913,7 +1185,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: normal;
-  color: #3C3C3C;
+  color: #3c3c3c;
 }
 @media screen and (max-width: 1366px) {
   .node__content .repair-page-balance ul > li {
@@ -942,8 +1214,8 @@
   .node__content .repair-page-balance {
     display: block;
     -webkit-box-pack: unset;
-        -ms-flex-pack: unset;
-            justify-content: unset;
+    -ms-flex-pack: unset;
+    justify-content: unset;
   }
 }
 .node__content .repair-page-balance > div {
@@ -974,7 +1246,12 @@
     margin-top: 30px;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-left .field--name-field-dvhm-sc-b-img div.field__item img {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-left
+  .field--name-field-dvhm-sc-b-img
+  div.field__item
+  img {
   width: 100%;
   height: auto;
 }
@@ -1001,68 +1278,124 @@
     margin-top: 20px;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .paragraph--type--dvhm-sc-b-sub
+  .field--name-field-dvhm-sc-b-stitle {
   width: 100%;
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-stitle {
     width: 100%;
   }
 }
 @media screen and (max-width: 425px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-stitle {
     margin-bottom: 10px;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle div.field__item {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .paragraph--type--dvhm-sc-b-sub
+  .field--name-field-dvhm-sc-b-stitle
+  div.field__item {
   font-weight: 600;
   margin-bottom: 20px;
   font-size: 20px;
   line-height: normal;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-stitle
+    div.field__item {
     font-size: 15px;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-stitle
+    div.field__item {
     font-size: 20px;
   }
 }
 @media screen and (max-width: 425px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-stitle div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-stitle
+    div.field__item {
     font-size: 18px;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-sitems {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .paragraph--type--dvhm-sc-b-sub
+  .field--name-field-dvhm-sc-b-sitems {
   width: 100%;
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-sitems {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-sitems {
     width: 100%;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-snotice {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .paragraph--type--dvhm-sc-b-sub
+  .field--name-field-dvhm-sc-b-snotice {
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
 }
 @media screen and (max-width: 425px) {
-  .node__content .repair-page-balance .repair-page-balance-right .paragraph--type--dvhm-sc-b-sub .field--name-field-dvhm-sc-b-snotice {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .paragraph--type--dvhm-sc-b-sub
+    .field--name-field-dvhm-sc-b-snotice {
     margin-top: 40px;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .field--name-field-dvhm-sc-b-title
+  div.field__item {
   font-weight: 300;
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
   text-align: left;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-title
+    div.field__item {
     font-size: 38px;
     margin-top: 0;
     line-height: normal;
@@ -1070,36 +1403,63 @@
   }
 }
 @media screen and (max-width: 1280px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-title
+    div.field__item {
     font-size: 36px;
     line-height: normal;
   }
 }
 @media screen and (max-width: 1024px) and (min-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item br {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-title
+    div.field__item
+    br {
     display: none;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-title
+    div.field__item {
     font-size: 28px;
     margin-bottom: 20px;
     line-height: normal;
   }
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-title div.field__item br {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-title
+    div.field__item
+    br {
     display: none;
   }
 }
-.node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-content {
+.node__content
+  .repair-page-balance
+  .repair-page-balance-right
+  .field--name-field-dvhm-sc-b-content {
   margin-top: 30px;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-content {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-content {
     margin-top: 0;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .repair-page-balance .repair-page-balance-right .field--name-field-dvhm-sc-b-content {
+  .node__content
+    .repair-page-balance
+    .repair-page-balance-right
+    .field--name-field-dvhm-sc-b-content {
     width: 100%;
   }
 }
@@ -1152,15 +1512,15 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 @media screen and (max-width: 768px) {
   .node__content .page-repair-rescue .rescue-wrapper {
     display: block;
     -webkit-box-pack: unset;
-        -ms-flex-pack: unset;
-            justify-content: unset;
+    -ms-flex-pack: unset;
+    justify-content: unset;
   }
 }
 .node__content .page-repair-rescue .rescue-wrapper > div {
@@ -1210,13 +1570,22 @@
     padding-right: 50px;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-title {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-left
+  .field--name-field-dvhm-sc-r-247-title {
   margin-top: 30px;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-btn a {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-left
+  .field--name-field-dvhm-sc-r-247-btn
+  a {
   width: fit-content;
   padding: 16px;
-  border: 1px solid #1464F4;
+  border: 1px solid #1464f4;
   border-radius: 3px;
   font-weight: 700;
   font-size: 12px;
@@ -1225,32 +1594,57 @@
   text-align: center;
   text-transform: uppercase;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-btn .field__item {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-left
+  .field--name-field-dvhm-sc-r-247-btn
+  .field__item {
   padding: 16px;
   width: fit-content;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-title div.field__item {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-left
+  .field--name-field-dvhm-sc-r-247-title
+  div.field__item {
   font-weight: 300;
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
   margin-bottom: 30px;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-title div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-left
+    .field--name-field-dvhm-sc-r-247-title
+    div.field__item {
     font-size: 40px;
     margin: 0;
     line-height: normal;
   }
 }
 @media screen and (max-width: 1280px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-title div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-left
+    .field--name-field-dvhm-sc-r-247-title
+    div.field__item {
     font-size: 36px;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-title div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-left
+    .field--name-field-dvhm-sc-r-247-title
+    div.field__item {
     font-size: 28px;
   }
 }
@@ -1263,11 +1657,19 @@
     width: 100%;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-img {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-left
+  .field--name-field-dvhm-sc-r-247-img {
   margin-bottom: 54px;
 }
 @media (max-width: 767px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-left .field--name-field-dvhm-sc-r-247-img {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-left
+    .field--name-field-dvhm-sc-r-247-img {
     margin-bottom: 30px;
   }
 }
@@ -1297,98 +1699,170 @@
   }
 }
 @media screen and (max-width: 425px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mtitle {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mtitle {
     margin-top: 20px;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mtitle div.field__item {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mtitle
+  div.field__item {
   font-weight: 300;
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mtitle div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mtitle
+    div.field__item {
     font-size: 35px;
     line-height: normal;
     margin: 0;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mtitle div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mtitle
+    div.field__item {
     font-size: 28px;
   }
 }
 @media screen and (max-width: 425px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mtitle div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mtitle
+    div.field__item {
     line-height: normal;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mstitle div.field__item {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mstitle
+  div.field__item {
   font-weight: 300;
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
 }
 @media screen and (max-width: 1366px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mstitle div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mstitle
+    div.field__item {
     font-size: 36px;
     line-height: normal;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mstitle div.field__item {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mstitle
+    div.field__item {
     font-size: 28px;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mcontent {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mcontent {
   margin-top: 30px;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mcontent p {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mcontent
+  p {
   width: 100%;
   font-weight: 400;
   font-size: 16px;
   line-height: normal;
-  color: #3C3C3C;
+  color: #3c3c3c;
 }
 @media screen and (max-width: 1280px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mcontent p {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mcontent
+    p {
     font-size: 14px;
   }
 }
 @media screen and (max-width: 768px) {
-  .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mcontent p {
+  .node__content
+    .page-repair-rescue
+    .rescue-wrapper
+    .rescue-right
+    .field--name-field-dvhm-sc-r-mcontent
+    p {
     width: 100%;
   }
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mlink {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mlink {
   margin-top: 0px;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mlink .field__item {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mlink
+  .field__item {
   display: inline-block;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mlink a {
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mlink
+  a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 16px;
   gap: 10px;
   min-width: 187px;
   height: 48px;
-  background: #FFFFFF;
-  border: 1px solid #1464F4;
+  background: #ffffff;
+  border: 1px solid #1464f4;
   border-radius: 3px;
   font-weight: 700;
   font-size: 12px;
@@ -1396,12 +1870,23 @@
   text-align: center;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #1464F4;
+  color: #1464f4;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mlink a:hover, .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mlink a:focus {
-  background: #1464F4;
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mlink
+  a:hover,
+.node__content
+  .page-repair-rescue
+  .rescue-wrapper
+  .rescue-right
+  .field--name-field-dvhm-sc-r-mlink
+  a:focus {
+  background: #1464f4;
   color: #fff;
 }
 .node__content .page-repair-rescue .rescue-wrapper .rescue-right .field--name-field-dvhm-sc-r-mimg {
@@ -1446,7 +1931,7 @@
   background: #f0f3f3 !important;
   border-radius: 18px;
   -webkit-box-shadow: inset 0 0 14px 14px transparent;
-          box-shadow: inset 0 0 14px 14px transparent;
+  box-shadow: inset 0 0 14px 14px transparent;
   border: solid 4px transparent;
 }
 .has-scroll ::-webkit-scrollbar-track:hover {
@@ -1469,7 +1954,7 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-.node__content .swiper-slide .page-section>div {
+.node__content .swiper-slide .page-section > div {
   width: 50%;
 }
 .node__content .swiper-slide .page-section .page-section--body {
@@ -1483,7 +1968,7 @@
   font-size: 40px;
   line-height: normal;
   letter-spacing: -0.02em;
-  color: #3C3C3C;
+  color: #3c3c3c;
   margin-bottom: 30px;
 }
 .node__content .swiper-slide .page-section .page-section--body p {
@@ -1494,7 +1979,7 @@
 }
 .node__content .swiper-slide .page-section .page-section--body p a {
   font-weight: 700;
-  color: #1464F4;
+  color: #1464f4;
 }
 .node__content .swiper-slide .page-section .page-section--body .ul-title {
   font-size: 20px;
@@ -1504,8 +1989,9 @@
   width: fit-content;
   font-weight: 600;
   font-size: 16px;
-  background: linear-gradient(0deg, rgba(239, 165, 5, 0.1), rgba(239, 165, 5, 0.1)),
-              linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  background:
+    linear-gradient(0deg, rgba(239, 165, 5, 0.1), rgba(239, 165, 5, 0.1)),
+    linear-gradient(0deg, #ffffff, #ffffff);
 }
 .node__content .swiper-slide .page-section .page-section--body ul {
   padding: 0;
@@ -1540,7 +2026,7 @@
   .node__content .swiper-slide.page-sections h5 {
     margin-top: 20px;
   }
-  .node__content .swiper-slide .page-section>div {
+  .node__content .swiper-slide .page-section > div {
     width: 100%;
   }
   .node__content .swiper-slide .page-section.page-section--image-left .page-section--body,

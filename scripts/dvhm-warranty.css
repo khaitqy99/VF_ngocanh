@@ -30,15 +30,15 @@
   font-size: 16px;
   padding: 14px 46px;
   border-radius: 3px;
-  background-color: #1464F4;
+  background-color: #1464f4;
   color: #fff;
   text-transform: uppercase;
-  border: 1px solid #1464F4;
+  border: 1px solid #1464f4;
 }
 
 .page-warranty-intro .warranty-intro-content .field--name-field-warranty-set-link a:hover {
   background-color: #fff;
-  color: #1464F4;
+  color: #1464f4;
 }
 
 .page-warranty-info .field--name-field-sub-content .field__items {
@@ -72,7 +72,7 @@
   color: #3c3c3c;
   text-align: center;
   padding: 16px;
-  border: 1px solid #D9E1E2;
+  border: 1px solid #d9e1e2;
 }
 
 .paragraph--type--warranty-time .field--name-field-section-download-select .dropdown-toggle::after,
@@ -94,11 +94,11 @@
 
 .paragraph--type--warranty-time .dropdown-menu .dropdown-item {
   padding: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .paragraph--type--warranty-time .dropdown-menu .dropdown-item:hover {
-  background-color: #1464F4;
+  background-color: #1464f4;
   color: #fff;
 }
 
@@ -112,8 +112,8 @@
   text-align: center;
   padding: 16px;
   background-color: #fff;
-  border: 1px solid #1464F4;
-  color: #1464F4;
+  border: 1px solid #1464f4;
+  color: #1464f4;
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
@@ -124,7 +124,7 @@
 }
 
 .paragraph--type--warranty-time .field--name-field-section-link a:hover {
-  background-color: #1464F4;
+  background-color: #1464f4;
   color: #fff;
 }
 
@@ -132,19 +132,33 @@
   text-align: center;
 }
 
-.page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .warranty-time-image {
+.page-warranty-info
+  .field__item:nth-child(2n)
+  .paragraph--type--warranty-time
+  .warranty-time-image {
   order: 1;
 }
 
-.page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .field--name-field-section-link .field__items {
+.page-warranty-info
+  .field__item:nth-child(2n)
+  .paragraph--type--warranty-time
+  .field--name-field-section-link
+  .field__items {
   display: flex;
 }
 
-.page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .field--name-field-section-link .field__item {
+.page-warranty-info
+  .field__item:nth-child(2n)
+  .paragraph--type--warranty-time
+  .field--name-field-section-link
+  .field__item {
   width: 50%;
 }
 
-.page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .field--name-field-section-download-select,
+.page-warranty-info
+  .field__item:nth-child(2n)
+  .paragraph--type--warranty-time
+  .field--name-field-section-download-select,
 .warranty-docs-dropdown-wrap {
   margin-top: 24px;
 }
@@ -186,7 +200,10 @@
   width: 50%;
 }
 
-.paragraph--type--dvhm-warranty-coverage .field__item:nth-child(2n) .paragraph--type--dvhm-warranty-coverrage-sub .field__item--content {
+.paragraph--type--dvhm-warranty-coverage
+  .field__item:nth-child(2n)
+  .paragraph--type--dvhm-warranty-coverrage-sub
+  .field__item--content {
   order: 1;
 }
 
@@ -255,7 +272,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-
   .page-warranty-intro,
   .page-warranty-info,
   .page-warranty-non-warranty {
@@ -299,15 +315,26 @@
     width: 100%;
   }
 
-  .page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .field--name-field-section-link .field__items {
+  .page-warranty-info
+    .field__item:nth-child(2n)
+    .paragraph--type--warranty-time
+    .field--name-field-section-link
+    .field__items {
     gap: 16px;
   }
 
-  .page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .field--name-field-section-link .field__item {
+  .page-warranty-info
+    .field__item:nth-child(2n)
+    .paragraph--type--warranty-time
+    .field--name-field-section-link
+    .field__item {
     width: 100%;
   }
 
-  .page-warranty-info .field__item:nth-child(2n) .paragraph--type--warranty-time .warranty-time-image {
+  .page-warranty-info
+    .field__item:nth-child(2n)
+    .paragraph--type--warranty-time
+    .warranty-time-image {
     order: unset;
   }
 

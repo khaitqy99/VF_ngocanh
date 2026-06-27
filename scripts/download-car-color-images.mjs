@@ -22,14 +22,14 @@ const CODE_NAMES = {
   CE17: "Deep Ocean",
   CE22: "Crimson Red",
   "181U": "Summer Yellow",
-  "1821": "Rose Pink",
+  1821: "Rose Pink",
   "181Y": "Sky Blue",
   CE1J: "Astral Blue",
   CE1X: "Ivy Green",
-  "2927": "Desat Silver",
+  2927: "Desat Silver",
   "171V": "Brahminy White",
   "1V18": "Sunset Orange",
-  "2911": "Dragon Forged",
+  2911: "Dragon Forged",
 };
 
 const VINFAST_PDP = {
@@ -87,10 +87,7 @@ function parse360Colors(html) {
 }
 
 function parseReserveExterior(html, modelFolder) {
-  const re = new RegExp(
-    `reserves\\/${modelFolder}\\/exterior\\/product-([^."']+)\\.webp`,
-    "gi",
-  );
+  const re = new RegExp(`reserves\\/${modelFolder}\\/exterior\\/product-([^."']+)\\.webp`, "gi");
   const codes = [...new Set([...html.matchAll(re)].map((m) => m[1]))];
   return codes.map((code) => ({
     code,
@@ -320,7 +317,9 @@ async function scrapeCarColors(carId, shopUrl, extraUrl) {
 }
 
 async function main() {
-  const vehicles = JSON.parse(fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"));
+  const vehicles = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"),
+  );
   const result = { cars: {}, scooters: {}, syncedAt: new Date().toISOString() };
 
   for (const car of vehicles.cars) {

@@ -29,7 +29,14 @@
         { "label": "Quãng đường chạy (NEDC) (km)", "value": "326" },
         { "label": "Dung lượng pin khả dụng (kWh)", "value": "37,23" }
       ],
-      "fields": { "power": 134, "powerKw": 100, "torque": 135, "range": 326, "batteryCapacity": 37.23, "drive": "fwd" },
+      "fields": {
+        "power": 134,
+        "powerKw": 100,
+        "torque": 135,
+        "range": 326,
+        "batteryCapacity": 37.23,
+        "drive": "fwd"
+      },
       "tagline": "HERIO GREEN",
       "slogan": "A-SUV điện — trọn vẹn trải nghiệm cùng Herio"
     },
@@ -49,11 +56,20 @@
         "Dải màu trẻ trung lên tới 14 màu"
       ],
       "exterior": [
-        { "title": "Ưu điểm, điểm nổi bật", "desc": "Vận hành đơn giản, tối ưu phù hợp cho người mới sử dụng EV." },
-        { "title": "Dải màu trẻ trung", "desc": "Minio Green chính thức là chiến thần vỏn vẹn 2 cửa với lên tới 14 tùy chọn màu sắc cá tính." }
+        {
+          "title": "Ưu điểm, điểm nổi bật",
+          "desc": "Vận hành đơn giản, tối ưu phù hợp cho người mới sử dụng EV."
+        },
+        {
+          "title": "Dải màu trẻ trung",
+          "desc": "Minio Green chính thức là chiến thần vỏn vẹn 2 cửa với lên tới 14 tùy chọn màu sắc cá tính."
+        }
       ],
       "interior": [
-        { "title": "Chi tiết nội thất", "desc": "Không gian đủ cho gia đình 2 người lớn, 2 trẻ em." }
+        {
+          "title": "Chi tiết nội thất",
+          "desc": "Không gian đủ cho gia đình 2 người lớn, 2 trẻ em."
+        }
       ],
       "specTable": [
         { "label": "Chiều dài cơ sở (mm)", "value": "2065" },
@@ -64,7 +80,14 @@
         { "label": "Dung lượng pin khả dụng (kWh)", "value": "18,3" },
         { "label": "Dẫn động", "value": "RWD/Cầu sau" }
       ],
-      "fields": { "power": 40, "powerKw": 30, "torque": 65, "range": 210, "batteryCapacity": 18.3, "drive": "rwd" },
+      "fields": {
+        "power": 40,
+        "powerKw": 30,
+        "torque": 65,
+        "range": 210,
+        "batteryCapacity": 18.3,
+        "drive": "rwd"
+      },
       "tagline": "MINIO GREEN",
       "slogan": "Khởi nghiệp trong tầm tay — MiniCar điện đô thị gọn nhẹ"
     },
@@ -95,7 +118,14 @@
           "desc": "Ghế ngồi VF 8 mới giúp giải tỏa áp lực, hỗ trợ tuần hoàn cơ thể trong mọi điều kiện di chuyển."
         }
       ],
-      "colors": ["Solar Ruby", "Infinity Blanc", "Jet Black", "Starburst Blue", "Mysterioso Purple", "Vitality Orange"],
+      "colors": [
+        "Solar Ruby",
+        "Infinity Blanc",
+        "Jet Black",
+        "Starburst Blue",
+        "Mysterioso Purple",
+        "Vitality Orange"
+      ],
       "specTable": [
         { "label": "Công suất tối đa (kW)", "value": "170" },
         { "label": "Mô men xoắn cực đại (Nm)", "value": "330" },
@@ -107,7 +137,15 @@
         { "label": "Kích thước mâm xe", "value": "19 Inch" },
         { "label": "Màn hình giải trí trung tâm", "value": "12,9 Inch" }
       ],
-      "fields": { "power": 228, "powerKw": 170, "torque": 330, "range": 480, "batteryCapacity": 60.13, "chargingTime": "Dưới 30 phút (10%-70%)", "dimensions": "4701 x 1872 x 1670" },
+      "fields": {
+        "power": 228,
+        "powerKw": 170,
+        "torque": 330,
+        "range": 480,
+        "batteryCapacity": 60.13,
+        "chargingTime": "Dưới 30 phút (10%-70%)",
+        "dimensions": "4701 x 1872 x 1670"
+      },
       "tagline": "VF 8 Thế Hệ Mới",
       "slogan": "Khi phong cách trở thành dấu ấn — SUV điện cỡ D thế hệ mới"
     },
@@ -139,7 +177,16 @@
         { "label": "Dẫn động", "value": "FWD/Cầu trước" },
         { "label": "Kích thước la-zăng", "value": "Mâm hợp kim 19 inch" }
       ],
-      "fields": { "power": 201, "powerKw": 150, "torque": 280, "range": 450, "batteryCapacity": 60.13, "chargingTime": "30 phút (10%-70%)", "drive": "fwd", "dimensions": "4740 x 1872 x 1734" },
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "torque": 280,
+        "range": 450,
+        "batteryCapacity": 60.13,
+        "chargingTime": "30 phút (10%-70%)",
+        "drive": "fwd",
+        "dimensions": "4740 x 1872 x 1734"
+      },
       "tagline": "VF MPV 7",
       "slogan": "Gia đình sum vầy — MPV điện 7 chỗ"
     },
@@ -175,7 +222,13 @@
         { "label": "Kích thước la-zăng", "value": "18 inch" },
         { "label": "Thời gian nạp pin nhanh nhất", "value": "30 phút (10%-70%)" }
       ],
-      "fields": { "power": 201, "powerKw": 150, "range": 450, "chargingTime": "30 phút (10%-70%)", "dimensions": "2840 mm cơ sở" },
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "range": 450,
+        "chargingTime": "30 phút (10%-70%)",
+        "dimensions": "2840 mm cơ sở"
+      },
       "tagline": "LIMO GREEN",
       "slogan": "Rộng mở không gian — MPV điện 7 chỗ"
     }
@@ -200,8 +253,14 @@
         "Công suất tối đa 1500 W"
       ],
       "exterior": [
-        { "title": "KIỂU DÁNG", "desc": "Thiết kế mạnh mẽ, trẻ trung với các đường nét góc cạnh, đậm chất phố." },
-        { "title": "BỀN BỈ & AN TOÀN", "desc": "Động cơ đạt tiêu chuẩn chống nước IP67, an tâm di chuyển trong điều kiện mưa." }
+        {
+          "title": "KIỂU DÁNG",
+          "desc": "Thiết kế mạnh mẽ, trẻ trung với các đường nét góc cạnh, đậm chất phố."
+        },
+        {
+          "title": "BỀN BỈ & AN TOÀN",
+          "desc": "Động cơ đạt tiêu chuẩn chống nước IP67, an tâm di chuyển trong điều kiện mưa."
+        }
       ],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "49" },
@@ -213,7 +272,13 @@
         { "label": "Thể tích cốp (L)", "value": "4" },
         { "label": "Thời gian sạc tiêu chuẩn", "value": "Khoảng 8h (0%-100%)" }
       ],
-      "fields": { "topSpeed": 49, "range": 87, "motorPower": 1500, "trunk": 4, "chargingTime": "Khoảng 8h" },
+      "fields": {
+        "topSpeed": 49,
+        "range": 87,
+        "motorPower": 1500,
+        "trunk": 4,
+        "chargingTime": "Khoảng 8h"
+      },
       "tagline": "FLAZZ MAX",
       "slogan": "Độc đáo — bật chất thể thao"
     },
@@ -223,7 +288,10 @@
       "type": "scooter",
       "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio-s",
       "variants": [{ "name": "AMIO S", "price": 13900000 }],
-      "overview": { "title": "AMIO S", "subtitle": "Xe máy điện đô thị gọn nhẹ, tốc độ tối đa 25 km/h." },
+      "overview": {
+        "title": "AMIO S",
+        "subtitle": "Xe máy điện đô thị gọn nhẹ, tốc độ tối đa 25 km/h."
+      },
       "highlights": ["Tốc độ tối đa 25 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "25" },
@@ -240,7 +308,10 @@
       "type": "scooter",
       "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
       "variants": [{ "name": "EVO Lite", "price": 17000000 }],
-      "overview": { "title": "EVO LITE", "subtitle": "Xe máy điện phân khúc cao cấp với quãng đường lên tới 165 km." },
+      "overview": {
+        "title": "EVO LITE",
+        "subtitle": "Xe máy điện phân khúc cao cấp với quãng đường lên tới 165 km."
+      },
       "highlights": ["Tốc độ tối đa 49 km/h", "Quãng đường ~165 km/lần sạc", "Công suất 2300 W"],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "49" },
@@ -385,7 +456,10 @@
       "type": "scooter",
       "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-feliz-II",
       "variants": [{ "name": "Feliz II", "price": 24900000 }],
-      "overview": { "title": "FELIZ II", "subtitle": "Xe máy điện phong cách với quãng đường ~156 km." },
+      "overview": {
+        "title": "FELIZ II",
+        "subtitle": "Xe máy điện phong cách với quãng đường ~156 km."
+      },
       "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~156 km/lần sạc", "Công suất 3000 W"],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "70" },
@@ -402,7 +476,10 @@
       "type": "scooter",
       "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
       "variants": [{ "name": "EVO", "price": 19990000 }],
-      "overview": { "title": "EVO", "subtitle": "Xe máy điện đa dụng với quãng đường ~165 km (2 pin)." },
+      "overview": {
+        "title": "EVO",
+        "subtitle": "Xe máy điện đa dụng với quãng đường ~165 km (2 pin)."
+      },
       "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~165 km (2 pin)", "Cốp xe 12 lít"],
       "specTable": [
         { "label": "Tốc độ tối đa (km/h)", "value": "70" },

@@ -537,12 +537,7 @@
           "desc": "Limo Green 7 chỗ phù hợp cho nhóm bạn, gia đình đông người cùng di chuyển."
         }
       ],
-      "colors": [
-        "Jet Black",
-        "Desat Silver",
-        "Solar Ruby",
-        "Infinity Blanc"
-      ],
+      "colors": ["Jet Black", "Desat Silver", "Solar Ruby", "Infinity Blanc"],
       "specTable": [
         {
           "label": "Chiều dài cơ sở (mm)",
@@ -605,13 +600,7 @@
           "listPrice": 315000000
         }
       ],
-      "colors": [
-        "Summer Yellow",
-        "Infinity Blanc",
-        "Zenith Grey",
-        "Urban Mint",
-        "Solar Ruby"
-      ],
+      "colors": ["Summer Yellow", "Infinity Blanc", "Zenith Grey", "Urban Mint", "Solar Ruby"],
       "colorHex": [
         {
           "name": "Summer Yellow",
@@ -634,9 +623,7 @@
           "hex": "#DC2626"
         }
       ],
-      "highlights": [
-        "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"
-      ],
+      "highlights": ["Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"],
       "overview": {
         "title": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn",
         "subtitle": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!"
@@ -647,9 +634,7 @@
         "overview": {
           "title": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn",
           "subtitle": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!",
-          "bullets": [
-            "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"
-          ]
+          "bullets": ["Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"]
         },
         "exterior": [
           {
@@ -790,13 +775,7 @@
       "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5.html",
       "fetchedAt": "2026-06-26T11:05:53.305Z",
       "variants": [],
-      "colors": [
-        "Summer Yellow",
-        "Jet Black",
-        "Infinity Blanc",
-        "Zenith Grey",
-        "Solar Ruby"
-      ],
+      "colors": ["Summer Yellow", "Jet Black", "Infinity Blanc", "Zenith Grey", "Solar Ruby"],
       "colorHex": [
         {
           "name": "Summer Yellow",
@@ -1988,11 +1967,7 @@
         "title": "AMIO S",
         "subtitle": "Xe máy điện đô thị gọn nhẹ, tốc độ tối đa 25 km/h."
       },
-      "highlights": [
-        "Tốc độ tối đa 25 km/h",
-        "Quãng đường ~65 km/lần sạc",
-        "Công suất 800 W"
-      ],
+      "highlights": ["Tốc độ tối đa 25 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
       "specTable": [
         {
           "label": "Tốc độ tối đa (km/h)",
@@ -2210,11 +2185,7 @@
         "title": "AMIO",
         "subtitle": "Xe máy điện đô thị với tốc độ tối đa 30 km/h."
       },
-      "highlights": [
-        "Tốc độ tối đa 30 km/h",
-        "Quãng đường ~65 km/lần sạc",
-        "Công suất 800 W"
-      ],
+      "highlights": ["Tốc độ tối đa 30 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
       "specTable": [
         {
           "label": "Tốc độ tối đa (km/h)",
@@ -2390,11 +2361,7 @@
         "title": "FELIZ II",
         "subtitle": "Xe máy điện phong cách với quãng đường ~156 km."
       },
-      "highlights": [
-        "Tốc độ tối đa 70 km/h",
-        "Quãng đường ~156 km/lần sạc",
-        "Công suất 3000 W"
-      ],
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~156 km/lần sạc", "Công suất 3000 W"],
       "specTable": [
         {
           "label": "Tốc độ tối đa (km/h)",
@@ -2432,11 +2399,7 @@
         "title": "EVO",
         "subtitle": "Xe máy điện đa dụng với quãng đường ~165 km (2 pin)."
       },
-      "highlights": [
-        "Tốc độ tối đa 70 km/h",
-        "Quãng đường ~165 km (2 pin)",
-        "Cốp xe 12 lít"
-      ],
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~165 km (2 pin)", "Cốp xe 12 lít"],
       "specTable": [
         {
           "label": "Tốc độ tối đa (km/h)",
@@ -3283,11 +3246,7 @@
       ],
       "colors": [],
       "colorHex": [],
-      "highlights": [
-        "Tốc độ tối đa 48 km/h",
-        "Quãng đường 198 km (2 pin)",
-        "Cốp xe 35 lít"
-      ],
+      "highlights": ["Tốc độ tối đa 48 km/h", "Quãng đường 198 km (2 pin)", "Cốp xe 35 lít"],
       "overview": {
         "title": "EVO GRAND LITE",
         "subtitle": "Xe ga điện tiết kiệm, quãng đường lên tới 198 km (2 pin)."
@@ -3467,9 +3426,7 @@
       ],
       "colors": [],
       "colorHex": [],
-      "highlights": [
-        "Quãng đường di chuyển lên tới 110 km"
-      ],
+      "highlights": ["Quãng đường di chuyển lên tới 110 km"],
       "overview": {
         "title": "Xe đạp điện VF DrgnFly",
         "subtitle": "Xe đạp điện VF DrgnFly"
@@ -3480,9 +3437,7 @@
         "overview": {
           "title": "Xe đạp điện VF DrgnFly",
           "subtitle": "Xe đạp điện VF DrgnFly",
-          "bullets": [
-            "Quãng đường di chuyển lên tới 110 km"
-          ]
+          "bullets": ["Quãng đường di chuyển lên tới 110 km"]
         },
         "exterior": [],
         "interior": [],

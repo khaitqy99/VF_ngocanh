@@ -7,7 +7,10 @@ const ROOT = path.resolve(__dirname, "..");
 const PUBLIC = path.join(ROOT, "public");
 const DETAILS = JSON.parse(fs.readFileSync(path.join(__dirname, "vinfast-details.json"), "utf8"));
 const VEHICLES = JSON.parse(fs.readFileSync(path.join(__dirname, "vinfast-vehicles.json"), "utf8"));
-const OVERRIDES_TS = fs.readFileSync(path.join(ROOT, "src/lib/vinfast-detail-overrides.ts"), "utf8");
+const OVERRIDES_TS = fs.readFileSync(
+  path.join(ROOT, "src/lib/vinfast-detail-overrides.ts"),
+  "utf8",
+);
 const CARS_TS = fs.readFileSync(path.join(ROOT, "src/lib/cars.ts"), "utf8");
 const SCOOTERS_TS = fs.readFileSync(path.join(ROOT, "src/lib/scooters.ts"), "utf8");
 
@@ -22,7 +25,8 @@ function extractCatalog(ts) {
     const id = block.match(/id:\s*["']?([^"',\n]+)["']?/)?.[1];
     const name = block.match(/name:\s*"([^"]+)"/)?.[1];
     const price = block.match(/price:\s*([\d_]+)/)?.[1];
-    if (id && name && price) models.push({ id, name, price: parseInt(price.replace(/_/g, ""), 10) });
+    if (id && name && price)
+      models.push({ id, name, price: parseInt(price.replace(/_/g, ""), 10) });
   }
   return models;
 }
@@ -90,7 +94,11 @@ for (const m of ALL) {
   const home = homePrices[m.id];
 
   if (home && m.price !== home) {
-    issues.push({ id: m.id, type: "price", msg: `catalog ${m.price.toLocaleString("vi-VN")} ≠ homepage ${home.toLocaleString("vi-VN")}` });
+    issues.push({
+      id: m.id,
+      type: "price",
+      msg: `catalog ${m.price.toLocaleString("vi-VN")} ≠ homepage ${home.toLocaleString("vi-VN")}`,
+    });
   }
 
   if (!detail?.specTable?.length) {
@@ -122,7 +130,11 @@ for (const m of ALL) {
   for (const key of ["exterior", "interior", "design"]) {
     const arr = override[key];
     if (arr?.length > 4) {
-      issues.push({ id: m.id, type: "layout", msg: `${key} có ${arr.length} mục (>4, grid chỉ hiển thị 4)` });
+      issues.push({
+        id: m.id,
+        type: "layout",
+        msg: `${key} có ${arr.length} mục (>4, grid chỉ hiển thị 4)`,
+      });
     }
   }
 

@@ -1,7 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { parseShopPdpContent, parseShopListingProduct, decodeHtml } from "./parse-shop-pdp-content.mjs";
+import {
+  parseShopPdpContent,
+  parseShopListingProduct,
+  decodeHtml,
+} from "./parse-shop-pdp-content.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const VEHICLES_FILE = path.join(__dirname, "vinfast-vehicles.json");
@@ -9,17 +13,37 @@ const OUT_FILE = path.join(__dirname, "vinfast-details.json");
 const BROWSER_PATCH = path.join(__dirname, "vinfast-details-browser.json");
 
 const CAR_ID_MAP = {
-  "VF 3": "vf3", "VF 5": "vf5", "VF 6": "vf6", "VF 7": "vf7", "VF 8": "vf8",
-  "VF 8 All New": "vf8-all-new", "VF 9": "vf9", "VF MPV 7": "vf-mpv7",
-  "Minio Green": "minio-green", "Herio Green": "herio-green", "Limo Green": "limo-green",
-  "Nerio Green": "nerio-green", "EC VAN": "ec-van",
+  "VF 3": "vf3",
+  "VF 5": "vf5",
+  "VF 6": "vf6",
+  "VF 7": "vf7",
+  "VF 8": "vf8",
+  "VF 8 All New": "vf8-all-new",
+  "VF 9": "vf9",
+  "VF MPV 7": "vf-mpv7",
+  "Minio Green": "minio-green",
+  "Herio Green": "herio-green",
+  "Limo Green": "limo-green",
+  "Nerio Green": "nerio-green",
+  "EC VAN": "ec-van",
 };
 
 const SCOOTER_ID_MAP = {
-  "FLAZZ MAX": "flazz-max", "AMIO S": "amio-s", "EVO Lite": "evo-lite", Amio: "amio",
-  Viper: "viper", "Feliz II": "feliz-ii", EVO: "evo", zgoo: "zgoo", Flazz: "flazz",
-  "Vero X": "vero-x", "Feliz 2025": "feliz-2025", "Evo Grand": "evo-grand",
-  "Evo Grand Lite": "evo-grand-lite", DrgnFly: "drgnfly", "EVO Lite Neo": "evo-lite-neo",
+  "FLAZZ MAX": "flazz-max",
+  "AMIO S": "amio-s",
+  "EVO Lite": "evo-lite",
+  Amio: "amio",
+  Viper: "viper",
+  "Feliz II": "feliz-ii",
+  EVO: "evo",
+  zgoo: "zgoo",
+  Flazz: "flazz",
+  "Vero X": "vero-x",
+  "Feliz 2025": "feliz-2025",
+  "Evo Grand": "evo-grand",
+  "Evo Grand Lite": "evo-grand-lite",
+  DrgnFly: "drgnfly",
+  "EVO Lite Neo": "evo-lite-neo",
 };
 
 const TECH_LABEL =
@@ -29,11 +53,20 @@ const MODAL_NOISE =
   /email|mật khẩu|đăng ký thành công|kiểm tra email|tài khoản vinfast|đổi mật khẩu/i;
 
 const COLOR_HEX = {
-  "Summer Yellow": "#FBBF24", "Jet Black": "#111827", "Infinity Blanc": "#FFFFFF",
-  "Zenith Grey": "#6B7280", "Urban Mint": "#34D399", "Ivy Green": "#065F46",
-  "Desat Silver": "#D1D5DB", "Crimson Red": "#B91C1C", "Solar Ruby": "#DC2626",
-  "Deep Ocean": "#0b1f5b", "Brahminy White": "#FFFFFF", "Sunset Orange": "#D97706",
-  "Astral Blue": "#2563EB", "Dragon Forged": "#7F1D1D",
+  "Summer Yellow": "#FBBF24",
+  "Jet Black": "#111827",
+  "Infinity Blanc": "#FFFFFF",
+  "Zenith Grey": "#6B7280",
+  "Urban Mint": "#34D399",
+  "Ivy Green": "#065F46",
+  "Desat Silver": "#D1D5DB",
+  "Crimson Red": "#B91C1C",
+  "Solar Ruby": "#DC2626",
+  "Deep Ocean": "#0b1f5b",
+  "Brahminy White": "#FFFFFF",
+  "Sunset Orange": "#D97706",
+  "Astral Blue": "#2563EB",
+  "Dragon Forged": "#7F1D1D",
 };
 
 const HEADERS = {
@@ -44,14 +77,23 @@ const HEADERS = {
 };
 
 function stripHtml(html) {
-  return decodeHtml(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  return decodeHtml(
+    html
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function parseMetaOverview(html) {
   const og = html.match(/property="og:description"\s+content="([^"]+)"/i)?.[1];
   const meta = html.match(/<meta name="description"\s+content="([^"]+)"/i)?.[1];
   const lead = stripHtml(og || meta || "");
-  if (!lead || MODAL_NOISE.test(lead) || /so sánh giữa|nhận báo giá|đăng ký thành công/i.test(lead)) {
+  if (
+    !lead ||
+    MODAL_NOISE.test(lead) ||
+    /so sánh giữa|nhận báo giá|đăng ký thành công/i.test(lead)
+  ) {
     return null;
   }
   return {
@@ -66,7 +108,9 @@ function parsePrice(text) {
 }
 
 function filterTechSpecs(rows) {
-  return rows.filter((s) => TECH_LABEL.test(s.label) && s.label.length < 60 && s.value.length < 120);
+  return rows.filter(
+    (s) => TECH_LABEL.test(s.label) && s.label.length < 60 && s.value.length < 120,
+  );
 }
 
 function parseTableSpecs(html) {
@@ -74,7 +118,9 @@ function parseTableSpecs(html) {
   const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
   let m;
   while ((m = rowRe.exec(html)) !== null) {
-    const cells = [...m[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/gi)].map((c) => stripHtml(c[1]));
+    const cells = [...m[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/gi)].map((c) =>
+      stripHtml(c[1]),
+    );
     if (cells.length >= 2 && cells[0] && cells[1]) specs.push({ label: cells[0], value: cells[1] });
   }
   return filterTechSpecs(specs);
@@ -173,7 +219,9 @@ function parseOverview(html, name, pdpContent) {
     if (
       title.length > 20 &&
       title.length < 150 &&
-      !/ngân sách|tùy chọn|cookie|TỶ LỆ MUA LẠI|nhận báo giá|đăng ký|so sánh giữa|giá bán/i.test(title)
+      !/ngân sách|tùy chọn|cookie|TỶ LỆ MUA LẠI|nhận báo giá|đăng ký|so sánh giữa|giá bán/i.test(
+        title,
+      )
     ) {
       const after = stripHtml(html.slice(m.index + m[0].length, m.index + m[0].length + 500));
       return { title, subtitle: after.slice(0, 280) };
@@ -200,7 +248,8 @@ function parseFeatureSections(html) {
     const desc = stripHtml(m[2]);
     if (!title || !desc || desc.length < 40 || MODAL_NOISE.test(title + desc)) continue;
     const entry = { title: title.slice(0, 80), desc: desc.slice(0, 400) };
-    if (/nội thất|ghế|buồng lái|trần kính|tiện nghi|hàng ghế/i.test(title + desc)) interior.push(entry);
+    if (/nội thất|ghế|buồng lái|trần kính|tiện nghi|hàng ghế/i.test(title + desc))
+      interior.push(entry);
     else exterior.push(entry);
   }
   return { exterior: exterior.slice(0, 4), interior: interior.slice(0, 4) };
@@ -314,12 +363,8 @@ function supplementFromListing(detail, listingHtml) {
   const pdpContent = {
     ...(detail.pdpContent ?? {}),
     ...listingPdp,
-    exterior: listingPdp.exterior?.length
-      ? listingPdp.exterior
-      : detail.pdpContent?.exterior,
-    interior: listingPdp.interior?.length
-      ? listingPdp.interior
-      : detail.pdpContent?.interior,
+    exterior: listingPdp.exterior?.length ? listingPdp.exterior : detail.pdpContent?.exterior,
+    interior: listingPdp.interior?.length ? listingPdp.interior : detail.pdpContent?.interior,
     technology: listingPdp.technology?.length
       ? listingPdp.technology
       : detail.pdpContent?.technology,
@@ -351,7 +396,8 @@ async function scrapeVehicle(vehicle, type, pdpUrl) {
     const compareSpecs = parseCompareSpecs(html);
     const allSpecs = [...tableSpecs, ...compareSpecs];
     const text = stripHtml(html);
-    const fields = type === "car" ? extractCarFields(allSpecs) : extractScooterFields(allSpecs, text);
+    const fields =
+      type === "car" ? extractCarFields(allSpecs) : extractScooterFields(allSpecs, text);
     const overview = parseOverview(html, vehicle.name, pdpContent);
     const featureSections = parseFeatureSections(html);
 
@@ -466,7 +512,9 @@ async function main() {
   const okCars = results.cars.filter((c) => c && !c.error).length;
   const okScooters = results.scooters.filter((s) => s && !s.error).length;
   console.log(`\nWrote ${OUT_FILE}`);
-  console.log(`Cars: ${okCars}/${data.cars.length}, Scooters: ${okScooters}/${data.scooters.length}`);
+  console.log(
+    `Cars: ${okCars}/${data.cars.length}, Scooters: ${okScooters}/${data.scooters.length}`,
+  );
 }
 
 main().catch((err) => {

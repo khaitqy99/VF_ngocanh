@@ -15,7 +15,10 @@ for (const url of urls) {
   if (!res.ok) continue;
   const html = await res.text();
   const blocks = [...html.matchAll(/id="(block-[^"]+)"/g)].map((m) => m[1]);
-  console.log("blocks:", [...new Set(blocks)].filter((b) => /banner|hero|service/i.test(b)).slice(0, 15));
+  console.log(
+    "blocks:",
+    [...new Set(blocks)].filter((b) => /banner|hero|service/i.test(b)).slice(0, 15),
+  );
   const imgs = [
     ...new Set(
       (html.match(/https:\/\/static-cms-prod[^\"'\s>]+\.(jpg|webp|png)/gi) || []).concat(

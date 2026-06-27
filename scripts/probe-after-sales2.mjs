@@ -22,12 +22,15 @@ for (const url of urls) {
   fs.writeFileSync(`scripts/vinfast-${slug}.html`, html.slice(0, 50000));
   const imgs = [
     ...new Set(
-      (html.match(/https?:\/\/[^\"'\s>]+\.(jpg|jpeg|webp|png)/gi) || []).filter(
-        (u) => /static-cms|demandware|vinfast|service|bao-hanh|warranty/i.test(u),
+      (html.match(/https?:\/\/[^\"'\s>]+\.(jpg|jpeg|webp|png)/gi) || []).filter((u) =>
+        /static-cms|demandware|vinfast|service|bao-hanh|warranty/i.test(u),
       ),
     ),
   ];
   console.log("imgs:", imgs.slice(0, 10));
-  const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g, "").trim();
+  const h1 = html
+    .match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]
+    ?.replace(/<[^>]+>/g, "")
+    .trim();
   if (h1) console.log("h1:", h1.slice(0, 80));
 }

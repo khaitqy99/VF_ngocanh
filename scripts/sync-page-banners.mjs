@@ -162,7 +162,10 @@ const manifest = {
   })),
 };
 
-fs.writeFileSync(path.join(ROOT, "scripts", "page-banners.json"), JSON.stringify(manifest, null, 2));
+fs.writeFileSync(
+  path.join(ROOT, "scripts", "page-banners.json"),
+  JSON.stringify(manifest, null, 2),
+);
 
 console.log(`\nDone: ${banners.length} banners`);
 console.log(`  Ô tô: ${carBanners.length} | Xe máy: ${scooterBanners.length}`);
