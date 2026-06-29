@@ -87,7 +87,7 @@ export function CarCatalogCard({
         <div className="mt-auto space-y-2 border-t border-slate-100 pt-2.5">
           <div>
             <p className="text-[10px] font-semibold text-slate-500 sm:text-[11px]">
-              Giá niêm yết (Thuê pin)
+              Giá niêm yết (đã bao gồm pin)
             </p>
             <p className="text-base font-black tabular-nums text-brand-dark sm:text-lg">
               {formatPrice(car.price)}{" "}

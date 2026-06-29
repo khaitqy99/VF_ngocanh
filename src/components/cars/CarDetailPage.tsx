@@ -163,6 +163,8 @@ export default function CarDetailPage({ detail }: Props) {
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
+  const hasMultipleVariants = detail.variants.length > 1;
+  const lowestVariantPrice = Math.min(...detail.variants.map((v) => v.price));
   const thumbStripRef = useRef<HTMLDivElement>(null);
 
   const [estimatorLocation, setEstimatorLocation] = useState("camau");
@@ -432,8 +434,13 @@ export default function CarDetailPage({ detail }: Props) {
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Giá bán từ
+                        {hasMultipleVariants ? "Giá niêm yết" : "Giá bán từ"}
                       </p>
+                      {hasMultipleVariants && (
+                        <p className="mt-0.5 text-xs font-semibold text-brand-dark">
+                          {variant.name}
+                        </p>
+                      )}
                       <div className="mt-0.5">
                         <AnimatePresence mode="wait">
                           <motion.span
@@ -476,30 +483,8 @@ export default function CarDetailPage({ detail }: Props) {
                     />
                   </div>
 
-                  {/* Mobile config toggle */}
-                  <button
-                    type="button"
-                    onClick={() => setConfigOpen((o) => !o)}
-                    className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-left transition hover:border-brand/40 lg:hidden"
-                    aria-expanded={configOpen}
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-brand-dark">Cấu hình xe</p>
-                      <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
-                        {variant.name} · {selectedColorObj?.name} ·{" "}
-                        {batteryMode === "rent" ? "Thuê pin" : "Mua pin"}
-                      </p>
-                    </div>
-                    <ChevronDown
-                      className={`size-4 shrink-0 text-muted-foreground transition ${configOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-
-                  <div
-                    className={`mt-4 space-y-4 ${configOpen ? "block" : "hidden"} lg:mt-6 lg:block lg:space-y-6`}
-                  >
-                    {/* Variants */}
-                    <div>
+                  {hasMultipleVariants && (
+                    <div className="mt-4">
                       <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
                         Chọn phiên bản
                       </p>
@@ -511,7 +496,7 @@ export default function CarDetailPage({ detail }: Props) {
                               key={v.id}
                               type="button"
                               onClick={() => setSelectedVariant(v.id)}
-                              className={`flex w-full flex-col gap-1 rounded-xl border-2 px-3 py-2.5 text-left transition lg:flex-row lg:items-center lg:justify-between lg:px-4 lg:py-3 ${
+                              className={`flex w-full flex-col gap-1 rounded-xl border-2 px-3 py-2.5 text-left transition sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-3 ${
                                 selected
                                   ? "border-brand bg-brand/5 shadow-sm"
                                   : "border-border hover:border-brand/40"
@@ -529,15 +514,46 @@ export default function CarDetailPage({ detail }: Props) {
                                   {v.name}
                                 </span>
                               </div>
-                              <span className="pl-8 text-xs font-bold tabular-nums text-muted-foreground lg:pl-0">
+                              <span
+                                className={`pl-8 text-sm font-black tabular-nums sm:pl-0 ${
+                                  selected ? "text-brand" : "text-brand-dark"
+                                }`}
+                              >
                                 {formatPrice(v.price)} đ
                               </span>
                             </button>
                           );
                         })}
                       </div>
+                      <p className="mt-2 text-[11px] font-medium text-muted-foreground">
+                        Giá từ {formatPrice(lowestVariantPrice)} đ — đã bao gồm pin
+                      </p>
                     </div>
+                  )}
 
+                  {/* Mobile config toggle — màu sắc & pin */}
+                  <button
+                    type="button"
+                    onClick={() => setConfigOpen((o) => !o)}
+                    className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-left transition hover:border-brand/40 lg:hidden"
+                    aria-expanded={configOpen}
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-brand-dark">
+                        Màu sắc &amp; hình thức pin
+                      </p>
+                      <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
+                        {selectedColorObj?.name} · {batteryMode === "rent" ? "Thuê pin" : "Mua pin"}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={`size-4 shrink-0 text-muted-foreground transition ${configOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  <div
+                    className={`mt-4 space-y-4 ${configOpen ? "block" : "hidden"} lg:mt-6 lg:block lg:space-y-6`}
+                  >
                     {/* Colors */}
                     <div>
                       <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">

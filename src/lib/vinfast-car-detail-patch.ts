@@ -169,7 +169,7 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-mpv-7",
         name: "VF MPV 7",
-        price: 728910000,
+        price: 819000000,
       },
     ],
     specGroups: [
@@ -543,7 +543,7 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "minio-green",
         name: "Minio Green",
-        price: 239410000,
+        price: 269000000,
       },
     ],
     specGroups: [
@@ -739,7 +739,7 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "herio-green",
         name: "Herio Green",
-        price: 426310000,
+        price: 499000000,
       },
     ],
     specGroups: [
@@ -1098,7 +1098,7 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "limo-green",
         name: "Limo Green",
-        price: 666610000,
+        price: 749000000,
       },
     ],
     specGroups: [
@@ -1305,12 +1305,12 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-3-eco",
         name: "VF 3 Eco",
-        price: 268780000,
+        price: 302000000,
       },
       {
         id: "vf-3-plus",
         name: "VF 3 Plus",
-        price: 280350000,
+        price: 315000000,
       },
     ],
     specGroups: [
@@ -1682,12 +1682,12 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-6-eco",
         name: "VF 6 Eco",
-        price: 613210000,
+        price: 689000000,
       },
       {
         id: "vf-6-plus",
         name: "VF 6 Plus",
-        price: 666610000,
+        price: 745000000,
       },
     ],
     specGroups: [
@@ -1889,17 +1889,27 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-7-eco",
         name: "VF 7 Eco",
-        price: 702210000,
+        price: 799000000,
       },
       {
-        id: "vf-7-plus",
-        name: "VF 7 Plus",
-        price: 791210000,
+        id: "vf-7-plus-tt",
+        name: "VF 7 Plus - TT",
+        price: 949000000,
       },
       {
-        id: "vf-7-plus-tran-kinh-toan-canh",
-        name: "VF 7 Plus Trần kính toàn cảnh",
-        price: 809010000,
+        id: "vf-7-plus-tk",
+        name: "VF 7 Plus - TK",
+        price: 969000000,
+      },
+      {
+        id: "vf-7-plus-tt-tc2",
+        name: "VF 7 Plus - TT - TC2",
+        price: 889000000,
+      },
+      {
+        id: "vf-7-plus-tk-tc2",
+        name: "VF 7 Plus - TK - TC2",
+        price: 909000000,
       },
     ],
     specGroups: [
@@ -1931,6 +1941,18 @@ const GENERATED_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
     ],
   },
   vf9: {
+    variants: [
+      {
+        id: "vf-9-eco",
+        name: "VF 9 Eco",
+        price: 1499000000,
+      },
+      {
+        id: "vf-9-plus-tt",
+        name: "VF 9 Plus - TT",
+        price: 1699000000,
+      },
+    ],
     safety: {
       title: "AN TOÀN VƯỢT TRỘI",
       subtitle: "Hệ thống an toàn chủ động và thụ động bảo vệ toàn diện trên VF 9",

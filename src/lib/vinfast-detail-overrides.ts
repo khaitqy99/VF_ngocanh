@@ -11,7 +11,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-8-all-new",
         name: "VF 8 All New",
-        price: 849150000,
+        price: 999000000,
       },
     ],
     overview: {
@@ -99,7 +99,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-mpv-7",
         name: "VF MPV 7",
-        price: 728910000,
+        price: 819000000,
       },
     ],
     overview: {
@@ -182,9 +182,19 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
     slogan: "Linh hoạt lưu thông nội đô, vận hành êm ái, giảm chi phí vận hành, tối đa lợi nhuận",
     variants: [
       {
-        id: "ec-van",
-        name: "EC VAN",
-        price: 253650000,
+        id: "ec-van-tc",
+        name: "EC Van - TC",
+        price: 285000000,
+      },
+      {
+        id: "ec-van-nc",
+        name: "EC Van - NC",
+        price: 305000000,
+      },
+      {
+        id: "ec-van-nc-cua-truot",
+        name: "EC Van - NC cửa trượt",
+        price: 325000000,
       },
     ],
     overview: {
@@ -258,7 +268,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "minio-green",
         name: "Minio Green",
-        price: 239410000,
+        price: 269000000,
       },
     ],
     overview: {
@@ -342,7 +352,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "herio-green",
         name: "Herio Green",
-        price: 426310000,
+        price: 499000000,
       },
     ],
     overview: {
@@ -488,7 +498,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "limo-green",
         name: "Limo Green",
-        price: 666610000,
+        price: 749000000,
       },
     ],
     overview: {
@@ -565,12 +575,12 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-3-eco",
         name: "VF 3 Eco",
-        price: 268780000,
+        price: 302000000,
       },
       {
         id: "vf-3-plus",
         name: "VF 3 Plus",
-        price: 280350000,
+        price: 315000000,
       },
     ],
     overview: {
@@ -730,7 +740,7 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf5",
         name: "VF 5",
-        price: 470810000,
+        price: 529000000,
       },
     ],
     overview: {
@@ -854,12 +864,12 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-6-eco",
         name: "VF 6 Eco",
-        price: 613210000,
+        price: 689000000,
       },
       {
         id: "vf-6-plus",
         name: "VF 6 Plus",
-        price: 666610000,
+        price: 745000000,
       },
     ],
     overview: {
@@ -968,17 +978,27 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-7-eco",
         name: "VF 7 Eco",
-        price: 702210000,
+        price: 799000000,
       },
       {
-        id: "vf-7-plus",
-        name: "VF 7 Plus",
-        price: 791210000,
+        id: "vf-7-plus-tt",
+        name: "VF 7 Plus - TT",
+        price: 949000000,
       },
       {
-        id: "vf-7-plus-tran-kinh-toan-canh",
-        name: "VF 7 Plus Trần kính toàn cảnh",
-        price: 809010000,
+        id: "vf-7-plus-tk",
+        name: "VF 7 Plus - TK",
+        price: 969000000,
+      },
+      {
+        id: "vf-7-plus-tt-tc2",
+        name: "VF 7 Plus - TT - TC2",
+        price: 889000000,
+      },
+      {
+        id: "vf-7-plus-tk-tc2",
+        name: "VF 7 Plus - TK - TC2",
+        price: 909000000,
       },
     ],
     overview: {
@@ -1172,14 +1192,19 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ.",
     variants: [
       {
-        id: "vf-8-series-moi-vf-8-eco",
-        name: "VF 8 series mới VF 8 Eco",
-        price: 866150000,
+        id: "vf-8-eco",
+        name: "VF 8 Eco",
+        price: 1019000000,
+      },
+      {
+        id: "vf-8-eco-nang-cap",
+        name: "VF 8 Eco - Nâng cấp",
+        price: 999000000,
       },
       {
         id: "vf-8-plus",
-        name: "VF 8 Plus​",
-        price: 1019150000,
+        name: "VF 8 Plus",
+        price: 1199000000,
       },
     ],
     overview: {
@@ -1378,12 +1403,12 @@ export const VINFAST_CAR_DETAIL_OVERRIDES: Partial<Record<string, Record<string,
       {
         id: "vf-9-eco",
         name: "VF 9 Eco",
-        price: 1274150000,
+        price: 1499000000,
       },
       {
-        id: "vf-9-plus",
-        name: "VF 9 Plus",
-        price: 1444150000,
+        id: "vf-9-plus-tt",
+        name: "VF 9 Plus - TT",
+        price: 1699000000,
       },
     ],
     overview: {

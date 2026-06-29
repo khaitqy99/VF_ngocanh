@@ -11,7 +11,7 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-8-all-new",
         name: "VF 8 All New",
-        price: 849_150_000,
+        price: 999_000_000,
       },
     ],
     overview: {
@@ -207,12 +207,17 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
       {
         id: "vf-8-eco",
         name: "VF 8 Eco",
-        price: 866_150_000,
+        price: 1_019_000_000,
+      },
+      {
+        id: "vf-8-eco-nang-cap",
+        name: "VF 8 Eco - Nâng cấp",
+        price: 999_000_000,
       },
       {
         id: "vf-8-plus",
         name: "VF 8 Plus",
-        price: 1_019_150_000,
+        price: 1_199_000_000,
       },
     ],
     overview: {

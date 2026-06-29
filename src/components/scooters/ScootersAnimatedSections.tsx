@@ -196,11 +196,11 @@ export function ScootersPromoBanners() {
           >
             <motion.img
               src={SCOOTER_IMAGES.promoTestDrive}
-              alt="Showroom VF Ngọc Anh Cà Mau — Trải nghiệm xe máy điện"
-              className="absolute inset-0 h-full w-full object-cover object-[65%_center] sm:object-right"
+              alt="Xe máy điện VinFast — Trải nghiệm lái thử tại Showroom VF Ngọc Anh"
+              className="absolute inset-0 h-full w-full object-cover object-right"
               variants={reduced ? undefined : carsPromoImage}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-transparent" />
+            <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/90 sm:via-brand-dark/65 sm:to-transparent" />
             <div className="relative z-10 flex max-w-sm flex-col justify-center p-6 text-white md:p-8">
               <span className="mb-3 self-start rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
                 Lái thử miễn phí

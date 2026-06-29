@@ -41,7 +41,7 @@ export type CarModel = {
 
 export const CAR_IMAGES = {
   hero: "/images/showroom.jpg",
-  promoTestDrive: "/images/cars/promo-test-drive.jpg",
+  promoTestDrive: "/images/banners/04-vinfascination-vinpearl-desktop.jpg",
   promoFinance: "/images/cars/promo-finance.jpg",
 } as const;
 
@@ -51,7 +51,7 @@ export const CARS: CarModel[] = [
     name: "VF 8 All New",
     subtitle: "SUV điện D-SUV thế hệ mới",
     image: "/images/vinfast/cars/vf8-all-new.png",
-    price: 849_150_000,
+    price: 999_000_000,
     seats: 5,
     range: 490,
     power: 228,
@@ -91,7 +91,7 @@ export const CARS: CarModel[] = [
     name: "VF MPV 7",
     subtitle: "MPV điện đa dụng rộng rãi gia đình",
     image: "/images/vinfast/cars/vf-mpv7.webp",
-    price: 728_910_000,
+    price: 819_000_000,
     seats: 7,
     range: 450,
     power: 201,
@@ -130,7 +130,7 @@ export const CARS: CarModel[] = [
     name: "EC VAN",
     subtitle: "Xe van điện thương mại giao hàng",
     image: "/images/vinfast/cars/ec-van.webp",
-    price: 253_650_000,
+    price: 285_000_000,
     seats: 2,
     range: 150,
     power: 60,
@@ -160,7 +160,7 @@ export const CARS: CarModel[] = [
     name: "Minio Green",
     subtitle: "MiniCar điện đô thị thời thượng",
     image: "/images/vinfast/cars/minio-green.webp",
-    price: 239_410_000,
+    price: 269_000_000,
     seats: 4,
     range: 170,
     power: 40,
@@ -198,7 +198,7 @@ export const CARS: CarModel[] = [
     name: "Herio Green",
     subtitle: "SUV điện A-SUV tiết kiệm và linh hoạt",
     image: "/images/vinfast/cars/herio-green.png",
-    price: 426_310_000,
+    price: 499_000_000,
     seats: 5,
     range: 326,
     power: 134,
@@ -268,7 +268,7 @@ export const CARS: CarModel[] = [
     name: "Limo Green",
     subtitle: "MPV điện dịch vụ đa dụng 7 chỗ",
     image: "/images/vinfast/cars/limo-green.png",
-    price: 666_610_000,
+    price: 749_000_000,
     seats: 7,
     range: 450,
     power: 201,
@@ -302,7 +302,7 @@ export const CARS: CarModel[] = [
     name: "VF 3",
     subtitle: "Mini SUV điện độc đáo và cá tính",
     image: "/images/vinfast/cars/vf3.webp",
-    price: 268_780_000,
+    price: 302_000_000,
     seats: 4,
     range: 210,
     power: 40,
@@ -351,7 +351,7 @@ export const CARS: CarModel[] = [
     name: "VF 5",
     subtitle: "SUV điện đô thị nhỏ gọn",
     image: "/images/vinfast/cars/vf5.webp",
-    price: 470_810_000,
+    price: 529_000_000,
     seats: 5,
     range: 326,
     power: 134,
@@ -399,7 +399,7 @@ export const CARS: CarModel[] = [
     name: "VF 6",
     subtitle: "SUV điện đô thị lý tưởng hạng B",
     image: "/images/vinfast/cars/vf6.webp",
-    price: 613_210_000,
+    price: 689_000_000,
     seats: 5,
     range: 480,
     power: 201,
@@ -442,7 +442,7 @@ export const CARS: CarModel[] = [
     name: "VF 7",
     subtitle: "SUV cỡ C thời thượng và thể thao",
     image: "/images/vinfast/cars/vf7.webp",
-    price: 702_210_000,
+    price: 799_000_000,
     seats: 5,
     range: 496,
     power: 349,
@@ -494,7 +494,7 @@ export const CARS: CarModel[] = [
     name: "VF 8",
     subtitle: "SUV điện thông minh hạng D",
     image: "/images/vinfast/cars/vf8.webp",
-    price: 866_150_000,
+    price: 999_000_000,
     seats: 5,
     range: 562,
     power: 402,
@@ -551,7 +551,7 @@ export const CARS: CarModel[] = [
     name: "VF 9",
     subtitle: "SUV điện cao cấp hạng E",
     image: "/images/vinfast/cars/vf9.webp",
-    price: 1_274_150_000,
+    price: 1_499_000_000,
     seats: 7,
     range: 626,
     power: 402,
@@ -633,7 +633,7 @@ export const DRIVE_OPTIONS: { value: DriveType; label: string }[] = [
 ];
 
 export const PRICE_MIN = 200_000_000;
-export const PRICE_MAX = 1_500_000_000;
+export const PRICE_MAX = 1_700_000_000;
 
 export function formatPrice(value: number) {
   return value.toLocaleString("vi-VN");

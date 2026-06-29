@@ -228,7 +228,7 @@ export function PdpImageFeatureGrid({ items }: { items: PdpFeatureCard[] }) {
 
 export function PdpTechIconGrid({ items }: { items: PdpTechCard[] }) {
   return (
-    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-5">
+    <div className="mt-10 grid grid-cols-2 gap-4 lg:mt-12 lg:grid-cols-4 lg:gap-5">
       {items.map((item) => (
         <article
           key={item.title}
@@ -322,7 +322,7 @@ export function PdpPerformanceShowcase({
           <img
             src={image}
             alt={imageAlt}
-            className="absolute inset-0 h-full w-full object-contain p-8 sm:p-12"
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </div>
         <div className="flex flex-col justify-center border-t border-border/40 p-6 sm:p-8 lg:border-t-0 lg:border-l lg:p-10">

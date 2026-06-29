@@ -309,11 +309,11 @@ export function CarsPromoBanners() {
           >
             <motion.img
               src={CAR_IMAGES.promoTestDrive}
-              alt="Showroom VF Ngọc Anh Cà Mau — Đăng ký lái thử"
-              className="absolute inset-0 h-full w-full object-cover object-[65%_center] sm:object-right"
+              alt="Ô tô điện VinFast — Đăng ký lái thử tại Showroom VF Ngọc Anh"
+              className="absolute inset-0 h-full w-full object-cover object-right"
               variants={reduced ? undefined : carsPromoImage}
             />
-            <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/95 sm:via-brand-dark/80 sm:to-transparent" />
+            <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/90 sm:via-brand-dark/65 sm:to-transparent" />
             <div className="relative z-10 flex max-w-sm flex-col justify-center p-6 text-white md:p-8">
               <span className="mb-3 self-start rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
                 Hot Showroom
