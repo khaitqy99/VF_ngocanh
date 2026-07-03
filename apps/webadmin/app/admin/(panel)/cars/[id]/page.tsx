@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { CarEditClient } from "@/components/admin/CarEditClient";
 import { getAdminCarDetail, getAdminCars } from "@/lib/cms-data";
+import { buildPreviewEditUrl } from "@/lib/preview-edit-url";
+import { resolveProductSlug } from "@/lib/seo/slugs";
 
 export const revalidate = 60;
 
@@ -25,5 +27,8 @@ export default async function CarEditPage({ params }: { params: Promise<{ id: st
     );
   }
 
-  return <CarEditClient detail={detail} id={id} siteUrl={siteUrl} />;
+  const slug = resolveProductSlug({ id, slug: undefined }, "car");
+  const previewUrl = buildPreviewEditUrl(siteUrl, `/oto/${slug}/preview`);
+
+  return <CarEditClient detail={detail} id={id} siteUrl={siteUrl} previewUrl={previewUrl} />;
 }

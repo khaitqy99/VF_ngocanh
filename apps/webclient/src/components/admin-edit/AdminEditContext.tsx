@@ -223,7 +223,7 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
       toast.success("Đã gửi thay đổi sang admin để lưu");
       return;
     }
-    toast.success("Đã lưu thay đổi (chế độ xem trước độc lập)");
+    toast.message("Chỉ lưu được khi mở từ trang admin đã đăng nhập");
   }, [detail, productType, draft]);
 
   const ctx = useMemo(

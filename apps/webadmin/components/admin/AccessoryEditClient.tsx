@@ -22,9 +22,11 @@ type AccessoryItem = {
 export function AccessoryEditClient({
   product,
   siteUrl,
+  previewUrl,
 }: {
   product: AccessoryItem;
   siteUrl: string;
+  previewUrl: string;
 }) {
   const [tab, setTab] = useState<"preview" | "seo">("preview");
   const slug = resolveProductSlug({ id: product.id, slug: undefined }, "accessory", product.name);
@@ -61,6 +63,7 @@ export function AccessoryEditClient({
           listLabel="Phụ kiện"
           productName={product.name}
           previewPath={`/phu-kien/${slug}/preview`}
+          previewUrl={previewUrl}
           publicHref={`${siteUrl}${accessoryDetailPath({ id: product.id, slug, name: product.name })}`}
           mediaCategory="accessories"
           mediaSlug={product.id}

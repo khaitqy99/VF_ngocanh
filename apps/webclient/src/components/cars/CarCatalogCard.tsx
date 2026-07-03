@@ -13,6 +13,10 @@ import {
 } from "@/components/admin-edit/admin-form-styles";
 import { formatPrice, type CarModel } from "@/lib/cars";
 import { carDetailPath } from "@/lib/seo/slugs";
+import {
+  previewHrefWithToken,
+  usePreviewEditToken,
+} from "@/components/admin-edit/PreviewEditTokenContext";
 import { vfCatalogCardTitle } from "@/lib/typography";
 
 export function CarCatalogCard({
@@ -28,6 +32,7 @@ export function CarCatalogCard({
   onBookDrive: () => void;
   onEstimatePrice: () => void;
 }) {
+  const editToken = usePreviewEditToken();
   const [draft, setDraft] = useState(car);
 
   const hasUnsavedChanges = useMemo(
@@ -208,7 +213,7 @@ export function CarCatalogCard({
           </div>
 
           <Link
-            href={`${carDetailPath(car)}/preview?admin=1`}
+            href={previewHrefWithToken(`${carDetailPath(car)}/preview`, editToken)}
             target="_blank"
             className="block text-center text-[10px] font-bold text-brand hover:underline"
           >

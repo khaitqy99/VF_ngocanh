@@ -11,10 +11,12 @@ export function ScooterEditClient({
   detail,
   id,
   siteUrl,
+  previewUrl,
 }: {
   detail: ScooterDetail;
   id: string;
   siteUrl: string;
+  previewUrl: string;
 }) {
   const [tab, setTab] = useState<"preview" | "seo">("preview");
   const slug = resolveProductSlug({ id, slug: undefined }, "scooter");
@@ -51,6 +53,7 @@ export function ScooterEditClient({
           listLabel="Xe máy"
           productName={detail.name}
           previewPath={`/xe-may-dien/${slug}/preview`}
+          previewUrl={previewUrl}
           publicHref={`${siteUrl}${scooterDetailPath({ id, slug })}`}
           mediaCategory="scooters"
           mediaSlug={id}

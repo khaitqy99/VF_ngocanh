@@ -8,6 +8,7 @@ export function CatalogLiveEditor({
   listLabel,
   catalogLabel,
   previewPath,
+  previewUrl,
   publicHref,
   mediaCategory,
 }: {
@@ -15,6 +16,7 @@ export function CatalogLiveEditor({
   listLabel: string;
   catalogLabel: string;
   previewPath: string;
+  previewUrl: string;
   publicHref: string;
   mediaCategory: MediaCategory;
 }) {
@@ -24,6 +26,7 @@ export function CatalogLiveEditor({
       listLabel={listLabel}
       productName={catalogLabel}
       previewPath={previewPath}
+      previewUrl={previewUrl}
       publicHref={publicHref}
       mediaCategory={mediaCategory}
       editorHint="Chỉnh sửa trực tiếp trên thẻ catalog — bấm Lưu thẻ sau khi hoàn tất"

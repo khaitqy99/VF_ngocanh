@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ScooterEditClient } from "@/components/admin/ScooterEditClient";
 import { getAdminScooterDetail, getAdminScooters } from "@/lib/cms-data";
+import { buildPreviewEditUrl } from "@/lib/preview-edit-url";
+import { resolveProductSlug } from "@/lib/seo/slugs";
 
 export const revalidate = 60;
 
@@ -25,5 +27,8 @@ export default async function ScooterEditPage({ params }: { params: Promise<{ id
     );
   }
 
-  return <ScooterEditClient detail={detail} id={id} siteUrl={siteUrl} />;
+  const slug = resolveProductSlug({ id, slug: undefined }, "scooter");
+  const previewUrl = buildPreviewEditUrl(siteUrl, `/xe-may-dien/${slug}/preview`);
+
+  return <ScooterEditClient detail={detail} id={id} siteUrl={siteUrl} previewUrl={previewUrl} />;
 }

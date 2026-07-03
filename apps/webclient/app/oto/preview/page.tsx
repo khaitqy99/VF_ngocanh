@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { getBanners, getCars } from "@/lib/cms";
+import { PreviewEditTokenProvider } from "@/components/admin-edit/PreviewEditTokenContext";
 import { previewNoindexMetadata } from "@/lib/seo";
+import { verifyPreviewEditToken } from "@/lib/preview-edit-token";
 
 import CarsPage from "@/components/cars/CarsPage";
 
+const PREVIEW_PATH = "/oto/preview";
+
 type Props = {
-  searchParams: Promise<{ admin?: string }>;
+  searchParams: Promise<{ edit_token?: string }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,8 +17,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OtoCatalogPreviewRoute({ searchParams }: Props) {
-  const { admin } = await searchParams;
+  const { edit_token } = await searchParams;
+  const adminEdit = verifyPreviewEditToken(PREVIEW_PATH, edit_token);
   const [cars, heroBanners] = await Promise.all([getCars(), getBanners("cars")]);
 
-  return <CarsPage cars={cars} heroBanners={heroBanners} embedded adminEdit={admin === "1"} />;
+  return (
+    <PreviewEditTokenProvider token={adminEdit ? (edit_token ?? null) : null}>
+      <CarsPage cars={cars} heroBanners={heroBanners} embedded={adminEdit} adminEdit={adminEdit} />
+    </PreviewEditTokenProvider>
+  );
 }

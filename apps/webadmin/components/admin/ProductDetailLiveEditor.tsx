@@ -43,6 +43,7 @@ export function ProductDetailLiveEditor({
   listLabel,
   productName,
   previewPath,
+  previewUrl,
   publicHref,
   inlineEdit = true,
   mediaCategory,
@@ -53,6 +54,7 @@ export function ProductDetailLiveEditor({
   listLabel: string;
   productName: string;
   previewPath: string;
+  previewUrl?: string;
   publicHref: string;
   inlineEdit?: boolean;
   mediaCategory?: MediaCategory;
@@ -60,7 +62,9 @@ export function ProductDetailLiveEditor({
   editorHint?: string;
 }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const previewUrl = `${siteUrl}${previewPath}${inlineEdit ? (previewPath.includes("?") ? "&" : "?") + "admin=1" : ""}`;
+  const iframePreviewUrl =
+    previewUrl ??
+    `${siteUrl}${previewPath}${inlineEdit ? (previewPath.includes("?") ? "&" : "?") + "edit_token=invalid" : ""}`;
   const { toast } = useToast();
   const [iframeKey, setIframeKey] = useState(0);
   const [statusUpdating, setStatusUpdating] = useState(false);
@@ -258,7 +262,7 @@ export function ProductDetailLiveEditor({
         ref={iframeRef}
         key={iframeKey}
         title={`Xem trước ${productName}`}
-        src={previewUrl}
+        src={iframePreviewUrl}
         className="min-h-0 w-full flex-1 border-0 bg-white"
       />
 
