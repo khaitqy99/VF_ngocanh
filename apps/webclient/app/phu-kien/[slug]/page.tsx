@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import AccessoryDetailPage from "@/components/accessories/AccessoryDetailPage";
 import { getAccessories, getAccessoryBySlugOrId } from "@/lib/cms";
 import { buildAccessoryMetadata } from "@/lib/seo/product-metadata";
-import { accessoryDetailPath, resolveProductSlug } from "@/lib/seo/slugs";
+import { accessoryDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 120;
@@ -13,9 +13,11 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const accessories = await getAccessories();
-  return accessories.map((product) => ({
-    slug: resolveProductSlug(product, "accessory", product.name),
-  }));
+  return accessories
+    .map((product) => ({
+      slug: resolveProductSlug(product, "accessory", product.name),
+    }))
+    .filter((entry) => !isReservedProductSlug(entry.slug));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AccessoryDetailRoute({ params }: Props) {
   const { slug } = await params;
+  if (isReservedProductSlug(slug)) notFound();
   const product = await getAccessoryBySlugOrId(slug);
   if (!product) notFound();
 

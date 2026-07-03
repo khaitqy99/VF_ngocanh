@@ -61,13 +61,20 @@ export function isValidSlug(value: string): boolean {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) && value.length >= 2 && value.length <= 120;
 }
 
+/** Slug dành riêng cho route catalog preview — không dùng làm slug sản phẩm. */
+export const RESERVED_PRODUCT_SLUGS = new Set(["preview", "catalog-preview"]);
+
+export function isReservedProductSlug(slug: string): boolean {
+  return RESERVED_PRODUCT_SLUGS.has(slug);
+}
+
 export function resolveProductSlug(
   row: { id: string; slug?: string | null },
   type: "car" | "scooter" | "accessory",
   name?: string,
 ): string {
   const fromDb = row.slug?.trim();
-  if (fromDb && isValidSlug(fromDb)) return fromDb;
+  if (fromDb && isValidSlug(fromDb) && !isReservedProductSlug(fromDb)) return fromDb;
   if (type === "car") return defaultCarSlug(row.id);
   if (type === "scooter") return defaultScooterSlug(row.id);
   return defaultAccessorySlug(row.id, name);

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import ScooterDetailPage from "@/components/scooters/ScooterDetailPage";
 import { getScooterDetailAccessories, getScooterDetailBySlug, getScooters } from "@/lib/cms";
 import { buildScooterMetadata } from "@/lib/seo/product-metadata";
-import { resolveProductSlug, scooterDetailPath } from "@/lib/seo/slugs";
+import { resolveProductSlug, scooterDetailPath, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 120;
@@ -13,7 +13,9 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const scooters = await getScooters();
-  return scooters.map((scooter) => ({ slug: resolveProductSlug(scooter, "scooter") }));
+  return scooters
+    .map((scooter) => ({ slug: resolveProductSlug(scooter, "scooter") }))
+    .filter((entry) => !isReservedProductSlug(entry.slug));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ScooterDetailRoute({ params }: Props) {
   const { slug } = await params;
+  if (isReservedProductSlug(slug)) notFound();
   const [detail, detailAccessories] = await Promise.all([
     getScooterDetailBySlug(slug),
     getScooterDetailAccessories(),

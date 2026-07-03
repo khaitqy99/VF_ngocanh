@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import CarDetailPage from "@/components/cars/CarDetailPage";
 import { getCarDetailAccessories, getCarDetailBySlug, getCars } from "@/lib/cms";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
-import { carDetailPath, resolveProductSlug } from "@/lib/seo/slugs";
+import { carDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 120;
@@ -13,7 +13,9 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const cars = await getCars();
-  return cars.map((car) => ({ slug: resolveProductSlug(car, "car") }));
+  return cars
+    .map((car) => ({ slug: resolveProductSlug(car, "car") }))
+    .filter((entry) => !isReservedProductSlug(entry.slug));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CarDetailRoute({ params }: Props) {
   const { slug } = await params;
+  if (isReservedProductSlug(slug)) notFound();
   const detail = await getCarDetailBySlug(slug);
   if (!detail) notFound();
 
