@@ -1,0 +1,719 @@
+{
+  "syncedAt": "2026-06-26T10:39:09.209Z",
+  "source": "https://vinfastauto.com/vn_vi",
+  "banners": [
+    {
+      "desktopSrc": "https://static-cms-prod.vinfastauto.com/vinfast-1-trieu-xe-may-dien-xuat-xuong-desktop.webp",
+      "alt": "VinFast chính thức xuất xưởng 1 triệu xe máy điện - Mãnh liệt chuyển đổi xanh 12/06/2026",
+      "href": "https://vinfastauto.com/vn_vi/vinfast-xuat-xuong-chiec-xe-may-dien-thu-1-trieu"
+    },
+    {
+      "desktopSrc": "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-1-desktop.webp",
+      "alt": "VinFast xe máy điện - Phố thêm xanh lướt hè phơi phới, tổng ưu đãi lên đến 16%",
+      "href": "https://shop.vinfastauto.com/vn_vi/dat-coc-o-to-dien-vinfast.html?utm_source=banner_Oto_website&utm_medium=MKT_O2O&utm_campaign=banner_T6&utm_content=dat_coc_o_to_dien"
+    },
+    {
+      "desktopSrc": "https://static-cms-prod.vinfastauto.com/vinfast-xe-may-dien-uu-dai-he-16-desktop.webp",
+      "alt": "VinFast xe máy điện - Phố thêm xanh lướt hè phơi phới, tổng ưu đãi lên đến 16%",
+      "href": "https://shop.vinfastauto.com/vn_vi/dat-mua-xe-may-dien-vinfast?utm_source=banner_XM%C4%90_website&utm_medium=MKT_O2O&utm_campaign=banner_T6&utm_content=dat_coc_xe_may_dien"
+    },
+    {
+      "desktopSrc": "https://static-cms-prod.vinfastauto.com/vinfast-vinfascination-uu-dai-3-vinpearl-desktop.webp",
+      "alt": "VinFast Vinfascination đón hè rực rỡ - Ưu đãi giá bán lên đến 3%, tặng voucher Vinpearl",
+      "href": "https://shop.vinfastauto.com/vn_vi/dat-coc-o-to-dien-vinfast.html?utm_source=banner_Oto_website&utm_medium=MKT_O2O&utm_campaign=banner_T6&utm_content=dat_coc_o_to_dien"
+    },
+    {
+      "desktopSrc": "https://static-cms-prod.vinfastauto.com/vinfast-vf3-uu-dai-he-vinpearl-desktop.webp",
+      "alt": "VinFast VF 3 Vinfascination mùa hè rực rỡ - Tặng voucher Vinpearl hoặc ưu đãi 2% giá bán",
+      "href": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf3.html?utm_source=banner_Oto_website&utm_medium=MKT_O2O&utm_campaign=banner_T6&utm_content=dat_coc_VF_3"
+    }
+  ],
+  "cars": [
+    {
+      "name": "VF 8 All New",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/vf8-all-new.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "D-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "480-500 km"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "849.150.000 VNĐ*",
+          "listPrice": "999.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf8-the-all-new-2026",
+      "localId": "vf8-all-new"
+    },
+    {
+      "name": "VF MPV 7",
+      "imageSrc": "https://storage.googleapis.com/vinfast-data-01/pdp/vf_mpv_7/Homepage_MPV7.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "MPV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "450 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "728.910.000 VNĐ*",
+          "listPrice": "819.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf-mpv7",
+      "localId": "vf-mpv7"
+    },
+    {
+      "name": "EC VAN",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/ecvan-02.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "VAN"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "2 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "150 km"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "253.650.000 VNĐ*",
+          "listPrice": "285.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/vinfast-ecvan.html",
+      "localId": "ec-van"
+    },
+    {
+      "name": "Minio Green",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/MinioGreen.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "MiniCar"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "170 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "239.410.000 VNĐ*",
+          "listPrice": "269.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/minio-green.html",
+      "localId": "minio-green"
+    },
+    {
+      "name": "Herio Green",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/he.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "A-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "326 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "426.310.000 VNĐ*",
+          "listPrice": "479.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/herio-green.html",
+      "localId": "herio-green"
+    },
+    {
+      "name": "Nerio Green",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/NerioGreen.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "B-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "318,6 km (NEDC)"
+        },
+        {
+          "label": "Giá từ",
+          "value": "668.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/nerio-green.html",
+      "localId": "nerio-green"
+    },
+    {
+      "name": "Limo Green",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/limo.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "MPV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "450 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "666.610.000 VNĐ*",
+          "listPrice": "749.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/limo-green.html",
+      "localId": "limo-green"
+    },
+    {
+      "name": "VF 3",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF3.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "MiniCar"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "210 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "268.780.000 VNĐ*",
+          "listPrice": "302.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf3.html",
+      "localId": "vf3"
+    },
+    {
+      "name": "VF 5",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF5.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "A-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "326,4 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "470.810.000 VNĐ*",
+          "listPrice": "529.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5.html",
+      "localId": "vf5"
+    },
+    {
+      "name": "VF 6",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF6.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "B-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "480 km (NEDC)"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "613.210.000 VNĐ*",
+          "listPrice": "689.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6.html",
+      "localId": "vf6"
+    },
+    {
+      "name": "VF 7",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF7.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "C-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "496 km"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "702.210.000 VNĐ*",
+          "listPrice": "789.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7.html",
+      "localId": "vf7"
+    },
+    {
+      "name": "VF 8",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF8.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "D-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "471 km"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "866.150.000 VNĐ*",
+          "listPrice": "1.019.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/car-vf8.html",
+      "localId": "vf8"
+    },
+    {
+      "name": "VF 9",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/car/VF9.webp",
+      "specs": [
+        {
+          "label": "Dòng xe",
+          "value": "E-SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "6-7 chỗ"
+        },
+        {
+          "label": "Quãng đường lên tới",
+          "value": "626 km"
+        },
+        {
+          "label": "Giá bán từ",
+          "value": "1.274.150.000 VNĐ*",
+          "listPrice": "1.499.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/car-vf9.html",
+      "localId": "vf9"
+    }
+  ],
+  "scooters": [
+    {
+      "name": "FLAZZ MAX",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/escooter/FlazzMax.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "49 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~87 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "1500 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "14.990.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-vinfast-flazz-max",
+      "localId": "flazz-max"
+    },
+    {
+      "name": "AMIO S",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/escooter/AmioS.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "25 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~65 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "800 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "13.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-vinfast-amio-s",
+      "localId": "amio-s"
+    },
+    {
+      "name": "EVO Lite",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/evo-lite.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "49 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~165 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "2300 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "17.000.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-evo",
+      "localId": "evo-lite"
+    },
+    {
+      "name": "Amio",
+      "imageSrc": "https://storage.googleapis.com/vinfast-data-01/pdp/amio/Amio.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "30 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~65 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "800 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "13.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio",
+      "localId": "amio"
+    },
+    {
+      "name": "Viper",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/bike/Viper.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~156 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "3000 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "39.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-vinfast-viper",
+      "localId": "viper"
+    },
+    {
+      "name": "Feliz II",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/bike/Feliz-II.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "~156 km/lần sạc"
+        },
+        {
+          "label": "Công suất tối đa",
+          "value": "3000 W"
+        },
+        {
+          "label": "Giá từ",
+          "value": "24.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-vinfast-feliz-II",
+      "localId": "feliz-ii"
+    },
+    {
+      "name": "EVO",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/evo.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (2 pin)",
+          "value": "~165 km/lần sạc"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "12 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "19.990.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://vinfastauto.com/xe-may-dien-evo",
+      "localId": "evo"
+    },
+    {
+      "name": "zgoo",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/zgoo.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "39 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "70 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "14 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "15.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-zgoo.html",
+      "localId": "zgoo"
+    },
+    {
+      "name": "Flazz",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/falzzz.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "39 km/h"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc (2 pin)",
+          "value": "135 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "14 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "16.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-flazz.html",
+      "localId": "flazz"
+    },
+    {
+      "name": "Vero X",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/verox_d.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc (2 pin)",
+          "value": "262 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "35 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "34.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-verox.html",
+      "localId": "vero-x"
+    },
+    {
+      "name": "Feliz 2025",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/feliz2025_d.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc (2 pin)",
+          "value": "262 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "34 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "27.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-feliz.html",
+      "localId": "feliz-2025"
+    },
+    {
+      "name": "Evo Grand",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/evogrand.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "70 km/h"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc (2 pin)",
+          "value": "262 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "35 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "23.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand.html",
+      "localId": "evo-grand"
+    },
+    {
+      "name": "Evo Grand Lite",
+      "imageSrc": "https://static-cms-prod.vinfastauto.com/evogrand_lite.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "48 km/h"
+        },
+        {
+          "label": "Quãng đường đi được 1 lần sạc (2 pin)",
+          "value": "198 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "35 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "19.900.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand-lite.html",
+      "localId": "evo-grand-lite"
+    },
+    {
+      "name": "DrgnFly",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/escooter/VfDrgnFly.webp",
+      "specs": [
+        {
+          "label": "Công suất động cơ",
+          "value": "250 W"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "110 km"
+        },
+        {
+          "label": "Pin Lithium Ion",
+          "value": "47,2V"
+        },
+        {
+          "label": "Giá từ",
+          "value": "18.690.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-dap-dien-drgnfly.html",
+      "localId": "drgnfly"
+    },
+    {
+      "name": "EVO Lite Neo",
+      "imageSrc": "https://vinfastauto.com/themes/porto/img/homepage-v2/escooter/EvoLiteNeo.webp",
+      "specs": [
+        {
+          "label": "Tốc độ tối đa",
+          "value": "49 km/h"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc",
+          "value": "78 km"
+        },
+        {
+          "label": "Cốp xe",
+          "value": "17 lít"
+        },
+        {
+          "label": "Giá từ",
+          "value": "14.400.000 VNĐ"
+        }
+      ],
+      "detailHref": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-lite-neo.html",
+      "localId": "evo-lite-neo"
+    }
+  ]
+}

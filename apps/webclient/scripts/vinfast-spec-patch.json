@@ -1,0 +1,167 @@
+{
+  "cars": {
+    "vf6": {
+      "variants": [
+        { "name": "VF 6 Eco", "price": 613210000, "listPrice": 689000000 },
+        { "name": "VF 6 Plus", "price": 666610000, "listPrice": 749000000 }
+      ],
+      "specTable": [
+        { "label": "Dài x Rộng x Cao (mm)", "value": "4.238 x 1.820 x 1.594" },
+        { "label": "Chiều dài cơ sở (mm)", "value": "2.730" },
+        { "label": "Công suất tối đa (kW)", "value": "150" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "310" },
+        { "label": "Quãng đường (NEDC) (km)", "value": "480" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "59,6" },
+        { "label": "Thời gian nạp pin nhanh nhất", "value": "25 phút (10%-70%)" },
+        { "label": "Dẫn động", "value": "FWD/Cầu trước" },
+        { "label": "Kích thước la-zăng", "value": "18 inch" },
+        { "label": "Số chỗ ngồi", "value": "5 chỗ" }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "torque": 310,
+        "range": 480,
+        "batteryCapacity": 59.6,
+        "chargingTime": "25 phút (10%-70%)",
+        "drive": "fwd",
+        "dimensions": "4.238 x 1.820 x 1.594 mm"
+      }
+    },
+    "vf8": {
+      "specTable": [
+        { "label": "Dài x Rộng x Cao (mm)", "value": "4.750 x 1.934 x 1.667" },
+        { "label": "Công suất tối đa (hp)", "value": "402" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "620" },
+        { "label": "Quãng đường (km)", "value": "471" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "88,3" },
+        { "label": "Thời gian nạp pin nhanh nhất", "value": "31 phút (10%-70%)" },
+        { "label": "Dẫn động", "value": "AWD/2 cầu toàn thời gian" },
+        { "label": "Tăng tốc 0-100 km/h", "value": "5,5 giây" },
+        { "label": "Số chỗ ngồi", "value": "5 chỗ" }
+      ],
+      "fields": {
+        "power": 402,
+        "torque": 620,
+        "range": 471,
+        "batteryCapacity": 88.3,
+        "chargingTime": "31 phút (10%-70%)",
+        "drive": "awd",
+        "dimensions": "4.750 x 1.934 x 1.667 mm"
+      }
+    },
+    "vf9": {
+      "specTable": [
+        { "label": "Dài x Rộng x Cao (mm)", "value": "5.119 x 2.254 x 1.697" },
+        { "label": "Chiều dài cơ sở (mm)", "value": "3.149" },
+        { "label": "Khoảng sáng gầm xe không tải (mm)", "value": "174" },
+        { "label": "Công suất tối đa (hp/kW)", "value": "402/300" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "620" },
+        { "label": "Tốc độ tối đa (km/h)", "value": "200" },
+        { "label": "Quãng đường (km)", "value": "626" },
+        { "label": "Dung lượng pin (kWh) - khả dụng", "value": "123" },
+        { "label": "Loại pin", "value": "CATL" },
+        { "label": "Thời gian nạp pin nhanh nhất", "value": "35 phút (10%-70%)" },
+        { "label": "Dẫn động", "value": "AWD/2 cầu toàn thời gian" },
+        { "label": "Trọng lượng không tải (kg)", "value": "2.911" },
+        { "label": "Dung tích cốp gập ghế (L)", "value": "926" },
+        { "label": "Số chỗ ngồi", "value": "7 chỗ" }
+      ],
+      "fields": {
+        "power": 402,
+        "powerKw": 300,
+        "torque": 620,
+        "range": 626,
+        "batteryCapacity": 123,
+        "chargingTime": "35 phút (10%-70%)",
+        "drive": "awd",
+        "dimensions": "5.119 x 2.254 x 1.697 mm"
+      }
+    }
+  },
+  "scooters": {
+    "zgoo": {
+      "variants": [{ "name": "zgoo", "price": 13900000, "listPrice": 15900000 }],
+      "specTable": [
+        { "label": "Quãng đường (km)", "value": "70" },
+        { "label": "Tốc độ tối đa (km/h)", "value": "39" },
+        { "label": "Công suất động cơ (W)", "value": "1500" },
+        { "label": "Loại pin", "value": "LFP" },
+        { "label": "Thời gian sạc", "value": "5 giờ (0-100%)" },
+        { "label": "Trọng lượng (kg)", "value": "90" },
+        { "label": "Dung tích cốp (lít)", "value": "14" },
+        { "label": "Kích thước (mm)", "value": "1.700 x 680 x 1.100" }
+      ],
+      "fields": {
+        "range": 70,
+        "topSpeed": 39,
+        "motorPower": 1500,
+        "trunk": 14,
+        "weight": 90,
+        "chargingTime": "5 giờ (0-100%)"
+      }
+    },
+    "flazz": {
+      "variants": [{ "name": "Flazz", "price": 14900000, "listPrice": 16900000 }],
+      "specTable": [
+        { "label": "Quãng đường (km)", "value": "135" },
+        { "label": "Tốc độ tối đa (km/h)", "value": "39" },
+        { "label": "Công suất động cơ (W)", "value": "1500" },
+        { "label": "Loại pin", "value": "LFP" },
+        { "label": "Thời gian sạc", "value": "5 giờ (0-100%)" },
+        { "label": "Trọng lượng (kg)", "value": "92" },
+        { "label": "Dung tích cốp (lít)", "value": "14" },
+        { "label": "Kích thước (mm)", "value": "1.720 x 680 x 1.080" }
+      ],
+      "fields": {
+        "range": 135,
+        "topSpeed": 39,
+        "motorPower": 1500,
+        "trunk": 14,
+        "weight": 92,
+        "chargingTime": "5 giờ (0-100%)"
+      }
+    },
+    "evo-grand": {
+      "variants": [{ "name": "Evo Grand", "price": 21121000, "listPrice": 23900000 }],
+      "specTable": [
+        { "label": "Quãng đường (km)", "value": "262" },
+        { "label": "Tốc độ tối đa (km/h)", "value": "70" },
+        { "label": "Công suất động cơ (W)", "value": "2800" },
+        { "label": "Loại pin", "value": "LFP" },
+        { "label": "Thời gian sạc", "value": "6 giờ (0-100%)" },
+        { "label": "Trọng lượng (kg)", "value": "115" },
+        { "label": "Dung tích cốp (lít)", "value": "35" },
+        { "label": "Kích thước (mm)", "value": "1.920 x 700 x 1.140" }
+      ],
+      "fields": {
+        "range": 262,
+        "topSpeed": 70,
+        "motorPower": 2800,
+        "trunk": 35,
+        "weight": 115,
+        "chargingTime": "6 giờ (0-100%)"
+      }
+    },
+    "drgnfly": {
+      "variants": [{ "name": "DrgnFly", "price": 16641000, "listPrice": 18690000 }],
+      "specTable": [
+        { "label": "Quãng đường (km)", "value": "110" },
+        { "label": "Tốc độ tối đa (km/h)", "value": "49" },
+        { "label": "Công suất động cơ (W)", "value": "250" },
+        { "label": "Loại pin", "value": "Lithium-ion" },
+        { "label": "Thời gian sạc", "value": "5 giờ (0-100%)" },
+        { "label": "Trọng lượng xe (kg)", "value": "28" },
+        { "label": "Kích thước (mm)", "value": "1.750 x 600 x 1.100" }
+      ],
+      "fields": {
+        "range": 110,
+        "topSpeed": 49,
+        "motorPower": 250,
+        "trunk": 0,
+        "weight": 28,
+        "chargingTime": "5 giờ (0-100%)"
+      }
+    }
+  }
+}

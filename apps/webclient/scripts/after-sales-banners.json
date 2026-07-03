@@ -1,0 +1,33 @@
+{
+  "syncedAt": "2026-06-24T03:27:42.287Z",
+  "source": "https://vinfastauto.com/vn_vi (DVHM pages)",
+  "banners": [
+    {
+      "id": "01-bao-hanh-sua-chua",
+      "source": "https://vinfastauto.com/vn_vi/thong-tin-bao-hanh",
+      "desktop": "/images/banners/after-sales/01-bao-hanh-sua-chua-desktop.webp",
+      "mobile": "/images/banners/after-sales/01-bao-hanh-sua-chua-desktop.webp",
+      "alt": "Bảo hành - sửa chữa VinFast",
+      "remoteDesktop": "https://static-cms-prod.vinfastauto.com/baohanh_1755224955_0.webp",
+      "remoteMobile": "https://static-cms-prod.vinfastauto.com/baohanh_1755224955_0.webp"
+    },
+    {
+      "id": "02-bao-duong-dinh-ky",
+      "source": "https://vinfastauto.com/vn_vi/dich-vu-bao-duong",
+      "desktop": "/images/banners/after-sales/02-bao-duong-dinh-ky-desktop.webp",
+      "mobile": "/images/banners/after-sales/02-bao-duong-dinh-ky-desktop.webp",
+      "alt": "Bảo dưỡng định kỳ VinFast",
+      "remoteDesktop": "https://static-cms-prod.vinfastauto.com/bao-duong-dinh-ky_1755224955_5.webp",
+      "remoteMobile": "https://static-cms-prod.vinfastauto.com/bao-duong-dinh-ky_1755224955_5.webp"
+    },
+    {
+      "id": "03-dich-vu-sua-chua",
+      "source": "https://vinfastauto.com/vn_vi/dich-vu-sua-chua",
+      "desktop": "/images/banners/after-sales/03-dich-vu-sua-chua-desktop.webp",
+      "mobile": "/images/banners/after-sales/03-dich-vu-sua-chua-mobile.webp",
+      "alt": "Dịch vụ sửa chữa VinFast",
+      "remoteDesktop": "https://static-cms-prod.vinfastauto.com/banner-dich-vu-sua-chua_1755497298.webp",
+      "remoteMobile": "https://static-cms-prod.vinfastauto.com/banner-dich-vu-sua-chua-mb_1755497298.webp"
+    }
+  ]
+}

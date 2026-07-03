@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/cms-data": ["./lib/cms-data.ts"],
+      "@/lib/cms": ["./lib/cms.ts"],
+      "@/lib/format": ["./lib/format.ts"],
+      "@/lib/leads": ["./lib/leads.ts"],
+      "@/lib/media-library": ["./lib/media-library.ts"],
+      "@/lib/product-utils": ["./lib/product-utils.ts"],
+      "@/lib/revalidate-webclient": ["./lib/revalidate-webclient.ts"],
+      "@/lib/seo-revalidate": ["./lib/seo-revalidate.ts"],
+      "@/lib/*": ["../webclient/src/lib/*"],
+      "@/*": ["./*"],
+      "@webclient/*": ["../webclient/src/*"],
+      "@vinfast3s/supabase": ["../../packages/supabase/src/index.ts"],
+      "@vinfast3s/supabase/*": ["../../packages/supabase/src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

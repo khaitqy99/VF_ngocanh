@@ -1,0 +1,515 @@
+{
+  "cars": [
+    {
+      "id": "herio-green",
+      "name": "Herio Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/herio-green",
+      "variants": [{ "name": "Herio Green", "price": 426310000 }],
+      "overview": {
+        "title": "HERIO GREEN — A-SUV điện đô thị",
+        "subtitle": "Herio Green sở hữu thiết kế hiện đại, trẻ trung với các lựa chọn phối màu nội ngoại thất cá tính."
+      },
+      "highlights": [
+        "Quãng đường 326 km (NEDC)",
+        "Công suất 100 kW / Mô-men 135 Nm",
+        "Pin 37,23 kWh"
+      ],
+      "exterior": [
+        {
+          "title": "Thiết kế trẻ trung",
+          "desc": "Herio Green nổi bật với các lựa chọn phối màu nội ngoại thất, cá nhân hóa theo phong cách sống."
+        }
+      ],
+      "specTable": [
+        { "label": "Chiều dài cơ sở (mm)", "value": "2514" },
+        { "label": "Khoảng sáng gầm xe (mm)", "value": "160" },
+        { "label": "Công suất tối đa (kW)", "value": "100" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "135" },
+        { "label": "Quãng đường chạy (NEDC) (km)", "value": "326" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "37,23" }
+      ],
+      "fields": {
+        "power": 134,
+        "powerKw": 100,
+        "torque": 135,
+        "range": 326,
+        "batteryCapacity": 37.23,
+        "drive": "fwd"
+      },
+      "tagline": "HERIO GREEN",
+      "slogan": "A-SUV điện — trọn vẹn trải nghiệm cùng Herio"
+    },
+    {
+      "id": "minio-green",
+      "name": "Minio Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/minio-green",
+      "variants": [{ "name": "Minio Green", "price": 239410000, "listPrice": 269000000 }],
+      "overview": {
+        "title": "MINIO GREEN - KHỞI NGHIỆP TRONG TẦM TAY",
+        "subtitle": "Sở hữu kích thước gọn, vừa vặn với mọi ngõ hẻm, từ đô thị đến nông thôn Việt Nam."
+      },
+      "highlights": [
+        "Quãng đường 210 km (NEDC)",
+        "Công suất 30 kW / Mô-men 65 Nm",
+        "Dải màu trẻ trung lên tới 14 màu"
+      ],
+      "exterior": [
+        {
+          "title": "Ưu điểm, điểm nổi bật",
+          "desc": "Vận hành đơn giản, tối ưu phù hợp cho người mới sử dụng EV."
+        },
+        {
+          "title": "Dải màu trẻ trung",
+          "desc": "Minio Green chính thức là chiến thần vỏn vẹn 2 cửa với lên tới 14 tùy chọn màu sắc cá tính."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Chi tiết nội thất",
+          "desc": "Không gian đủ cho gia đình 2 người lớn, 2 trẻ em."
+        }
+      ],
+      "specTable": [
+        { "label": "Chiều dài cơ sở (mm)", "value": "2065" },
+        { "label": "Khoảng sáng gầm xe (mm)", "value": "166,3" },
+        { "label": "Công suất tối đa (kW)", "value": "30" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "65" },
+        { "label": "Quãng đường chạy (NEDC) (km/lần sạc đầy)", "value": "210" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "18,3" },
+        { "label": "Dẫn động", "value": "RWD/Cầu sau" }
+      ],
+      "fields": {
+        "power": 40,
+        "powerKw": 30,
+        "torque": 65,
+        "range": 210,
+        "batteryCapacity": 18.3,
+        "drive": "rwd"
+      },
+      "tagline": "MINIO GREEN",
+      "slogan": "Khởi nghiệp trong tầm tay — MiniCar điện đô thị gọn nhẹ"
+    },
+    {
+      "id": "vf8-all-new",
+      "name": "VF 8 All New",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf8-the-all-new-2026",
+      "variants": [{ "name": "VF 8 All New", "price": 849150000 }],
+      "overview": {
+        "title": "Khi phong cách trở thành dấu ấn",
+        "subtitle": "VF 8 thế hệ mới định hình phong cách di chuyển Xanh hiện đại, nâng chuẩn công nghệ Việt."
+      },
+      "highlights": [
+        "Công suất 170 kW / Mô-men 330 Nm",
+        "Quãng đường 480-500 km (NEDC)",
+        "Pin 60 kWh — sạc nhanh dưới 30 phút (10%-70%)"
+      ],
+      "exterior": [
+        {
+          "title": "Trải nghiệm thị giác không giới hạn",
+          "desc": "Ngoại thất VF 8 gây ấn tượng với diện mạo đặc trưng của xe điện thế hệ mới, dải đèn cánh chim kéo dài đầy chiều sâu."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Nội thất khoáng đạt - Nâng tầm tiện nghi",
+          "desc": "Ghế ngồi VF 8 mới giúp giải tỏa áp lực, hỗ trợ tuần hoàn cơ thể trong mọi điều kiện di chuyển."
+        }
+      ],
+      "colors": [
+        "Solar Ruby",
+        "Infinity Blanc",
+        "Jet Black",
+        "Starburst Blue",
+        "Mysterioso Purple",
+        "Vitality Orange"
+      ],
+      "specTable": [
+        { "label": "Công suất tối đa (kW)", "value": "170" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "330" },
+        { "label": "Quãng đường (NEDC) (km)", "value": "480-500" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "60,13" },
+        { "label": "Dài x Rộng x Cao (mm)", "value": "4701 x 1872 x 1670" },
+        { "label": "Số ghế ngồi", "value": "5 ghế" },
+        { "label": "Thời gian nạp pin nhanh nhất (10%-70%)", "value": "Dưới 30 phút" },
+        { "label": "Kích thước mâm xe", "value": "19 Inch" },
+        { "label": "Màn hình giải trí trung tâm", "value": "12,9 Inch" }
+      ],
+      "fields": {
+        "power": 228,
+        "powerKw": 170,
+        "torque": 330,
+        "range": 480,
+        "batteryCapacity": 60.13,
+        "chargingTime": "Dưới 30 phút (10%-70%)",
+        "dimensions": "4701 x 1872 x 1670"
+      },
+      "tagline": "VF 8 Thế Hệ Mới",
+      "slogan": "Khi phong cách trở thành dấu ấn — SUV điện cỡ D thế hệ mới"
+    },
+    {
+      "id": "vf-mpv7",
+      "name": "VF MPV 7",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf-mpv7",
+      "variants": [{ "name": "VF MPV 7", "price": 728910000 }],
+      "overview": {
+        "title": "VF MPV 7 — Gia đình sum vầy, hành trình trọn vẹn",
+        "subtitle": "MPV điện 7 chỗ với quãng đường 450 km (NEDC), không gian rộng rãi cho cả gia đình."
+      },
+      "highlights": [
+        "Quãng đường 450 km (NEDC)",
+        "Công suất 150 kW / Mô-men 280 Nm",
+        "Sạc nhanh DC 80 kW — 30 phút (10%-70%)"
+      ],
+      "specTable": [
+        { "label": "Dài x Rộng x Cao (mm)", "value": "4740 x 1872 x 1734" },
+        { "label": "Chiều dài cơ sở (mm)", "value": "2840" },
+        { "label": "Khoảng sáng gầm xe (mm)", "value": "185" },
+        { "label": "Công suất tối đa (kW)", "value": "150" },
+        { "label": "Mô men xoắn cực đại (Nm)", "value": "280" },
+        { "label": "Quãng đường chạy (NEDC) (km)", "value": "450" },
+        { "label": "Dung lượng pin khả dụng (kWh)", "value": "60,13" },
+        { "label": "Công suất sạc nhanh DC tối đa (kW)", "value": "80" },
+        { "label": "Thời gian nạp pin nhanh nhất", "value": "30 phút (10%-70%)" },
+        { "label": "Dẫn động", "value": "FWD/Cầu trước" },
+        { "label": "Kích thước la-zăng", "value": "Mâm hợp kim 19 inch" }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "torque": 280,
+        "range": 450,
+        "batteryCapacity": 60.13,
+        "chargingTime": "30 phút (10%-70%)",
+        "drive": "fwd",
+        "dimensions": "4740 x 1872 x 1734"
+      },
+      "tagline": "VF MPV 7",
+      "slogan": "Gia đình sum vầy — MPV điện 7 chỗ"
+    },
+    {
+      "id": "limo-green",
+      "name": "Limo Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/limo-green",
+      "variants": [{ "name": "Limo Green", "price": 666610000, "listPrice": 749000000 }],
+      "overview": {
+        "title": "LIMO GREEN — Rộng mở không gian, kéo dài hành trình",
+        "subtitle": "Xe điện 7 chỗ phù hợp gia đình đông người và vận doanh vận tải đa năng."
+      },
+      "highlights": [
+        "Quãng đường 450 km (NEDC)",
+        "Công suất 150 kW",
+        "7 chỗ — chiều dài cơ sở 2840 mm"
+      ],
+      "exterior": [
+        {
+          "title": "Thiết kế tiên tiến",
+          "desc": "Limo Green 7 chỗ phù hợp cho nhóm bạn, gia đình đông người cùng di chuyển."
+        }
+      ],
+      "colors": ["Jet Black", "Desat Silver", "Solar Ruby", "Infinity Blanc"],
+      "specTable": [
+        { "label": "Chiều dài cơ sở (mm)", "value": "2840" },
+        { "label": "Chiều rộng (mm)", "value": "1872" },
+        { "label": "Sức chứa", "value": "7 chỗ" },
+        { "label": "Công suất tối đa (kW)", "value": "150" },
+        { "label": "Quãng đường chạy (NEDC) (km)", "value": "450" },
+        { "label": "Khoảng sáng gầm xe (mm)", "value": "180" },
+        { "label": "Kích thước la-zăng", "value": "18 inch" },
+        { "label": "Thời gian nạp pin nhanh nhất", "value": "30 phút (10%-70%)" }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "range": 450,
+        "chargingTime": "30 phút (10%-70%)",
+        "dimensions": "2840 mm cơ sở"
+      },
+      "tagline": "LIMO GREEN",
+      "slogan": "Rộng mở không gian — MPV điện 7 chỗ"
+    }
+  ],
+  "scooters": [
+    {
+      "id": "flazz-max",
+      "name": "FLAZZ MAX",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-flazz-max",
+      "variants": [
+        { "name": "Flazz Max (không kèm pin)", "price": 14990000 },
+        { "name": "Flazz Max (kèm pin)", "price": 20600000 }
+      ],
+      "overview": {
+        "title": "ĐỘC ĐÁO - BẬT CHẤT THỂ THAO",
+        "subtitle": "Flazz Max sở hữu công suất tối đa 1500W, pin LFP 1.5kWh, thiết kế thể thao năng động."
+      },
+      "highlights": [
+        "Tốc độ tối đa 49 km/h",
+        "Quãng đường ~87 km/lần sạc",
+        "Công suất tối đa 1500 W"
+      ],
+      "exterior": [
+        {
+          "title": "KIỂU DÁNG",
+          "desc": "Thiết kế mạnh mẽ, trẻ trung với các đường nét góc cạnh, đậm chất phố."
+        },
+        {
+          "title": "BỀN BỈ & AN TOÀN",
+          "desc": "Động cơ đạt tiêu chuẩn chống nước IP67, an tâm di chuyển trong điều kiện mưa."
+        }
+      ],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "49" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~87" },
+        { "label": "Công suất tối đa (W)", "value": "1500" },
+        { "label": "Công suất danh định (W)", "value": "1000" },
+        { "label": "Dung lượng pin (kWh)", "value": "1,5" },
+        { "label": "Dài x Rộng x Cao (mm)", "value": "1745 x 700 x 1050" },
+        { "label": "Thể tích cốp (L)", "value": "4" },
+        { "label": "Thời gian sạc tiêu chuẩn", "value": "Khoảng 8h (0%-100%)" }
+      ],
+      "fields": {
+        "topSpeed": 49,
+        "range": 87,
+        "motorPower": 1500,
+        "trunk": 4,
+        "chargingTime": "Khoảng 8h"
+      },
+      "tagline": "FLAZZ MAX",
+      "slogan": "Độc đáo — bật chất thể thao"
+    },
+    {
+      "id": "amio-s",
+      "name": "AMIO S",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio-s",
+      "variants": [{ "name": "AMIO S", "price": 13900000 }],
+      "overview": {
+        "title": "AMIO S",
+        "subtitle": "Xe máy điện đô thị gọn nhẹ, tốc độ tối đa 25 km/h."
+      },
+      "highlights": ["Tốc độ tối đa 25 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "25" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~65" },
+        { "label": "Công suất tối đa (W)", "value": "800" }
+      ],
+      "fields": { "topSpeed": 25, "range": 65, "motorPower": 800 },
+      "tagline": "AMIO S",
+      "slogan": "Xe điện đô thị tiện lợi"
+    },
+    {
+      "id": "evo-lite",
+      "name": "EVO Lite",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+      "variants": [{ "name": "EVO Lite", "price": 17000000 }],
+      "overview": {
+        "title": "EVO LITE",
+        "subtitle": "Xe máy điện phân khúc cao cấp với quãng đường lên tới 165 km."
+      },
+      "highlights": ["Tốc độ tối đa 49 km/h", "Quãng đường ~165 km/lần sạc", "Công suất 2300 W"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "49" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~165" },
+        { "label": "Công suất tối đa (W)", "value": "2300" }
+      ],
+      "fields": { "topSpeed": 49, "range": 165, "motorPower": 2300 },
+      "tagline": "EVO LITE",
+      "slogan": "Sống xanh, đi chất — quãng đường lên tới ~165 km/lần sạc"
+    },
+    {
+      "id": "amio",
+      "name": "Amio",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio",
+      "variants": [{ "name": "Amio", "price": 13900000 }],
+      "overview": { "title": "AMIO", "subtitle": "Xe máy điện đô thị với tốc độ tối đa 30 km/h." },
+      "highlights": ["Tốc độ tối đa 30 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "30" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~65" },
+        { "label": "Công suất tối đa (W)", "value": "800" }
+      ],
+      "fields": { "topSpeed": 30, "range": 65, "motorPower": 800 },
+      "tagline": "AMIO",
+      "slogan": "Di chuyển xanh mỗi ngày"
+    },
+    {
+      "id": "viper",
+      "name": "Viper",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-viper",
+      "variants": [{ "name": "Viper", "price": 39900000 }],
+      "overview": {
+        "title": "VIPER",
+        "subtitle": "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h, quãng đường ~156 km/lần sạc."
+      },
+      "highlights": [
+        "Tốc độ tối đa 70 km/h",
+        "Quãng đường ~156 km/lần sạc",
+        "Công suất 3000 W",
+        "Khóa thông minh Smart Key"
+      ],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "70" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~156" },
+        { "label": "Công suất tối đa (W)", "value": "3000" }
+      ],
+      "fields": { "topSpeed": 70, "range": 156, "motorPower": 3000 },
+      "tagline": "VIPER",
+      "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+      "pdpContent": {
+        "tagline": "VIPER",
+        "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+        "overview": {
+          "title": "Xe máy điện VinFast Viper",
+          "subtitle": "Xe máy điện hiệu suất cao với động cơ BLDC Inhub, màn hình TFT và khả năng linh hoạt nâng cấp 2 pin.",
+          "bullets": [
+            "Tốc độ tối đa 70 km/h",
+            "Quãng đường ~156 km/lần sạc",
+            "Công suất tối đa 3000 W",
+            "Khóa thông minh Smart Key"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+          },
+          {
+            "title": "HIỆU SUẤT ẤN TƯỢNG",
+            "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+          },
+          {
+            "title": "Màn hình TFT hiện đại",
+            "desc": "Màn hình TFT hiện đại, đem tới độ phân giải và tương phản cao, giúp hiển thị thông số rõ ràng, sống động."
+          },
+          {
+            "title": "Cốp xe rộng rãi",
+            "desc": "Cốp xe rộng rãi, tối ưu không gian chứa pin và các vật dụng cần thiết."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Sàn để chân rộng rãi",
+            "desc": "Sàn để chân rộng rãi và vị trí để chân sau tách rời, giúp tư thế ngồi thư thái và thoải mái."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+            "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ. Quãng đường khoảng 82 km (+74 km khi lắp pin phụ) theo điều kiện tiêu chuẩn VinFast."
+          },
+          {
+            "icon": "drive",
+            "title": "Hệ thống phanh an toàn",
+            "desc": "Trang bị phanh đĩa trước, phanh cơ bánh sau đảm bảo an toàn trên mọi hành trình."
+          },
+          {
+            "icon": "app",
+            "title": "Khóa thông minh",
+            "desc": "Khóa xe Smart Key tiện lợi, an toàn."
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường ~156 km/lần sạc — Công suất 3000 W",
+          "features": [
+            { "title": "Tốc độ tối đa", "desc": "70 km/h" },
+            { "title": "Quãng đường 1 lần sạc", "desc": "~156 km" },
+            { "title": "Công suất tối đa", "desc": "3000 W" }
+          ]
+        }
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+        },
+        {
+          "title": "HIỆU SUẤT ẤN TƯỢNG",
+          "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+          "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ."
+        },
+        {
+          "icon": "drive",
+          "title": "Hệ thống phanh an toàn",
+          "desc": "Phanh đĩa trước, phanh cơ bánh sau."
+        }
+      ]
+    },
+    {
+      "id": "feliz-ii",
+      "name": "Feliz II",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-feliz-II",
+      "variants": [{ "name": "Feliz II", "price": 24900000 }],
+      "overview": {
+        "title": "FELIZ II",
+        "subtitle": "Xe máy điện phong cách với quãng đường ~156 km."
+      },
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~156 km/lần sạc", "Công suất 3000 W"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "70" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~156" },
+        { "label": "Công suất tối đa (W)", "value": "3000" }
+      ],
+      "fields": { "topSpeed": 70, "range": 156, "motorPower": 3000 },
+      "tagline": "FELIZ II",
+      "slogan": "Phong cách — tiện nghi"
+    },
+    {
+      "id": "evo",
+      "name": "EVO",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+      "variants": [{ "name": "EVO", "price": 19990000 }],
+      "overview": {
+        "title": "EVO",
+        "subtitle": "Xe máy điện đa dụng với quãng đường ~165 km (2 pin)."
+      },
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~165 km (2 pin)", "Cốp xe 12 lít"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "70" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "~165" },
+        { "label": "Cốp xe (lít)", "value": "12" }
+      ],
+      "fields": { "topSpeed": 70, "range": 165, "trunk": 12 },
+      "tagline": "EVO",
+      "slogan": "Đa dụng — bền bỉ"
+    },
+    {
+      "id": "evo-grand-lite",
+      "name": "Evo Grand Lite",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand-lite.html",
+      "variants": [{ "name": "Evo Grand Lite", "price": 23900000 }],
+      "overview": {
+        "title": "EVO GRAND LITE",
+        "subtitle": "Xe ga điện tiết kiệm, quãng đường lên tới 198 km (2 pin)."
+      },
+      "highlights": ["Tốc độ tối đa 48 km/h", "Quãng đường 198 km (2 pin)", "Cốp xe 35 lít"],
+      "specTable": [
+        { "label": "Tốc độ tối đa (km/h)", "value": "48" },
+        { "label": "Quãng đường 1 lần sạc (km)", "value": "198" },
+        { "label": "Thể tích cốp (L)", "value": "35" },
+        { "label": "Công suất động cơ (W)", "value": "2500" }
+      ],
+      "fields": { "topSpeed": 48, "range": 198, "trunk": 35, "motorPower": 2500 },
+      "tagline": "EVO GRAND LITE",
+      "slogan": "Tiết kiệm — dễ sử dụng"
+    }
+  ]
+}

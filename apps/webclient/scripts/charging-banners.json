@@ -1,0 +1,33 @@
+{
+  "syncedAt": "2026-06-24T03:32:55.340Z",
+  "source": "vinfastauto.com/vn_vi (dich-vu-pin-oto-dien, dich-vu-pin-xe-may-dien)",
+  "banners": [
+    {
+      "id": "01-tram-sac-vinfast",
+      "alt": "Hệ thống trạm sạc VinFast — Lợi ích thuê pin & sạc công cộng",
+      "source": "https://vinfastauto.com/vn_vi/dich-vu-pin-oto-dien",
+      "desktop": "/images/banners/charging/01-tram-sac-vinfast-desktop.webp",
+      "mobile": "/images/banners/charging/01-tram-sac-vinfast-mobile.webp",
+      "remoteDesktop": "https://storage.googleapis.com/vinfast-data-01/banner-tramsac_1660273569.webp",
+      "remoteMobile": "https://storage.googleapis.com/vinfast-data-01/banner-tramsac-mobi_1660273591.webp"
+    },
+    {
+      "id": "02-quy-hoach-tram-sac",
+      "alt": "Quy hoạch trạm sạc VinFast toàn quốc",
+      "source": "https://vinfastauto.com/vn_vi/dich-vu-pin-oto-dien",
+      "desktop": "/images/banners/charging/02-quy-hoach-tram-sac-desktop.webp",
+      "mobile": "/images/banners/charging/02-quy-hoach-tram-sac-desktop.webp",
+      "remoteDesktop": "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.webp",
+      "remoteMobile": "https://storage.googleapis.com/vinfast-data-01/pin-tramsac-6_1660273722.webp"
+    },
+    {
+      "id": "03-pin-xe-may-dien",
+      "alt": "Pin và trạm sạc xe máy điện VinFast",
+      "source": "https://vinfastauto.com/vn_vi/dich-vu-pin-xe-may-dien",
+      "desktop": "/images/banners/charging/03-pin-xe-may-dien-desktop.webp",
+      "mobile": "/images/banners/charging/03-pin-xe-may-dien-desktop.webp",
+      "remoteDesktop": "https://static-cms-prod.vinfastauto.com/MicrosoftTeams-image%201_1658915764_1659496931.webp",
+      "remoteMobile": "https://static-cms-prod.vinfastauto.com/MicrosoftTeams-image%201_1658915764_1659496931.webp"
+    }
+  ]
+}

@@ -1,0 +1,3681 @@
+{
+  "cars": [
+    {
+      "id": "vf8-all-new",
+      "name": "VF 8 All New",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf8-the-all-new-2026",
+      "variants": [
+        {
+          "name": "VF 8 All New",
+          "price": 849150000
+        }
+      ],
+      "overview": {
+        "title": "Khi phong cách trở thành dấu ấn",
+        "subtitle": "VF 8 thế hệ mới định hình phong cách di chuyển Xanh hiện đại, nâng chuẩn công nghệ Việt."
+      },
+      "highlights": [
+        "Công suất 170 kW / Mô-men 330 Nm",
+        "Quãng đường 480-500 km (NEDC)",
+        "Pin 60 kWh — sạc nhanh dưới 30 phút (10%-70%)"
+      ],
+      "exterior": [
+        {
+          "title": "Trải nghiệm thị giác không giới hạn",
+          "desc": "Ngoại thất VF 8 gây ấn tượng với diện mạo đặc trưng của xe điện thế hệ mới, dải đèn cánh chim kéo dài đầy chiều sâu."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Nội thất khoáng đạt - Nâng tầm tiện nghi",
+          "desc": "Ghế ngồi VF 8 mới giúp giải tỏa áp lực, hỗ trợ tuần hoàn cơ thể trong mọi điều kiện di chuyển."
+        }
+      ],
+      "colors": [
+        "Solar Ruby",
+        "Infinity Blanc",
+        "Jet Black",
+        "Starburst Blue",
+        "Mysterioso Purple",
+        "Vitality Orange"
+      ],
+      "specTable": [
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "170"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "330"
+        },
+        {
+          "label": "Quãng đường (NEDC) (km)",
+          "value": "480-500"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "60,13"
+        },
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4701 x 1872 x 1670"
+        },
+        {
+          "label": "Số ghế ngồi",
+          "value": "5 ghế"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất (10%-70%)",
+          "value": "Dưới 30 phút"
+        },
+        {
+          "label": "Kích thước mâm xe",
+          "value": "19 Inch"
+        },
+        {
+          "label": "Màn hình giải trí trung tâm",
+          "value": "12,9 Inch"
+        }
+      ],
+      "fields": {
+        "power": 228,
+        "powerKw": 170,
+        "torque": 330,
+        "range": 480,
+        "batteryCapacity": 60.13,
+        "chargingTime": "Dưới 30 phút (10%-70%)",
+        "dimensions": "4701 x 1872 x 1670"
+      },
+      "tagline": "VF 8 Thế Hệ Mới",
+      "slogan": "Khi phong cách trở thành dấu ấn — SUV điện cỡ D thế hệ mới"
+    },
+    {
+      "id": "vf-mpv7",
+      "name": "VF MPV 7",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf-mpv7",
+      "variants": [
+        {
+          "name": "VF MPV 7",
+          "price": 728910000
+        }
+      ],
+      "overview": {
+        "title": "VF MPV 7 — Gia đình sum vầy, hành trình trọn vẹn",
+        "subtitle": "MPV điện 7 chỗ với quãng đường 450 km (NEDC), không gian rộng rãi cho cả gia đình."
+      },
+      "highlights": [
+        "Quãng đường 450 km (NEDC)",
+        "Công suất 150 kW / Mô-men 280 Nm",
+        "Sạc nhanh DC 80 kW — 30 phút (10%-70%)"
+      ],
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4740 x 1872 x 1734"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2840"
+        },
+        {
+          "label": "Khoảng sáng gầm xe (mm)",
+          "value": "185"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "150"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "280"
+        },
+        {
+          "label": "Quãng đường chạy (NEDC) (km)",
+          "value": "450"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "60,13"
+        },
+        {
+          "label": "Công suất sạc nhanh DC tối đa (kW)",
+          "value": "80"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "30 phút (10%-70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "FWD/Cầu trước"
+        },
+        {
+          "label": "Kích thước la-zăng",
+          "value": "Mâm hợp kim 19 inch"
+        }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "torque": 280,
+        "range": 450,
+        "batteryCapacity": 60.13,
+        "chargingTime": "30 phút (10%-70%)",
+        "drive": "fwd",
+        "dimensions": "4740 x 1872 x 1734"
+      },
+      "tagline": "VF MPV 7",
+      "slogan": "Gia đình sum vầy — MPV điện 7 chỗ"
+    },
+    {
+      "id": "ec-van",
+      "name": "EC VAN",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/vinfast-ecvan.html",
+      "fetchedAt": "2026-06-26T11:05:49.933Z",
+      "variants": [],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường di chuyển (NEDC) 175 km",
+        "Mô men xoắn cực đại 110 Nm Quãng đường di chuyển (NEDC) 175 km/sạc đầy",
+        "Công suất tối đa 30 kW"
+      ],
+      "overview": {
+        "title": "Vận tải đa năng, tiện dụng, sinh lời",
+        "subtitle": "Linh hoạt lưu thông nội đô, vận hành êm ái, giảm chi phí vận hành, tối đa lợi nhuận"
+      },
+      "pdpContent": {
+        "tagline": "EC VAN",
+        "slogan": "Linh hoạt lưu thông nội đô, vận hành êm ái, giảm chi phí vận hành, tối đa lợi nhuận",
+        "overview": {
+          "title": "Vận tải đa năng, tiện dụng, sinh lời",
+          "subtitle": "Linh hoạt lưu thông nội đô, vận hành êm ái, giảm chi phí vận hành, tối đa lợi nhuận",
+          "bullets": [
+            "Quãng đường di chuyển (NEDC) 175 km",
+            "Mô men xoắn cực đại 110 Nm Quãng đường di chuyển (NEDC) 175 km/sạc đầy",
+            "Công suất tối đa 30 kW"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Cách mạng xanh trong vận tải hàng hóa",
+            "desc": "EC Van tiên phong mang đến giải pháp vận chuyển thương mại đột phá, nổi bật với khả năng vận hành linh hoạt, êm ái và tiết kiệm chi phí. Sở hữu thiết kế hiện đại, tiện dụng cùng bảng màu ngoại thất với 4 lựa chọn nổi bật Xanh – Vàng – Trắng – Đỏ, EC Van không chỉ là phương tiện di chuyển mà còn là đối tác tin cậy, phương tiện sinh kế phù hợp cho kinh tế hộ gia đình, doanh nghiệp."
+          }
+        ],
+        "interior": [],
+        "technology": [],
+        "technologyLead": "",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển (NEDC) 175 km",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển (NEDC)",
+              "desc": "Quãng đường di chuyển (NEDC) 175 km"
+            },
+            {
+              "title": "Mô men xoắn cực đại",
+              "desc": "Mô men xoắn cực đại 110 Nm Quãng đường di chuyển (NEDC) 175 km/sạc đầy"
+            },
+            {
+              "title": "Công suất tối đa",
+              "desc": "Công suất tối đa 30 kW"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Cách mạng xanh trong vận tải hàng hóa",
+          "desc": "EC Van tiên phong mang đến giải pháp vận chuyển thương mại đột phá, nổi bật với khả năng vận hành linh hoạt, êm ái và tiết kiệm chi phí. Sở hữu thiết kế hiện đại, tiện dụng cùng bảng màu ngoại thất với 4 lựa chọn nổi bật Xanh – Vàng – Trắng – Đỏ, EC Van không chỉ là phương tiện di chuyển mà còn là đối tác tin cậy, phương tiện sinh kế phù hợp cho kinh tế hộ gia đình, doanh nghiệp."
+        }
+      ],
+      "interior": [],
+      "technology": [],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển (NEDC) 175 km",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển (NEDC)",
+            "desc": "Quãng đường di chuyển (NEDC) 175 km"
+          },
+          {
+            "title": "Mô men xoắn cực đại",
+            "desc": "Mô men xoắn cực đại 110 Nm Quãng đường di chuyển (NEDC) 175 km/sạc đầy"
+          },
+          {
+            "title": "Công suất tối đa",
+            "desc": "Công suất tối đa 30 kW"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "3.767 x 1.680 x 1.790 "
+        }
+      ],
+      "fields": {
+        "dimensions": "3.767 x 1.680 x 1.790 "
+      },
+      "tagline": "EC VAN",
+      "slogan": "Linh hoạt lưu thông nội đô, vận hành êm ái, giảm chi phí vận hành, tối đa lợi nhuận"
+    },
+    {
+      "id": "minio-green",
+      "name": "Minio Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/minio-green",
+      "variants": [
+        {
+          "name": "Minio Green",
+          "price": 239410000,
+          "listPrice": 269000000
+        }
+      ],
+      "overview": {
+        "title": "MINIO GREEN - KHỞI NGHIỆP TRONG TẦM TAY",
+        "subtitle": "Sở hữu kích thước gọn, vừa vặn với mọi ngõ hẻm, từ đô thị đến nông thôn Việt Nam."
+      },
+      "highlights": [
+        "Quãng đường 210 km (NEDC)",
+        "Công suất 30 kW / Mô-men 65 Nm",
+        "Dải màu trẻ trung lên tới 14 màu"
+      ],
+      "exterior": [
+        {
+          "title": "Ưu điểm, điểm nổi bật",
+          "desc": "Vận hành đơn giản, tối ưu phù hợp cho người mới sử dụng EV."
+        },
+        {
+          "title": "Dải màu trẻ trung",
+          "desc": "Minio Green chính thức là chiến thần vỏn vẹn 2 cửa với lên tới 14 tùy chọn màu sắc cá tính."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Chi tiết nội thất",
+          "desc": "Không gian đủ cho gia đình 2 người lớn, 2 trẻ em."
+        }
+      ],
+      "specTable": [
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2065"
+        },
+        {
+          "label": "Khoảng sáng gầm xe (mm)",
+          "value": "166,3"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "30"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "65"
+        },
+        {
+          "label": "Quãng đường chạy (NEDC) (km/lần sạc đầy)",
+          "value": "210"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "18,3"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "RWD/Cầu sau"
+        }
+      ],
+      "fields": {
+        "power": 40,
+        "powerKw": 30,
+        "torque": 65,
+        "range": 210,
+        "batteryCapacity": 18.3,
+        "drive": "rwd"
+      },
+      "tagline": "MINIO GREEN",
+      "slogan": "Khởi nghiệp trong tầm tay — MiniCar điện đô thị gọn nhẹ"
+    },
+    {
+      "id": "herio-green",
+      "name": "Herio Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/herio-green",
+      "variants": [
+        {
+          "name": "Herio Green",
+          "price": 426310000
+        }
+      ],
+      "overview": {
+        "title": "HERIO GREEN — A-SUV điện đô thị",
+        "subtitle": "Herio Green sở hữu thiết kế hiện đại, trẻ trung với các lựa chọn phối màu nội ngoại thất cá tính."
+      },
+      "highlights": [
+        "Quãng đường 326 km (NEDC)",
+        "Công suất 100 kW / Mô-men 135 Nm",
+        "Pin 37,23 kWh"
+      ],
+      "exterior": [
+        {
+          "title": "Thiết kế trẻ trung",
+          "desc": "Herio Green nổi bật với các lựa chọn phối màu nội ngoại thất, cá nhân hóa theo phong cách sống."
+        }
+      ],
+      "specTable": [
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2514"
+        },
+        {
+          "label": "Khoảng sáng gầm xe (mm)",
+          "value": "160"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "100"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "135"
+        },
+        {
+          "label": "Quãng đường chạy (NEDC) (km)",
+          "value": "326"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "37,23"
+        }
+      ],
+      "fields": {
+        "power": 134,
+        "powerKw": 100,
+        "torque": 135,
+        "range": 326,
+        "batteryCapacity": 37.23,
+        "drive": "fwd"
+      },
+      "tagline": "HERIO GREEN",
+      "slogan": "A-SUV điện — trọn vẹn trải nghiệm cùng Herio"
+    },
+    {
+      "id": "nerio-green",
+      "name": "Nerio Green",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/nerio-green.html",
+      "fetchedAt": "2026-06-26T11:05:51.519Z",
+      "variants": [],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường chạy (NEDC) 318,6 km",
+        "Mô men xoắn cực đại 242 Nm Quãng đường chạy (NEDC) 318,6 km/lần sạc đầy",
+        "Công suất tối đa 110 kW"
+      ],
+      "overview": {
+        "title": "Đặt cọc xe điện Nerio Green",
+        "subtitle": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ."
+      },
+      "pdpContent": {
+        "tagline": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết ",
+        "slogan": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ.",
+        "overview": {
+          "title": "Đặt cọc xe điện Nerio Green",
+          "subtitle": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ.",
+          "bullets": [
+            "Quãng đường chạy (NEDC) 318,6 km",
+            "Mô men xoắn cực đại 242 Nm Quãng đường chạy (NEDC) 318,6 km/lần sạc đầy",
+            "Công suất tối đa 110 kW"
+          ]
+        },
+        "exterior": [],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "app",
+            "title": "Công nghệ thông minh",
+            "desc": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ."
+          }
+        ],
+        "technologyLead": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ.",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường chạy (NEDC) 318,6 km",
+          "features": [
+            {
+              "title": "Quãng đường chạy (NEDC)",
+              "desc": "Quãng đường chạy (NEDC) 318,6 km"
+            },
+            {
+              "title": "Mô men xoắn cực đại",
+              "desc": "Mô men xoắn cực đại 242 Nm Quãng đường chạy (NEDC) 318,6 km/lần sạc đầy"
+            },
+            {
+              "title": "Công suất tối đa",
+              "desc": "Công suất tối đa 110 kW"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "app",
+          "title": "Công nghệ thông minh",
+          "desc": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường chạy (NEDC) 318,6 km",
+        "features": [
+          {
+            "title": "Quãng đường chạy (NEDC)",
+            "desc": "Quãng đường chạy (NEDC) 318,6 km"
+          },
+          {
+            "title": "Mô men xoắn cực đại",
+            "desc": "Mô men xoắn cực đại 242 Nm Quãng đường chạy (NEDC) 318,6 km/lần sạc đầy"
+          },
+          {
+            "title": "Công suất tối đa",
+            "desc": "Công suất tối đa 110 kW"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4300 x 1768 x 1615 "
+        }
+      ],
+      "fields": {
+        "dimensions": "4300 x 1768 x 1615 "
+      },
+      "tagline": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết ",
+      "slogan": "Đặt cọc xe điện Nerio Green, C-SUV thuần điện thiết kế hiện đại, công nghệ tiên tiến, vận hành tiết kiệm và tiện lợi, bảo hành 10 năm, phù hợp với tài xế công nghệ."
+    },
+    {
+      "id": "limo-green",
+      "name": "Limo Green",
+      "type": "car",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/limo-green",
+      "variants": [
+        {
+          "name": "Limo Green",
+          "price": 666610000,
+          "listPrice": 749000000
+        }
+      ],
+      "overview": {
+        "title": "LIMO GREEN — Rộng mở không gian, kéo dài hành trình",
+        "subtitle": "Xe điện 7 chỗ phù hợp gia đình đông người và vận doanh vận tải đa năng."
+      },
+      "highlights": [
+        "Quãng đường 450 km (NEDC)",
+        "Công suất 150 kW",
+        "7 chỗ — chiều dài cơ sở 2840 mm"
+      ],
+      "exterior": [
+        {
+          "title": "Thiết kế tiên tiến",
+          "desc": "Limo Green 7 chỗ phù hợp cho nhóm bạn, gia đình đông người cùng di chuyển."
+        }
+      ],
+      "colors": ["Jet Black", "Desat Silver", "Solar Ruby", "Infinity Blanc"],
+      "specTable": [
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2840"
+        },
+        {
+          "label": "Chiều rộng (mm)",
+          "value": "1872"
+        },
+        {
+          "label": "Sức chứa",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "150"
+        },
+        {
+          "label": "Quãng đường chạy (NEDC) (km)",
+          "value": "450"
+        },
+        {
+          "label": "Khoảng sáng gầm xe (mm)",
+          "value": "180"
+        },
+        {
+          "label": "Kích thước la-zăng",
+          "value": "18 inch"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "30 phút (10%-70%)"
+        }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "range": 450,
+        "chargingTime": "30 phút (10%-70%)",
+        "dimensions": "2840 mm cơ sở"
+      },
+      "tagline": "LIMO GREEN",
+      "slogan": "Rộng mở không gian — MPV điện 7 chỗ"
+    },
+    {
+      "id": "vf3",
+      "name": "VF 3",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf3.html",
+      "fetchedAt": "2026-06-26T11:05:52.605Z",
+      "variants": [
+        {
+          "name": "VF 3 Eco",
+          "price": 268780000,
+          "listPrice": 302000000
+        },
+        {
+          "name": "VF 3 Plus",
+          "price": 280350000,
+          "listPrice": 315000000
+        }
+      ],
+      "colors": ["Summer Yellow", "Infinity Blanc", "Zenith Grey", "Urban Mint", "Solar Ruby"],
+      "colorHex": [
+        {
+          "name": "Summer Yellow",
+          "hex": "#FBBF24"
+        },
+        {
+          "name": "Infinity Blanc",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Zenith Grey",
+          "hex": "#6B7280"
+        },
+        {
+          "name": "Urban Mint",
+          "hex": "#34D399"
+        },
+        {
+          "name": "Solar Ruby",
+          "hex": "#DC2626"
+        }
+      ],
+      "highlights": ["Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"],
+      "overview": {
+        "title": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn",
+        "subtitle": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!"
+      },
+      "pdpContent": {
+        "tagline": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển tro",
+        "slogan": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!",
+        "overview": {
+          "title": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn",
+          "subtitle": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!",
+          "bullets": ["Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"]
+        },
+        "exterior": [
+          {
+            "title": "VinFast VF 3 - Tự do sáng tạo, toả sáng chất riêng!",
+            "desc": "Với dải màu ngoại thất đa dạng và độc đáo, bao gồm 7 tùy chọn màu sắc trẻ trung và thời thượng, VF 3 là sự lựa chọn hoàn hảo giúp bạn thoả sức thể hiện sự khác biệt và cá tính của riêng mình. Dù bạn là ai, hãy lựa chọn màu sắc và trang bị VF 3 theo sở thích của bạn, và cùng VinFast biến ước mơ của bạn thành hiện thực."
+          },
+          {
+            "title": "La-zăng vượt trội về kích thước & phong cách.",
+            "desc": "VF 3 là mẫu xe hiếm hoi trong phân khúc xe sở hữu la-zăng kích thước 16 inch, không chỉ tạo điểm nhấn về thiết kế mà còn góp phần gia tăng khả năng di chuyển trên địa hình đa dạng trong đô thị. Đặc biệt, để VF 3 tăng thêm vẻ cá tính, sự sang trọng cho chiếc xe Khách hàng có thể đặt mua ốp la -zăng tại đây."
+          }
+        ],
+        "interior": [
+          {
+            "title": "VinFast VF 3 - Luôn đủ chỗ cho mọi người!",
+            "desc": "Thiết kế thông minh và không gian nội thất tối ưu hóa của VF 3 mang lại trải nghiệm di chuyển tiện lợi, đảm bảo sự thoải mái và tiện nghi cho cả 4 chỗ ngồi. Màu sắc nội thất trang nhã, trẻ trung và cá tính, cùng chất liệu thân thiện tạo ra một không gian đặc biệt, nơi chứa đựng những kỷ niệm đáng nhớ trên mọi hành trình khám phá phong cách sống của riêng bạn!"
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "VinFast VF 3 - Xe nhỏ, giá trị lớn.",
+            "desc": "Với thiết kế tối giản, nhỏ gọn, cá tính và năng động, VinFast VF 3 sẽ luôn cùng bạn hoà nhịp với xu thế công nghệ di chuyển xanh toàn cầu, trải nghiệm giá trị trên mỗi hành trình, và tự do thể hiện ph"
+          },
+          {
+            "icon": "drive",
+            "title": "VF 3 không chỉ là một chiếc xe điện tiên tiến.",
+            "desc": "Mà còn là một tác phẩm nghệ thuật kết hợp giữa công nghệ và sự sáng tạo trong thiết kế."
+          }
+        ],
+        "technologyLead": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215",
+          "features": [
+            {
+              "title": "Mô men xoắn cực đại (Nm)",
+              "desc": "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "VinFast VF 3 - Tự do sáng tạo, toả sáng chất riêng!",
+          "desc": "Với dải màu ngoại thất đa dạng và độc đáo, bao gồm 7 tùy chọn màu sắc trẻ trung và thời thượng, VF 3 là sự lựa chọn hoàn hảo giúp bạn thoả sức thể hiện sự khác biệt và cá tính của riêng mình. Dù bạn là ai, hãy lựa chọn màu sắc và trang bị VF 3 theo sở thích của bạn, và cùng VinFast biến ước mơ của bạn thành hiện thực."
+        },
+        {
+          "title": "La-zăng vượt trội về kích thước & phong cách.",
+          "desc": "VF 3 là mẫu xe hiếm hoi trong phân khúc xe sở hữu la-zăng kích thước 16 inch, không chỉ tạo điểm nhấn về thiết kế mà còn góp phần gia tăng khả năng di chuyển trên địa hình đa dạng trong đô thị. Đặc biệt, để VF 3 tăng thêm vẻ cá tính, sự sang trọng cho chiếc xe Khách hàng có thể đặt mua ốp la -zăng tại đây."
+        }
+      ],
+      "interior": [
+        {
+          "title": "VinFast VF 3 - Luôn đủ chỗ cho mọi người!",
+          "desc": "Thiết kế thông minh và không gian nội thất tối ưu hóa của VF 3 mang lại trải nghiệm di chuyển tiện lợi, đảm bảo sự thoải mái và tiện nghi cho cả 4 chỗ ngồi. Màu sắc nội thất trang nhã, trẻ trung và cá tính, cùng chất liệu thân thiện tạo ra một không gian đặc biệt, nơi chứa đựng những kỷ niệm đáng nhớ trên mọi hành trình khám phá phong cách sống của riêng bạn!"
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "VinFast VF 3 - Xe nhỏ, giá trị lớn.",
+          "desc": "Với thiết kế tối giản, nhỏ gọn, cá tính và năng động, VinFast VF 3 sẽ luôn cùng bạn hoà nhịp với xu thế công nghệ di chuyển xanh toàn cầu, trải nghiệm giá trị trên mỗi hành trình, và tự do thể hiện ph"
+        },
+        {
+          "icon": "drive",
+          "title": "VF 3 không chỉ là một chiếc xe điện tiên tiến.",
+          "desc": "Mà còn là một tác phẩm nghệ thuật kết hợp giữa công nghệ và sự sáng tạo trong thiết kế."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215",
+        "features": [
+          {
+            "title": "Mô men xoắn cực đại (Nm)",
+            "desc": "Mô men xoắn cực đại (Nm) 110 Quãng đường chạy một lần sạc đầy (km) 215"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Động cơ",
+          "value": "01 Motor"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "30"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "110"
+        },
+        {
+          "label": "Quãng đường chạy một lần sạc đầy (km)",
+          "value": "215"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "36 phút (10% - 70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "RWD/Cầu sau"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "215"
+        },
+        {
+          "label": "Công suất tối đa (kW)"
+        },
+        {
+          "label": "Mô men xoắn (Nm)"
+        },
+        {
+          "label": "Công suất Eco (kW)",
+          "value": "30"
+        }
+      ],
+      "fields": {
+        "power": 40,
+        "powerKw": 30,
+        "torque": 110,
+        "range": 215,
+        "chargingTime": "36 phút (10% - 70%)",
+        "drive": "rwd"
+      },
+      "tagline": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển tro",
+      "slogan": "Mẫu xe mini car quốc dân sành điệu với thiết kế nhỏ gọn, linh hoạt, tối ưu quãng đường di chuyển trong đô thị. Xem bảng giá và thông số tại đây!"
+    },
+    {
+      "id": "vf5",
+      "name": "VF 5",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5.html",
+      "fetchedAt": "2026-06-26T11:05:53.305Z",
+      "variants": [],
+      "colors": ["Summer Yellow", "Jet Black", "Infinity Blanc", "Zenith Grey", "Solar Ruby"],
+      "colorHex": [
+        {
+          "name": "Summer Yellow",
+          "hex": "#FBBF24"
+        },
+        {
+          "name": "Jet Black",
+          "hex": "#111827"
+        },
+        {
+          "name": "Infinity Blanc",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Zenith Grey",
+          "hex": "#6B7280"
+        },
+        {
+          "name": "Solar Ruby",
+          "hex": "#DC2626"
+        }
+      ],
+      "highlights": [
+        "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km",
+        "Mô men xoắn cực đại 135 Nm Thông số kỹ thuật Dài x rộng x Cao (mm) 3",
+        "Công suất tối đa 134 hp"
+      ],
+      "overview": {
+        "title": "Xe điện VinFast VF 5 thiết kế trẻ trung",
+        "subtitle": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm."
+      },
+      "pdpContent": {
+        "tagline": "Cá nhân vượt trội — Đồng hành hàng ngày",
+        "slogan": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm.",
+        "overview": {
+          "title": "Xe điện VinFast VF 5 thiết kế trẻ trung",
+          "subtitle": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm.",
+          "bullets": [
+            "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km",
+            "Mô men xoắn cực đại 135 Nm Thông số kỹ thuật Dài x rộng x Cao (mm) 3",
+            "Công suất tối đa 134 hp"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Ngoại thất ấn tượng",
+            "desc": "Phong cách trẻ trung, năng động, cá tính."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Nội thất tinh tế",
+            "desc": "Không gian rộng rãi, phối màu sành điệu, cuốn hút với các đường viền bắt mắt."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "app",
+            "title": "Công nghệ thông minh",
+            "desc": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm."
+          }
+        ],
+        "technologyLead": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm.",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển (chuẩn NEDC)",
+              "desc": "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km"
+            },
+            {
+              "title": "Mô men xoắn cực đại",
+              "desc": "Mô men xoắn cực đại 135 Nm Thông số kỹ thuật Dài x rộng x Cao (mm) 3"
+            },
+            {
+              "title": "Công suất tối đa",
+              "desc": "Công suất tối đa 134 hp"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Ngoại thất ấn tượng",
+          "desc": "Phong cách trẻ trung, năng động, cá tính."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Nội thất tinh tế",
+          "desc": "Không gian rộng rãi, phối màu sành điệu, cuốn hút với các đường viền bắt mắt."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "app",
+          "title": "Công nghệ thông minh",
+          "desc": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển (chuẩn NEDC)",
+            "desc": "Quãng đường di chuyển (chuẩn NEDC)* 326,4 km"
+          },
+          {
+            "title": "Mô men xoắn cực đại",
+            "desc": "Mô men xoắn cực đại 135 Nm Thông số kỹ thuật Dài x rộng x Cao (mm) 3"
+          },
+          {
+            "title": "Công suất tối đa",
+            "desc": "Công suất tối đa 134 hp"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "3.967 x 1.723 x 1.579 "
+        }
+      ],
+      "fields": {
+        "dimensions": "3.967 x 1.723 x 1.579 "
+      },
+      "tagline": "Cá nhân vượt trội — Đồng hành hàng ngày",
+      "slogan": "Xe điện VinFast VF 5 thiết kế trẻ trung, cá tính và phối màu nội ngoại thất độc đáo, trang bị những công nghệ hỗ trợ lái tiên tiến, trợ lý ảo thông minh, bảo hành 7 năm."
+    },
+    {
+      "id": "vf6",
+      "name": "VF 6",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6.html",
+      "fetchedAt": "2026-06-26T11:05:54.334Z",
+      "variants": [
+        {
+          "name": "VF 6 Eco",
+          "price": 613210000,
+          "listPrice": 689000000
+        },
+        {
+          "name": "VF 6 Plus",
+          "price": 666610000,
+          "listPrice": 749000000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường (NEDC)* VF 6 Eco 150 kW/201 hp Công suất tối đa VF 6 Plus 310 Nm Mô men xoắn cực đại VF 6 Plus",
+        "Công suất tối đa VF 6 Plus 310 Nm Mô men xoắn cực đại VF 6 Plus Nhận ưu đãi --> Nhận ưu đãi Đăng ký nhận",
+        "BẢO HÀNH & BẢO DƯỠNG HƯỚNG DẪN SỬ DỤNG TÀI LIỆU TẢI VỀ --> Thông tin bảo hành Thông tin"
+      ],
+      "overview": {
+        "title": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung",
+        "subtitle": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấp dẫn, chính sách hậu mãi cực tốt, thiết kế tinh tế, động cơ mạnh mẽ, là lựa chọn hoàn hảo cho gia đình trẻ."
+      },
+      "pdpContent": {
+        "tagline": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấ",
+        "slogan": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấp dẫn, chính sách hậu mãi cực tốt, thiết kế tinh tế, động cơ mạnh mẽ, là lựa chọn hoàn hảo cho gia đình trẻ.",
+        "overview": {
+          "title": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung",
+          "subtitle": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấp dẫn, chính sách hậu mãi cực tốt, thiết kế tinh tế, động cơ mạnh mẽ, là lựa chọn hoàn hảo cho gia đình trẻ.",
+          "bullets": []
+        },
+        "exterior": [
+          {
+            "title": "Ngoại thất",
+            "desc": "Thiết kế ngoại thất được khởi tạo từ những đường nét tinh tế đến từng chi tiết cùng vẻ ngoài năng động, ấn tượng ngay từ ánh nhìn đầu tiên."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Nội thất",
+            "desc": "Thiết kế nội thất lấy cảm hứng từ ngôi nhà thứ hai của gia đình với không gian rộng rãi, thoải mái cùng hai màu nội thất và chất liệu tự nhiên, thân thiện với người dùng."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "Công nghệ",
+            "desc": "VF 6 mang đến cho người dùng cả “thế giới công nghệ” với trợ lý ảo VinFast cùng nhiều tính năng an toàn, giải trí và tiện ích đẳng cấp."
+          }
+        ],
+        "technologyLead": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấp dẫn, chính sách hậu mãi cực tốt, thiết kế tinh tế, động cơ mạnh mẽ, là lựa chọn hoàn hảo cho gia đình trẻ.",
+        "performance": null,
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Ngoại thất",
+          "desc": "Thiết kế ngoại thất được khởi tạo từ những đường nét tinh tế đến từng chi tiết cùng vẻ ngoài năng động, ấn tượng ngay từ ánh nhìn đầu tiên."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Nội thất",
+          "desc": "Thiết kế nội thất lấy cảm hứng từ ngôi nhà thứ hai của gia đình với không gian rộng rãi, thoải mái cùng hai màu nội thất và chất liệu tự nhiên, thân thiện với người dùng."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "voice",
+          "title": "Công nghệ",
+          "desc": "VF 6 mang đến cho người dùng cả “thế giới công nghệ” với trợ lý ảo VinFast cùng nhiều tính năng an toàn, giải trí và tiện ích đẳng cấp."
+        }
+      ],
+      "performance": null,
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4.238 x 1.820 x 1.594"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2.730"
+        },
+        {
+          "label": "Công suất tối đa (kW)",
+          "value": "150"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "310"
+        },
+        {
+          "label": "Quãng đường (NEDC) (km)",
+          "value": "480"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "59,6"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "25 phút (10%-70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "FWD/Cầu trước"
+        },
+        {
+          "label": "Kích thước la-zăng",
+          "value": "18 inch"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        }
+      ],
+      "fields": {
+        "power": 201,
+        "powerKw": 150,
+        "torque": 310,
+        "range": 480,
+        "batteryCapacity": 59.6,
+        "chargingTime": "25 phút (10%-70%)",
+        "drive": "fwd",
+        "dimensions": "4.238 x 1.820 x 1.594 mm"
+      },
+      "tagline": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấ",
+      "slogan": "Mẫu SUV điện VinFast VF 6 với thiết kế trẻ trung, hiện đại, giá đặt cọc chỉ 30 triệu đồng, ưu đãi hấp dẫn, chính sách hậu mãi cực tốt, thiết kế tinh tế, động cơ mạnh mẽ, là lựa chọn hoàn hảo cho gia đình trẻ."
+    },
+    {
+      "id": "vf7",
+      "name": "VF 7",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7.html",
+      "fetchedAt": "2026-06-26T11:05:55.425Z",
+      "variants": [
+        {
+          "name": "VF 7 Eco",
+          "price": 702210000,
+          "listPrice": 789000000
+        },
+        {
+          "name": "VF 7 Plus",
+          "price": 791210000,
+          "listPrice": 889000000
+        },
+        {
+          "name": "VF 7 Plus Trần kính toàn cảnh",
+          "price": 809010000,
+          "listPrice": 909000000
+        }
+      ],
+      "colors": [
+        "Jet Black",
+        "Infinity Blanc",
+        "Zenith Grey",
+        "Urban Mint",
+        "Solar Ruby",
+        "Dragon Forged"
+      ],
+      "colorHex": [
+        {
+          "name": "Jet Black",
+          "hex": "#111827"
+        },
+        {
+          "name": "Infinity Blanc",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Zenith Grey",
+          "hex": "#6B7280"
+        },
+        {
+          "name": "Urban Mint",
+          "hex": "#34D399"
+        },
+        {
+          "name": "Solar Ruby",
+          "hex": "#DC2626"
+        },
+        {
+          "name": "Dragon Forged",
+          "hex": "#7F1D1D"
+        }
+      ],
+      "highlights": [
+        "Quãng đường di chuyển 1 lần sạc đầy 504 km*",
+        "Hệ thống trợ lái nâng cao",
+        "Mô men xoắn cực đại 500 Nm (* Thông số bản Plus tùy chọn AWD) Chi phí l",
+        "Công suất tối đa 260 kW"
+      ],
+      "overview": {
+        "title": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách",
+        "subtitle": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh mẽ. Xem ưu đãi mới nhất và đặt cọc online ngay hôm nay."
+      },
+      "pdpContent": {
+        "tagline": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh m",
+        "slogan": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh mẽ. Xem ưu đãi mới nhất và đặt cọc online ngay hôm nay.",
+        "overview": {
+          "title": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách",
+          "subtitle": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh mẽ. Xem ưu đãi mới nhất và đặt cọc online ngay hôm nay.",
+          "bullets": [
+            "Quãng đường di chuyển 1 lần sạc đầy 504 km*",
+            "Hệ thống trợ lái nâng cao",
+            "Mô men xoắn cực đại 500 Nm (* Thông số bản Plus tùy chọn AWD) Chi phí l",
+            "Công suất tối đa 260 kW"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Ngoại thất kế thừa và đổi mới từ hơn trăm năm lịch sử của ngành ô tô.",
+            "desc": "Ngoại thất kế thừa và đổi mới từ hơn trăm năm lịch sử của ngành ô tô."
+          },
+          {
+            "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+            "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Thiết kế nội thất hướng tới người lái.",
+            "desc": "Thiết kế nội thất hướng tới người lái."
+          },
+          {
+            "title": "Tiện nghi thông minh tích hợp trên màn hình giải trí.",
+            "desc": "Với kích cỡ 12,9 inch, có thể tùy chỉnh cá nhân hóa theo người dùng. Màn hình giải trí cảm ứng của VF 7 có thể giúp điều khiển các chức năng trên xe bằng cách vuốt/chạm nhẹ hoặc ra lệnh cho trợ lý ảo qua giọng nói."
+          },
+          {
+            "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+            "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+          },
+          {
+            "title": "Kiến tạo không gian trải nghiệm phóng khoáng, tự do và tràn đầy năng lượng.",
+            "desc": "Tận hưởng hành trình trong không gian riêng tư và rộng rãi của chiếc xe, nơi mỗi chi tiết mang đậm dấu ấn cá nhân tạo nên cuộc phiêu lưu độc đáo của riêng bạn."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "VF 7 không chỉ là một chiếc xe điện tiên tiến, mà còn là một tác phẩm nghệ thuật",
+            "desc": "VF 7 không chỉ là một chiếc xe điện tiên tiến, mà còn là một tác phẩm nghệ thuật kết hợp giữa công nghệ và sự sáng tạo trong thiết kế."
+          },
+          {
+            "icon": "screen",
+            "title": "Tiện nghi thông minh tích hợp trên màn hình giải trí.",
+            "desc": "Với kích cỡ 12,9 inch, có thể tùy chỉnh cá nhân hóa theo người dùng. Màn hình giải trí cảm ứng của VF 7 có thể giúp điều khiển các chức năng trên xe bằng cách vuốt/chạm nhẹ hoặc ra lệnh cho trợ lý ảo "
+          },
+          {
+            "icon": "drive",
+            "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+            "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+          }
+        ],
+        "technologyLead": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh mẽ. Xem ưu đãi mới nhất và đặt cọc online ngay hôm nay.",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển 1 lần sạc đầy 504 km*",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển",
+              "desc": "Quãng đường di chuyển 1 lần sạc đầy 504 km*"
+            },
+            {
+              "title": "Hệ thống trợ lái nâng cao",
+              "desc": "Hệ thống trợ lái nâng cao"
+            },
+            {
+              "title": "Mô men xoắn cực đại",
+              "desc": "Mô men xoắn cực đại 500 Nm (* Thông số bản Plus tùy chọn AWD) Chi phí l"
+            },
+            {
+              "title": "Công suất tối đa",
+              "desc": "Công suất tối đa 260 kW"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Ngoại thất kế thừa và đổi mới từ hơn trăm năm lịch sử của ngành ô tô.",
+          "desc": "Ngoại thất kế thừa và đổi mới từ hơn trăm năm lịch sử của ngành ô tô."
+        },
+        {
+          "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+          "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Thiết kế nội thất hướng tới người lái.",
+          "desc": "Thiết kế nội thất hướng tới người lái."
+        },
+        {
+          "title": "Tiện nghi thông minh tích hợp trên màn hình giải trí.",
+          "desc": "Với kích cỡ 12,9 inch, có thể tùy chỉnh cá nhân hóa theo người dùng. Màn hình giải trí cảm ứng của VF 7 có thể giúp điều khiển các chức năng trên xe bằng cách vuốt/chạm nhẹ hoặc ra lệnh cho trợ lý ảo qua giọng nói."
+        },
+        {
+          "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+          "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+        },
+        {
+          "title": "Kiến tạo không gian trải nghiệm phóng khoáng, tự do và tràn đầy năng lượng.",
+          "desc": "Tận hưởng hành trình trong không gian riêng tư và rộng rãi của chiếc xe, nơi mỗi chi tiết mang đậm dấu ấn cá nhân tạo nên cuộc phiêu lưu độc đáo của riêng bạn."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "VF 7 không chỉ là một chiếc xe điện tiên tiến, mà còn là một tác phẩm nghệ thuật",
+          "desc": "VF 7 không chỉ là một chiếc xe điện tiên tiến, mà còn là một tác phẩm nghệ thuật kết hợp giữa công nghệ và sự sáng tạo trong thiết kế."
+        },
+        {
+          "icon": "screen",
+          "title": "Tiện nghi thông minh tích hợp trên màn hình giải trí.",
+          "desc": "Với kích cỡ 12,9 inch, có thể tùy chỉnh cá nhân hóa theo người dùng. Màn hình giải trí cảm ứng của VF 7 có thể giúp điều khiển các chức năng trên xe bằng cách vuốt/chạm nhẹ hoặc ra lệnh cho trợ lý ảo "
+        },
+        {
+          "icon": "drive",
+          "title": "Triết lý thiết kế “Vũ trụ phi đối xứng”.",
+          "desc": "Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển 1 lần sạc đầy 504 km*",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển",
+            "desc": "Quãng đường di chuyển 1 lần sạc đầy 504 km*"
+          },
+          {
+            "title": "Hệ thống trợ lái nâng cao",
+            "desc": "Hệ thống trợ lái nâng cao"
+          },
+          {
+            "title": "Mô men xoắn cực đại",
+            "desc": "Mô men xoắn cực đại 500 Nm (* Thông số bản Plus tùy chọn AWD) Chi phí l"
+          },
+          {
+            "title": "Công suất tối đa",
+            "desc": "Công suất tối đa 260 kW"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "2.840"
+        },
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": " "
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "440"
+        },
+        {
+          "label": "Công suất tối đa (kW)"
+        },
+        {
+          "label": "Mô men xoắn (Nm)"
+        },
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "59,6"
+        },
+        {
+          "label": "Công suất Eco (kW)",
+          "value": "130"
+        }
+      ],
+      "fields": {
+        "range": 440,
+        "batteryCapacity": 59.6,
+        "dimensions": " "
+      },
+      "tagline": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh m",
+      "slogan": "Đặt cọc xe điện VinFast VF 7 – SUV điện phong cách, công nghệ thông minh và khả năng vận hành mạnh mẽ. Xem ưu đãi mới nhất và đặt cọc online ngay hôm nay."
+    },
+    {
+      "id": "vf8",
+      "name": "VF 8",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/car-vf8.html",
+      "fetchedAt": "2026-06-26T11:05:56.521Z",
+      "variants": [
+        {
+          "name": "VF 8 series mới VF 8 Eco",
+          "price": 866150000,
+          "listPrice": 1019000000
+        },
+        {
+          "name": "VF 8 Plus​",
+          "price": 1019150000,
+          "listPrice": 1199000000
+        }
+      ],
+      "colors": [
+        "Jet Black",
+        "Infinity Blanc",
+        "Zenith Grey",
+        "Urban Mint",
+        "Ivy Green",
+        "Desat Silver",
+        "Crimson Red"
+      ],
+      "colorHex": [
+        {
+          "name": "Jet Black",
+          "hex": "#111827"
+        },
+        {
+          "name": "Infinity Blanc",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Zenith Grey",
+          "hex": "#6B7280"
+        },
+        {
+          "name": "Urban Mint",
+          "hex": "#34D399"
+        },
+        {
+          "name": "Ivy Green",
+          "hex": "#065F46"
+        },
+        {
+          "name": "Desat Silver",
+          "hex": "#D1D5DB"
+        },
+        {
+          "name": "Crimson Red",
+          "hex": "#B91C1C"
+        }
+      ],
+      "highlights": [
+        "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km",
+        "Hệ thống trợ lái nâng cao của VinFast được trang bị công nghệ và trang thiết bị hiện đại nhất, m",
+        "Công suất 350 hp --> 201 hp 402 hp",
+        "100 Km/h"
+      ],
+      "overview": {
+        "title": "Đặt cọc xe điện VinFast VF 8",
+        "subtitle": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ."
+      },
+      "pdpContent": {
+        "tagline": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hàn",
+        "slogan": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ.",
+        "overview": {
+          "title": "Đặt cọc xe điện VinFast VF 8",
+          "subtitle": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ.",
+          "bullets": [
+            "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km",
+            "Hệ thống trợ lái nâng cao của VinFast được trang bị công nghệ và trang thiết bị hiện đại nhất, m",
+            "Công suất 350 hp --> 201 hp 402 hp",
+            "100 Km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Thiết kế khí động học​",
+            "desc": "Giảm lực cản không khí và tăng hiệu quả vận hành, đồng thời mang lại vẻ ngoài hiện đại và mạnh mẽ."
+          },
+          {
+            "title": "Gương chiếu hậu hiện đại",
+            "desc": "Tự động lưu vị trí theo thói quen của chủ xe, tích hợp đèn báo rẽ và cảnh báo điểm mù tăng tăng cường sự an toàn cho Khách hàng."
+          },
+          {
+            "title": "Cửa sổ trời toàn cảnh",
+            "desc": "Tích hợp rèm điện, điều khiển đóng mở bằng giọng nói."
+          },
+          {
+            "title": "Cảm biến và camera 360 độ",
+            "desc": "Giúp tài xế dễ dàng quan sát và điều khiển trong không gian hẹp hay các khu vực đông đúc."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Cảm biến và camera 360 độ",
+            "desc": "Giúp tài xế dễ dàng quan sát và điều khiển trong không gian hẹp hay các khu vực đông đúc."
+          },
+          {
+            "title": "Ghế da vegan tích hợp sưởi và thông gió",
+            "desc": "Đảm bảo sự thoải mái tối đa cho mọi hành trình, cho cả mùa hè và mùa đông."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "Trợ lý ảo ViVi 2.0",
+            "desc": "Trợ lý ảo ViVi 2.0 phiên bản mới nhất, ứng dụng công nghệ AI tạo sinh, mang đến khả năng tương tác, điểu khiển xe bằng giọng nói tiếng Việt hoàn toàn tự nhiên. Đồng thời, Trợ lý ảo ViVi 2.0 sẽ là một "
+          }
+        ],
+        "technologyLead": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ.",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km",
+          "features": [
+            {
+              "title": "quãng đường di chuyển mỗi lần sạc đầy lên tới",
+              "desc": "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km"
+            },
+            {
+              "title": "Hệ thống trợ lái nâng cao của VinFast được trang bị công ngh",
+              "desc": "Hệ thống trợ lái nâng cao của VinFast được trang bị công nghệ và trang thiết bị hiện đại nhất, m"
+            },
+            {
+              "title": "Công suất",
+              "desc": "Công suất 350 hp --> 201 hp 402 hp"
+            },
+            {
+              "title": "100 Km/h",
+              "desc": "100 Km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Thiết kế khí động học​",
+          "desc": "Giảm lực cản không khí và tăng hiệu quả vận hành, đồng thời mang lại vẻ ngoài hiện đại và mạnh mẽ."
+        },
+        {
+          "title": "Gương chiếu hậu hiện đại",
+          "desc": "Tự động lưu vị trí theo thói quen của chủ xe, tích hợp đèn báo rẽ và cảnh báo điểm mù tăng tăng cường sự an toàn cho Khách hàng."
+        },
+        {
+          "title": "Cửa sổ trời toàn cảnh",
+          "desc": "Tích hợp rèm điện, điều khiển đóng mở bằng giọng nói."
+        },
+        {
+          "title": "Cảm biến và camera 360 độ",
+          "desc": "Giúp tài xế dễ dàng quan sát và điều khiển trong không gian hẹp hay các khu vực đông đúc."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Cảm biến và camera 360 độ",
+          "desc": "Giúp tài xế dễ dàng quan sát và điều khiển trong không gian hẹp hay các khu vực đông đúc."
+        },
+        {
+          "title": "Ghế da vegan tích hợp sưởi và thông gió",
+          "desc": "Đảm bảo sự thoải mái tối đa cho mọi hành trình, cho cả mùa hè và mùa đông."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "voice",
+          "title": "Trợ lý ảo ViVi 2.0",
+          "desc": "Trợ lý ảo ViVi 2.0 phiên bản mới nhất, ứng dụng công nghệ AI tạo sinh, mang đến khả năng tương tác, điểu khiển xe bằng giọng nói tiếng Việt hoàn toàn tự nhiên. Đồng thời, Trợ lý ảo ViVi 2.0 sẽ là một "
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km",
+        "features": [
+          {
+            "title": "quãng đường di chuyển mỗi lần sạc đầy lên tới",
+            "desc": "quãng đường di chuyển mỗi lần sạc đầy lên tới 562 km"
+          },
+          {
+            "title": "Hệ thống trợ lái nâng cao của VinFast được trang bị công ngh",
+            "desc": "Hệ thống trợ lái nâng cao của VinFast được trang bị công nghệ và trang thiết bị hiện đại nhất, m"
+          },
+          {
+            "title": "Công suất",
+            "desc": "Công suất 350 hp --> 201 hp 402 hp"
+          },
+          {
+            "title": "100 Km/h",
+            "desc": "100 Km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "4.750 x 1.934 x 1.667"
+        },
+        {
+          "label": "Công suất tối đa (hp)",
+          "value": "402"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "620"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "471"
+        },
+        {
+          "label": "Dung lượng pin khả dụng (kWh)",
+          "value": "88,3"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "31 phút (10%-70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "AWD/2 cầu toàn thời gian"
+        },
+        {
+          "label": "Tăng tốc 0-100 km/h",
+          "value": "5,5 giây"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5 chỗ"
+        }
+      ],
+      "fields": {
+        "power": 402,
+        "torque": 620,
+        "range": 471,
+        "batteryCapacity": 88.3,
+        "chargingTime": "31 phút (10%-70%)",
+        "drive": "awd",
+        "dimensions": "4.750 x 1.934 x 1.667 mm"
+      },
+      "tagline": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hàn",
+      "slogan": "Đặt cọc xe điện VinFast VF 8, mẫu xe có thiết kế tinh tế, hệ thống hỗ trợ lái nâng cao ADAS, vận hành vượt trội, sự lựa chọn bậc nhất phân khúc SUV 5 chỗ."
+    },
+    {
+      "id": "vf9",
+      "name": "VF 9",
+      "type": "car",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/dat-coc-xe-vf9.html",
+      "fetchedAt": "2026-06-26T11:05:57.154Z",
+      "variants": [
+        {
+          "name": "VF 9 Eco",
+          "price": 1274150000,
+          "listPrice": 1499000000
+        },
+        {
+          "name": "VF 9 Plus",
+          "price": 1444150000,
+          "listPrice": 1699000000
+        }
+      ],
+      "colors": [
+        "Jet Black",
+        "Infinity Blanc",
+        "Zenith Grey",
+        "Urban Mint",
+        "Ivy Green",
+        "Desat Silver",
+        "Crimson Red"
+      ],
+      "colorHex": [
+        {
+          "name": "Jet Black",
+          "hex": "#111827"
+        },
+        {
+          "name": "Infinity Blanc",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Zenith Grey",
+          "hex": "#6B7280"
+        },
+        {
+          "name": "Urban Mint",
+          "hex": "#34D399"
+        },
+        {
+          "name": "Ivy Green",
+          "hex": "#065F46"
+        },
+        {
+          "name": "Desat Silver",
+          "hex": "#D1D5DB"
+        },
+        {
+          "name": "Crimson Red",
+          "hex": "#B91C1C"
+        }
+      ],
+      "highlights": [
+        "Quãng đường di chuyển/lần sạc đầy 626 km*",
+        "Vận hành mạnh mẽ 402 hp/ 620 Nm",
+        "Bảo hành xe 200.000 km hoặc 10 năm"
+      ],
+      "overview": {
+        "title": "Mẫu eSUV cỡ lớn Hạng sang",
+        "subtitle": "VF 9 là mẫu xe SUV 7 chỗ hàng đầu của VinFast. Với kiểu dáng tinh tế, công nghệ tiên tiến nhất và sự tỉ mỉ trong từng chi tiết, VF 9 mang đến trải nghiệm đặc biệt cao cấp cho Người sở hữu."
+      },
+      "pdpContent": {
+        "tagline": "Sự Lựa Chọn Của Người Thành Đạt, Tiên Phong",
+        "slogan": "VF 9 là mẫu xe SUV 7 chỗ hàng đầu của VinFast. Với kiểu dáng tinh tế, công nghệ tiên tiến nhất và sự tỉ mỉ trong từng chi tiết, VF 9 mang đến trải nghiệm đặc biệt cao cấp cho Người sở hữu.",
+        "overview": {
+          "title": "Mẫu eSUV cỡ lớn Hạng sang",
+          "subtitle": "VF 9 là mẫu xe SUV 7 chỗ hàng đầu của VinFast. Với kiểu dáng tinh tế, công nghệ tiên tiến nhất và sự tỉ mỉ trong từng chi tiết, VF 9 mang đến trải nghiệm đặc biệt cao cấp cho Người sở hữu.",
+          "bullets": [
+            "Quãng đường di chuyển/lần sạc đầy 626 km*",
+            "Vận hành mạnh mẽ 402 hp/ 620 Nm",
+            "Bảo hành xe 200.000 km hoặc 10 năm"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Mạnh mẽ, bề thế Nâng tầm thời thượng",
+            "desc": "Thiết kế được lấy cảm hứng từ những chiếc du thuyền hạng sang, hoà hợp với những đường nét mạnh mẽ và phóng khoáng , đem lại vẻ ngoài độc đáo và sang trọng , xứng tầm với chủ nhân tinh hoa."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Bản giao hưởng của thẩm mỹ và trải nghiệm tiện nghi",
+            "desc": "Ngôn ngữ thiết kế tối giản mang hơi hướng tương lai phối hợp cùng loạt vật liệu cao cấp, thân thiện với môi trường, VF 9 đem lại trải nghiệm nội thất khoáng đạt, thư thái trên mọi hành trình."
+          },
+          {
+            "title": "Tuỳ chọn hàng ghế cơ trưởng chỉnh điện",
+            "desc": "Tuỳ chọn hàng ghế cơ trưởng chỉnh điện, tích hợp tính năng làm mát, sưởi, massage, sạc không dây."
+          },
+          {
+            "title": "Tuỳ chọn trần kính toàn cảnh hoà hợp với thiên nhiên",
+            "desc": "Tuỳ chọn trần kính toàn cảnh hoà hợp với thiên nhiên, cho không gian nội thất luôn khoáng đạt."
+          },
+          {
+            "title": "Nút chuyển số trực quan",
+            "desc": "Nút chuyển số trực quan, kèm sạc không dây tích hợp trên bệ tì tay, tiện lợi và dễ dàng sử dụng."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "voice",
+            "title": "Trợ lý ảo AI hỗ trợ Tiếng Việt",
+            "desc": "Trợ lý ảo AI hỗ trợ tiếng Việt, điều khiển giọng nói thông minh và kết nối dịch vụ thông minh trên xe."
+          },
+          {
+            "icon": "adas",
+            "title": "Trợ lái nâng cao cấp độ 2",
+            "desc": "Hệ thống trợ lái nâng cao cấp độ 2 với các tính năng an toàn chủ động và hỗ trợ lái thông minh."
+          },
+          {
+            "icon": "app",
+            "title": "Dịch vụ thông minh",
+            "desc": "Hệ sinh thái kết nối và dịch vụ tiên tiến trên xe."
+          }
+        ],
+        "technologyLead": "Hợp tác cùng những đối tác hàng đầu trên toàn cầu, VinFast áp dụng những công nghệ hiện đại với thiết kế tập trung vào con người, đem lại trải nghiệm. Trợ lý ảo cùng loạt Dịch vụ thông minh tiên tiến, đồng hành cùng bạn ",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển/lần sạc đầy 626 km*",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển/lần sạc đầy",
+              "desc": "Quãng đường di chuyển/lần sạc đầy 626 km*"
+            },
+            {
+              "title": "Vận hành mạnh mẽ",
+              "desc": "Vận hành mạnh mẽ 402 hp/ 620 Nm"
+            }
+          ]
+        },
+        "safety": {
+          "title": "Đặc quyền",
+          "subtitle": "Xứng tầm tinh hoa",
+          "features": [
+            {
+              "title": "Trải nghiệm VIP tại xưởng dịch vụ VinFast",
+              "desc": "Được tiếp đón và tư vấn bởi đội ngũ cố vấn dịch vụ, kỹ thuật viên giàu kinh nghiệm và có tay nghề cao nhất. Quý khách sẽ được ưu tiên sắp xếp lịch bảo dưỡng, sửa chữa theo thời gian và nhu cầu của bản thân. Đồng thời, xe sẽ được tiếp nhận/phục vụ và ưu tiên sửa chữa ngay bởi những kỹ thuật viên xuất sắc nhất, và được kiểm tra chất lượng bởi quản đốc trước khi giao xe."
+            },
+            {
+              "title": "Tiếp cận dịch vụ sửa chữa nhanh chóng và thuận tiện",
+              "desc": "Miễn phí giao nhận xe tại địa điểm theo yêu cầu của quý khách (trong giờ hành chính, phạm vi 30 km từ xưởng dịch vụ VinFast gần nhất). Hỗ trợ chi phí sửa chữa cho đại lý, đảm bảo quý khách được phục vụ nhanh chóng và hiệu quả nhất."
+            },
+            {
+              "title": "Dịch vụ chăm sóc Khách hàng tận tâm, chu đáo",
+              "desc": "Hotline 24/7 với nhân viên CSKH chuyên trách tiếp đón, đảm bảo mọi yêu cầu và phản hồi được giải đáp nhanh chóng, chuyên nghiệp."
+            },
+            {
+              "title": "Sạc điện miễn phí lên tới 3 năm",
+              "desc": "Theo chương trình miễn phí sạc từ V-Green, áp dụng kèm điều kiện và điều khoản. Vui lòng liên hệ đại lý để biết thông tin chi tiết."
+            }
+          ],
+          "highlights": [
+            "Trải nghiệm VIP tại xưởng dịch vụ VinFast",
+            "Tiếp cận dịch vụ sửa chữa nhanh chóng và thuận tiện",
+            "Dịch vụ chăm sóc Khách hàng tận tâm, chu đáo",
+            "Sạc điện miễn phí lên tới 3 năm"
+          ]
+        },
+        "charging": {
+          "title": "Giải pháp Pin và Trạm sạc",
+          "desc": "VinFast cung cấp đa dạng giải pháp sạc để đáp ứng nhu cầu sử dụng của Khách hàng một cách thuận tiện nhất."
+        }
+      },
+      "exterior": [
+        {
+          "title": "Mạnh mẽ, bề thế Nâng tầm thời thượng",
+          "desc": "Thiết kế được lấy cảm hứng từ những chiếc du thuyền hạng sang, hoà hợp với những đường nét mạnh mẽ và phóng khoáng , đem lại vẻ ngoài độc đáo và sang trọng , xứng tầm với chủ nhân tinh hoa."
+        }
+      ],
+      "interior": [
+        {
+          "title": "Bản giao hưởng của thẩm mỹ và trải nghiệm tiện nghi",
+          "desc": "Ngôn ngữ thiết kế tối giản mang hơi hướng tương lai phối hợp cùng loạt vật liệu cao cấp, thân thiện với môi trường, VF 9 đem lại trải nghiệm nội thất khoáng đạt, thư thái trên mọi hành trình."
+        },
+        {
+          "title": "Tuỳ chọn hàng ghế cơ trưởng chỉnh điện",
+          "desc": "Tuỳ chọn hàng ghế cơ trưởng chỉnh điện, tích hợp tính năng làm mát, sưởi, massage, sạc không dây."
+        },
+        {
+          "title": "Tuỳ chọn trần kính toàn cảnh hoà hợp với thiên nhiên",
+          "desc": "Tuỳ chọn trần kính toàn cảnh hoà hợp với thiên nhiên, cho không gian nội thất luôn khoáng đạt."
+        },
+        {
+          "title": "Nút chuyển số trực quan",
+          "desc": "Nút chuyển số trực quan, kèm sạc không dây tích hợp trên bệ tì tay, tiện lợi và dễ dàng sử dụng."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "voice",
+          "title": "Trợ lý ảo AI hỗ trợ Tiếng Việt",
+          "desc": "Trợ lý ảo AI hỗ trợ tiếng Việt, điều khiển giọng nói thông minh và kết nối dịch vụ thông minh trên xe."
+        },
+        {
+          "icon": "adas",
+          "title": "Trợ lái nâng cao cấp độ 2",
+          "desc": "Hệ thống trợ lái nâng cao cấp độ 2 với các tính năng an toàn chủ động và hỗ trợ lái thông minh."
+        },
+        {
+          "icon": "app",
+          "title": "Dịch vụ thông minh",
+          "desc": "Hệ sinh thái kết nối và dịch vụ tiên tiến trên xe."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển/lần sạc đầy 626 km*",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển/lần sạc đầy",
+            "desc": "Quãng đường di chuyển/lần sạc đầy 626 km*"
+          },
+          {
+            "title": "Vận hành mạnh mẽ",
+            "desc": "Vận hành mạnh mẽ 402 hp/ 620 Nm"
+          }
+        ]
+      },
+      "safety": {
+        "title": "Đặc quyền",
+        "subtitle": "Xứng tầm tinh hoa",
+        "features": [
+          {
+            "title": "Trải nghiệm VIP tại xưởng dịch vụ VinFast",
+            "desc": "Được tiếp đón và tư vấn bởi đội ngũ cố vấn dịch vụ, kỹ thuật viên giàu kinh nghiệm và có tay nghề cao nhất. Quý khách sẽ được ưu tiên sắp xếp lịch bảo dưỡng, sửa chữa theo thời gian và nhu cầu của bản thân. Đồng thời, xe sẽ được tiếp nhận/phục vụ và ưu tiên sửa chữa ngay bởi những kỹ thuật viên xuất sắc nhất, và được kiểm tra chất lượng bởi quản đốc trước khi giao xe."
+          },
+          {
+            "title": "Tiếp cận dịch vụ sửa chữa nhanh chóng và thuận tiện",
+            "desc": "Miễn phí giao nhận xe tại địa điểm theo yêu cầu của quý khách (trong giờ hành chính, phạm vi 30 km từ xưởng dịch vụ VinFast gần nhất). Hỗ trợ chi phí sửa chữa cho đại lý, đảm bảo quý khách được phục vụ nhanh chóng và hiệu quả nhất."
+          },
+          {
+            "title": "Dịch vụ chăm sóc Khách hàng tận tâm, chu đáo",
+            "desc": "Hotline 24/7 với nhân viên CSKH chuyên trách tiếp đón, đảm bảo mọi yêu cầu và phản hồi được giải đáp nhanh chóng, chuyên nghiệp."
+          },
+          {
+            "title": "Sạc điện miễn phí lên tới 3 năm",
+            "desc": "Theo chương trình miễn phí sạc từ V-Green, áp dụng kèm điều kiện và điều khoản. Vui lòng liên hệ đại lý để biết thông tin chi tiết."
+          }
+        ],
+        "highlights": [
+          "Trải nghiệm VIP tại xưởng dịch vụ VinFast",
+          "Tiếp cận dịch vụ sửa chữa nhanh chóng và thuận tiện",
+          "Dịch vụ chăm sóc Khách hàng tận tâm, chu đáo",
+          "Sạc điện miễn phí lên tới 3 năm"
+        ]
+      },
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "5.119 x 2.254 x 1.697"
+        },
+        {
+          "label": "Chiều dài cơ sở (mm)",
+          "value": "3.149"
+        },
+        {
+          "label": "Khoảng sáng gầm xe không tải (mm)",
+          "value": "174"
+        },
+        {
+          "label": "Công suất tối đa (hp/kW)",
+          "value": "402/300"
+        },
+        {
+          "label": "Mô men xoắn cực đại (Nm)",
+          "value": "620"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "200"
+        },
+        {
+          "label": "Quãng đường (km)",
+          "value": "626"
+        },
+        {
+          "label": "Dung lượng pin (kWh) - khả dụng",
+          "value": "123"
+        },
+        {
+          "label": "Loại pin",
+          "value": "CATL"
+        },
+        {
+          "label": "Thời gian nạp pin nhanh nhất",
+          "value": "35 phút (10%-70%)"
+        },
+        {
+          "label": "Dẫn động",
+          "value": "AWD/2 cầu toàn thời gian"
+        },
+        {
+          "label": "Trọng lượng không tải (kg)",
+          "value": "2.911"
+        },
+        {
+          "label": "Dung tích cốp gập ghế (L)",
+          "value": "926"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7 chỗ"
+        }
+      ],
+      "fields": {
+        "power": 402,
+        "powerKw": 300,
+        "torque": 620,
+        "range": 626,
+        "batteryCapacity": 123,
+        "chargingTime": "35 phút (10%-70%)",
+        "drive": "awd",
+        "dimensions": "5.119 x 2.254 x 1.697 mm"
+      },
+      "tagline": "Sự Lựa Chọn Của Người Thành Đạt, Tiên Phong",
+      "slogan": "VF 9 là mẫu xe SUV 7 chỗ hàng đầu của VinFast. Với kiểu dáng tinh tế, công nghệ tiên tiến nhất và sự tỉ mỉ trong từng chi tiết, VF 9 mang đến trải nghiệm đặc biệt cao cấp cho Người sở hữu."
+    }
+  ],
+  "scooters": [
+    {
+      "id": "flazz-max",
+      "name": "FLAZZ MAX",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-flazz-max",
+      "variants": [
+        {
+          "name": "Flazz Max (không kèm pin)",
+          "price": 14990000
+        },
+        {
+          "name": "Flazz Max (kèm pin)",
+          "price": 20600000
+        }
+      ],
+      "overview": {
+        "title": "ĐỘC ĐÁO - BẬT CHẤT THỂ THAO",
+        "subtitle": "Flazz Max sở hữu công suất tối đa 1500W, pin LFP 1.5kWh, thiết kế thể thao năng động."
+      },
+      "highlights": [
+        "Tốc độ tối đa 49 km/h",
+        "Quãng đường ~87 km/lần sạc",
+        "Công suất tối đa 1500 W"
+      ],
+      "exterior": [
+        {
+          "title": "KIỂU DÁNG",
+          "desc": "Thiết kế mạnh mẽ, trẻ trung với các đường nét góc cạnh, đậm chất phố."
+        },
+        {
+          "title": "BỀN BỈ & AN TOÀN",
+          "desc": "Động cơ đạt tiêu chuẩn chống nước IP67, an tâm di chuyển trong điều kiện mưa."
+        }
+      ],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "49"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~87"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "1500"
+        },
+        {
+          "label": "Công suất danh định (W)",
+          "value": "1000"
+        },
+        {
+          "label": "Dung lượng pin (kWh)",
+          "value": "1,5"
+        },
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "1745 x 700 x 1050"
+        },
+        {
+          "label": "Thể tích cốp (L)",
+          "value": "4"
+        },
+        {
+          "label": "Thời gian sạc tiêu chuẩn",
+          "value": "Khoảng 8h (0%-100%)"
+        }
+      ],
+      "fields": {
+        "topSpeed": 49,
+        "range": 87,
+        "motorPower": 1500,
+        "trunk": 4,
+        "chargingTime": "Khoảng 8h"
+      },
+      "tagline": "FLAZZ MAX",
+      "slogan": "Độc đáo — bật chất thể thao"
+    },
+    {
+      "id": "amio-s",
+      "name": "AMIO S",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio-s",
+      "variants": [
+        {
+          "name": "AMIO S",
+          "price": 13900000
+        }
+      ],
+      "overview": {
+        "title": "AMIO S",
+        "subtitle": "Xe máy điện đô thị gọn nhẹ, tốc độ tối đa 25 km/h."
+      },
+      "highlights": ["Tốc độ tối đa 25 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "25"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~65"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "800"
+        }
+      ],
+      "fields": {
+        "topSpeed": 25,
+        "range": 65,
+        "motorPower": 800
+      },
+      "tagline": "AMIO S",
+      "slogan": "Xe điện đô thị tiện lợi"
+    },
+    {
+      "id": "evo-lite",
+      "name": "EVO Lite",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+      "variants": [
+        {
+          "name": "EVO Lite",
+          "price": 17000000
+        }
+      ],
+      "overview": {
+        "title": "Xe máy điện VinFast Evo Lite",
+        "subtitle": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+        "bullets": [
+          "Hệ thống đèn Full LED và đèn pha LED Projector.",
+          "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu.",
+          "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái.",
+          "Hệ thống giảm xóc với giảm chấn thủy lực, hỗ trợ xe di chuyển êm ái trên nhiều địa hình."
+        ]
+      },
+      "highlights": [
+        "Hệ thống đèn Full LED và đèn pha LED Projector.",
+        "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu.",
+        "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái.",
+        "Hệ thống giảm xóc với giảm chấn thủy lực, hỗ trợ xe di chuyển êm ái trên nhiều địa hình."
+      ],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "49"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~165"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "2300"
+        }
+      ],
+      "fields": {
+        "topSpeed": 49,
+        "range": 165,
+        "motorPower": 2300
+      },
+      "tagline": "EVO LITE",
+      "slogan": "Sống xanh, đi chất — quãng đường lên tới ~165 km/lần sạc",
+      "pdpContent": {
+        "tagline": "EVO LITE",
+        "slogan": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+        "overview": {
+          "title": "Xe máy điện VinFast Evo Lite",
+          "subtitle": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+          "bullets": [
+            "Hệ thống đèn Full LED và đèn pha LED Projector.",
+            "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu.",
+            "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái.",
+            "Hệ thống giảm xóc với giảm chấn thủy lực, hỗ trợ xe di chuyển êm ái trên nhiều địa hình."
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+            "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+          },
+          {
+            "title": "Thể tích cốp Evo Lite",
+            "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+          },
+          {
+            "title": "Sàn để chân Evo Lite",
+            "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+          },
+          {
+            "title": "Hệ thống giảm xóc Evo Lite",
+            "desc": "Hệ thống giảm xóc với giảm chấn thủy lực, hỗ trợ xe di chuyển êm ái trên nhiều địa hình."
+          },
+          {
+            "title": "Đèn pha Led Projector Evo Lite",
+            "desc": "Vận hành êm ái trên mọi địa hình."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+            "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+          },
+          {
+            "icon": "drive",
+            "title": "Thể tích cốp Evo Lite",
+            "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+          },
+          {
+            "icon": "drive",
+            "title": "Sàn để chân Evo Lite",
+            "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+          }
+        ],
+        "technologyLead": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+          "features": [
+            {
+              "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+              "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+            },
+            {
+              "title": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nh",
+              "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+            },
+            {
+              "title": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái",
+              "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+          "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+        },
+        {
+          "title": "Thể tích cốp Evo Lite",
+          "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+        },
+        {
+          "title": "Sàn để chân Evo Lite",
+          "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+        },
+        {
+          "title": "Hệ thống giảm xóc Evo Lite",
+          "desc": "Hệ thống giảm xóc với giảm chấn thủy lực, hỗ trợ xe di chuyển êm ái trên nhiều địa hình."
+        },
+        {
+          "title": "Đèn pha Led Projector Evo Lite",
+          "desc": "Vận hành êm ái trên mọi địa hình."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+          "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+        },
+        {
+          "icon": "drive",
+          "title": "Thể tích cốp Evo Lite",
+          "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+        },
+        {
+          "icon": "drive",
+          "title": "Sàn để chân Evo Lite",
+          "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Hệ thống đèn Full LED và đèn pha LED Projector.",
+        "features": [
+          {
+            "title": "Hệ thống đèn Full LED và đèn pha LED Projector",
+            "desc": "Hệ thống đèn Full LED và đèn pha LED Projector."
+          },
+          {
+            "title": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nh",
+            "desc": "Thể tích cốp 12L (khi lắp 2 pin) tối ưu sức chứa - tối đa nhu cầu."
+          },
+          {
+            "title": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái",
+            "desc": "Sàn để chân rộng thoáng cho tư thế ngồi thoải mái."
+          }
+        ]
+      }
+    },
+    {
+      "id": "amio",
+      "name": "Amio",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-amio",
+      "variants": [
+        {
+          "name": "Amio",
+          "price": 13900000
+        }
+      ],
+      "overview": {
+        "title": "AMIO",
+        "subtitle": "Xe máy điện đô thị với tốc độ tối đa 30 km/h."
+      },
+      "highlights": ["Tốc độ tối đa 30 km/h", "Quãng đường ~65 km/lần sạc", "Công suất 800 W"],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "30"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~65"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "800"
+        }
+      ],
+      "fields": {
+        "topSpeed": 30,
+        "range": 65,
+        "motorPower": 800
+      },
+      "tagline": "AMIO",
+      "slogan": "Di chuyển xanh mỗi ngày"
+    },
+    {
+      "id": "viper",
+      "name": "Viper",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-viper",
+      "variants": [
+        {
+          "name": "Viper",
+          "price": 39900000
+        }
+      ],
+      "overview": {
+        "title": "VIPER",
+        "subtitle": "Xe máy điện hiệu suất cao, tốc độ tối đa 70 km/h, quãng đường ~156 km/lần sạc."
+      },
+      "highlights": [
+        "Tốc độ tối đa 70 km/h",
+        "Quãng đường ~156 km/lần sạc",
+        "Công suất 3000 W",
+        "Khóa thông minh Smart Key"
+      ],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "70"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~156"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "3000"
+        }
+      ],
+      "fields": {
+        "topSpeed": 70,
+        "range": 156,
+        "motorPower": 3000
+      },
+      "tagline": "VIPER",
+      "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+      "pdpContent": {
+        "tagline": "VIPER",
+        "slogan": "Bản lĩnh tiên phong — động cơ BLDC Inhub 3000W, pin LFP 1.5 kWh",
+        "overview": {
+          "title": "Xe máy điện VinFast Viper",
+          "subtitle": "Xe máy điện hiệu suất cao với động cơ BLDC Inhub, màn hình TFT và khả năng linh hoạt nâng cấp 2 pin.",
+          "bullets": [
+            "Tốc độ tối đa 70 km/h",
+            "Quãng đường ~156 km/lần sạc",
+            "Công suất tối đa 3000 W",
+            "Khóa thông minh Smart Key"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+          },
+          {
+            "title": "HIỆU SUẤT ẤN TƯỢNG",
+            "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+          },
+          {
+            "title": "Màn hình TFT hiện đại",
+            "desc": "Màn hình TFT hiện đại, đem tới độ phân giải và tương phản cao, giúp hiển thị thông số rõ ràng, sống động."
+          },
+          {
+            "title": "Cốp xe rộng rãi",
+            "desc": "Cốp xe rộng rãi, tối ưu không gian chứa pin và các vật dụng cần thiết."
+          }
+        ],
+        "interior": [
+          {
+            "title": "Sàn để chân rộng rãi",
+            "desc": "Sàn để chân rộng rãi và vị trí để chân sau tách rời, giúp tư thế ngồi thư thái và thoải mái."
+          }
+        ],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+            "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ. Quãng đường khoảng 82 km (+74 km khi lắp pin phụ) theo điều kiện tiêu chuẩn VinFast."
+          },
+          {
+            "icon": "drive",
+            "title": "Hệ thống phanh an toàn",
+            "desc": "Trang bị phanh đĩa trước, phanh cơ bánh sau đảm bảo an toàn trên mọi hành trình."
+          },
+          {
+            "icon": "app",
+            "title": "Khóa thông minh",
+            "desc": "Khóa xe Smart Key tiện lợi, an toàn."
+          }
+        ],
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường ~156 km/lần sạc — Công suất 3000 W",
+          "features": [
+            {
+              "title": "Tốc độ tối đa",
+              "desc": "70 km/h"
+            },
+            {
+              "title": "Quãng đường 1 lần sạc",
+              "desc": "~156 km"
+            },
+            {
+              "title": "Công suất tối đa",
+              "desc": "3000 W"
+            }
+          ]
+        }
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Trang bị 2 khay chứa pin trong cốp xe, giúp tối ưu không gian và dễ dàng tháo lắp."
+        },
+        {
+          "title": "HIỆU SUẤT ẤN TƯỢNG",
+          "desc": "VinFast Viper được trang bị động cơ BLDC Inhub với công suất tối đa 3000 W. Pin LFP có dung lượng 1.5 kWh cho khả năng vận hành mạnh mẽ, bền bỉ."
+        }
+      ],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "NẠP NĂNG LƯỢNG ẤN TƯỢNG",
+          "desc": "Pin LFP 1.5 kWh, linh hoạt nâng cấp thêm pin phụ."
+        },
+        {
+          "icon": "drive",
+          "title": "Hệ thống phanh an toàn",
+          "desc": "Phanh đĩa trước, phanh cơ bánh sau."
+        }
+      ]
+    },
+    {
+      "id": "feliz-ii",
+      "name": "Feliz II",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-vinfast-feliz-II",
+      "variants": [
+        {
+          "name": "Feliz II",
+          "price": 24900000
+        }
+      ],
+      "overview": {
+        "title": "FELIZ II",
+        "subtitle": "Xe máy điện phong cách với quãng đường ~156 km."
+      },
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~156 km/lần sạc", "Công suất 3000 W"],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "70"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~156"
+        },
+        {
+          "label": "Công suất tối đa (W)",
+          "value": "3000"
+        }
+      ],
+      "fields": {
+        "topSpeed": 70,
+        "range": 156,
+        "motorPower": 3000
+      },
+      "tagline": "FELIZ II",
+      "slogan": "Phong cách — tiện nghi"
+    },
+    {
+      "id": "evo",
+      "name": "EVO",
+      "type": "scooter",
+      "sourceUrl": "https://vinfastauto.com/vn_vi/xe-may-dien-evo",
+      "variants": [
+        {
+          "name": "EVO",
+          "price": 19990000
+        }
+      ],
+      "overview": {
+        "title": "EVO",
+        "subtitle": "Xe máy điện đa dụng với quãng đường ~165 km (2 pin)."
+      },
+      "highlights": ["Tốc độ tối đa 70 km/h", "Quãng đường ~165 km (2 pin)", "Cốp xe 12 lít"],
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "70"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "~165"
+        },
+        {
+          "label": "Cốp xe (lít)",
+          "value": "12"
+        }
+      ],
+      "fields": {
+        "topSpeed": 70,
+        "range": 165,
+        "trunk": 12
+      },
+      "tagline": "EVO",
+      "slogan": "Đa dụng — bền bỉ"
+    },
+    {
+      "id": "zgoo",
+      "name": "zgoo",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-zgoo.html",
+      "fetchedAt": "2026-06-26T11:06:01.444Z",
+      "variants": [
+        {
+          "name": "zgoo",
+          "price": 13900000,
+          "listPrice": 15900000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Công suất/Dung lượng 1,2 kW",
+        "Tốc độ tối đa 70 km/1 lần sạc Quãng đường di chuyển 1",
+        "39 km/h"
+      ],
+      "overview": {
+        "title": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh",
+        "subtitle": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!"
+      },
+      "pdpContent": {
+        "tagline": "Xe Máy Điện  Zgoo - Thông số, giá bán mới nhất",
+        "slogan": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+        "overview": {
+          "title": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh",
+          "subtitle": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+          "bullets": [
+            "Công suất/Dung lượng 1,2 kW",
+            "Tốc độ tối đa 70 km/1 lần sạc Quãng đường di chuyển 1",
+            "39 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "CHẾ ĐỘ LÁI LINH HOẠT",
+            "desc": "Tích hợp hai chế độ lái: Eco - Êm ái và Sport - Mạnh mẽ giúp bạn di chuyển thuận tiện trong mọi hành trình."
+          },
+          {
+            "title": "HỆ THỐNG GIẢM XÓC MƯỢT MÀ",
+            "desc": "Hệ thống giảm chấm thủy lực giúp xe di chuyển ổn định trên mọi địa hình, từ đường phố đông đúc đến những cung đường gồ ghề."
+          },
+          {
+            "title": "ĐỘNG CƠ ƯU VIỆT",
+            "desc": "Động cơ Inhub với công suất 1100W giúp xe vận hành mượt mà, linh hoạt. Pin LFP đặt dưới sàn giúp xe vận hành cân bằng và ổn định ngay cả khi tăng tốc nhanh."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Pin LFP vượt trội",
+            "desc": "Tăng công suất động cơ. Giảm thiểu tiêu hao không cần thiết. Ổn định & an toàn hơn, chống cháy nổ trên mọi trường hợp."
+          },
+          {
+            "icon": "drive",
+            "title": "Thời gian sạc tiêu chuẩn",
+            "desc": "Khoảng 6h30 phút từ 0 - 100%."
+          },
+          {
+            "icon": "drive",
+            "title": "Cách bảo quản thông minh",
+            "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng. Cắm sạc khi dung lượng pin thấp hơn 20%. Không nên sạc khi nhiệt độ pin cao hơn 45°C, hệ thống sẽ không nhận sạc khi pin nóng ở nhiệt độ 50°C."
+          }
+        ],
+        "technologyLead": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Công suất/Dung lượng 1,2 kW",
+          "features": [
+            {
+              "title": "Công suất/Dung lượng",
+              "desc": "Công suất/Dung lượng 1,2 kW"
+            },
+            {
+              "title": "Tốc độ tối đa",
+              "desc": "Tốc độ tối đa 70 km/1 lần sạc Quãng đường di chuyển 1"
+            },
+            {
+              "title": "39 km/h",
+              "desc": "39 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "CHẾ ĐỘ LÁI LINH HOẠT",
+          "desc": "Tích hợp hai chế độ lái: Eco - Êm ái và Sport - Mạnh mẽ giúp bạn di chuyển thuận tiện trong mọi hành trình."
+        },
+        {
+          "title": "HỆ THỐNG GIẢM XÓC MƯỢT MÀ",
+          "desc": "Hệ thống giảm chấm thủy lực giúp xe di chuyển ổn định trên mọi địa hình, từ đường phố đông đúc đến những cung đường gồ ghề."
+        },
+        {
+          "title": "ĐỘNG CƠ ƯU VIỆT",
+          "desc": "Động cơ Inhub với công suất 1100W giúp xe vận hành mượt mà, linh hoạt. Pin LFP đặt dưới sàn giúp xe vận hành cân bằng và ổn định ngay cả khi tăng tốc nhanh."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Pin LFP vượt trội",
+          "desc": "Tăng công suất động cơ. Giảm thiểu tiêu hao không cần thiết. Ổn định & an toàn hơn, chống cháy nổ trên mọi trường hợp."
+        },
+        {
+          "icon": "drive",
+          "title": "Thời gian sạc tiêu chuẩn",
+          "desc": "Khoảng 6h30 phút từ 0 - 100%."
+        },
+        {
+          "icon": "drive",
+          "title": "Cách bảo quản thông minh",
+          "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng. Cắm sạc khi dung lượng pin thấp hơn 20%. Không nên sạc khi nhiệt độ pin cao hơn 45°C, hệ thống sẽ không nhận sạc khi pin nóng ở nhiệt độ 50°C."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Công suất/Dung lượng 1,2 kW",
+        "features": [
+          {
+            "title": "Công suất/Dung lượng",
+            "desc": "Công suất/Dung lượng 1,2 kW"
+          },
+          {
+            "title": "Tốc độ tối đa",
+            "desc": "Tốc độ tối đa 70 km/1 lần sạc Quãng đường di chuyển 1"
+          },
+          {
+            "title": "39 km/h",
+            "desc": "39 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Quãng đường (km)",
+          "value": "70"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "39"
+        },
+        {
+          "label": "Công suất động cơ (W)",
+          "value": "1500"
+        },
+        {
+          "label": "Loại pin",
+          "value": "LFP"
+        },
+        {
+          "label": "Thời gian sạc",
+          "value": "5 giờ (0-100%)"
+        },
+        {
+          "label": "Trọng lượng (kg)",
+          "value": "90"
+        },
+        {
+          "label": "Dung tích cốp (lít)",
+          "value": "14"
+        },
+        {
+          "label": "Kích thước (mm)",
+          "value": "1.700 x 680 x 1.100"
+        }
+      ],
+      "fields": {
+        "range": 70,
+        "topSpeed": 39,
+        "motorPower": 1500,
+        "trunk": 14,
+        "weight": 90,
+        "chargingTime": "5 giờ (0-100%)"
+      },
+      "tagline": "Xe Máy Điện  Zgoo - Thông số, giá bán mới nhất",
+      "slogan": "Xe máy điện VinFast ZGoo - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế hiện đại, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!"
+    },
+    {
+      "id": "flazz",
+      "name": "Flazz",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-flazz.html",
+      "fetchedAt": "2026-06-26T11:06:02.103Z",
+      "variants": [
+        {
+          "name": "Flazz",
+          "price": 14900000,
+          "listPrice": 16900000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường di chuyển lên tới 135 km",
+        "Công suất/Dung lượng 1,2 kW",
+        "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển",
+        "39 km/h"
+      ],
+      "overview": {
+        "title": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh",
+        "subtitle": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!"
+      },
+      "pdpContent": {
+        "tagline": "Xe Máy Điện  Flazz - Thông số, giá bán mới nhất",
+        "slogan": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+        "overview": {
+          "title": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh",
+          "subtitle": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+          "bullets": [
+            "Quãng đường di chuyển lên tới 135 km",
+            "Công suất/Dung lượng 1,2 kW",
+            "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển",
+            "39 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+          },
+          {
+            "title": "LỰA CHỌN LÝ TƯỞNG CHO ĐÔ THỊ",
+            "desc": "Quãng đường di chuyển lên tới 135 km. Tốc độ tối đa 39km/h, vô cùng thích hợp với điều kiện giao thông nội đô.*"
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Công nghệ Pin LFP",
+            "desc": "Tăng công suất động cơ. Giảm thiểu tiêu hao không cần thiết. Ổn định & an toàn hơn, chống cháy nổ trên mọi trường hợp."
+          },
+          {
+            "icon": "drive",
+            "title": "Thời gian sạc tiêu chuẩn",
+            "desc": "Khoảng 6h30 phút từ 0 - 100%."
+          },
+          {
+            "icon": "drive",
+            "title": "Cách bảo quản thông minh",
+            "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng. Cắm sạc khi dung lượng pin thấp hơn 20%. Không nên sạc khi nhiệt độ pin cao hơn 45°C, hệ thống sẽ không nhận sạc khi pin nóng ở nhiệt độ 50°C."
+          }
+        ],
+        "technologyLead": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển lên tới 135 km",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển lên tới",
+              "desc": "Quãng đường di chuyển lên tới 135 km"
+            },
+            {
+              "title": "Công suất/Dung lượng",
+              "desc": "Công suất/Dung lượng 1,2 kW"
+            },
+            {
+              "title": "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển",
+              "desc": "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển"
+            },
+            {
+              "title": "39 km/h",
+              "desc": "39 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+        },
+        {
+          "title": "LỰA CHỌN LÝ TƯỞNG CHO ĐÔ THỊ",
+          "desc": "Quãng đường di chuyển lên tới 135 km. Tốc độ tối đa 39km/h, vô cùng thích hợp với điều kiện giao thông nội đô.*"
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Công nghệ Pin LFP",
+          "desc": "Tăng công suất động cơ. Giảm thiểu tiêu hao không cần thiết. Ổn định & an toàn hơn, chống cháy nổ trên mọi trường hợp."
+        },
+        {
+          "icon": "drive",
+          "title": "Thời gian sạc tiêu chuẩn",
+          "desc": "Khoảng 6h30 phút từ 0 - 100%."
+        },
+        {
+          "icon": "drive",
+          "title": "Cách bảo quản thông minh",
+          "desc": "Duy trì dung lượng trên 20% trong quá trình sử dụng. Cắm sạc khi dung lượng pin thấp hơn 20%. Không nên sạc khi nhiệt độ pin cao hơn 45°C, hệ thống sẽ không nhận sạc khi pin nóng ở nhiệt độ 50°C."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển lên tới 135 km",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển lên tới",
+            "desc": "Quãng đường di chuyển lên tới 135 km"
+          },
+          {
+            "title": "Công suất/Dung lượng",
+            "desc": "Công suất/Dung lượng 1,2 kW"
+          },
+          {
+            "title": "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển",
+            "desc": "Tốc độ tối đa ~135 km/1 lần sạc Quãng đường di chuyển"
+          },
+          {
+            "title": "39 km/h",
+            "desc": "39 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Quãng đường (km)",
+          "value": "135"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "39"
+        },
+        {
+          "label": "Công suất động cơ (W)",
+          "value": "1500"
+        },
+        {
+          "label": "Loại pin",
+          "value": "LFP"
+        },
+        {
+          "label": "Thời gian sạc",
+          "value": "5 giờ (0-100%)"
+        },
+        {
+          "label": "Trọng lượng (kg)",
+          "value": "92"
+        },
+        {
+          "label": "Dung tích cốp (lít)",
+          "value": "14"
+        },
+        {
+          "label": "Kích thước (mm)",
+          "value": "1.720 x 680 x 1.080"
+        }
+      ],
+      "fields": {
+        "range": 135,
+        "topSpeed": 39,
+        "motorPower": 1500,
+        "trunk": 14,
+        "weight": 92,
+        "chargingTime": "5 giờ (0-100%)"
+      },
+      "tagline": "Xe Máy Điện  Flazz - Thông số, giá bán mới nhất",
+      "slogan": "Xe máy điện VinFast Flazz - Lựa chọn lý tưởng cho học sinh, không yêu cầu bằng lái. Xe sở hữu thiết kế cá tính, mạnh mẽ, động cơ ưu việt, pin LFP vượt trội. Khám phá ngay!"
+    },
+    {
+      "id": "vero-x",
+      "name": "Vero X",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-verox.html",
+      "fetchedAt": "2026-06-26T11:06:02.791Z",
+      "variants": [],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "quãng đường di chuyển đạt tới 262 km",
+        "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+        "70 km/h"
+      ],
+      "overview": {
+        "title": "Xe máy điện VinFast Vero X: Lái êm ái",
+        "subtitle": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!"
+      },
+      "pdpContent": {
+        "tagline": "XE MÁY ĐIỆN 02 PIN",
+        "slogan": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!",
+        "overview": {
+          "title": "Xe máy điện VinFast Vero X: Lái êm ái",
+          "subtitle": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!",
+          "bullets": [
+            "quãng đường di chuyển đạt tới 262 km",
+            "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+            "70 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+          },
+          {
+            "title": "QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY ẤN TƯỢNG",
+            "desc": "Khẳng định ưu thế với quãng đường di chuyển đạt tới 262 km/lần sạc. Tốc độ tối đa 70 km/h, vận hành mãnh mẽ và tăng tốc từ 0 - 50 km/h chỉ trong 15 giây."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "app",
+            "title": "Công nghệ thông minh",
+            "desc": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!"
+          }
+        ],
+        "technologyLead": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "quãng đường di chuyển đạt tới 262 km",
+          "features": [
+            {
+              "title": "quãng đường di chuyển đạt tới",
+              "desc": "quãng đường di chuyển đạt tới 262 km"
+            },
+            {
+              "title": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+              "desc": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển"
+            },
+            {
+              "title": "70 km/h",
+              "desc": "70 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+        },
+        {
+          "title": "QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY ẤN TƯỢNG",
+          "desc": "Khẳng định ưu thế với quãng đường di chuyển đạt tới 262 km/lần sạc. Tốc độ tối đa 70 km/h, vận hành mãnh mẽ và tăng tốc từ 0 - 50 km/h chỉ trong 15 giây."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "app",
+          "title": "Công nghệ thông minh",
+          "desc": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!"
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "quãng đường di chuyển đạt tới 262 km",
+        "features": [
+          {
+            "title": "quãng đường di chuyển đạt tới",
+            "desc": "quãng đường di chuyển đạt tới 262 km"
+          },
+          {
+            "title": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+            "desc": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển"
+          },
+          {
+            "title": "70 km/h",
+            "desc": "70 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "1858 x 690 x 1100 "
+        }
+      ],
+      "fields": {},
+      "tagline": "XE MÁY ĐIỆN 02 PIN",
+      "slogan": "Xe máy điện VinFast Vero X: Lái êm ái, kiểu dáng thời thượng. Cốp 35L và sàn rộng rãi, tối ưu công năng, tối đa nhu cầu. Khám phá ngay!"
+    },
+    {
+      "id": "feliz-2025",
+      "name": "Feliz 2025",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-feliz.html",
+      "fetchedAt": "2026-06-26T11:06:03.477Z",
+      "variants": [],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km",
+        "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+        "70 km/h"
+      ],
+      "overview": {
+        "title": "Xe máy điện Feliz 2025 thiết kế thanh lịch",
+        "subtitle": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!"
+      },
+      "pdpContent": {
+        "tagline": "XE MÁY ĐIỆN 02 PIN",
+        "slogan": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!",
+        "overview": {
+          "title": "Xe máy điện Feliz 2025 thiết kế thanh lịch",
+          "subtitle": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!",
+          "bullets": [
+            "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km",
+            "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+            "70 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+            "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+          },
+          {
+            "title": "QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY ẤN TƯỢNG",
+            "desc": "Khẳng định ưu thế với quãng đường di chuyển đạt tới 262 km/lần sạc. Tốc độ tối đa 70 km/h, vận hành mạnh mẽ và tăng tốc từ 0 - 50 km/h chỉ trong vòng 16 giây."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "app",
+            "title": "Công nghệ thông minh",
+            "desc": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!"
+          }
+        ],
+        "technologyLead": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km",
+          "features": [
+            {
+              "title": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng",
+              "desc": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km"
+            },
+            {
+              "title": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+              "desc": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển"
+            },
+            {
+              "title": "70 km/h",
+              "desc": "70 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "LINH HOẠT NÂNG CẤP 02 PIN",
+          "desc": "Hệ thống 02 pin LFP tiên tiến với 01 pin cố định dưới sàn xe và 01 pin tháo rời đặt trong cốp."
+        },
+        {
+          "title": "QUÃNG ĐƯỜNG DI CHUYỂN ĐẦY ẤN TƯỢNG",
+          "desc": "Khẳng định ưu thế với quãng đường di chuyển đạt tới 262 km/lần sạc. Tốc độ tối đa 70 km/h, vận hành mạnh mẽ và tăng tốc từ 0 - 50 km/h chỉ trong vòng 16 giây."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "app",
+          "title": "Công nghệ thông minh",
+          "desc": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!"
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km",
+        "features": [
+          {
+            "title": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng",
+            "desc": "QUÃNG ĐƯỜNG Chinh phục quãng đường lên tới khoảng 262 km"
+          },
+          {
+            "title": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển",
+            "desc": "Tốc độ tối đa ~262 km/1 lần sạc Quãng đường di chuyển"
+          },
+          {
+            "title": "70 km/h",
+            "desc": "70 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Dài x Rộng x Cao (mm)",
+          "value": "1920 x 694 x 1140 "
+        }
+      ],
+      "fields": {},
+      "tagline": "XE MÁY ĐIỆN 02 PIN",
+      "slogan": "Xe máy điện Feliz 2025 thiết kế thanh lịch, nâng cấp 2 pin LFP linh hoạt, cho quãng đường lên đến ~262km/lần sạc (*)Tích hợp cốp 34L siêu rộng. Đặt cọc Feliz 2025 ngay!"
+    },
+    {
+      "id": "evo-grand",
+      "name": "Evo Grand",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand.html",
+      "fetchedAt": "2026-06-26T11:06:04.124Z",
+      "variants": [
+        {
+          "name": "Evo Grand",
+          "price": 21121000,
+          "listPrice": 23900000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km",
+        "Tốc độ tối đa 262 km/1 lần sạc* Quãng đường di chuyển",
+        "70 km/h"
+      ],
+      "overview": {
+        "title": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP",
+        "subtitle": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km/h/ lần sạc. Khám phá ưu đãi mới nhất!"
+      },
+      "pdpContent": {
+        "tagline": "Xe Máy Điện Evo Grand - Thông số, giá bán mới nhất",
+        "slogan": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km/h/ lần sạc. Khám phá ưu đãi mới nhất!",
+        "overview": {
+          "title": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP",
+          "subtitle": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km/h/ lần sạc. Khám phá ưu đãi mới nhất!",
+          "bullets": [
+            "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km",
+            "Tốc độ tối đa 262 km/1 lần sạc* Quãng đường di chuyển",
+            "70 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Thể tích cốp 35L tối ưu sức chứa",
+            "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+          },
+          {
+            "title": "Linh hoạt nâng cấp 02 pin kép",
+            "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+          },
+          {
+            "title": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần",
+            "desc": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần sạc*."
+          },
+          {
+            "title": "Sử dụng Pin LFP với các ưu điểm vượt trội",
+            "desc": "Sử dụng Pin LFP với các ưu điểm vượt trội."
+          },
+          {
+            "title": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năn",
+            "desc": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năng chiếu sáng mạnh mẽ, tăng khả năng quan sát."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Thể tích cốp 35L tối ưu sức chứa",
+            "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+          },
+          {
+            "icon": "drive",
+            "title": "Linh hoạt nâng cấp 02 pin kép",
+            "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+          },
+          {
+            "icon": "drive",
+            "title": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần",
+            "desc": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần sạc*."
+          }
+        ],
+        "technologyLead": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km/h/ lần sạc. Khám phá ưu đãi mới nhất!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km",
+          "features": [
+            {
+              "title": "Quãng đường đi được",
+              "desc": "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km"
+            },
+            {
+              "title": "Tốc độ tối đa",
+              "desc": "Tốc độ tối đa 262 km/1 lần sạc* Quãng đường di chuyển"
+            },
+            {
+              "title": "70 km/h",
+              "desc": "70 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Thể tích cốp 35L tối ưu sức chứa",
+          "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+        },
+        {
+          "title": "Linh hoạt nâng cấp 02 pin kép",
+          "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+        },
+        {
+          "title": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần",
+          "desc": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần sạc*."
+        },
+        {
+          "title": "Sử dụng Pin LFP với các ưu điểm vượt trội",
+          "desc": "Sử dụng Pin LFP với các ưu điểm vượt trội."
+        },
+        {
+          "title": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năn",
+          "desc": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năng chiếu sáng mạnh mẽ, tăng khả năng quan sát."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Thể tích cốp 35L tối ưu sức chứa",
+          "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+        },
+        {
+          "icon": "drive",
+          "title": "Linh hoạt nâng cấp 02 pin kép",
+          "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+        },
+        {
+          "icon": "drive",
+          "title": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần",
+          "desc": "Trải nghiệm hành trình di chuyển lên tới 262km trong một lần sạc*."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km",
+        "features": [
+          {
+            "title": "Quãng đường đi được",
+            "desc": "Quãng đường đi được 1 lần sạc* Khoảng 134 km (+128 Km"
+          },
+          {
+            "title": "Tốc độ tối đa",
+            "desc": "Tốc độ tối đa 262 km/1 lần sạc* Quãng đường di chuyển"
+          },
+          {
+            "title": "70 km/h",
+            "desc": "70 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Quãng đường (km)",
+          "value": "262"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "70"
+        },
+        {
+          "label": "Công suất động cơ (W)",
+          "value": "2800"
+        },
+        {
+          "label": "Loại pin",
+          "value": "LFP"
+        },
+        {
+          "label": "Thời gian sạc",
+          "value": "6 giờ (0-100%)"
+        },
+        {
+          "label": "Trọng lượng (kg)",
+          "value": "115"
+        },
+        {
+          "label": "Dung tích cốp (lít)",
+          "value": "35"
+        },
+        {
+          "label": "Kích thước (mm)",
+          "value": "1.920 x 700 x 1.140"
+        }
+      ],
+      "fields": {
+        "range": 262,
+        "topSpeed": 70,
+        "motorPower": 2800,
+        "trunk": 35,
+        "weight": 115,
+        "chargingTime": "6 giờ (0-100%)"
+      },
+      "tagline": "Xe Máy Điện Evo Grand - Thông số, giá bán mới nhất",
+      "slogan": "Xe máy điện Evo Grand linh hoạt nâng cấp Pin LFP, khả năng di chuyển ấn tượng với quãng đường lên tới 262km, tốc độ 70km/h/ lần sạc. Khám phá ưu đãi mới nhất!"
+    },
+    {
+      "id": "evo-grand-lite",
+      "name": "Evo Grand Lite",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-grand-lite.html",
+      "fetchedAt": "2026-06-26T11:06:04.806Z",
+      "variants": [
+        {
+          "name": "Evo Grand Lite",
+          "price": 23900000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": ["Tốc độ tối đa 48 km/h", "Quãng đường 198 km (2 pin)", "Cốp xe 35 lít"],
+      "overview": {
+        "title": "EVO GRAND LITE",
+        "subtitle": "Xe ga điện tiết kiệm, quãng đường lên tới 198 km (2 pin)."
+      },
+      "pdpContent": {
+        "tagline": "Xe Máy Điện Evo Grand Lite - Thông số, giá bán mới nhất",
+        "slogan": "VinFast Evo Grand Lite - Xe máy điện dành cho học sinh, không yêu cầu bằng lái, vận hành êm ái, bền bỉ với công nghệ Pin LFP vượt trội. Khám phá thiết kế, tính năng và ưu đãi mới nhất!",
+        "overview": {
+          "title": "VinFast Evo Grand Lite - Xe máy điện dành cho học sinh",
+          "subtitle": "VinFast Evo Grand Lite - Xe máy điện dành cho học sinh, không yêu cầu bằng lái, vận hành êm ái, bền bỉ với công nghệ Pin LFP vượt trội. Khám phá thiết kế, tính năng và ưu đãi mới nhất!",
+          "bullets": [
+            "Quãng đường đi được 1 lần sạc* Khoảng 70 km (+128 Km",
+            "Tốc độ tối đa 198 km/1 lần sạc* Quãng đường di chuyển",
+            "48 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "Thể tích cốp 35L tối ưu sức chứa",
+            "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+          },
+          {
+            "title": "Linh hoạt nâng cấp 02 pin kép",
+            "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+          },
+          {
+            "title": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần",
+            "desc": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần sạc*."
+          },
+          {
+            "title": "Sử dụng Pin LFP với các ưu điểm vượt trội",
+            "desc": "Sử dụng Pin LFP với các ưu điểm vượt trội."
+          },
+          {
+            "title": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năn",
+            "desc": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năng chiếu sáng mạnh mẽ, tăng khả năng quan sát."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Thể tích cốp 35L tối ưu sức chứa",
+            "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+          },
+          {
+            "icon": "drive",
+            "title": "Linh hoạt nâng cấp 02 pin kép",
+            "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+          },
+          {
+            "icon": "drive",
+            "title": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần",
+            "desc": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần sạc*."
+          }
+        ],
+        "technologyLead": "VinFast Evo Grand Lite - Xe máy điện dành cho học sinh, không yêu cầu bằng lái, vận hành êm ái, bền bỉ với công nghệ Pin LFP vượt trội. Khám phá thiết kế, tính năng và ưu đãi mới nhất!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường đi được 1 lần sạc* Khoảng 70 km (+128 Km",
+          "features": [
+            {
+              "title": "Quãng đường đi được",
+              "desc": "Quãng đường đi được 1 lần sạc* Khoảng 70 km (+128 Km"
+            },
+            {
+              "title": "Tốc độ tối đa",
+              "desc": "Tốc độ tối đa 198 km/1 lần sạc* Quãng đường di chuyển"
+            },
+            {
+              "title": "48 km/h",
+              "desc": "48 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "Thể tích cốp 35L tối ưu sức chứa",
+          "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+        },
+        {
+          "title": "Linh hoạt nâng cấp 02 pin kép",
+          "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+        },
+        {
+          "title": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần",
+          "desc": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần sạc*."
+        },
+        {
+          "title": "Sử dụng Pin LFP với các ưu điểm vượt trội",
+          "desc": "Sử dụng Pin LFP với các ưu điểm vượt trội."
+        },
+        {
+          "title": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năn",
+          "desc": "Hệ thống đèn chiếu sáng và đèn tín hiệu Full LED cho khả năng chiếu sáng mạnh mẽ, tăng khả năng quan sát."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Thể tích cốp 35L tối ưu sức chứa",
+          "desc": "Thể tích cốp 35L tối ưu sức chứa – tối đa nhu cầu."
+        },
+        {
+          "icon": "drive",
+          "title": "Linh hoạt nâng cấp 02 pin kép",
+          "desc": "Linh hoạt nâng cấp 02 pin kép, gấp đôi năng lượng, nâng tầm hiệu suất."
+        },
+        {
+          "icon": "drive",
+          "title": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần",
+          "desc": "Trải nghiệm hành trình di chuyển lên tới 198km trong một lần sạc*."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường đi được 1 lần sạc* Khoảng 70 km (+128 Km",
+        "features": [
+          {
+            "title": "Quãng đường đi được",
+            "desc": "Quãng đường đi được 1 lần sạc* Khoảng 70 km (+128 Km"
+          },
+          {
+            "title": "Tốc độ tối đa",
+            "desc": "Tốc độ tối đa 198 km/1 lần sạc* Quãng đường di chuyển"
+          },
+          {
+            "title": "48 km/h",
+            "desc": "48 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "48"
+        },
+        {
+          "label": "Quãng đường 1 lần sạc (km)",
+          "value": "198"
+        },
+        {
+          "label": "Thể tích cốp (L)",
+          "value": "35"
+        },
+        {
+          "label": "Công suất động cơ (W)",
+          "value": "2500"
+        }
+      ],
+      "fields": {
+        "topSpeed": 48,
+        "range": 198,
+        "trunk": 35,
+        "motorPower": 2500
+      },
+      "tagline": "EVO GRAND LITE",
+      "slogan": "Tiết kiệm — dễ sử dụng"
+    },
+    {
+      "id": "drgnfly",
+      "name": "DrgnFly",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-dap-dien-drgnfly.html",
+      "fetchedAt": "2026-06-26T11:06:05.509Z",
+      "variants": [
+        {
+          "name": "DrgnFly",
+          "price": 16641000,
+          "listPrice": 18690000
+        }
+      ],
+      "colors": [],
+      "colorHex": [],
+      "highlights": ["Quãng đường di chuyển lên tới 110 km"],
+      "overview": {
+        "title": "Xe đạp điện VF DrgnFly",
+        "subtitle": "Xe đạp điện VF DrgnFly"
+      },
+      "pdpContent": {
+        "tagline": "Xe đạp điện VF DrgnFly",
+        "slogan": "Xe đạp điện VF DrgnFly",
+        "overview": {
+          "title": "Xe đạp điện VF DrgnFly",
+          "subtitle": "Xe đạp điện VF DrgnFly",
+          "bullets": ["Quãng đường di chuyển lên tới 110 km"]
+        },
+        "exterior": [],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "app",
+            "title": "Công nghệ thông minh",
+            "desc": "Xe đạp điện VF DrgnFly"
+          }
+        ],
+        "technologyLead": "Xe đạp điện VF DrgnFly",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển lên tới 110 km",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển lên tới",
+              "desc": "Quãng đường di chuyển lên tới 110 km"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "app",
+          "title": "Công nghệ thông minh",
+          "desc": "Xe đạp điện VF DrgnFly"
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển lên tới 110 km",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển lên tới",
+            "desc": "Quãng đường di chuyển lên tới 110 km"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Quãng đường (km)",
+          "value": "110"
+        },
+        {
+          "label": "Tốc độ tối đa (km/h)",
+          "value": "49"
+        },
+        {
+          "label": "Công suất động cơ (W)",
+          "value": "250"
+        },
+        {
+          "label": "Loại pin",
+          "value": "Lithium-ion"
+        },
+        {
+          "label": "Thời gian sạc",
+          "value": "5 giờ (0-100%)"
+        },
+        {
+          "label": "Trọng lượng xe (kg)",
+          "value": "28"
+        },
+        {
+          "label": "Kích thước (mm)",
+          "value": "1.750 x 600 x 1.100"
+        }
+      ],
+      "fields": {
+        "range": 110,
+        "topSpeed": 49,
+        "motorPower": 250,
+        "trunk": 0,
+        "weight": 28,
+        "chargingTime": "5 giờ (0-100%)"
+      },
+      "tagline": "Xe đạp điện VF DrgnFly",
+      "slogan": "Xe đạp điện VF DrgnFly"
+    },
+    {
+      "id": "evo-lite-neo",
+      "name": "EVO Lite Neo",
+      "type": "scooter",
+      "sourceUrl": "https://shop.vinfastauto.com/vn_vi/xe-may-dien-evo-lite-neo.html",
+      "fetchedAt": "2026-06-26T11:06:06.251Z",
+      "variants": [],
+      "colors": [],
+      "colorHex": [],
+      "highlights": [
+        "Quãng đường di chuyển 78 km",
+        "Tốc độ tối đa 78 km/1 lần sạc Quãng đường di chuyển 1",
+        "49 km/h"
+      ],
+      "overview": {
+        "title": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái)",
+        "subtitle": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ trung và cốp 17L tiện dụng. Xem ngay chính sách và ưu đãi mới nhất!"
+      },
+      "pdpContent": {
+        "tagline": "Lựa chọn chuẩn Gen Z",
+        "slogan": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ trung và cốp 17L tiện dụng. Xem ngay chính sách và ưu đãi mới nhất!",
+        "overview": {
+          "title": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái)",
+          "subtitle": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ trung và cốp 17L tiện dụng. Xem ngay chính sách và ưu đãi mới nhất!",
+          "bullets": [
+            "Quãng đường di chuyển 78 km",
+            "Tốc độ tối đa 78 km/1 lần sạc Quãng đường di chuyển 1",
+            "49 km/h"
+          ]
+        },
+        "exterior": [
+          {
+            "title": "VẬN HÀNH ÊM ÁI ĐI MUÔN NƠI",
+            "desc": "Thân xe được thiết kế công thái học tối ưu, tạo cảm giác thoải mái cho người lái và người ngồi sau, giúp người lái xe có thể chạy xe trong thời gian dài."
+          },
+          {
+            "title": "THIẾT KẾ THÂN THIỆN VỚI NGƯỜI DÙNG",
+            "desc": "Kích thước tầm trung phù hợp với người Việt tạo cảm giác lái thoải mái, êm ái trên nhiều loại địa hình."
+          }
+        ],
+        "interior": [],
+        "technology": [
+          {
+            "icon": "drive",
+            "title": "Động cơ một chiều không chổi than - BLDC",
+            "desc": "Động cơ BLDC được tích hợp trên vành bánh sau, không cần hệ thống truyền động giúp tối ưu kích thước, khối lượng, hiệu suất cho toàn xe. Động cơ BLDC có hiệu suất cao, không ồn, an toàn, bền bỉ, không cần bảo dưỡng."
+          },
+          {
+            "icon": "drive",
+            "title": "Công suất",
+            "desc": "Công suất lớn nhất 1600W. Khả năng tăng tốc 0-49km/h trong 18 giây*."
+          },
+          {
+            "icon": "drive",
+            "title": "Hệ thống lốp không săm",
+            "desc": "Tăng khả năng bám đường tốt. Hỗ trợ phương tiện khi đi qua những mặt đường trơn trượt, gồ ghề."
+          }
+        ],
+        "technologyLead": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ trung và cốp 17L tiện dụng. Xem ngay chính sách và ưu đãi mới nhất!",
+        "performance": {
+          "title": "HIỆU SUẤT VƯỢT TRỘI",
+          "subtitle": "Quãng đường di chuyển 78 km",
+          "features": [
+            {
+              "title": "Quãng đường di chuyển",
+              "desc": "Quãng đường di chuyển 78 km"
+            },
+            {
+              "title": "Tốc độ tối đa",
+              "desc": "Tốc độ tối đa 78 km/1 lần sạc Quãng đường di chuyển 1"
+            },
+            {
+              "title": "49 km/h",
+              "desc": "49 km/h"
+            }
+          ]
+        },
+        "safety": null,
+        "charging": null
+      },
+      "exterior": [
+        {
+          "title": "VẬN HÀNH ÊM ÁI ĐI MUÔN NƠI",
+          "desc": "Thân xe được thiết kế công thái học tối ưu, tạo cảm giác thoải mái cho người lái và người ngồi sau, giúp người lái xe có thể chạy xe trong thời gian dài."
+        },
+        {
+          "title": "THIẾT KẾ THÂN THIỆN VỚI NGƯỜI DÙNG",
+          "desc": "Kích thước tầm trung phù hợp với người Việt tạo cảm giác lái thoải mái, êm ái trên nhiều loại địa hình."
+        }
+      ],
+      "interior": [],
+      "technology": [
+        {
+          "icon": "drive",
+          "title": "Động cơ một chiều không chổi than - BLDC",
+          "desc": "Động cơ BLDC được tích hợp trên vành bánh sau, không cần hệ thống truyền động giúp tối ưu kích thước, khối lượng, hiệu suất cho toàn xe. Động cơ BLDC có hiệu suất cao, không ồn, an toàn, bền bỉ, không cần bảo dưỡng."
+        },
+        {
+          "icon": "drive",
+          "title": "Công suất",
+          "desc": "Công suất lớn nhất 1600W. Khả năng tăng tốc 0-49km/h trong 18 giây*."
+        },
+        {
+          "icon": "drive",
+          "title": "Hệ thống lốp không săm",
+          "desc": "Tăng khả năng bám đường tốt. Hỗ trợ phương tiện khi đi qua những mặt đường trơn trượt, gồ ghề."
+        }
+      ],
+      "performance": {
+        "title": "HIỆU SUẤT VƯỢT TRỘI",
+        "subtitle": "Quãng đường di chuyển 78 km",
+        "features": [
+          {
+            "title": "Quãng đường di chuyển",
+            "desc": "Quãng đường di chuyển 78 km"
+          },
+          {
+            "title": "Tốc độ tối đa",
+            "desc": "Tốc độ tối đa 78 km/1 lần sạc Quãng đường di chuyển 1"
+          },
+          {
+            "title": "49 km/h",
+            "desc": "49 km/h"
+          }
+        ]
+      },
+      "safety": null,
+      "specTable": [
+        {
+          "label": "Quãng đường di chuyển/tháng",
+          "value": "nhỏ hơn hoặc bằng 500 km"
+        },
+        {
+          "label": "Quãng đường di chuyển/tháng",
+          "value": "từ trên 500 km tới 1.000 km"
+        },
+        {
+          "label": "Quãng đường di chuyển/tháng",
+          "value": "từ trên 1.000 km tới dưới 2.000 km"
+        },
+        {
+          "label": "Quãng đường di chuyển/tháng",
+          "value": "từ 2.000 km"
+        }
+      ],
+      "fields": {
+        "range": 500,
+        "weight": 105
+      },
+      "tagline": "Lựa chọn chuẩn Gen Z",
+      "slogan": "Evo Lite Neo - Xe máy điện cho học sinh (không yêu cầu bằng lái). Hệ thống phanh an toàn, vận hành êm ái, thiết kế trẻ trung và cốp 17L tiện dụng. Xem ngay chính sách và ưu đãi mới nhất!"
+    }
+  ],
+  "syncedAt": "2026-06-26T11:05:47.923Z",
+  "specPatchedAt": "2026-06-26T11:27:03.191Z"
+}

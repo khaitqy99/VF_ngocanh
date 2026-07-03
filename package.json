@@ -1,0 +1,41 @@
+{
+  "name": "vinfast3scamau",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @vinfast3s/webclient",
+    "dev:client": "node scripts/sync-root-env.mjs && npm run dev -w @vinfast3s/webclient",
+    "dev:admin": "node scripts/sync-root-env.mjs && npm run dev -w @vinfast3s/webadmin",
+    "dev:all": "node scripts/sync-root-env.mjs && npx concurrently -n client,admin -c blue,magenta \"npm run dev -w @vinfast3s/webclient\" \"npm run dev -w @vinfast3s/webadmin\"",
+    "build": "npm run build --workspaces --if-present",
+    "build:client": "npm run build -w @vinfast3s/webclient",
+    "build:admin": "npm run build -w @vinfast3s/webadmin",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push",
+    "db:types": "supabase gen types typescript --local > packages/supabase/src/database.types.ts",
+    "db:check": "node scripts/check-db.mjs",
+    "db:schema": "node scripts/apply-remote-schema.mjs",
+    "db:seed": "npx tsx scripts/seed-remote.ts",
+    "images:webp": "node scripts/convert-png-to-webp.mjs && node scripts/replace-png-paths.mjs",
+    "images:webp:jpg": "node scripts/convert-jpg-to-webp.mjs && node scripts/replace-jpg-paths.mjs",
+    "images:webp:all": "npm run images:webp && npm run images:webp:jpg",
+    "images:sync-remote": "node scripts/migrate-remote-png-to-webp.mjs && npm run db:seed",
+    "images:sync-remote:jpg": "node scripts/migrate-remote-jpg-to-webp.mjs && npm run db:seed",
+    "setup:env": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')){fs.copyFileSync('.env.example','.env'); console.log('Created .env from .env.example');} else {console.log('.env already exists');}\" && node scripts/sync-root-env.mjs",
+    "env:sync": "node scripts/sync-root-env.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "postgres": "^3.4.9",
+    "sharp": "^0.35.3",
+    "tsx": "^4.22.4"
+  }
+}

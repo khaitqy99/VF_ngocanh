@@ -1,0 +1,6 @@
+{
+  "name": "VinFast VF Ngọc Anh Admin CMS",
+  "description": "High-fidelity UI prototype for VinFast Dealership Enterprise Admin System",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
