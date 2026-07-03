@@ -16,12 +16,5 @@ export default async function OtoCatalogPreviewRoute({ searchParams }: Props) {
   const { admin } = await searchParams;
   const [cars, heroBanners] = await Promise.all([getCars(), getBanners("cars")]);
 
-  return (
-    <CarsPage
-      cars={cars}
-      heroBanners={heroBanners}
-      embedded
-      adminEdit={admin === "1"}
-    />
-  );
+  return <CarsPage cars={cars} heroBanners={heroBanners} embedded adminEdit={admin === "1"} />;
 }

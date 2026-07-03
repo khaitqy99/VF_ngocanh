@@ -99,7 +99,9 @@ export function CarCatalogCard({
     return (
       <article
         className={`catalog-card flex h-full flex-col border bg-white ${
-          hasUnsavedChanges ? "border-amber-400 ring-2 ring-amber-200" : "border-brand/30 ring-1 ring-brand/10"
+          hasUnsavedChanges
+            ? "border-amber-400 ring-2 ring-amber-200"
+            : "border-brand/30 ring-1 ring-brand/10"
         } ${className ?? ""}`}
       >
         <div className="relative">
@@ -168,9 +170,7 @@ export function CarCatalogCard({
               <input
                 type="checkbox"
                 checked={Boolean(draft.isBestSeller)}
-                onChange={(e) =>
-                  setDraft((prev) => ({ ...prev, isBestSeller: e.target.checked }))
-                }
+                onChange={(e) => setDraft((prev) => ({ ...prev, isBestSeller: e.target.checked }))}
                 className="rounded border-slate-300"
               />
               Bán chạy

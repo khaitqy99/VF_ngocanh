@@ -10,7 +10,8 @@ export const adminFormTextarea =
 
 export const adminFormLabel = "text-[11px] font-semibold text-slate-500";
 
-export const adminFormMetaCard = "mt-6 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm";
+export const adminFormMetaCard =
+  "mt-6 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm";
 
 export const adminFormImageBtn =
   "absolute right-3 top-3 rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]";

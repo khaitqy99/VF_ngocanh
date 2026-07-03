@@ -21,12 +21,14 @@ export function parseSeoRecord(value: unknown): SeoRecord {
   const robots =
     raw.robots && typeof raw.robots === "object" && !Array.isArray(raw.robots)
       ? {
-          index: typeof (raw.robots as Record<string, unknown>).index === "boolean"
-            ? ((raw.robots as Record<string, unknown>).index as boolean)
-            : undefined,
-          follow: typeof (raw.robots as Record<string, unknown>).follow === "boolean"
-            ? ((raw.robots as Record<string, unknown>).follow as boolean)
-            : undefined,
+          index:
+            typeof (raw.robots as Record<string, unknown>).index === "boolean"
+              ? ((raw.robots as Record<string, unknown>).index as boolean)
+              : undefined,
+          follow:
+            typeof (raw.robots as Record<string, unknown>).follow === "boolean"
+              ? ((raw.robots as Record<string, unknown>).follow as boolean)
+              : undefined,
         }
       : undefined;
 
@@ -63,7 +65,8 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
     siteName: typeof raw.siteName === "string" ? raw.siteName : undefined,
     titleTemplate: typeof raw.titleTemplate === "string" ? raw.titleTemplate : undefined,
     defaultTitle: typeof raw.defaultTitle === "string" ? raw.defaultTitle : undefined,
-    defaultDescription: typeof raw.defaultDescription === "string" ? raw.defaultDescription : undefined,
+    defaultDescription:
+      typeof raw.defaultDescription === "string" ? raw.defaultDescription : undefined,
     defaultOgTitle: typeof raw.defaultOgTitle === "string" ? raw.defaultOgTitle : undefined,
     defaultOgDescription:
       typeof raw.defaultOgDescription === "string" ? raw.defaultOgDescription : undefined,
@@ -71,12 +74,14 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
     robots:
       raw.robots && typeof raw.robots === "object" && !Array.isArray(raw.robots)
         ? {
-            index: typeof (raw.robots as Record<string, unknown>).index === "boolean"
-              ? ((raw.robots as Record<string, unknown>).index as boolean)
-              : undefined,
-            follow: typeof (raw.robots as Record<string, unknown>).follow === "boolean"
-              ? ((raw.robots as Record<string, unknown>).follow as boolean)
-              : undefined,
+            index:
+              typeof (raw.robots as Record<string, unknown>).index === "boolean"
+                ? ((raw.robots as Record<string, unknown>).index as boolean)
+                : undefined,
+            follow:
+              typeof (raw.robots as Record<string, unknown>).follow === "boolean"
+                ? ((raw.robots as Record<string, unknown>).follow as boolean)
+                : undefined,
           }
         : undefined,
     organization: org,
@@ -144,9 +149,7 @@ export function resolveSeoContent(
   const noindex = Boolean(
     seo?.noindex ?? (seo?.robots?.index !== undefined ? !seo.robots.index : false),
   );
-  const nofollow = Boolean(
-    seo?.robots?.follow !== undefined ? !seo.robots.follow : false,
-  );
+  const nofollow = Boolean(seo?.robots?.follow !== undefined ? !seo.robots.follow : false);
 
   return { title, description, ogTitle, ogDescription, ogImage, canonical, noindex, nofollow };
 }

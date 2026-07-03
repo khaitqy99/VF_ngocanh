@@ -1,5 +1,5 @@
 import type { Json, Tables } from "@vinfast3s/supabase";
-import { applyPatches, type PatchValue } from "@/components/admin-edit/vehicle-edit-paths";
+import { applyPatches, type PatchValue } from "../../components/admin-edit/vehicle-edit-paths";
 import type { CarDetail } from "@/lib/car-details";
 import { CARS, type CarModel } from "@/lib/cars";
 import type { ScooterDetail } from "@/lib/scooter-details";
@@ -9,10 +9,7 @@ import type { HeroBannerSlide } from "@/lib/images";
 import type { VinFastHeroBanner, VinFastHomeSlide } from "@/lib/vinfast-home";
 import { formatPrice } from "@/lib/cars";
 import { resolveProductSlug } from "@/lib/seo/slugs";
-import {
-  parseDbColors,
-  resolveVehicleGallery,
-} from "./vehicle-images";
+import { parseDbColors, resolveVehicleGallery } from "./vehicle-images";
 
 type VehicleRow = Tables<"vehicles">;
 type AccessoryRow = Tables<"accessories">;
@@ -124,7 +121,10 @@ function applyScooterQuickSpecPatch(detail: ScooterDetail, content: Json): Scoot
   };
 }
 
-export function applyVehicleContentPatches<T extends Record<string, unknown>>(base: T, content: Json): T {
+export function applyVehicleContentPatches<T extends Record<string, unknown>>(
+  base: T,
+  content: Json,
+): T {
   return applyAdminPatches(base, content);
 }
 
@@ -195,23 +195,23 @@ function pickCatalogPatches(
   return Object.keys(catalogOnly).length > 0 ? catalogOnly : null;
 }
 
-function applyCatalogPatches<T extends { name: string; subtitle?: string; image: string; price: number }>(
-  item: T,
-  content: Json,
-  allowed: Set<string>,
-): T {
+function applyCatalogPatches<
+  T extends { name: string; subtitle?: string; image: string; price: number },
+>(item: T, content: Json, allowed: Set<string>): T {
   const catalogOnly = pickCatalogPatches(content, allowed);
   if (!catalogOnly) return item;
   return applyPatches(item, catalogOnly);
 }
 
 function ensureCarCatalogFields(car: CarModel, fallback?: CarModel): CarModel {
-  if (!fallback) return car;
-  const price =
-    Number.isFinite(car.price) && car.price > 0 ? car.price : fallback.price;
+  if (!fallback) {
+    return { ...car, colors: car.colors ?? [] };
+  }
+  const price = Number.isFinite(car.price) && car.price > 0 ? car.price : fallback.price;
   return {
     ...fallback,
     ...car,
+    colors: car.colors ?? fallback.colors,
     segment: car.segment ?? fallback.segment,
     drive: car.drive ?? fallback.drive,
     rangeBucket: car.rangeBucket ?? fallback.rangeBucket,
@@ -313,9 +313,7 @@ export function hydrateFeaturedVehicleSlides(
     if (!vehicle) return slide;
 
     const specs = slide.specs.map((spec) =>
-      spec.highlight
-        ? { ...spec, value: `${formatPrice(vehicle.price)} VNĐ` }
-        : spec,
+      spec.highlight ? { ...spec, value: `${formatPrice(vehicle.price)} VNĐ` } : spec,
     );
 
     return {
@@ -385,11 +383,7 @@ export function mapVehicleToScooterDetail(row: VehicleRow): ScooterDetail | unde
 
 export function mapAccessoryRow(row: AccessoryRow): AccessoryProduct {
   const content = row.content as AccessoryProduct | null;
-  const slug = resolveProductSlug(
-    { id: row.id, slug: row.slug },
-    "accessory",
-    row.name,
-  );
+  const slug = resolveProductSlug({ id: row.id, slug: row.slug }, "accessory", row.name);
   if (content && typeof content === "object") {
     return {
       ...content,
@@ -400,6 +394,7 @@ export function mapAccessoryRow(row: AccessoryRow): AccessoryProduct {
       price: Number(row.price ?? content.price ?? 0),
       image: row.image_url ?? content.image ?? "",
       category: (row.category ?? content.category) as AccessoryProduct["category"],
+      vehicles: content.vehicles ?? [],
       inStock: row.in_stock ?? content.inStock ?? true,
     };
   }

@@ -107,7 +107,9 @@ export function AccessoryProductCard({
     return (
       <article
         className={`catalog-card flex h-full flex-col border bg-white ${
-          hasUnsavedChanges ? "border-amber-400 ring-2 ring-amber-200" : "border-brand/30 ring-1 ring-brand/10"
+          hasUnsavedChanges
+            ? "border-amber-400 ring-2 ring-amber-200"
+            : "border-brand/30 ring-1 ring-brand/10"
         } ${className ?? ""}`}
       >
         <div className="relative overflow-hidden">

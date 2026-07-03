@@ -75,13 +75,13 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
     const hasPatches = Boolean(draft.patches && Object.keys(draft.patches).length > 0);
     return Boolean(
       hasPatches ||
-        draft.name !== undefined ||
-        draft.tagline !== undefined ||
-        draft.slogan !== undefined ||
-        draft.badges !== undefined ||
-        draft.price !== undefined ||
-        draft.overviewTitle !== undefined ||
-        draft.overviewSubtitle !== undefined,
+      draft.name !== undefined ||
+      draft.tagline !== undefined ||
+      draft.slogan !== undefined ||
+      draft.badges !== undefined ||
+      draft.price !== undefined ||
+      draft.overviewTitle !== undefined ||
+      draft.overviewSubtitle !== undefined,
     );
   }, [draft]);
 

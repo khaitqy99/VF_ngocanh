@@ -325,7 +325,9 @@ export default function ScootersPage({
   useEffect(() => {
     if (!adminEdit || !embedded) return;
     const timer = window.setTimeout(() => {
-      document.getElementById("scooter-catalog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById("scooter-catalog-grid")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 350);
     return () => window.clearTimeout(timer);
   }, [adminEdit, embedded]);
@@ -353,15 +355,17 @@ export default function ScootersPage({
         {!embedded && <ScootersBreadcrumbBar />}
 
         {!embedded && !adminEdit ? (
-        <HeroSection
-          onExplore={() => {
-            document.getElementById("scooter-catalog-grid")?.scrollIntoView({ behavior: "smooth" });
-          }}
-        />
+          <HeroSection
+            onExplore={() => {
+              document
+                .getElementById("scooter-catalog-grid")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+          />
         ) : null}
 
         {!adminEdit ? (
-        <ScootersSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          <ScootersSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         ) : null}
 
         {/* Main Catalog Explorer Section */}
@@ -382,13 +386,17 @@ export default function ScootersPage({
 
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
-              <aside
-                className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
-              >
-                <FadeIn direction="left">
-                  <FilterSidebar filters={filters} setFilters={setFilters} onClear={clearFilters} />
-                </FadeIn>
-              </aside>
+                <aside
+                  className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+                >
+                  <FadeIn direction="left">
+                    <FilterSidebar
+                      filters={filters}
+                      setFilters={setFilters}
+                      onClear={clearFilters}
+                    />
+                  </FadeIn>
+                </aside>
               ) : null}
 
               {/* Grid content and pagination */}
@@ -431,336 +439,336 @@ export default function ScootersPage({
 
         {/* Dynamic & Gorgeous Rolling Cost & Installment Loan Estimator for Scooters */}
         {!adminEdit ? (
-        <section
-          id="estimator-tool"
-          className="section-y overflow-hidden relative border-b border-slate-200 bg-white text-slate-800"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
+          <section
+            id="estimator-tool"
+            className="section-y overflow-hidden relative border-b border-slate-200 bg-white text-slate-800"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
-          <div className="container-vf relative z-10">
-            <ScootersSectionHeader
-              eyebrow="Công cụ tính toán"
-              title="DỰ TOÁN CHI PHÍ & TRẢ GÓP XE MÁY"
-              description="Tính toán chi phí lăn bánh chính xác bao gồm lệ phí trước bạ xe máy điện, lệ phí cấp biển số theo quy định mới, phương án thuê pin hoặc mua đứt pin LFP, và dự toán kế hoạch mua xe trả góp 0% lãi suất."
-            />
+            <div className="container-vf relative z-10">
+              <ScootersSectionHeader
+                eyebrow="Công cụ tính toán"
+                title="DỰ TOÁN CHI PHÍ & TRẢ GÓP XE MÁY"
+                description="Tính toán chi phí lăn bánh chính xác bao gồm lệ phí trước bạ xe máy điện, lệ phí cấp biển số theo quy định mới, phương án thuê pin hoặc mua đứt pin LFP, và dự toán kế hoạch mua xe trả góp 0% lãi suất."
+              />
 
-            <EstimatorMotionShell>
-              <div className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl lg:grid-cols-12">
-                {/* Left Settings Panel */}
-                <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
-                  <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
-                    <Calculator className="size-4 text-brand" /> Cấu hình dự toán
-                  </h3>
+              <EstimatorMotionShell>
+                <div className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl lg:grid-cols-12">
+                  {/* Left Settings Panel */}
+                  <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
+                    <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
+                      <Calculator className="size-4 text-brand" /> Cấu hình dự toán
+                    </h3>
 
-                  {/* Select Scooter */}
-                  <div className="mt-6">
-                    <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
-                      Chọn dòng xe máy điện
-                    </label>
-                    <Select
-                      value={estimatorScooterId}
-                      onValueChange={(v) => setEstimatorScooterId(v)}
-                    >
-                      <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
-                        <SelectValue placeholder="Chọn xe" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200 text-slate-800">
-                        {SCOOTERS.map((s) => (
-                          <SelectItem
-                            key={s.id}
-                            value={s.id}
-                            className="focus:bg-slate-100 font-medium"
-                          >
-                            {s.name} — {formatPrice(s.price)} VNĐ
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Tab switch inside estimator settings */}
-                  <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
-                    <button
-                      onClick={() => setEstimatorTab("rolling")}
-                      className={`py-2 text-xs font-bold rounded-md transition-all ${
-                        estimatorTab === "rolling"
-                          ? "bg-brand text-white shadow-md"
-                          : "text-slate-500 hover:text-brand-dark"
-                      }`}
-                    >
-                      Giá Lăn Bánh
-                    </button>
-                    <button
-                      onClick={() => setEstimatorTab("installment")}
-                      className={`py-2 text-xs font-bold rounded-md transition-all ${
-                        estimatorTab === "installment"
-                          ? "bg-brand text-white shadow-md"
-                          : "text-slate-500 hover:text-brand-dark"
-                      }`}
-                    >
-                      Phương Án Trả Góp
-                    </button>
-                  </div>
-
-                  {/* Common options for both tabs */}
-                  <div className="mt-6 space-y-4">
-                    {/* Battery option */}
-                    <div>
-                      <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
-                        Phương án pin xe máy
-                      </span>
-                      <div className="grid grid-cols-2 gap-2">
-                        <button
-                          onClick={() => setEstimatorBattery("rent")}
-                          className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                            estimatorBattery === "rent"
-                              ? "border-brand bg-brand/10 text-brand"
-                              : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                          }`}
-                        >
-                          <span>Thuê pin</span>
-                          <span className="text-[10px] font-semibold opacity-70 mt-1">
-                            + {formatPrice(selectedEstimatorScooter.rentBatteryPrice)} đ/tháng
-                          </span>
-                        </button>
-                        <button
-                          onClick={() => setEstimatorBattery("purchase")}
-                          className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                            estimatorBattery === "purchase"
-                              ? "border-brand bg-brand/10 text-brand"
-                              : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                          }`}
-                        >
-                          <span>Mua đứt pin</span>
-                          <span className="text-[10px] font-semibold opacity-70 mt-1">
-                            + {formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Province Selection */}
-                    <div>
+                    {/* Select Scooter */}
+                    <div className="mt-6">
                       <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
-                        Hộ khẩu đăng ký biển số
+                        Chọn dòng xe máy điện
                       </label>
                       <Select
-                        value={estimatorLocation}
-                        onValueChange={(v) => setEstimatorLocation(v)}
+                        value={estimatorScooterId}
+                        onValueChange={(v) => setEstimatorScooterId(v)}
                       >
-                        <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
-                          <SelectValue placeholder="Chọn Khu Vực" />
+                        <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                          <SelectValue placeholder="Chọn xe" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-slate-200 text-slate-800">
-                          {PROVINCES.map((p) => (
+                          {SCOOTERS.map((s) => (
                             <SelectItem
-                              key={p.id}
-                              value={p.id}
+                              key={s.id}
+                              value={s.id}
                               className="focus:bg-slate-100 font-medium"
                             >
-                              {p.name}
+                              {s.name} — {formatPrice(s.price)} VNĐ
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
 
-                    {/* Additional options based on selected tab */}
-                    {estimatorTab === "installment" && (
-                      <div className="space-y-4 pt-2">
-                        {/* Downpayment % slider */}
-                        <div>
-                          <div className="flex justify-between text-xs font-bold mb-2">
-                            <span className="text-slate-500">Trả trước</span>
-                            <span className="text-brand">{100 - downPaymentPct}% giá trị</span>
-                          </div>
-                          <Slider
-                            min={20}
-                            max={80}
-                            step={10}
-                            value={[100 - downPaymentPct]}
-                            onValueChange={(v) => setDownPaymentPct(100 - v[0])}
-                            className="py-1"
-                          />
-                          <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-                            <span>Trả trước tối thiểu 20%</span>
-                            <span>Trả trước tối đa 80%</span>
-                          </div>
-                        </div>
+                    {/* Tab switch inside estimator settings */}
+                    <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                      <button
+                        onClick={() => setEstimatorTab("rolling")}
+                        className={`py-2 text-xs font-bold rounded-md transition-all ${
+                          estimatorTab === "rolling"
+                            ? "bg-brand text-white shadow-md"
+                            : "text-slate-500 hover:text-brand-dark"
+                        }`}
+                      >
+                        Giá Lăn Bánh
+                      </button>
+                      <button
+                        onClick={() => setEstimatorTab("installment")}
+                        className={`py-2 text-xs font-bold rounded-md transition-all ${
+                          estimatorTab === "installment"
+                            ? "bg-brand text-white shadow-md"
+                            : "text-slate-500 hover:text-brand-dark"
+                        }`}
+                      >
+                        Phương Án Trả Góp
+                      </button>
+                    </div>
 
-                        {/* Loan term slider */}
-                        <div>
-                          <div className="flex justify-between text-xs font-bold mb-2">
-                            <span className="text-slate-500">Thời gian trả góp</span>
-                            <span className="text-brand">
-                              {loanTermYears} năm ({loanTermYears * 12} tháng)
+                    {/* Common options for both tabs */}
+                    <div className="mt-6 space-y-4">
+                      {/* Battery option */}
+                      <div>
+                        <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
+                          Phương án pin xe máy
+                        </span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            onClick={() => setEstimatorBattery("rent")}
+                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
+                              estimatorBattery === "rent"
+                                ? "border-brand bg-brand/10 text-brand"
+                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                            }`}
+                          >
+                            <span>Thuê pin</span>
+                            <span className="text-[10px] font-semibold opacity-70 mt-1">
+                              + {formatPrice(selectedEstimatorScooter.rentBatteryPrice)} đ/tháng
                             </span>
-                          </div>
-                          <Slider
-                            min={1}
-                            max={3}
-                            step={1}
-                            value={[loanTermYears]}
-                            onValueChange={(v) => setLoanTermYears(v[0])}
-                            className="py-1"
-                          />
-                          <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-                            <span>1 năm (12 tháng)</span>
-                            <span>3 năm (36 tháng)</span>
-                          </div>
-                        </div>
-
-                        {/* Interest Rate */}
-                        <div>
-                          <div className="flex justify-between text-xs font-bold mb-2">
-                            <span className="text-slate-500">Lãi suất trả góp</span>
-                            <span className="text-brand">{interestRate}% / năm</span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2">
-                            {[0, 4.9].map((rate) => (
-                              <button
-                                key={rate}
-                                onClick={() => setInterestRate(rate)}
-                                className={`py-1 rounded text-xs font-bold border transition-all ${
-                                  interestRate === rate
-                                    ? "border-brand bg-brand/10 text-brand"
-                                    : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                                }`}
-                              >
-                                {rate}% {rate === 0 ? "(Gói ưu đãi 0%)" : "(Gói tiêu chuẩn)"}
-                              </button>
-                            ))}
-                          </div>
+                          </button>
+                          <button
+                            onClick={() => setEstimatorBattery("purchase")}
+                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
+                              estimatorBattery === "purchase"
+                                ? "border-brand bg-brand/10 text-brand"
+                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                            }`}
+                          >
+                            <span>Mua đứt pin</span>
+                            <span className="text-[10px] font-semibold opacity-70 mt-1">
+                              + {formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ
+                            </span>
+                          </button>
                         </div>
                       </div>
-                    )}
-                  </div>
-                </div>
 
-                {/* Right Results Panel */}
-                <div className="flex flex-col justify-between bg-slate-50 p-6 md:p-8 lg:col-span-7">
-                  <AnimatePresence mode="wait" custom={estimatorTab}>
-                    {estimatorTab === "rolling" ? (
-                      <motion.div
-                        key="rolling"
-                        custom="rolling"
-                        variants={reduced ? undefined : carsEstimatorPanel}
-                        initial={reduced ? false : "enter"}
-                        animate={reduced ? undefined : "center"}
-                        exit={reduced ? undefined : "exit"}
-                      >
-                        <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
-                          <Calculator className="size-4 text-brand" /> Chi phí lăn bánh chi tiết
-                        </h3>
+                      {/* Province Selection */}
+                      <div>
+                        <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
+                          Hộ khẩu đăng ký biển số
+                        </label>
+                        <Select
+                          value={estimatorLocation}
+                          onValueChange={(v) => setEstimatorLocation(v)}
+                        >
+                          <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                            <SelectValue placeholder="Chọn Khu Vực" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-white border-slate-200 text-slate-800">
+                            {PROVINCES.map((p) => (
+                              <SelectItem
+                                key={p.id}
+                                value={p.id}
+                                className="focus:bg-slate-100 font-medium"
+                              >
+                                {p.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                        <EstimatorCostList>
-                          <EstimatorCostRow
-                            label="Giá niêm yết của xe máy"
-                            value={`${formatPrice(selectedEstimatorScooter.price)} đ`}
-                          />
-                          {estimatorBattery === "purchase" && (
-                            <EstimatorCostRow
-                              label="Mua đứt pin LFP công nghệ mới"
-                              value={`+${formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ`}
-                              sub
+                      {/* Additional options based on selected tab */}
+                      {estimatorTab === "installment" && (
+                        <div className="space-y-4 pt-2">
+                          {/* Downpayment % slider */}
+                          <div>
+                            <div className="flex justify-between text-xs font-bold mb-2">
+                              <span className="text-slate-500">Trả trước</span>
+                              <span className="text-brand">{100 - downPaymentPct}% giá trị</span>
+                            </div>
+                            <Slider
+                              min={20}
+                              max={80}
+                              step={10}
+                              value={[100 - downPaymentPct]}
+                              onValueChange={(v) => setDownPaymentPct(100 - v[0])}
+                              className="py-1"
                             />
-                          )}
-                          <EstimatorCostRow
-                            label="Lệ phí trước bạ xe máy điện"
-                            value={`${formatPrice(rollingCostResult.registrationTax)} đ`}
-                          />
-                          <EstimatorCostRow
-                            label="Lệ phí cấp biển số theo giá trị xe"
-                            value={`${formatPrice(rollingCostResult.plateFee)} đ`}
-                          />
-                          <EstimatorCostRow
-                            label="Bảo hiểm TNDS bắt buộc (xe máy)"
-                            value={`${formatPrice(rollingCostResult.civilInsurance)} đ`}
-                          />
-                          <EstimatorCostRow
-                            label="Phí dịch vụ đăng ký biển số"
-                            value={`${formatPrice(rollingCostResult.inspectionFee)} đ`}
-                          />
-                        </EstimatorCostList>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="installment"
-                        custom="installment"
-                        variants={reduced ? undefined : carsEstimatorPanel}
-                        initial={reduced ? false : "enter"}
-                        animate={reduced ? undefined : "center"}
-                        exit={reduced ? undefined : "exit"}
-                      >
-                        <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
-                          <Percent className="size-4 text-brand" /> Phương án tài chính mua xe
-                        </h3>
-
-                        <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          <div className="rounded-xl border border-slate-200 bg-white p-4">
-                            <p className="text-[10px] font-bold uppercase text-slate-500">
-                              Số tiền trả góp ({downPaymentPct}%)
-                            </p>
-                            <p className="mt-1 text-lg font-black tabular-nums text-brand">
-                              {formatPrice(installmentResult.loanAmount)} đ
-                            </p>
+                            <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                              <span>Trả trước tối thiểu 20%</span>
+                              <span>Trả trước tối đa 80%</span>
+                            </div>
                           </div>
-                          <div className="rounded-xl border border-slate-200 bg-white p-4">
-                            <p className="text-[10px] font-bold uppercase text-slate-500">
-                              Số tiền thanh toán trước ({100 - downPaymentPct}%)
-                            </p>
-                            <p className="mt-1 text-lg font-black tabular-nums text-slate-800">
-                              {formatPrice(installmentResult.upfrontAmount)} đ
-                            </p>
+
+                          {/* Loan term slider */}
+                          <div>
+                            <div className="flex justify-between text-xs font-bold mb-2">
+                              <span className="text-slate-500">Thời gian trả góp</span>
+                              <span className="text-brand">
+                                {loanTermYears} năm ({loanTermYears * 12} tháng)
+                              </span>
+                            </div>
+                            <Slider
+                              min={1}
+                              max={3}
+                              step={1}
+                              value={[loanTermYears]}
+                              onValueChange={(v) => setLoanTermYears(v[0])}
+                              className="py-1"
+                            />
+                            <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                              <span>1 năm (12 tháng)</span>
+                              <span>3 năm (36 tháng)</span>
+                            </div>
+                          </div>
+
+                          {/* Interest Rate */}
+                          <div>
+                            <div className="flex justify-between text-xs font-bold mb-2">
+                              <span className="text-slate-500">Lãi suất trả góp</span>
+                              <span className="text-brand">{interestRate}% / năm</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                              {[0, 4.9].map((rate) => (
+                                <button
+                                  key={rate}
+                                  onClick={() => setInterestRate(rate)}
+                                  className={`py-1 rounded text-xs font-bold border transition-all ${
+                                    interestRate === rate
+                                      ? "border-brand bg-brand/10 text-brand"
+                                      : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                  }`}
+                                >
+                                  {rate}% {rate === 0 ? "(Gói ưu đãi 0%)" : "(Gói tiêu chuẩn)"}
+                                </button>
+                              ))}
+                            </div>
                           </div>
                         </div>
+                      )}
+                    </div>
+                  </div>
 
-                        <EstimatorCostList>
-                          <EstimatorCostRow
-                            label="Tổng giá trị lăn bánh xe máy"
-                            value={`${formatPrice(rollingCostResult.totalRolling)} đ`}
-                          />
-                          <EstimatorCostRow
-                            label="Thời hạn trả góp"
-                            value={`${loanTermYears * 12} tháng`}
-                          />
-                          <EstimatorCostRow
-                            label="Gốc thanh toán hàng tháng"
-                            value={`${formatPrice(installmentResult.firstMonthPrincipal)} đ`}
-                          />
-                          <EstimatorCostRow
-                            label="Lãi thanh toán hàng tháng"
-                            value={`${formatPrice(installmentResult.firstMonthInterest)} đ`}
-                          />
-                        </EstimatorCostList>
+                  {/* Right Results Panel */}
+                  <div className="flex flex-col justify-between bg-slate-50 p-6 md:p-8 lg:col-span-7">
+                    <AnimatePresence mode="wait" custom={estimatorTab}>
+                      {estimatorTab === "rolling" ? (
+                        <motion.div
+                          key="rolling"
+                          custom="rolling"
+                          variants={reduced ? undefined : carsEstimatorPanel}
+                          initial={reduced ? false : "enter"}
+                          animate={reduced ? undefined : "center"}
+                          exit={reduced ? undefined : "exit"}
+                        >
+                          <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
+                            <Calculator className="size-4 text-brand" /> Chi phí lăn bánh chi tiết
+                          </h3>
 
-                        <p className="mt-3 flex items-start gap-2 rounded-lg border border-brand/15 bg-brand/5 px-3 py-2.5 text-[10px] leading-relaxed text-slate-600">
-                          <Info className="mt-0.5 size-3.5 shrink-0 text-brand" />
-                          Duyệt hồ sơ nhanh qua CCCD gắn chip — thủ tục gọn trong khoảng 10 phút.
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                          <EstimatorCostList>
+                            <EstimatorCostRow
+                              label="Giá niêm yết của xe máy"
+                              value={`${formatPrice(selectedEstimatorScooter.price)} đ`}
+                            />
+                            {estimatorBattery === "purchase" && (
+                              <EstimatorCostRow
+                                label="Mua đứt pin LFP công nghệ mới"
+                                value={`+${formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ`}
+                                sub
+                              />
+                            )}
+                            <EstimatorCostRow
+                              label="Lệ phí trước bạ xe máy điện"
+                              value={`${formatPrice(rollingCostResult.registrationTax)} đ`}
+                            />
+                            <EstimatorCostRow
+                              label="Lệ phí cấp biển số theo giá trị xe"
+                              value={`${formatPrice(rollingCostResult.plateFee)} đ`}
+                            />
+                            <EstimatorCostRow
+                              label="Bảo hiểm TNDS bắt buộc (xe máy)"
+                              value={`${formatPrice(rollingCostResult.civilInsurance)} đ`}
+                            />
+                            <EstimatorCostRow
+                              label="Phí dịch vụ đăng ký biển số"
+                              value={`${formatPrice(rollingCostResult.inspectionFee)} đ`}
+                            />
+                          </EstimatorCostList>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="installment"
+                          custom="installment"
+                          variants={reduced ? undefined : carsEstimatorPanel}
+                          initial={reduced ? false : "enter"}
+                          animate={reduced ? undefined : "center"}
+                          exit={reduced ? undefined : "exit"}
+                        >
+                          <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
+                            <Percent className="size-4 text-brand" /> Phương án tài chính mua xe
+                          </h3>
 
-                  <EstimatorTotalFooter
-                    estimatorTab={estimatorTab}
-                    rollingTotal={rollingCostResult.totalRolling}
-                    firstMonthTotal={installmentResult.firstMonthTotal}
-                    avgMonthly={installmentResult.avgMonthlyPayment}
-                    onBook={() => openBooking(selectedEstimatorScooter)}
-                  />
+                          <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                              <p className="text-[10px] font-bold uppercase text-slate-500">
+                                Số tiền trả góp ({downPaymentPct}%)
+                              </p>
+                              <p className="mt-1 text-lg font-black tabular-nums text-brand">
+                                {formatPrice(installmentResult.loanAmount)} đ
+                              </p>
+                            </div>
+                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                              <p className="text-[10px] font-bold uppercase text-slate-500">
+                                Số tiền thanh toán trước ({100 - downPaymentPct}%)
+                              </p>
+                              <p className="mt-1 text-lg font-black tabular-nums text-slate-800">
+                                {formatPrice(installmentResult.upfrontAmount)} đ
+                              </p>
+                            </div>
+                          </div>
+
+                          <EstimatorCostList>
+                            <EstimatorCostRow
+                              label="Tổng giá trị lăn bánh xe máy"
+                              value={`${formatPrice(rollingCostResult.totalRolling)} đ`}
+                            />
+                            <EstimatorCostRow
+                              label="Thời hạn trả góp"
+                              value={`${loanTermYears * 12} tháng`}
+                            />
+                            <EstimatorCostRow
+                              label="Gốc thanh toán hàng tháng"
+                              value={`${formatPrice(installmentResult.firstMonthPrincipal)} đ`}
+                            />
+                            <EstimatorCostRow
+                              label="Lãi thanh toán hàng tháng"
+                              value={`${formatPrice(installmentResult.firstMonthInterest)} đ`}
+                            />
+                          </EstimatorCostList>
+
+                          <p className="mt-3 flex items-start gap-2 rounded-lg border border-brand/15 bg-brand/5 px-3 py-2.5 text-[10px] leading-relaxed text-slate-600">
+                            <Info className="mt-0.5 size-3.5 shrink-0 text-brand" />
+                            Duyệt hồ sơ nhanh qua CCCD gắn chip — thủ tục gọn trong khoảng 10 phút.
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <EstimatorTotalFooter
+                      estimatorTab={estimatorTab}
+                      rollingTotal={rollingCostResult.totalRolling}
+                      firstMonthTotal={installmentResult.firstMonthTotal}
+                      avgMonthly={installmentResult.avgMonthlyPayment}
+                      onBook={() => openBooking(selectedEstimatorScooter)}
+                    />
+                  </div>
                 </div>
-              </div>
-            </EstimatorMotionShell>
-          </div>
-        </section>
+              </EstimatorMotionShell>
+            </div>
+          </section>
         ) : null}
 
         {!adminEdit ? (
-        <>
-        <ScootersPromoBanners />
-        <ScootersWhyVinFastSection items={WHY_VINFAST} />
-        </>
+          <>
+            <ScootersPromoBanners />
+            <ScootersWhyVinFastSection items={WHY_VINFAST} />
+          </>
         ) : null}
       </main>
 

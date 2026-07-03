@@ -10,11 +10,7 @@ import {
   seoToNextMetadata,
 } from "@/lib/seo";
 import { getSiteSeo, parseRowSeoColumn } from "@/lib/cms/seo";
-import {
-  getCarBySlug,
-  getScooterBySlug,
-  getAccessoryBySlugOrId,
-} from "@/lib/cms";
+import { getCarBySlug, getScooterBySlug, getAccessoryBySlugOrId } from "@/lib/cms";
 import { createAnonClient } from "@vinfast3s/supabase/anon";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 
@@ -83,7 +79,11 @@ export async function buildAccessoryMetadata(slug: string): Promise<Metadata> {
   let seo = {};
   if (isSupabaseConfigured()) {
     const supabase = createAnonClient();
-    const { data } = await supabase.from("accessories").select("content").eq("id", product.id).maybeSingle();
+    const { data } = await supabase
+      .from("accessories")
+      .select("content")
+      .eq("id", product.id)
+      .maybeSingle();
     if (data?.content && typeof data.content === "object" && !Array.isArray(data.content)) {
       seo = parseSeoRecord((data.content as Record<string, unknown>).seo);
     }

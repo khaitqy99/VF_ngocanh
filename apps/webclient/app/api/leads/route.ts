@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createAnonClient } from "@vinfast3s/supabase/anon";
-import { SERVICE_TO_LEAD_TYPE, toLeadInsert, type CreateLeadInput } from "@vinfast3s/supabase/leads";
+import {
+  SERVICE_TO_LEAD_TYPE,
+  toLeadInsert,
+  type CreateLeadInput,
+} from "@vinfast3s/supabase/leads";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 
 export async function POST(request: Request) {
@@ -47,11 +51,18 @@ export async function POST(request: Request) {
   };
 
   const supabase = createAnonClient();
-  const { data, error } = await supabase.from("leads").insert(toLeadInsert(input)).select("id").single();
+  const { data, error } = await supabase
+    .from("leads")
+    .insert(toLeadInsert(input))
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[api/leads] insert failed:", error.message);
-    return NextResponse.json({ error: "Không thể gửi yêu cầu. Vui lòng thử lại." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Không thể gửi yêu cầu. Vui lòng thử lại." },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ ok: true, id: data.id });

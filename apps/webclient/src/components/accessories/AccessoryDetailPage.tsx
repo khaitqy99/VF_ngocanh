@@ -44,7 +44,10 @@ function normalizeVehicles(value: string): string[] {
     .filter(Boolean);
 }
 
-function getAccessoryPatches(base: AccessoryProduct, draft: AccessoryProduct): Record<string, unknown> {
+function getAccessoryPatches(
+  base: AccessoryProduct,
+  draft: AccessoryProduct,
+): Record<string, unknown> {
   const patches: Record<string, unknown> = {};
 
   if (draft.name !== base.name) patches.name = draft.name;
@@ -62,7 +65,11 @@ function getAccessoryPatches(base: AccessoryProduct, draft: AccessoryProduct): R
   return patches;
 }
 
-export default function AccessoryDetailPage({ product, embedded = false, adminEdit = false }: Props) {
+export default function AccessoryDetailPage({
+  product,
+  embedded = false,
+  adminEdit = false,
+}: Props) {
   const [draft, setDraft] = useState<AccessoryProduct>(product);
   const related = useMemo(() => getRelatedAccessories(draft.id), [draft.id]);
   const vehiclesText = draft.vehicles.join(", ");
@@ -350,7 +357,9 @@ export default function AccessoryDetailPage({ product, embedded = false, adminEd
                           onChange={(e) =>
                             setDraft((prev) => ({
                               ...prev,
-                              vehicles: normalizeVehicles(e.target.value) as AccessoryProduct["vehicles"],
+                              vehicles: normalizeVehicles(
+                                e.target.value,
+                              ) as AccessoryProduct["vehicles"],
                             }))
                           }
                           className="w-56 rounded-md border border-slate-300 px-2 py-1 text-right text-sm font-bold"
@@ -363,7 +372,9 @@ export default function AccessoryDetailPage({ product, embedded = false, adminEd
                   </div>
                   <div className="flex justify-between gap-4">
                     <dt className="font-semibold text-slate-500">Tình trạng</dt>
-                    <dd className={`font-bold ${draft.inStock ? "text-emerald-600" : "text-slate-400"}`}>
+                    <dd
+                      className={`font-bold ${draft.inStock ? "text-emerald-600" : "text-slate-400"}`}
+                    >
                       {adminEdit ? (
                         <select
                           value={draft.inStock ? "in" : "out"}

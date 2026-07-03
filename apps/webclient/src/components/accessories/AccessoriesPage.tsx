@@ -290,7 +290,9 @@ export default function AccessoriesPage({
   useEffect(() => {
     if (!adminEdit || !embedded) return;
     const timer = window.setTimeout(() => {
-      document.getElementById("accessory-catalog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById("accessory-catalog-grid")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 350);
     return () => window.clearTimeout(timer);
   }, [adminEdit, embedded]);
@@ -318,60 +320,60 @@ export default function AccessoriesPage({
         {!embedded && <BreadcrumbBar />}
 
         {!embedded && !adminEdit ? (
-        <HeroSection
-          onExplore={() => {
-            document
-              .getElementById("accessory-catalog-grid")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }}
-          productCount={ACCESSORIES.length}
-          heroBanners={ACCESSORY_HERO_BANNERS}
-        />
+          <HeroSection
+            onExplore={() => {
+              document
+                .getElementById("accessory-catalog-grid")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            productCount={ACCESSORIES.length}
+            heroBanners={ACCESSORY_HERO_BANNERS}
+          />
         ) : null}
 
         {!adminEdit ? (
-        <section className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20">
-          <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
-              TÌM KIẾM PHỤ KIỆN CHÍNH HÃNG
-            </div>
-
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <div className="relative w-full sm:w-72">
-                <Search className="absolute left-3 top-2.5 size-4 text-slate-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Tìm kiếm phụ kiện..."
-                  className="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:bg-white transition-all text-slate-800"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
-                  >
-                    <X className="size-4" />
-                  </button>
-                )}
+          <section className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20">
+            <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                TÌM KIẾM PHỤ KIỆN CHÍNH HÃNG
               </div>
 
-              {/* Floating Quote Basket Button */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="relative flex shrink-0 items-center gap-2 rounded-lg border border-brand/30 bg-brand-dark px-4 p-2.5 text-white transition-colors hover:bg-brand"
-              >
-                <ShoppingCart className="size-4" />
-                <span className="text-xs font-black hidden sm:inline">GIỎ TƯ VẤN</span>
-                {cart.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white font-black text-[10px] size-5 rounded-full flex items-center justify-center animate-bounce border-2 border-white">
-                    {cart.length}
-                  </span>
-                )}
-              </button>
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="relative w-full sm:w-72">
+                  <Search className="absolute left-3 top-2.5 size-4 text-slate-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Tìm kiếm phụ kiện..."
+                    className="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:bg-white transition-all text-slate-800"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+                    >
+                      <X className="size-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Floating Quote Basket Button */}
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="relative flex shrink-0 items-center gap-2 rounded-lg border border-brand/30 bg-brand-dark px-4 p-2.5 text-white transition-colors hover:bg-brand"
+                >
+                  <ShoppingCart className="size-4" />
+                  <span className="text-xs font-black hidden sm:inline">GIỎ TƯ VẤN</span>
+                  {cart.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white font-black text-[10px] size-5 rounded-full flex items-center justify-center animate-bounce border-2 border-white">
+                      {cart.length}
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         ) : null}
 
         {/* Main Products Grid & Explorer */}
@@ -392,11 +394,11 @@ export default function AccessoriesPage({
 
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
-              <aside
-                className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
-              >
-                <FilterSidebar filters={filters} setFilters={setFilters} onClear={clearFilters} />
-              </aside>
+                <aside
+                  className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+                >
+                  <FilterSidebar filters={filters} setFilters={setFilters} onClear={clearFilters} />
+                </aside>
               ) : null}
 
               {/* Main catalog results grid */}
@@ -465,13 +467,13 @@ export default function AccessoriesPage({
         </section>
 
         {!adminEdit ? (
-        <>
-        <InstallProcessSection />
-        <PromoBanners />
-        <WhyOfficialSection />
-        <FaqSection />
-        <ContactCta />
-        </>
+          <>
+            <InstallProcessSection />
+            <PromoBanners />
+            <WhyOfficialSection />
+            <FaqSection />
+            <ContactCta />
+          </>
         ) : null}
       </main>
 
@@ -479,320 +481,323 @@ export default function AccessoriesPage({
       {!embedded && <FloatingButtons />}
 
       {!adminEdit ? (
-      <AnimatePresence>
-        {isCartOpen && (
-          <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
-            {/* Soft backdrop close trigger */}
-            <div className="absolute inset-0" onClick={() => setIsCartOpen(false)} />
+        <AnimatePresence>
+          {isCartOpen && (
+            <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
+              {/* Soft backdrop close trigger */}
+              <div className="absolute inset-0" onClick={() => setIsCartOpen(false)} />
 
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col text-slate-800 z-10 border-l border-slate-100"
-            >
-              {/* Drawer Header */}
-              <div className="bg-brand-dark text-white p-5 flex items-center justify-between shadow-md">
-                <div className="flex items-center gap-2">
-                  <ShoppingCart className="size-5 text-brand" />
-                  <h3 className="text-sm font-black uppercase">Giỏ tư vấn phụ kiện</h3>
-                  <span className="bg-brand text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                    {cart.length}
-                  </span>
-                </div>
-                <button
-                  onClick={() => {
-                    setIsCartOpen(false);
-                    setIsCheckoutSuccess(false);
-                  }}
-                  className="p-1 rounded-lg hover:bg-white/10 text-white/80 hover:text-white transition-all"
-                >
-                  <X className="size-5" />
-                </button>
-              </div>
-
-              {/* Cart Core Content */}
-              <div className="flex-1 overflow-y-auto p-5">
-                {isCheckoutSuccess ? (
-                  // Success screen
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-10 space-y-4"
-                  >
-                    <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
-                      <Check className="size-8" strokeWidth={2.5} />
-                    </div>
-                    <div>
-                      <h4 className="text-base font-black text-slate-900 uppercase">
-                        Gửi yêu cầu thành công!
-                      </h4>
-                      <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                        Cảm ơn quý khách{" "}
-                        <strong className="text-slate-800">{checkoutForm.name}</strong> đã quan tâm
-                        tới phụ kiện chính hãng tại VF Ngọc Anh. <br />
-                        Chuyên viên dịch vụ sẽ gọi điện hoặc nhắn tin tư vấn trực tiếp báo giá chi
-                        tiết và xếp lịch hẹn lắp đặt cho quý khách trong vòng 10 phút.
-                      </p>
-                    </div>
-
-                    <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 text-left text-xs font-semibold space-y-2.5">
-                      <div className="flex justify-between border-b border-slate-200/60 pb-2">
-                        <span className="text-slate-500">Người liên hệ:</span>
-                        <span className="text-slate-800 font-bold">
-                          {checkoutForm.name} - {checkoutForm.phone}
-                        </span>
-                      </div>
-                      <div className="space-y-1.5 max-h-[140px] overflow-y-auto">
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                          Danh sách đăng ký tư vấn:
-                        </p>
-                        {cart.map((item) => (
-                          <div
-                            key={item.id}
-                            className="flex justify-between items-center text-[11px]"
-                          >
-                            <span className="text-slate-700 font-medium truncate max-w-[240px]">
-                              • {item.name}
-                            </span>
-                            <span className="text-brand font-bold shrink-0">
-                              {formatPrice(item.price)} đ
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex justify-between border-t border-slate-200 pt-2 text-[11px] font-black text-brand">
-                        <span>TỔNG GIÁ TRỊ:</span>
-                        <span>{formatPrice(cartTotalPrice)} VNĐ</span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        clearCart();
-                        setIsCartOpen(false);
-                        setIsCheckoutSuccess(false);
-                      }}
-                      className="w-full bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider py-3 rounded-xl transition-all shadow-md"
-                    >
-                      QUAY LẠI CỬA HÀNG
-                    </button>
-                  </motion.div>
-                ) : cart.length === 0 ? (
-                  // Empty state
-                  <div className="text-center py-20 space-y-4">
-                    <ShoppingCart className="size-12 text-slate-200 mx-auto" />
-                    <p className="text-xs font-bold text-slate-400">
-                      Giỏ tư vấn phụ kiện của bạn đang trống.
-                    </p>
-                    <p className="text-[11px] text-slate-400 max-w-xs mx-auto">
-                      Vui lòng bấm chọn &ldquo;Thêm vào giỏ&rdquo; trên các sản phẩm phụ kiện chính
-                      hãng để gửi yêu cầu báo giá/lắp đặt đồng loạt.
-                    </p>
-                    <button
-                      onClick={() => setIsCartOpen(false)}
-                      className="bg-brand/10 hover:bg-brand/20 text-brand font-bold text-xs px-5 py-2.5 rounded-lg transition-all"
-                    >
-                      TIẾP TỤC KHÁM PHÁ
-                    </button>
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.3 }}
+                className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col text-slate-800 z-10 border-l border-slate-100"
+              >
+                {/* Drawer Header */}
+                <div className="bg-brand-dark text-white p-5 flex items-center justify-between shadow-md">
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart className="size-5 text-brand" />
+                    <h3 className="text-sm font-black uppercase">Giỏ tư vấn phụ kiện</h3>
+                    <span className="bg-brand text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {cart.length}
+                    </span>
                   </div>
-                ) : (
-                  // Listed Items & Submission Form
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                          Sản phẩm đã chọn ({cart.length})
-                        </span>
-                        <button
-                          onClick={clearCart}
-                          className="text-[10px] font-bold text-red-500 hover:underline flex items-center gap-1"
-                        >
-                          <Trash2 className="size-3" /> Xóa tất cả
-                        </button>
+                  <button
+                    onClick={() => {
+                      setIsCartOpen(false);
+                      setIsCheckoutSuccess(false);
+                    }}
+                    className="p-1 rounded-lg hover:bg-white/10 text-white/80 hover:text-white transition-all"
+                  >
+                    <X className="size-5" />
+                  </button>
+                </div>
+
+                {/* Cart Core Content */}
+                <div className="flex-1 overflow-y-auto p-5">
+                  {isCheckoutSuccess ? (
+                    // Success screen
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="text-center py-10 space-y-4"
+                    >
+                      <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
+                        <Check className="size-8" strokeWidth={2.5} />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-black text-slate-900 uppercase">
+                          Gửi yêu cầu thành công!
+                        </h4>
+                        <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                          Cảm ơn quý khách{" "}
+                          <strong className="text-slate-800">{checkoutForm.name}</strong> đã quan
+                          tâm tới phụ kiện chính hãng tại VF Ngọc Anh. <br />
+                          Chuyên viên dịch vụ sẽ gọi điện hoặc nhắn tin tư vấn trực tiếp báo giá chi
+                          tiết và xếp lịch hẹn lắp đặt cho quý khách trong vòng 10 phút.
+                        </p>
                       </div>
 
-                      {/* Basket items list */}
-                      <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                        {cart.map((item) => (
-                          <div
-                            key={item.id}
-                            className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200 relative group"
-                          >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="size-11 rounded-md object-contain bg-white border border-slate-100 p-1 shrink-0"
-                            />
-                            <div className="min-w-0 flex-1">
-                              <h4 className="text-xs font-bold text-slate-900 truncate pr-4">
-                                {item.name}
-                              </h4>
-                              <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
-                                {getCategoryLabel(item.category)}
-                              </p>
-                              <p className="text-xs font-black text-brand mt-1">
-                                {formatPrice(item.price)} đ
-                              </p>
-                            </div>
-                            <button
-                              onClick={() => removeFromCart(item.id)}
-                              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all opacity-80 group-hover:opacity-100"
-                              title="Xóa khỏi giỏ"
-                            >
-                              <X className="size-3.5" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Total and incentive notice */}
-                      <div className="bg-blue-50 border border-blue-100 rounded-xl p-3.5 flex flex-col gap-1.5 text-xs">
-                        <div className="flex justify-between items-center font-bold text-brand-dark">
-                          <span>Tổng giá trị phụ kiện:</span>
-                          <span className="text-base font-black text-brand">
-                            {formatPrice(cartTotalPrice)} VNĐ
+                      <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 text-left text-xs font-semibold space-y-2.5">
+                        <div className="flex justify-between border-b border-slate-200/60 pb-2">
+                          <span className="text-slate-500">Người liên hệ:</span>
+                          <span className="text-slate-800 font-bold">
+                            {checkoutForm.name} - {checkoutForm.phone}
                           </span>
                         </div>
-                        {cartTotalPrice >= 2_000_000 ? (
-                          <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-[10px] mt-1">
-                            <Check className="size-3.5" strokeWidth={3} /> Đủ điều kiện MIỄN PHÍ
-                            công lắp đặt tại Showroom!
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-1 text-slate-500 font-semibold text-[10px] mt-1">
-                            <Info className="size-3.5 text-brand" /> Mua thêm{" "}
-                            {formatPrice(2_000_000 - cartTotalPrice)} đ để được MIỄN PHÍ công lắp
-                            đặt.
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Consulting Request Form */}
-                    <form
-                      onSubmit={handleCheckout}
-                      className="border-t border-slate-100 pt-5 space-y-4"
-                    >
-                      <h4 className="text-[10px] font-black text-brand-dark uppercase tracking-widest">
-                        Thông tin đăng ký lắp đặt / giao hàng
-                      </h4>
-
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                          Họ và tên khách hàng *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={checkoutForm.name}
-                          onChange={(e) =>
-                            setCheckoutForm({ ...checkoutForm, name: e.target.value })
-                          }
-                          placeholder="Nguyễn Văn A"
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                          Số điện thoại liên hệ *
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          value={checkoutForm.phone}
-                          onChange={(e) =>
-                            setCheckoutForm({ ...checkoutForm, phone: e.target.value })
-                          }
-                          placeholder="09xx xxx xxx"
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
-                        />
-                      </div>
-
-                      <div>
-                        <span className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                          Hình thức nhận hàng
-                        </span>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setCheckoutForm({ ...checkoutForm, deliveryMethod: "showroom" })
-                            }
-                            className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
-                              checkoutForm.deliveryMethod === "showroom"
-                                ? "border-brand bg-brand/5 text-brand"
-                                : "border-slate-200 text-slate-600 hover:bg-slate-50"
-                            }`}
-                          >
-                            Lắp đặt tại Showroom
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setCheckoutForm({ ...checkoutForm, deliveryMethod: "home" })
-                            }
-                            className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
-                              checkoutForm.deliveryMethod === "home"
-                                ? "border-brand bg-brand/5 text-brand"
-                                : "border-slate-200 text-slate-600 hover:bg-slate-50"
-                            }`}
-                          >
-                            Giao hàng tận nhà (COD)
-                          </button>
+                        <div className="space-y-1.5 max-h-[140px] overflow-y-auto">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                            Danh sách đăng ký tư vấn:
+                          </p>
+                          {cart.map((item) => (
+                            <div
+                              key={item.id}
+                              className="flex justify-between items-center text-[11px]"
+                            >
+                              <span className="text-slate-700 font-medium truncate max-w-[240px]">
+                                • {item.name}
+                              </span>
+                              <span className="text-brand font-bold shrink-0">
+                                {formatPrice(item.price)} đ
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-between border-t border-slate-200 pt-2 text-[11px] font-black text-brand">
+                          <span>TỔNG GIÁ TRỊ:</span>
+                          <span>{formatPrice(cartTotalPrice)} VNĐ</span>
                         </div>
                       </div>
 
-                      {checkoutForm.deliveryMethod === "home" && (
-                        <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          clearCart();
+                          setIsCartOpen(false);
+                          setIsCheckoutSuccess(false);
+                        }}
+                        className="w-full bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider py-3 rounded-xl transition-all shadow-md"
+                      >
+                        QUAY LẠI CỬA HÀNG
+                      </button>
+                    </motion.div>
+                  ) : cart.length === 0 ? (
+                    // Empty state
+                    <div className="text-center py-20 space-y-4">
+                      <ShoppingCart className="size-12 text-slate-200 mx-auto" />
+                      <p className="text-xs font-bold text-slate-400">
+                        Giỏ tư vấn phụ kiện của bạn đang trống.
+                      </p>
+                      <p className="text-[11px] text-slate-400 max-w-xs mx-auto">
+                        Vui lòng bấm chọn &ldquo;Thêm vào giỏ&rdquo; trên các sản phẩm phụ kiện
+                        chính hãng để gửi yêu cầu báo giá/lắp đặt đồng loạt.
+                      </p>
+                      <button
+                        onClick={() => setIsCartOpen(false)}
+                        className="bg-brand/10 hover:bg-brand/20 text-brand font-bold text-xs px-5 py-2.5 rounded-lg transition-all"
+                      >
+                        TIẾP TỤC KHÁM PHÁ
+                      </button>
+                    </div>
+                  ) : (
+                    // Listed Items & Submission Form
+                    <div className="space-y-6">
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            Sản phẩm đã chọn ({cart.length})
+                          </span>
+                          <button
+                            onClick={clearCart}
+                            className="text-[10px] font-bold text-red-500 hover:underline flex items-center gap-1"
+                          >
+                            <Trash2 className="size-3" /> Xóa tất cả
+                          </button>
+                        </div>
+
+                        {/* Basket items list */}
+                        <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
+                          {cart.map((item) => (
+                            <div
+                              key={item.id}
+                              className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200 relative group"
+                            >
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="size-11 rounded-md object-contain bg-white border border-slate-100 p-1 shrink-0"
+                              />
+                              <div className="min-w-0 flex-1">
+                                <h4 className="text-xs font-bold text-slate-900 truncate pr-4">
+                                  {item.name}
+                                </h4>
+                                <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                                  {getCategoryLabel(item.category)}
+                                </p>
+                                <p className="text-xs font-black text-brand mt-1">
+                                  {formatPrice(item.price)} đ
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => removeFromCart(item.id)}
+                                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all opacity-80 group-hover:opacity-100"
+                                title="Xóa khỏi giỏ"
+                              >
+                                <X className="size-3.5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Total and incentive notice */}
+                        <div className="bg-blue-50 border border-blue-100 rounded-xl p-3.5 flex flex-col gap-1.5 text-xs">
+                          <div className="flex justify-between items-center font-bold text-brand-dark">
+                            <span>Tổng giá trị phụ kiện:</span>
+                            <span className="text-base font-black text-brand">
+                              {formatPrice(cartTotalPrice)} VNĐ
+                            </span>
+                          </div>
+                          {cartTotalPrice >= 2_000_000 ? (
+                            <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-[10px] mt-1">
+                              <Check className="size-3.5" strokeWidth={3} /> Đủ điều kiện MIỄN PHÍ
+                              công lắp đặt tại Showroom!
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-1 text-slate-500 font-semibold text-[10px] mt-1">
+                              <Info className="size-3.5 text-brand" /> Mua thêm{" "}
+                              {formatPrice(2_000_000 - cartTotalPrice)} đ để được MIỄN PHÍ công lắp
+                              đặt.
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Consulting Request Form */}
+                      <form
+                        onSubmit={handleCheckout}
+                        className="border-t border-slate-100 pt-5 space-y-4"
+                      >
+                        <h4 className="text-[10px] font-black text-brand-dark uppercase tracking-widest">
+                          Thông tin đăng ký lắp đặt / giao hàng
+                        </h4>
+
+                        <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                            Địa chỉ nhận hàng chi tiết *
+                            Họ và tên khách hàng *
                           </label>
                           <input
                             type="text"
                             required
-                            value={checkoutForm.address}
+                            value={checkoutForm.name}
                             onChange={(e) =>
-                              setCheckoutForm({ ...checkoutForm, address: e.target.value })
+                              setCheckoutForm({ ...checkoutForm, name: e.target.value })
                             }
-                            placeholder="Số nhà, ngõ/đường, Phường/Xã, Quận/Huyện, Tỉnh thành..."
+                            placeholder="Nguyễn Văn A"
                             className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
-                        </motion.div>
-                      )}
+                        </div>
 
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                          Lời nhắn / Yêu cầu thêm (Tùy chọn)
-                        </label>
-                        <textarea
-                          value={checkoutForm.note}
-                          onChange={(e) =>
-                            setCheckoutForm({ ...checkoutForm, note: e.target.value })
-                          }
-                          placeholder="Tôi muốn được đặt hẹn lắp vào sáng thứ 7 tuần này, dán thêm phim cách nhiệt..."
-                          rows={2}
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white resize-none"
-                        />
-                      </div>
+                        <div>
+                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                            Số điện thoại liên hệ *
+                          </label>
+                          <input
+                            type="tel"
+                            required
+                            value={checkoutForm.phone}
+                            onChange={(e) =>
+                              setCheckoutForm({ ...checkoutForm, phone: e.target.value })
+                            }
+                            placeholder="09xx xxx xxx"
+                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          />
+                        </div>
 
-                      <button
-                        type="submit"
-                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
-                      >
-                        <Calendar className="size-4" /> GỬI YÊU CẦU BÁO GIÁ LẮP ĐẶT
-                      </button>
-                    </form>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                        <div>
+                          <span className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                            Hình thức nhận hàng
+                          </span>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setCheckoutForm({ ...checkoutForm, deliveryMethod: "showroom" })
+                              }
+                              className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
+                                checkoutForm.deliveryMethod === "showroom"
+                                  ? "border-brand bg-brand/5 text-brand"
+                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                              }`}
+                            >
+                              Lắp đặt tại Showroom
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setCheckoutForm({ ...checkoutForm, deliveryMethod: "home" })
+                              }
+                              className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
+                                checkoutForm.deliveryMethod === "home"
+                                  ? "border-brand bg-brand/5 text-brand"
+                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                              }`}
+                            >
+                              Giao hàng tận nhà (COD)
+                            </button>
+                          </div>
+                        </div>
+
+                        {checkoutForm.deliveryMethod === "home" && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                          >
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                              Địa chỉ nhận hàng chi tiết *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={checkoutForm.address}
+                              onChange={(e) =>
+                                setCheckoutForm({ ...checkoutForm, address: e.target.value })
+                              }
+                              placeholder="Số nhà, ngõ/đường, Phường/Xã, Quận/Huyện, Tỉnh thành..."
+                              className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            />
+                          </motion.div>
+                        )}
+
+                        <div>
+                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                            Lời nhắn / Yêu cầu thêm (Tùy chọn)
+                          </label>
+                          <textarea
+                            value={checkoutForm.note}
+                            onChange={(e) =>
+                              setCheckoutForm({ ...checkoutForm, note: e.target.value })
+                            }
+                            placeholder="Tôi muốn được đặt hẹn lắp vào sáng thứ 7 tuần này, dán thêm phim cách nhiệt..."
+                            rows={2}
+                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white resize-none"
+                          />
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
+                        >
+                          <Calendar className="size-4" /> GỬI YÊU CẦU BÁO GIÁ LẮP ĐẶT
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       ) : null}
     </div>
   );

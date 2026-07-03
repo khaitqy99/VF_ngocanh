@@ -40,18 +40,16 @@ async function fetchPageSeoRow(slug: string): Promise<SeoRecord | null> {
   return parseSeoRecord(data.seo as Json);
 }
 
-export const getSiteSeo = unstable_cache(
-  async () => fetchSiteSeoRow(),
-  ["cms-site-seo"],
-  { revalidate: 120, tags: ["cms", CMS_SEO_TAG] },
-);
+export const getSiteSeo = unstable_cache(async () => fetchSiteSeoRow(), ["cms-site-seo"], {
+  revalidate: 120,
+  tags: ["cms", CMS_SEO_TAG],
+});
 
 export async function getPageSeo(slug: string): Promise<SeoRecord | null> {
-  return unstable_cache(
-    async () => fetchPageSeoRow(slug),
-    [`cms-page-seo-${slug}`],
-    { revalidate: 120, tags: ["cms", CMS_SEO_TAG, `cms-page-seo-${slug}`] },
-  )();
+  return unstable_cache(async () => fetchPageSeoRow(slug), [`cms-page-seo-${slug}`], {
+    revalidate: 120,
+    tags: ["cms", CMS_SEO_TAG, `cms-page-seo-${slug}`],
+  })();
 }
 
 export function parseVehicleSeo(content: Json | null | undefined): SeoRecord {

@@ -249,7 +249,9 @@ export const getHomeData = unstable_cache(
     ]);
 
     const parsed = homeContent ? parseHomeCms(homeContent) : null;
-    const featuredCarsBase = parsed?.featuredCars?.length ? parsed.featuredCars : VINFAST_FEATURED_CARS;
+    const featuredCarsBase = parsed?.featuredCars?.length
+      ? parsed.featuredCars
+      : VINFAST_FEATURED_CARS;
     const featuredScootersBase = parsed?.featuredScooters?.length
       ? parsed.featuredScooters
       : VINFAST_FEATURED_SCOOTERS;

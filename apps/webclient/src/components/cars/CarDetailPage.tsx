@@ -1817,7 +1817,6 @@ function AccessoriesSection({
   products: AccessoryProduct[];
   adminEditable?: boolean;
 }) {
-
   return (
     <>
       <InlineSectionTitle

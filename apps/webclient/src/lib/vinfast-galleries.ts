@@ -255,7 +255,7 @@ export const CAR_GALLERIES: Record<string, string[]> = {
 /** Hero gallery for car detail — curated PDP shots, then color variants, then catalog image. */
 export function getCarGallery(car: CarModel): string[] {
   const curated = CAR_GALLERIES[car.id];
-  const colorImages = car.colors.map((c) => c.image).filter(Boolean) as string[];
+  const colorImages = (car.colors ?? []).map((c) => c.image).filter(Boolean) as string[];
   const base = curated?.length ? curated : [];
   const merged = [...base];
   for (const img of colorImages) {

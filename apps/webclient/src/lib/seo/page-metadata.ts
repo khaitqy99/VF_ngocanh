@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 
-import {
-  getStaticPageSeoDefinition,
-  resolveStaticPageSeo,
-  seoToNextMetadata,
-} from "@/lib/seo";
+import { getStaticPageSeoDefinition, resolveStaticPageSeo, seoToNextMetadata } from "@/lib/seo";
 import { getPageSeo, getSiteSeo } from "@/lib/cms/seo";
 
 export async function buildStaticPageMetadata(pageSlug: string): Promise<Metadata> {
