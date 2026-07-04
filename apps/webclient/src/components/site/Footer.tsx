@@ -4,13 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Youtube, MapPin, Phone, Mail } from "lucide-react";
-import {
-  SHOWROOM_ADDRESS,
-  SHOWROOM_EMAIL,
-  SHOWROOM_MAP_URL,
-  SHOWROOM_PHONE,
-  SHOWROOM_PHONE_TEL,
-} from "@/lib/contact";
+import { resolveDealershipContact, type DealershipContact } from "@/lib/dealership";
 import { IMAGES } from "@/lib/images";
 import { FadeIn } from "@/components/motion";
 
@@ -25,7 +19,7 @@ const PRODUCT_LINKS = [
 ] as const;
 
 const SERVICE_LINKS = [
-  { label: "Đăng ký lái thử", href: "#" },
+  { label: "Đăng ký lái thử", href: "/oto" },
   { label: "Bảo dưỡng — Sửa chữa", href: "/dich-vu-hau-mai" },
   { label: "Bảo hành", href: "/dich-vu-hau-mai" },
   { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
@@ -34,14 +28,9 @@ const SERVICE_LINKS = [
 
 const ABOUT_LINKS = [
   { label: "Giới thiệu", href: "/gioi-thieu" },
-  { label: "Tin tức", href: "#" },
-  { label: "Tuyển dụng", href: "#" },
-  { label: "Liên hệ", href: "#" },
-] as const;
-
-const SOCIALS = [
-  { label: "Facebook", href: "#", icon: Facebook },
-  { label: "Youtube", href: "#", icon: Youtube },
+  { label: "Tin tức", href: "/gioi-thieu" },
+  { label: "Tuyển dụng", href: "/gioi-thieu" },
+  { label: "Liên hệ", href: "/gioi-thieu" },
 ] as const;
 
 function FooterHeading({ children }: { children: ReactNode }) {
@@ -55,19 +44,16 @@ function FooterHeading({ children }: { children: ReactNode }) {
 function FooterLinkList({ items }: { items: readonly { label: string; href: string }[] }) {
   return (
     <ul className="space-y-2">
-      {items.map(({ label, href }) => {
-        const Comp = href.startsWith("/") ? Link : "a";
-        return (
-          <li key={label}>
-            <Comp
-              href={href}
-              className="text-[13px] leading-snug text-foreground/75 transition-colors hover:text-brand"
-            >
-              {label}
-            </Comp>
-          </li>
-        );
-      })}
+      {items.map(({ label, href }) => (
+        <li key={label}>
+          <Link
+            href={href}
+            className="text-[13px] leading-snug text-foreground/75 transition-colors hover:text-brand"
+          >
+            {label}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 }
@@ -85,11 +71,22 @@ function ContactItem({ icon: Icon, children }: { icon: typeof MapPin; children: 
   );
 }
 
-export default function Footer() {
+function SocialIcon({ kind }: { kind: DealershipContact["socialLinks"][number]["kind"] }) {
+  if (kind === "facebook") return <Facebook size={16} />;
+  if (kind === "youtube") return <Youtube size={16} />;
+  return (
+    <span className="text-[10px] font-bold uppercase">{kind === "zalo" ? "Zalo" : "Web"}</span>
+  );
+}
+
+export default function Footer({
+  contact = resolveDealershipContact(),
+}: {
+  contact?: DealershipContact;
+}) {
   return (
     <footer className="border-t border-border/60 bg-[#f4f6fa]">
       <div className="container-vf space-y-8 py-8 sm:space-y-10 sm:py-10 lg:py-12">
-        {/* Hàng 1: Thương hiệu */}
         <FadeIn className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <div className="min-w-0">
             <Link href="/" className="inline-flex items-center">
@@ -103,32 +100,28 @@ export default function Footer() {
             </Link>
             <p className="mt-1 text-xs font-bold tracking-wide text-brand">VF NGỌC ANH</p>
             <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-muted-foreground sm:mt-2.5">
-              Đại lý ủy quyền chính thức VinFast tại Cà Mau. Trải nghiệm xe điện thông minh cùng
-              dịch vụ 3S tận tâm.
+              {contact.businessName}. Trải nghiệm xe điện thông minh cùng dịch vụ 3S tận tâm tại Cà
+              Mau.
             </p>
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
-            {SOCIALS.map(({ label, href, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
-              >
-                <Icon size={16} />
-              </a>
-            ))}
-            <a
-              href="#"
-              aria-label="TikTok"
-              className="flex h-9 items-center rounded-full border border-border/70 bg-white px-3 text-[11px] font-bold text-brand-dark transition-colors hover:border-brand hover:text-brand"
-            >
-              TikTok
-            </a>
-          </div>
+          {contact.socialLinks.length > 0 ? (
+            <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
+              {contact.socialLinks.map(({ label, href, kind }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
+                >
+                  <SocialIcon kind={kind} />
+                </a>
+              ))}
+            </div>
+          ) : null}
         </FadeIn>
 
-        {/* Hàng 2: Liên kết — 2×2 mobile, 4 cột desktop */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-border/40 pt-8 sm:grid-cols-4 sm:gap-x-8 lg:gap-x-10">
           <FadeIn delay={0.05}>
             <FooterHeading>Sản phẩm</FooterHeading>
@@ -150,28 +143,28 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <ContactItem icon={MapPin}>
                 <a
-                  href={SHOWROOM_MAP_URL}
+                  href={contact.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-brand"
                 >
-                  {SHOWROOM_ADDRESS}
+                  {contact.address}
                 </a>
               </ContactItem>
               <ContactItem icon={Phone}>
                 <a
-                  href={SHOWROOM_PHONE_TEL}
+                  href={contact.phoneTel}
                   className="font-semibold transition-colors hover:text-brand"
                 >
-                  {SHOWROOM_PHONE}
+                  {contact.phone}
                 </a>
               </ContactItem>
               <ContactItem icon={Mail}>
                 <a
-                  href={`mailto:${SHOWROOM_EMAIL}`}
+                  href={`mailto:${contact.email}`}
                   className="break-all transition-colors hover:text-brand"
                 >
-                  {SHOWROOM_EMAIL}
+                  {contact.email}
                 </a>
               </ContactItem>
             </ul>
@@ -183,12 +176,12 @@ export default function Footer() {
         <div className="container-vf flex flex-col items-center justify-between gap-3 py-4 text-[11px] text-muted-foreground sm:flex-row sm:py-5">
           <p>© 2026 VF Ngọc Anh. All rights reserved.</p>
           <div className="flex gap-5">
-            <a href="#" className="transition-colors hover:text-brand">
+            <Link href="/gioi-thieu" className="transition-colors hover:text-brand">
               Chính sách bảo mật
-            </a>
-            <a href="#" className="transition-colors hover:text-brand">
+            </Link>
+            <Link href="/gioi-thieu" className="transition-colors hover:text-brand">
               Điều khoản sử dụng
-            </a>
+            </Link>
           </div>
         </div>
       </div>

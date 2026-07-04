@@ -42,7 +42,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { ScooterCatalogCard } from "@/components/scooters/ScooterCatalogCard";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
@@ -828,7 +827,6 @@ export default function ScooterDetailPage({
 
       {!embedded ? (
         <>
-          <Footer />
           <FloatingButtons />
 
           {/* Mobile sticky bar */}

@@ -38,7 +38,7 @@ import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
 import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
+import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
@@ -151,7 +151,7 @@ export default function CarsPage({
     phone: "",
     email: "",
     service: "Đăng ký lái thử",
-    showroom: "VF Ngọc Anh - Long Biên",
+    showroom: SHOWROOM_BOOKING_LABEL,
     date: "",
     time: "09:00",
     note: "",
@@ -160,7 +160,7 @@ export default function CarsPage({
 
   // Rolling Cost Estimator State
   const [estimatorCarId, setEstimatorCarId] = useState<string>("vf3");
-  const [estimatorLocation, setEstimatorLocation] = useState<string>("hanoi");
+  const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
   const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
   const [includeInsurance, setIncludeInsurance] = useState<boolean>(true);
 
@@ -790,7 +790,6 @@ export default function CarsPage({
         ) : null}
       </main>
 
-      {!embedded && <Footer />}
       {!embedded && <FloatingButtons />}
 
       {/* RENDER MODAL: Comprehensive Booking Appointment Scheduler */}
@@ -1196,7 +1195,7 @@ export default function CarsPage({
                               phone: "",
                               email: "",
                               service: "Đăng ký lái thử",
-                              showroom: "VF Ngọc Anh - Long Biên",
+                              showroom: SHOWROOM_BOOKING_LABEL,
                               date: "",
                               time: "09:00",
                               note: "",

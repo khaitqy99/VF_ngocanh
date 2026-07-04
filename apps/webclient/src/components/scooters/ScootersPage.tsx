@@ -45,7 +45,7 @@ import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
+import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -159,7 +159,7 @@ export default function ScootersPage({
     phone: "",
     email: "",
     service: "Đăng ký lái thử",
-    showroom: "VF Ngọc Anh - Long Biên",
+    showroom: SHOWROOM_BOOKING_LABEL,
     date: "",
     time: "09:00",
     note: "",
@@ -168,7 +168,7 @@ export default function ScootersPage({
 
   // Rolling Cost Estimator State
   const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo");
-  const [estimatorLocation, setEstimatorLocation] = useState<string>("hanoi");
+  const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
   const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
 
   // Installment Calculator State
@@ -772,7 +772,6 @@ export default function ScootersPage({
         ) : null}
       </main>
 
-      {!embedded && <Footer />}
       {!embedded && <FloatingButtons />}
 
       {/* RENDER MODAL: Comprehensive Booking Appointment Scheduler for Scooters */}
@@ -1183,7 +1182,7 @@ export default function ScootersPage({
                               phone: "",
                               email: "",
                               service: "Đăng ký lái thử",
-                              showroom: "VF Ngọc Anh - Long Biên",
+                              showroom: SHOWROOM_BOOKING_LABEL,
                               date: "",
                               time: "09:00",
                               note: "",

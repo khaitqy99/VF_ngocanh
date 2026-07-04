@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
 import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
@@ -46,7 +45,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { AFTER_SALES_HERO_BANNERS, IMAGES, type HeroBannerSlide } from "@/lib/images";
-import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import { HOTLINE, HOTLINE_TEL, SHOWROOM_EMAIL } from "@/lib/contact";
 import { vfCtaHeading, vfSectionHeading, vfSectionHeadingLeft } from "@/lib/typography";
 
 const SERVICES = [
@@ -611,7 +610,6 @@ export default function AfterSalesPage({
         <CtaBanner />
       </main>
 
-      <Footer />
       <FloatingButtons />
     </div>
   );
@@ -1010,7 +1008,9 @@ function CtaBanner() {
               </span>
               <span className="flex items-center gap-2">
                 <Mail className="size-4 text-brand" />
-                ngocanh@vinfast.vn
+                <a href={`mailto:${SHOWROOM_EMAIL}`} className="transition-colors hover:text-brand">
+                  {SHOWROOM_EMAIL}
+                </a>
               </span>
             </div>
           </div>

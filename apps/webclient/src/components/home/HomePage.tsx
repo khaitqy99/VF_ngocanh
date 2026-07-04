@@ -6,8 +6,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
+import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { type DealershipContact } from "@/lib/dealership";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem, FadeIn, StaggerItem } from "@/components/motion";
 import { MotionButton } from "@/components/motion/MotionButton";
@@ -61,11 +62,13 @@ export default function HomePage({
   featuredCars,
   featuredScooters,
   accessories,
+  contact,
 }: {
   heroBanners: HeroBannerSlide[];
   featuredCars: VinFastHomeSlide[];
   featuredScooters: VinFastHomeSlide[];
   accessories: AccessoryProduct[];
+  contact: DealershipContact;
 }) {
   const [bookingSlide, setBookingSlide] = useState<VinFastHomeSlide | null>(null);
   const [bookingKind, setBookingKind] = useState<"car" | "scooter">("car");
@@ -96,8 +99,8 @@ export default function HomePage({
         <BrandStory />
         <ShowroomCommunity />
         <Newsletter />
+        <ShowroomLocationSection contact={contact} />
       </main>
-      <Footer />
       <FloatingButtons />
       <ShowroomBookingModal
         open={bookingSlide !== null}

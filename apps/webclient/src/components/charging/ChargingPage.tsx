@@ -32,7 +32,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
 import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
@@ -690,7 +689,6 @@ export default function ChargingPage({
         )}
       </AnimatePresence>
 
-      <Footer />
       <FloatingButtons />
     </div>
   );

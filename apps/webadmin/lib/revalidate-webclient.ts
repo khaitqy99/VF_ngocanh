@@ -35,22 +35,33 @@ export async function revalidateWebclient(payload: RevalidatePayload) {
   }
 }
 
+function uniquePaths(paths: string[]): string[] {
+  return [...new Set(paths.filter(Boolean))];
+}
+
 export function vehicleRevalidatePayload(
   id: string,
   vehicleType: "car" | "scooter",
+  slug?: string,
 ): RevalidatePayload {
-  const tags = ["cms", vehicleType === "car" ? "cms-cars" : "cms-scooters", `vehicle-${id}`];
-  const paths =
-    vehicleType === "car"
-      ? [`/oto/${id}`, "/oto", "/oto/preview", "/"]
-      : [`/xe-may-dien/${id}`, "/xe-may-dien", "/xe-may-dien/preview", "/"];
+  const prefix = vehicleType === "car" ? "/oto" : "/xe-may-dien";
+  const paths = uniquePaths([
+    `${prefix}/${id}`,
+    slug ? `${prefix}/${slug}` : "",
+    prefix,
+    `${prefix}/preview`,
+    "/",
+  ]);
 
-  return { tags, paths };
+  return {
+    tags: ["cms", vehicleType === "car" ? "cms-cars" : "cms-scooters", `vehicle-${id}`],
+    paths,
+  };
 }
 
-export function accessoryRevalidatePayload(id: string): RevalidatePayload {
+export function accessoryRevalidatePayload(id: string, slug?: string): RevalidatePayload {
   return {
     tags: ["cms", "cms-accessories"],
-    paths: [`/phu-kien/${id}`, "/phu-kien", "/phu-kien/preview", "/"],
+    paths: uniquePaths([`/phu-kien/${id}`, slug ? `/phu-kien/${slug}` : "", "/phu-kien", "/phu-kien/preview", "/"]),
   };
 }

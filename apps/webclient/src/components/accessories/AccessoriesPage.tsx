@@ -28,7 +28,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem } from "@/components/motion";
@@ -89,7 +88,7 @@ const WHY_OFFICIAL = [
   {
     icon: Wrench,
     title: "Lắp đặt chuyên nghiệp",
-    desc: "Miễn phí công lắp đặt cho hóa đơn phụ kiện từ 2 triệu VNĐ tại trung tâm dịch vụ kỹ thuật Long Biên.",
+    desc: "Miễn phí công lắp đặt cho hóa đơn phụ kiện từ 2 triệu VNĐ tại xưởng dịch vụ VF Ngọc Anh Cà Mau.",
   },
   {
     icon: Sparkles,
@@ -477,7 +476,6 @@ export default function AccessoriesPage({
         ) : null}
       </main>
 
-      {!embedded && <Footer />}
       {!embedded && <FloatingButtons />}
 
       {!adminEdit ? (

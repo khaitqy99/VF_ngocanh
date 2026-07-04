@@ -6,7 +6,6 @@ import { toast, Toaster } from "sonner";
 import { ArrowLeft, Check, Phone, Plus, Save, Shield, Undo2, Wrench } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
@@ -467,7 +466,6 @@ export default function AccessoryDetailPage({
         )}
       </main>
 
-      {!embedded && <Footer />}
       {!embedded && <FloatingButtons />}
     </div>
   );

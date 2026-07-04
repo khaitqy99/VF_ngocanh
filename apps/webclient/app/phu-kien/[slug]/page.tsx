@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import AccessoryDetailPage from "@/components/accessories/AccessoryDetailPage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getAccessories, getAccessoryBySlugOrId } from "@/lib/cms";
 import { buildAccessoryMetadata } from "@/lib/seo/product-metadata";
+import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { accessoryDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
@@ -49,15 +51,19 @@ export default async function AccessoryDetailRoute({ params }: Props) {
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
+      seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
     },
   };
 
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Trang chủ", path: "/" },
+    { name: "Phụ kiện", path: "/phu-kien" },
+    { name: product.name, path: canonicalPath },
+  ]);
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
+      <JsonLd data={[productSchema, breadcrumb]} />
       <AccessoryDetailPage product={product} />
     </>
   );

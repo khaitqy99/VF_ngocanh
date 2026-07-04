@@ -142,7 +142,7 @@ export async function PATCH(
   const admin = createAdminClient();
 
   if (type === "accessory") {
-    const { data: existing } = await admin.from("accessories").select("content, name").eq("id", id).maybeSingle();
+    const { data: existing } = await admin.from("accessories").select("content, name, slug").eq("id", id).maybeSingle();
     const content =
       existing?.content && typeof existing.content === "object" && !Array.isArray(existing.content)
         ? (existing.content as Record<string, Json | undefined>)
@@ -158,7 +158,7 @@ export async function PATCH(
     }
     const { error } = await admin.from("accessories").update(update).eq("id", id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    await revalidateWebclient(accessoryRevalidatePayload(id));
+    await revalidateWebclient(accessoryRevalidatePayload(id, body.slug ?? existing?.slug ?? id));
     return NextResponse.json({ ok: true });
   }
 
@@ -166,7 +166,7 @@ export async function PATCH(
   if (body.seo) update.seo = body.seo as Json;
   if (body.slug) update.slug = body.slug;
 
-  const { data: existing } = await admin.from("vehicles").select("id, type").eq("id", id).maybeSingle();
+  const { data: existing } = await admin.from("vehicles").select("id, type, slug").eq("id", id).maybeSingle();
   if (existing) {
     const { error } = await admin.from("vehicles").update(update).eq("id", id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -184,6 +184,8 @@ export async function PATCH(
   }
 
   const vehicleType = type === "scooter" ? "scooter" : "car";
-  await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType));
+  await revalidateWebclient(
+    vehicleRevalidatePayload(id, vehicleType, body.slug ?? existing?.slug ?? defaultSlugFor(type, id)),
+  );
   return NextResponse.json({ ok: true });
 }

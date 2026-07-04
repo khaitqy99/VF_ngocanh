@@ -35,7 +35,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import {
   Breadcrumb,
@@ -599,7 +598,6 @@ export default function EnergyStoragePage() {
         )}
       </AnimatePresence>
 
-      <Footer />
       <FloatingButtons />
     </div>
   );

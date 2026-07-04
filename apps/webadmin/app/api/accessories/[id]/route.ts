@@ -76,7 +76,7 @@ export async function PATCH(
   const admin = createAdminClient();
   const { data: existing, error: fetchError } = await admin
     .from("accessories")
-    .select("content")
+    .select("content, slug")
     .eq("id", id)
     .maybeSingle();
 
@@ -154,7 +154,7 @@ export async function PATCH(
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    await revalidateWebclient(accessoryRevalidatePayload(id));
+    await revalidateWebclient(accessoryRevalidatePayload(id, id));
     return NextResponse.json({ ok: true, mode: "insert" });
   }
 
@@ -171,7 +171,7 @@ export async function PATCH(
     return NextResponse.json({ error: "Không tìm thấy phụ kiện để cập nhật" }, { status: 404 });
   }
 
-  await revalidateWebclient(accessoryRevalidatePayload(id));
+  await revalidateWebclient(accessoryRevalidatePayload(id, existing.slug ?? id));
 
   return NextResponse.json({ ok: true, mode: "update" });
 }

@@ -116,7 +116,7 @@ export function GlobalSeoClient() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">LocalBusiness (Schema)</CardTitle>
+          <CardTitle className="text-sm">LocalBusiness / AutoDealer (Schema & Geo)</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
           <Input
@@ -127,7 +127,7 @@ export function GlobalSeoClient() {
                 organization: { ...s.organization, name: e.target.value },
               }))
             }
-            placeholder="Tên đại lý"
+            placeholder="Tên schema (VD: VF Ngọc Anh — Vinfast 3S Cà Mau)"
           />
           <Input
             value={settings.organization?.telephone ?? ""}
@@ -150,15 +150,129 @@ export function GlobalSeoClient() {
             placeholder="Email"
           />
           <Input
-            value={settings.organization?.address ?? ""}
+            value={settings.organization?.streetAddress ?? ""}
             onChange={(e) =>
               setSettings((s) => ({
                 ...s,
-                organization: { ...s.organization, address: e.target.value },
+                organization: { ...s.organization, streetAddress: e.target.value },
               }))
             }
-            placeholder="Địa chỉ showroom"
+            placeholder="Số nhà, đường"
           />
+          <Input
+            value={settings.organization?.addressLocality ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: { ...s.organization, addressLocality: e.target.value },
+              }))
+            }
+            placeholder="Thành phố / Quận"
+          />
+          <Input
+            value={settings.organization?.addressRegion ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: { ...s.organization, addressRegion: e.target.value },
+              }))
+            }
+            placeholder="Tỉnh / Vùng"
+          />
+          <Input
+            value={settings.organization?.postalCode ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: { ...s.organization, postalCode: e.target.value },
+              }))
+            }
+            placeholder="Mã bưu chính"
+          />
+          <Input
+            type="number"
+            step="any"
+            value={settings.organization?.geo?.latitude ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: {
+                  ...s.organization,
+                  geo: {
+                    ...s.organization?.geo,
+                    latitude: e.target.value ? Number(e.target.value) : undefined,
+                  },
+                },
+              }))
+            }
+            placeholder="Vĩ độ (latitude)"
+          />
+          <Input
+            type="number"
+            step="any"
+            value={settings.organization?.geo?.longitude ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: {
+                  ...s.organization,
+                  geo: {
+                    ...s.organization?.geo,
+                    longitude: e.target.value ? Number(e.target.value) : undefined,
+                  },
+                },
+              }))
+            }
+            placeholder="Kinh độ (longitude)"
+          />
+          <Input
+            value={settings.organization?.openingHours?.opens ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: {
+                  ...s.organization,
+                  openingHours: { ...s.organization?.openingHours, opens: e.target.value },
+                },
+              }))
+            }
+            placeholder="Giờ mở (VD: 08:00)"
+          />
+          <Input
+            value={settings.organization?.openingHours?.closes ?? ""}
+            onChange={(e) =>
+              setSettings((s) => ({
+                ...s,
+                organization: {
+                  ...s.organization,
+                  openingHours: { ...s.organization?.openingHours, closes: e.target.value },
+                },
+              }))
+            }
+            placeholder="Giờ đóng (VD: 18:00)"
+          />
+          <div className="md:col-span-2">
+            <label className="mb-1 block text-xs font-semibold">
+              sameAs — link Google Maps, Facebook, Zalo (mỗi dòng một URL)
+            </label>
+            <Textarea
+              rows={3}
+              value={(settings.organization?.sameAs ?? []).join("\n")}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  organization: {
+                    ...s.organization,
+                    sameAs: e.target.value
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter(Boolean),
+                  },
+                }))
+              }
+              placeholder="https://www.google.com/maps/..."
+            />
+          </div>
         </CardContent>
       </Card>
 

@@ -25,7 +25,8 @@
     "download:charging": "node scripts/download-charging-images.mjs",
     "download:charging-banners": "node scripts/download-charging-banners.mjs",
     "sync:charging-banners": "node scripts/download-charging-banners.mjs",
-    "sync:gallery": "node scripts/download-car-gallery-images.mjs && node scripts/generate-vinfast-galleries.mjs"
+    "sync:gallery": "node scripts/download-car-gallery-images.mjs && node scripts/generate-vinfast-galleries.mjs",
+    "icons:generate": "node scripts/generate-favicons.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

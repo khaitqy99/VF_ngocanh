@@ -1,12 +1,40 @@
 import type { Metadata } from "next";
 
 import {
+  getShowroomSameAs,
+  SCHEMA_BUSINESS_NAME,
+  SHOWROOM_CITY,
+  SHOWROOM_EMAIL,
+  SHOWROOM_LAT,
+  SHOWROOM_LNG,
+  SHOWROOM_OPENING,
+  SHOWROOM_PHONE,
+  SHOWROOM_POSTAL,
+  SHOWROOM_REGION,
+  SHOWROOM_STREET,
+} from "@/lib/dealership";
+import {
   PRODUCTION_SITE_URL,
   SITE_BRAND_NAME,
+  type OrganizationSettings,
   type SeoRecord,
   type SiteSeoSettings,
   type StaticPageSeoDefinition,
 } from "./types";
+
+function mergeOrganization(
+  base?: OrganizationSettings,
+  partial?: OrganizationSettings,
+): OrganizationSettings | undefined {
+  if (!base && !partial) return undefined;
+  return {
+    ...base,
+    ...partial,
+    geo: { ...base?.geo, ...partial?.geo },
+    openingHours: { ...base?.openingHours, ...partial?.openingHours },
+    sameAs: partial?.sameAs?.length ? partial.sameAs : base?.sameAs,
+  };
+}
 
 export type SeoAutoFill = {
   title?: string;
@@ -58,7 +86,15 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
   const raw = value as Record<string, unknown>;
   const org =
     raw.organization && typeof raw.organization === "object" && !Array.isArray(raw.organization)
-      ? (raw.organization as SiteSeoSettings["organization"])
+      ? (raw.organization as OrganizationSettings)
+      : undefined;
+  const orgGeo =
+    org?.geo && typeof org.geo === "object" && !Array.isArray(org.geo)
+      ? (org.geo as OrganizationSettings["geo"])
+      : undefined;
+  const orgHours =
+    org?.openingHours && typeof org.openingHours === "object" && !Array.isArray(org.openingHours)
+      ? (org.openingHours as OrganizationSettings["openingHours"])
       : undefined;
 
   return {
@@ -84,7 +120,16 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
                 : undefined,
           }
         : undefined,
-    organization: org,
+    organization: org
+      ? {
+          ...org,
+          geo: orgGeo,
+          openingHours: orgHours,
+          sameAs: Array.isArray(org.sameAs)
+            ? org.sameAs.filter((url): url is string => typeof url === "string")
+            : undefined,
+        }
+      : undefined,
   };
 }
 
@@ -94,17 +139,31 @@ export function defaultSiteSeoSettings(): SiteSeoSettings {
     titleTemplate: `%s | ${SITE_BRAND_NAME}`,
     defaultTitle: `${SITE_BRAND_NAME} — Đại lý VinFast chính hãng`,
     defaultDescription:
-      "Vinfast 3S Cà Mau — Khám phá ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi tại Cà Mau.",
+      "VF Ngọc Anh — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi tại Cà Mau.",
     defaultOgTitle: `${SITE_BRAND_NAME} — Đại lý VinFast chính hãng`,
     defaultOgDescription:
       "Khám phá ô tô điện, xe máy điện VinFast với nhiều ưu đãi hấp dẫn tại Cà Mau.",
     defaultOgImage: "/images/cars/oto-hero.webp",
     robots: { index: true, follow: true },
     organization: {
-      name: SITE_BRAND_NAME,
-      legalName: SITE_BRAND_NAME,
+      name: SCHEMA_BUSINESS_NAME,
+      legalName: SCHEMA_BUSINESS_NAME,
       url: PRODUCTION_SITE_URL,
-      logo: `${PRODUCTION_SITE_URL}/images/logo.webp`,
+      logo: `${PRODUCTION_SITE_URL}/images/vinfast/vinfast-logo-header.webp`,
+      telephone: SHOWROOM_PHONE,
+      email: SHOWROOM_EMAIL,
+      address: `${SHOWROOM_STREET}, ${SHOWROOM_CITY}, ${SHOWROOM_REGION}`,
+      streetAddress: SHOWROOM_STREET,
+      addressLocality: SHOWROOM_CITY,
+      addressRegion: SHOWROOM_REGION,
+      postalCode: SHOWROOM_POSTAL,
+      geo: { latitude: SHOWROOM_LAT, longitude: SHOWROOM_LNG },
+      openingHours: {
+        opens: SHOWROOM_OPENING.opens,
+        closes: SHOWROOM_OPENING.closes,
+        days: [...SHOWROOM_OPENING.days],
+      },
+      sameAs: getShowroomSameAs(),
     },
   };
 }
@@ -116,7 +175,7 @@ export function mergeSiteSeoSettings(partial?: SiteSeoSettings | null): SiteSeoS
     ...base,
     ...partial,
     robots: { ...base.robots, ...partial.robots },
-    organization: { ...base.organization, ...partial.organization },
+    organization: mergeOrganization(base.organization, partial.organization),
   };
 }
 
@@ -138,8 +197,9 @@ export function resolveSeoContent(
   const title = seo?.metaTitle?.trim() || defaults.title?.trim() || siteSeo.defaultTitle!;
   const description =
     seo?.metaDescription?.trim() || defaults.description?.trim() || siteSeo.defaultDescription!;
-  const ogTitle = seo?.ogTitle?.trim() || title;
-  const ogDescription = seo?.ogDescription?.trim() || description;
+  const ogTitle = seo?.ogTitle?.trim() || siteSeo.defaultOgTitle?.trim() || title;
+  const ogDescription =
+    seo?.ogDescription?.trim() || siteSeo.defaultOgDescription?.trim() || description;
   const ogImage = seo?.ogImage?.trim() || defaults.image?.trim() || siteSeo.defaultOgImage!;
   const canonicalPath = seo?.canonical?.trim() || defaults.path || "/";
   const canonical = canonicalPath.startsWith("http")

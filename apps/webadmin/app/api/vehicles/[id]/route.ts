@@ -135,7 +135,7 @@ export async function PATCH(
   const admin = createAdminClient();
   const { data: existing, error: fetchError } = await admin
     .from("vehicles")
-    .select("content, type")
+    .select("content, type, slug")
     .eq("id", id)
     .maybeSingle();
 
@@ -204,7 +204,7 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType));
+    await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, existing.slug ?? id));
 
     return NextResponse.json({ ok: true, mode: "update" });
   }
@@ -228,7 +228,7 @@ export async function PATCH(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType));
+  await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, insertPayload.slug ?? id));
 
   return NextResponse.json({ ok: true, mode: "insert" });
 }

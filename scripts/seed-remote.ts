@@ -22,11 +22,20 @@ import {
 } from "../apps/webclient/src/lib/images.ts";
 import { VINFAST_HERO_BANNERS, VINFAST_FEATURED_CARS } from "../apps/webclient/src/lib/vinfast-home.ts";
 import {
+  SCHEMA_BUSINESS_NAME,
   SHOWROOM_ADDRESS,
+  SHOWROOM_CITY,
   SHOWROOM_EMAIL,
+  SHOWROOM_LAT,
+  SHOWROOM_LNG,
+  SHOWROOM_OPENING,
   SHOWROOM_PHONE,
+  SHOWROOM_POSTAL,
+  SHOWROOM_REGION,
+  SHOWROOM_STREET,
   RESCUE_HOTLINE,
-} from "../apps/webclient/src/lib/contact.ts";
+  getShowroomSameAs,
+} from "../apps/webclient/src/lib/dealership.ts";
 import { getCarGallery } from "../apps/webclient/src/lib/vinfast-galleries.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -323,8 +332,23 @@ async function seedSiteSettings() {
         defaultOgImage: "/images/cars/oto-hero.webp",
         robots: { index: true, follow: true },
         organization: {
-          name: "Vinfast 3S Cà Mau",
+          name: SCHEMA_BUSINESS_NAME,
+          legalName: SCHEMA_BUSINESS_NAME,
           url: "https://vinfast3scamau.com",
+          telephone: SHOWROOM_PHONE,
+          email: SHOWROOM_EMAIL,
+          address: SHOWROOM_ADDRESS,
+          streetAddress: SHOWROOM_STREET,
+          addressLocality: SHOWROOM_CITY,
+          addressRegion: SHOWROOM_REGION,
+          postalCode: SHOWROOM_POSTAL,
+          geo: { latitude: SHOWROOM_LAT, longitude: SHOWROOM_LNG },
+          openingHours: {
+            opens: SHOWROOM_OPENING.opens,
+            closes: SHOWROOM_OPENING.closes,
+            days: [...SHOWROOM_OPENING.days],
+          },
+          sameAs: getShowroomSameAs(),
         },
       },
     },

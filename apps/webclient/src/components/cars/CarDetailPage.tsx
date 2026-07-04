@@ -42,7 +42,6 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
 import {
@@ -891,7 +890,6 @@ export default function CarDetailPage({
 
       {!embedded ? (
         <>
-          <Footer />
           <FloatingButtons />
 
           {/* Mobile sticky bar */}

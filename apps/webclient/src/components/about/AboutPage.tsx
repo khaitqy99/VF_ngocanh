@@ -20,8 +20,9 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
+import { type DealershipContact } from "@/lib/dealership";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -157,7 +158,7 @@ const ABOUT_CTA_SLIDES: FeatureCarouselSlide[] = [
   },
 ];
 
-export default function AboutPage() {
+export default function AboutPage({ contact }: { contact: DealershipContact }) {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
       <Header />
@@ -168,10 +169,10 @@ export default function AboutPage() {
         <MissionSection />
         <TimelineSection />
         <WhyChooseSection />
+        <ShowroomLocationSection className="section-y bg-slate-50" contact={contact} />
         <CtaBanner />
       </main>
 
-      <Footer />
       <FloatingButtons />
     </div>
   );

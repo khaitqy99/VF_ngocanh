@@ -18,6 +18,31 @@ export type SeoRecord = {
   noindex?: boolean;
 };
 
+export type OrganizationSettings = {
+  name?: string;
+  legalName?: string;
+  url?: string;
+  logo?: string;
+  telephone?: string;
+  email?: string;
+  /** Full formatted address (display) */
+  address?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
+  geo?: {
+    latitude?: number;
+    longitude?: number;
+  };
+  openingHours?: {
+    opens?: string;
+    closes?: string;
+    days?: string[];
+  };
+  sameAs?: string[];
+};
+
 export type SiteSeoSettings = {
   siteName?: string;
   titleTemplate?: string;
@@ -27,15 +52,7 @@ export type SiteSeoSettings = {
   defaultOgDescription?: string;
   defaultOgImage?: string;
   robots?: SeoRobots;
-  organization?: {
-    name?: string;
-    legalName?: string;
-    url?: string;
-    logo?: string;
-    telephone?: string;
-    email?: string;
-    address?: string;
-  };
+  organization?: OrganizationSettings;
 };
 
 export type StaticPageSeoDefinition = {
@@ -59,7 +76,7 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     group: "core",
     defaultTitle: "Vinfast 3S Cà Mau — Đại lý VinFast chính hãng",
     defaultDescription:
-      "Vinfast 3S Cà Mau — Khám phá ô tô điện, xe máy điện VinFast với ưu đãi hấp dẫn, hỗ trợ trả góp và dịch vụ hậu mãi tại Cà Mau.",
+      "VF Ngọc Anh — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện VinFast với ưu đãi hấp dẫn, hỗ trợ trả góp và dịch vụ hậu mãi tại Cà Mau.",
     defaultOgImage: "/images/cars/oto-hero.webp",
   },
   {
@@ -69,7 +86,7 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     group: "core",
     defaultTitle: "Giới thiệu Vinfast 3S Cà Mau",
     defaultDescription:
-      "Tìm hiểu về Vinfast 3S Cà Mau — đại lý ủy quyền chính thức VinFast. Sứ mệnh, tầm nhìn và dịch vụ chuyên nghiệp.",
+      "VF Ngọc Anh — Vinfast 3S Cà Mau. Tìm hiểu đại lý ủy quyền VinFast tại Cà Mau — sứ mệnh, tầm nhìn và dịch vụ 3S chuyên nghiệp.",
     defaultOgImage: "/images/showroom.webp",
   },
   {

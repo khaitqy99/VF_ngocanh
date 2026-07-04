@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import CarDetailPage from "@/components/cars/CarDetailPage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getCarDetailAccessories, getCarDetailBySlug, getCars } from "@/lib/cms";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
+import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { carDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
@@ -48,15 +50,19 @@ export default async function CarDetailRoute({ params }: Props) {
       availability: "https://schema.org/InStock",
       url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
       priceValidUntil: "2027-12-31",
+      seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
     },
   };
 
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Trang chủ", path: "/" },
+    { name: "Ô tô điện", path: "/oto" },
+    { name: detail.name, path: canonicalPath },
+  ]);
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(carSchema) }}
-      />
+      <JsonLd data={[carSchema, breadcrumb]} />
       <CarDetailPage detail={detail} detailAccessories={detailAccessories} />
     </>
   );

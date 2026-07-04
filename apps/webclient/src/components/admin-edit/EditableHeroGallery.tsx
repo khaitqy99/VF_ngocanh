@@ -123,7 +123,7 @@ export function EditableHeroGallery({
         ) : null}
         <div
           ref={thumbStripRef}
-          className="flex gap-2 overflow-x-auto scroll-smooth px-9 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
+          className="flex gap-2 overflow-x-auto scroll-smooth px-9 py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
         >
           {images.map((img, i) => {
             const thumb = getImageAtPath(edit?.values, `${path}.${i}`, img);
