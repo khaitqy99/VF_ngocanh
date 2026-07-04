@@ -25,6 +25,8 @@ const SITE_KEYWORDS = [
   "showroom VinFast Cà Mau",
 ];
 
+const GOOGLE_SITE_VERIFICATION = "sxgFg7V_2_LtDK9QCin2ka8viud2xHBRLTD";
+
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSeo();
   const resolved = resolveSeoContent(
@@ -38,7 +40,6 @@ export async function generateMetadata(): Promise<Metadata> {
     site,
   );
   const meta = seoToNextMetadata(resolved, site);
-  const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 
   return {
     ...meta,
@@ -65,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: "/favicon.png",
       apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
-    ...(googleVerification ? { verification: { google: googleVerification } } : {}),
+    verification: { google: GOOGLE_SITE_VERIFICATION },
   };
 }
 
