@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { CarPreviewClient } from "@/components/admin-edit/CarPreviewClient";
+import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
+import { PreviewCarDetail } from "@/components/admin-edit/PreviewEditViews";
 import { getCarDetailBySlug } from "@/lib/cms";
 import { previewNoindexMetadata } from "@/lib/seo";
-import { verifyPreviewEditToken } from "@/lib/preview-edit-token";
+import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ edit_token?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -16,19 +17,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return previewNoindexMetadata(`Preview — ${slug}`);
 }
 
-export default async function CarPreviewRoute({ params, searchParams }: Props) {
+export default async function CarPreviewRoute({ params }: Props) {
   const { slug } = await params;
-  const { edit_token } = await searchParams;
-  const previewPath = `/oto/${slug}/preview`;
-  const adminEdit = verifyPreviewEditToken(previewPath, edit_token);
+  const referer = (await headers()).get("referer");
+  const serverAllowed = canEnablePreviewEdit({ referer });
   const detail = await getCarDetailBySlug(slug);
   if (!detail) notFound();
 
   return (
-    <CarPreviewClient
-      detail={detail}
-      admin={adminEdit}
-      editToken={adminEdit ? (edit_token ?? null) : null}
-    />
+    <PreviewEditScopeProvider scope="oto" serverAllowed={serverAllowed}>
+      <PreviewCarDetail detail={detail} />
+    </PreviewEditScopeProvider>
   );
 }

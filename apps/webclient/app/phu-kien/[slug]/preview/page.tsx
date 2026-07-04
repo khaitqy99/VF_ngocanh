@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
-import AccessoryDetailPage from "@/components/accessories/AccessoryDetailPage";
-import { PreviewEditTokenProvider } from "@/components/admin-edit/PreviewEditTokenContext";
+import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
+import { PreviewAccessoryDetail } from "@/components/admin-edit/PreviewEditViews";
 import { getAccessoryBySlugOrId } from "@/lib/cms";
 import { previewNoindexMetadata } from "@/lib/seo";
-import { verifyPreviewEditToken } from "@/lib/preview-edit-token";
+import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ edit_token?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -17,17 +17,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return previewNoindexMetadata(`Preview — ${slug}`);
 }
 
-export default async function AccessoryPreviewRoute({ params, searchParams }: Props) {
+export default async function AccessoryPreviewRoute({ params }: Props) {
   const { slug } = await params;
-  const { edit_token } = await searchParams;
-  const previewPath = `/phu-kien/${slug}/preview`;
-  const adminEdit = verifyPreviewEditToken(previewPath, edit_token);
+  const referer = (await headers()).get("referer");
+  const serverAllowed = canEnablePreviewEdit({ referer });
   const product = await getAccessoryBySlugOrId(slug);
   if (!product) notFound();
 
   return (
-    <PreviewEditTokenProvider token={adminEdit ? (edit_token ?? null) : null}>
-      <AccessoryDetailPage product={product} embedded adminEdit={adminEdit} />
-    </PreviewEditTokenProvider>
+    <PreviewEditScopeProvider scope="phu-kien" serverAllowed={serverAllowed}>
+      <PreviewAccessoryDetail product={product} />
+    </PreviewEditScopeProvider>
   );
 }

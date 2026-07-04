@@ -12,7 +12,7 @@ export async function generateStaticParams() {
 export default async function CarEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const detail = await getAdminCarDetail(id);
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   if (!detail) {
     return (

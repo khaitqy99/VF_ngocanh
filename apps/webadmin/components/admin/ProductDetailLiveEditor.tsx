@@ -60,13 +60,9 @@ export function ProductDetailLiveEditor({
   editorHint?: string;
 }) {
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const iframeSrc = `${siteUrl}${previewPath}`;
   const { toast } = useToast();
   const [iframeKey, setIframeKey] = useState(0);
-  const [iframePreviewUrl, setIframePreviewUrl] = useState<string | null>(
-    inlineEdit ? null : `${siteUrl}${previewPath}`,
-  );
-  const [previewLoading, setPreviewLoading] = useState(inlineEdit);
-  const [previewError, setPreviewError] = useState<string | null>(null);
   const [statusUpdating, setStatusUpdating] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [imagePicker, setImagePicker] = useState<{
@@ -80,48 +76,9 @@ export function ProductDetailLiveEditor({
   const { productId, productType } = parsePreviewEditorPath(previewPath);
   const canManageStatus = Boolean(productId && productType);
 
-  useEffect(() => {
-    if (!inlineEdit) {
-      setIframePreviewUrl(`${siteUrl}${previewPath}`);
-      setPreviewLoading(false);
-      setPreviewError(null);
-      return;
-    }
-
-    let cancelled = false;
-    setPreviewLoading(true);
-    setPreviewError(null);
-
-    fetch(`/api/preview-edit-url?path=${encodeURIComponent(previewPath)}`, {
-      credentials: "include",
-    })
-      .then(async (res) => {
-        const data = (await res.json()) as { url?: string; error?: string };
-        if (cancelled) return;
-        if (!res.ok || !data.url) {
-          setPreviewError(
-            data.error ??
-              "Không tạo được link chỉnh sửa. Kiểm tra REVALIDATION_SECRET trên Vercel (admin + webclient).",
-          );
-          setIframePreviewUrl(`${siteUrl}${previewPath}`);
-          return;
-        }
-        setIframePreviewUrl(data.url);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setPreviewError("Không kết nối được API preview trên admin.");
-          setIframePreviewUrl(`${siteUrl}${previewPath}`);
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setPreviewLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [previewPath, inlineEdit, siteUrl, iframeKey]);
+  const notifyIframeEditMode = () => {
+    iframeRef.current?.contentWindow?.postMessage({ type: "vf-admin-enable-edit" }, siteUrl);
+  };
 
   const handleStatusUpdate = async (status: "draft" | "published" | "archived") => {
     if (!productId || !productType || statusUpdating) return;
@@ -294,12 +251,6 @@ export function ProductDetailLiveEditor({
         </div>
       </div>
 
-      {previewError ? (
-        <p className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs text-amber-900">
-          {previewError}
-        </p>
-      ) : null}
-
       {inlineEdit ? (
         <p className="shrink-0 border-b border-zinc-100 bg-zinc-50 px-4 py-1.5 text-center text-xs text-zinc-500">
           {editorHint ??
@@ -307,19 +258,14 @@ export function ProductDetailLiveEditor({
         </p>
       ) : null}
 
-      {previewLoading || !iframePreviewUrl ? (
-        <div className="flex min-h-0 flex-1 items-center justify-center bg-zinc-50 text-sm text-zinc-500">
-          Đang tải preview chỉnh sửa...
-        </div>
-      ) : (
-        <iframe
-          ref={iframeRef}
-          key={iframeKey}
-          title={`Xem trước ${productName}`}
-          src={iframePreviewUrl}
-          className="min-h-0 w-full flex-1 border-0 bg-white"
-        />
-      )}
+      <iframe
+        ref={iframeRef}
+        key={iframeKey}
+        title={`Xem trước ${productName}`}
+        src={iframeSrc}
+        onLoad={inlineEdit ? notifyIframeEditMode : undefined}
+        className="min-h-0 w-full flex-1 border-0 bg-white"
+      />
 
       {imagePicker ? (
         <MediaLibraryPicker

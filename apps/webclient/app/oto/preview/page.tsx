@@ -1,29 +1,23 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { getBanners, getCars } from "@/lib/cms";
-import { PreviewEditTokenProvider } from "@/components/admin-edit/PreviewEditTokenContext";
+import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
+import { PreviewCarsPage } from "@/components/admin-edit/PreviewEditViews";
 import { previewNoindexMetadata } from "@/lib/seo";
-import { verifyPreviewEditToken } from "@/lib/preview-edit-token";
-
-import CarsPage from "@/components/cars/CarsPage";
-
-const PREVIEW_PATH = "/oto/preview";
-
-type Props = {
-  searchParams: Promise<{ edit_token?: string }>;
-};
+import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
 
 export async function generateMetadata(): Promise<Metadata> {
   return previewNoindexMetadata("Preview catalog — Ô tô");
 }
 
-export default async function OtoCatalogPreviewRoute({ searchParams }: Props) {
-  const { edit_token } = await searchParams;
-  const adminEdit = verifyPreviewEditToken(PREVIEW_PATH, edit_token);
+export default async function OtoCatalogPreviewRoute() {
+  const referer = (await headers()).get("referer");
+  const serverAllowed = canEnablePreviewEdit({ referer });
   const [cars, heroBanners] = await Promise.all([getCars(), getBanners("cars")]);
 
   return (
-    <PreviewEditTokenProvider token={adminEdit ? (edit_token ?? null) : null}>
-      <CarsPage cars={cars} heroBanners={heroBanners} embedded={adminEdit} adminEdit={adminEdit} />
-    </PreviewEditTokenProvider>
+    <PreviewEditScopeProvider scope="oto" serverAllowed={serverAllowed}>
+      <PreviewCarsPage cars={cars} heroBanners={heroBanners} />
+    </PreviewEditScopeProvider>
   );
 }

@@ -2,7 +2,6 @@
 
 import CarDetailPage from "@/components/cars/CarDetailPage";
 import { CarAdminEditProvider, useAdminEdit } from "@/components/admin-edit/AdminEditContext";
-import { PreviewEditTokenProvider } from "@/components/admin-edit/PreviewEditTokenContext";
 import type { CarDetail } from "@/lib/car-details";
 
 function MergedCarDetailPage({ detail }: { detail: CarDetail }) {
@@ -11,22 +10,12 @@ function MergedCarDetailPage({ detail }: { detail: CarDetail }) {
   return <CarDetailPage detail={merged} embedded adminEdit />;
 }
 
-export function CarPreviewClient({
-  detail,
-  admin,
-  editToken = null,
-}: {
-  detail: CarDetail;
-  admin?: boolean;
-  editToken?: string | null;
-}) {
+export function CarPreviewClient({ detail, admin }: { detail: CarDetail; admin?: boolean }) {
   if (admin) {
     return (
-      <PreviewEditTokenProvider token={editToken}>
-        <CarAdminEditProvider detail={detail}>
-          <MergedCarDetailPage detail={detail} />
-        </CarAdminEditProvider>
-      </PreviewEditTokenProvider>
+      <CarAdminEditProvider detail={detail}>
+        <MergedCarDetailPage detail={detail} />
+      </CarAdminEditProvider>
     );
   }
 

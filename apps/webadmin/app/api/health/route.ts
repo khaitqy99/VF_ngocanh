@@ -35,11 +35,8 @@ export async function GET() {
       publicApi: publicError ? { ok: false, error: publicError.message } : { ok: true },
       adminApi: { ok: adminOk, message: adminMessage },
       urls: {
-        client: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
-        admin: (process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001").replace(/\/$/, ""),
-      },
-      previewEdit: {
-        secretConfigured: Boolean(process.env.REVALIDATION_SECRET ?? process.env.PREVIEW_EDIT_SECRET),
+        client: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+        admin: process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001",
       },
     });
   } catch (error) {

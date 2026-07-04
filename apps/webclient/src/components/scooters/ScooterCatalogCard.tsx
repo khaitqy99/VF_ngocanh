@@ -13,10 +13,6 @@ import {
 } from "@/components/admin-edit/admin-form-styles";
 import { formatPrice, type ScooterModel } from "@/lib/scooters";
 import { scooterDetailPath } from "@/lib/seo/slugs";
-import {
-  previewHrefWithToken,
-  usePreviewEditToken,
-} from "@/components/admin-edit/PreviewEditTokenContext";
 import { vfCatalogCardTitle } from "@/lib/typography";
 
 export function ScooterCatalogCard({
@@ -32,7 +28,6 @@ export function ScooterCatalogCard({
   onBookDrive: () => void;
   onEstimatePrice: () => void;
 }) {
-  const editToken = usePreviewEditToken();
   const [draft, setDraft] = useState(scooter);
 
   const hasUnsavedChanges = useMemo(
@@ -213,8 +208,7 @@ export function ScooterCatalogCard({
           </div>
 
           <Link
-            href={previewHrefWithToken(`${scooterDetailPath(scooter)}/preview`, editToken)}
-            target="_blank"
+            href={`${scooterDetailPath(scooter)}/preview`}
             className="block text-center text-[10px] font-bold text-brand hover:underline"
           >
             Sửa trang chi tiết →

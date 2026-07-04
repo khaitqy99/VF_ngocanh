@@ -27,7 +27,6 @@
       "@/lib/media-library": ["./lib/media-library.ts"],
       "@/lib/product-utils": ["./lib/product-utils.ts"],
       "@/lib/revalidate-webclient": ["./lib/revalidate-webclient.ts"],
-      "@/lib/preview-edit-url": ["./lib/preview-edit-url.ts"],
       "@/lib/seo-revalidate": ["./lib/seo-revalidate.ts"],
       "@/lib/*": ["../webclient/src/lib/*"],
       "@/*": ["./*"],

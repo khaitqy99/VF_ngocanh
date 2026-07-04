@@ -19,10 +19,6 @@ import {
 } from "@/components/admin-edit/admin-form-styles";
 import { accessoryDetailPath } from "@/lib/seo/slugs";
 import {
-  previewHrefWithToken,
-  usePreviewEditToken,
-} from "@/components/admin-edit/PreviewEditTokenContext";
-import {
   CATEGORY_OPTIONS,
   formatPrice,
   getCategoryLabel,
@@ -40,7 +36,6 @@ export function AccessoryProductCard({
   className?: string;
   adminEdit?: boolean;
 }) {
-  const editToken = usePreviewEditToken();
   const [draft, setDraft] = useState(product);
 
   const hasUnsavedChanges = useMemo(
@@ -246,8 +241,7 @@ export function AccessoryProductCard({
           </div>
 
           <Link
-            href={previewHrefWithToken(`${accessoryDetailPath(product)}/preview`, editToken)}
-            target="_blank"
+            href={`${accessoryDetailPath(product)}/preview`}
             className="block text-center text-[10px] font-bold text-brand hover:underline"
           >
             Sửa trang chi tiết →
