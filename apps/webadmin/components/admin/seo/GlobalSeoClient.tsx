@@ -253,6 +253,30 @@ export function GlobalSeoClient() {
           />
           <div className="md:col-span-2">
             <label className="mb-1 block text-xs font-semibold">
+              Ngày mở cửa (cách nhau bằng dấu phẩy, tiếng Anh)
+            </label>
+            <Input
+              value={(settings.organization?.openingHours?.days ?? []).join(", ")}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  organization: {
+                    ...s.organization,
+                    openingHours: {
+                      ...s.organization?.openingHours,
+                      days: e.target.value
+                        .split(",")
+                        .map((day) => day.trim())
+                        .filter(Boolean),
+                    },
+                  },
+                }))
+              }
+              placeholder="Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
+            />
+          </div>
+          <div className="md:col-span-2">
+            <label className="mb-1 block text-xs font-semibold">
               sameAs — link Google Maps, Facebook, Zalo (mỗi dòng một URL)
             </label>
             <Textarea

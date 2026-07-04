@@ -6,8 +6,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getScooterDetailAccessories, getScooterDetailBySlug, getScooters } from "@/lib/cms";
 import { buildScooterMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
+import { buildMotorcycleSchema } from "@/lib/seo/product-schema";
 import { resolveProductSlug, scooterDetailPath, isReservedProductSlug } from "@/lib/seo/slugs";
-import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 120;
 
@@ -35,23 +35,7 @@ export default async function ScooterDetailRoute({ params }: Props) {
   if (!detail) notFound();
 
   const canonicalPath = scooterDetailPath({ id: detail.id, slug });
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: `VinFast ${detail.name}`,
-    image: detail.image.startsWith("http") ? detail.image : `${PRODUCTION_SITE_URL}${detail.image}`,
-    description: `${detail.slogan} — ${detail.tagline}`,
-    brand: { "@type": "Brand", name: "VinFast" },
-    offers: {
-      "@type": "Offer",
-      price: detail.price,
-      priceCurrency: "VND",
-      availability: "https://schema.org/InStock",
-      url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
-      priceValidUntil: "2027-12-31",
-      seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
-    },
-  };
+  const motorcycleSchema = buildMotorcycleSchema(detail, canonicalPath);
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },
@@ -61,7 +45,7 @@ export default async function ScooterDetailRoute({ params }: Props) {
 
   return (
     <>
-      <JsonLd data={[productSchema, breadcrumb]} />
+      <JsonLd data={[motorcycleSchema, breadcrumb]} />
       <ScooterDetailPage detail={detail} detailAccessories={detailAccessories} />
     </>
   );

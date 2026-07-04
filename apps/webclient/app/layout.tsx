@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import SiteFooter from "@/components/site/SiteFooter";
+import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { seoToNextMetadata, resolveSeoContent } from "@/lib/seo";
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="vi" suppressHydrationWarning>
       <body className={`${plusJakartaSans.variable} font-sans antialiased`}>
+        <GoogleAnalytics />
         {children}
         <SiteFooter />
       </body>

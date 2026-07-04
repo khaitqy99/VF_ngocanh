@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 import Header from "@/components/site/Header";
+import FaqSection from "@/components/site/FaqSection";
 import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { type DealershipContact } from "@/lib/dealership";
@@ -99,6 +100,7 @@ export default function HomePage({
         <BrandStory />
         <ShowroomCommunity />
         <Newsletter />
+        <FaqSection />
         <ShowroomLocationSection contact={contact} />
       </main>
       <FloatingButtons />

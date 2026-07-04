@@ -6,7 +6,12 @@ import { getHomeData } from "@/lib/cms";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { resolveDealershipContact } from "@/lib/dealership";
 import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
-import { buildAutoDealerSchema, buildWebSiteSchema } from "@/lib/seo/local-business";
+import {
+  buildAutoDealerSchema,
+  buildFaqPageSchema,
+  buildWebSiteSchema,
+} from "@/lib/seo/local-business";
+import { DEALERSHIP_FAQ } from "@/lib/faq";
 
 export const revalidate = 120;
 
@@ -19,7 +24,13 @@ export default async function Page() {
 
   return (
     <>
-      <JsonLd data={[buildWebSiteSchema(site), buildAutoDealerSchema(site)]} />
+      <JsonLd
+        data={[
+          buildWebSiteSchema(site),
+          buildAutoDealerSchema(site),
+          buildFaqPageSchema(DEALERSHIP_FAQ),
+        ]}
+      />
       <HomePage
         heroBanners={home.heroBanners}
         featuredCars={home.featuredCars}

@@ -4,7 +4,7 @@ import AboutPage from "@/components/about/AboutPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { resolveDealershipContact } from "@/lib/dealership";
-import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "@/lib/seo/local-business";
 import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,7 +21,7 @@ export default async function GioiThieuPage() {
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, buildLocalBusinessSchema(site)]} />
       <AboutPage contact={contact} />
     </>
   );

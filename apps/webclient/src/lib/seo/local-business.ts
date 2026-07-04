@@ -126,3 +126,29 @@ export function buildItemListSchema({
     })),
   };
 }
+
+export function buildLocalBusinessSchema(site?: SiteSeoSettings | null) {
+  const base = buildAutoDealerSchema(site);
+  return {
+    ...base,
+    "@type": "LocalBusiness",
+    "@id": `${PRODUCTION_SITE_URL}/gioi-thieu#business`,
+    description:
+      "VF Ngọc Anh — Đại lý VinFast 3S chính thức tại Cà Mau, cung cấp ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi.",
+  };
+}
+
+export function buildFaqPageSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
