@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { CarEditClient } from "@/components/admin/CarEditClient";
 import { getAdminCarDetail, getAdminCars } from "@/lib/cms-data";
-import { buildPreviewEditUrl } from "@/lib/preview-edit-url";
-import { resolveProductSlug } from "@/lib/seo/slugs";
 
 export const revalidate = 60;
 
@@ -14,7 +12,7 @@ export async function generateStaticParams() {
 export default async function CarEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const detail = await getAdminCarDetail(id);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
   if (!detail) {
     return (
@@ -27,8 +25,5 @@ export default async function CarEditPage({ params }: { params: Promise<{ id: st
     );
   }
 
-  const slug = resolveProductSlug({ id, slug: undefined }, "car");
-  const previewUrl = buildPreviewEditUrl(siteUrl, `/oto/${slug}/preview`);
-
-  return <CarEditClient detail={detail} id={id} siteUrl={siteUrl} previewUrl={previewUrl} />;
+  return <CarEditClient detail={detail} id={id} siteUrl={siteUrl} />;
 }

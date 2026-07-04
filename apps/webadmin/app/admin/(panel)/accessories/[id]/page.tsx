@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { AccessoryEditClient } from "@/components/admin/AccessoryEditClient";
 import { getAdminAccessoryById, getAdminAccessories } from "@/lib/cms-data";
-import { buildPreviewEditUrl } from "@/lib/preview-edit-url";
-import { resolveProductSlug } from "@/lib/seo/slugs";
 
 export const revalidate = 60;
 
@@ -14,7 +12,7 @@ export async function generateStaticParams() {
 export default async function AccessoryEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const acc = await getAdminAccessoryById(id);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
   if (!acc) {
     return (
@@ -27,8 +25,5 @@ export default async function AccessoryEditPage({ params }: { params: Promise<{ 
     );
   }
 
-  const slug = resolveProductSlug({ id: acc.id, slug: undefined }, "accessory", acc.name);
-  const previewUrl = buildPreviewEditUrl(siteUrl, `/phu-kien/${slug}/preview`);
-
-  return <AccessoryEditClient product={acc} siteUrl={siteUrl} previewUrl={previewUrl} />;
+  return <AccessoryEditClient product={acc} siteUrl={siteUrl} />;
 }

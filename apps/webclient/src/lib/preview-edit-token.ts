@@ -63,9 +63,11 @@ export function previewScopeFromPath(previewPath: string): string {
 }
 
 export function buildPreviewEditUrl(siteUrl: string, previewPath: string): string {
-  const scope = previewScopeFromPath(previewPath);
+  const base = siteUrl.replace(/\/$/, "");
+  const path = previewPath.startsWith("/") ? previewPath : `/${previewPath}`;
+  const scope = previewScopeFromPath(path);
   const token = createPreviewEditToken(scope);
-  if (!token) return `${siteUrl}${previewPath}`;
-  const joiner = previewPath.includes("?") ? "&" : "?";
-  return `${siteUrl}${previewPath}${joiner}edit_token=${encodeURIComponent(token)}`;
+  if (!token) return `${base}${path}`;
+  const joiner = path.includes("?") ? "&" : "?";
+  return `${base}${path}${joiner}edit_token=${encodeURIComponent(token)}`;
 }

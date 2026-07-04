@@ -11,12 +11,10 @@ export function CarEditClient({
   detail,
   id,
   siteUrl,
-  previewUrl,
 }: {
   detail: CarDetail;
   id: string;
   siteUrl: string;
-  previewUrl: string;
 }) {
   const [tab, setTab] = useState<"preview" | "seo">("preview");
   const slug = resolveProductSlug({ id, slug: undefined }, "car");
@@ -53,7 +51,6 @@ export function CarEditClient({
           listLabel="Ô tô"
           productName={detail.name}
           previewPath={`/oto/${slug}/preview`}
-          previewUrl={previewUrl}
           publicHref={`${siteUrl}${carDetailPath({ id, slug })}`}
           mediaCategory="cars"
           mediaSlug={id}
