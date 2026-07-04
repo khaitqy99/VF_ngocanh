@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-import type { PreviewEditScope } from "@/lib/preview-edit-token";
+import { getAdminAppUrl, type PreviewEditScope } from "@/lib/preview-edit-token";
 
 const STORAGE_PREFIX = "vf-preview-edit:";
 const SESSION_MS = 60 * 60 * 1000;
@@ -55,7 +55,7 @@ export function PreviewEditScopeProvider({
   }, [serverAllowed, scope]);
 
   useEffect(() => {
-    const adminBase = process.env.NEXT_PUBLIC_ADMIN_URL?.replace(/\/$/, "");
+    const adminBase = getAdminAppUrl();
     if (!adminBase) return;
 
     let adminOrigin: string;
@@ -73,6 +73,11 @@ export function PreviewEditScopeProvider({
     };
 
     window.addEventListener("message", onMessage);
+
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: "vf-preview-ready" }, adminOrigin);
+    }
+
     return () => window.removeEventListener("message", onMessage);
   }, [scope]);
 

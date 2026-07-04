@@ -1,6 +1,19 @@
+/** URL admin CMS — fallback production nếu env chưa khai báo trên webclient Vercel. */
+export function getAdminAppUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_ADMIN_URL?.replace(/\/$/, "");
+  if (configured) return configured;
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  if (siteUrl.includes("vinfast3scamau.com")) {
+    return "https://cms.vinfast3scamau.com";
+  }
+
+  return "";
+}
+
 /** Bật sửa preview chỉ khi iframe được mở từ admin CMS. */
 export function canEnablePreviewEdit(options: { referer?: string | null }): boolean {
-  const adminBase = process.env.NEXT_PUBLIC_ADMIN_URL?.replace(/\/$/, "");
+  const adminBase = getAdminAppUrl();
   const referer = options.referer ?? "";
   if (adminBase && referer.startsWith(adminBase)) {
     return true;

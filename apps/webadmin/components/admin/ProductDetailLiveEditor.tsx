@@ -80,6 +80,34 @@ export function ProductDetailLiveEditor({
     iframeRef.current?.contentWindow?.postMessage({ type: "vf-admin-enable-edit" }, siteUrl);
   };
 
+  useEffect(() => {
+    if (!inlineEdit) return;
+
+    let siteOrigin: string;
+    try {
+      siteOrigin = new URL(siteUrl).origin;
+    } catch {
+      return;
+    }
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== siteOrigin) return;
+      if (event.data?.type !== "vf-preview-ready") return;
+      notifyIframeEditMode();
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [inlineEdit, siteUrl, iframeKey]);
+
+  const handleIframeLoad = () => {
+    if (!inlineEdit) return;
+    notifyIframeEditMode();
+    for (const delay of [300, 800, 1500]) {
+      window.setTimeout(notifyIframeEditMode, delay);
+    }
+  };
+
   const handleStatusUpdate = async (status: "draft" | "published" | "archived") => {
     if (!productId || !productType || statusUpdating) return;
     setStatusUpdating(true);
@@ -263,7 +291,7 @@ export function ProductDetailLiveEditor({
         key={iframeKey}
         title={`Xem trước ${productName}`}
         src={iframeSrc}
-        onLoad={inlineEdit ? notifyIframeEditMode : undefined}
+        onLoad={inlineEdit ? handleIframeLoad : undefined}
         className="min-h-0 w-full flex-1 border-0 bg-white"
       />
 
