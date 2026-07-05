@@ -278,26 +278,30 @@ export const getHomeData = unstable_cache(
 export async function getCarDetailAccessories(carId: string): Promise<AccessoryProduct[]> {
   const all = await getAccessories();
   const normalized = carId.replace(/-all-new$/, "").replace(/^vf/, "vf");
-  return all.filter((item) => {
-    if (!item.vehicles?.length || item.vehicles.includes("all")) return true;
-    return item.vehicles.some(
-      (v) => v === carId || v === normalized || carId.includes(v) || v.includes(carId),
-    );
-  });
+  return all
+    .filter((item) => {
+      if (!item.vehicles?.length || item.vehicles.includes("all")) return true;
+      return item.vehicles.some(
+        (v) => v === carId || v === normalized || carId.includes(v) || v.includes(carId),
+      );
+    })
+    .slice(0, 4);
 }
 
 export async function getScooterDetailAccessories(): Promise<AccessoryProduct[]> {
   const all = await getAccessories();
-  return all.filter(
-    (item) =>
-      !item.vehicles?.length ||
-      item.vehicles.includes("all") ||
-      item.vehicles.some((v) =>
-        ["flazz", "evo", "feliz", "vero", "amio", "viper", "zgoo", "drgnfly"].some((k) =>
-          v.includes(k),
+  return all
+    .filter(
+      (item) =>
+        !item.vehicles?.length ||
+        item.vehicles.includes("all") ||
+        item.vehicles.some((v) =>
+          ["flazz", "evo", "feliz", "vero", "amio", "viper", "zgoo", "drgnfly"].some((k) =>
+            v.includes(k),
+          ),
         ),
-      ),
-  );
+    )
+    .slice(0, 4);
 }
 
 export { getSiteSeo, getPageSeo, CMS_SEO_TAG } from "./seo";

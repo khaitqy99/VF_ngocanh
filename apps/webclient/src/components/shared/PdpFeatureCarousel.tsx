@@ -48,7 +48,7 @@ export function PdpFeatureCarousel({
       ? "bg-gradient-to-br from-[#0a1628] via-[#0f1f3d] to-[#0a1628] text-white"
       : variant === "warm"
         ? "bg-gradient-to-br from-amber-50/80 via-white to-orange-50/40"
-        : "bg-gradient-to-br from-[#f4f6fa] via-[#f8f9fc] to-white";
+        : "home-feature-surface";
 
   const textMuted = variant === "dark" ? "text-white/70" : "text-muted-foreground";
   const titleColor = variant === "dark" ? "text-white" : "text-brand-dark";

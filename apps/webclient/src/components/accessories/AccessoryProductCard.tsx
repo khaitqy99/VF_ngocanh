@@ -31,10 +31,12 @@ export function AccessoryProductCard({
   product,
   className,
   adminEdit = false,
+  compact = false,
 }: {
   product: AccessoryProduct;
   className?: string;
   adminEdit?: boolean;
+  compact?: boolean;
 }) {
   const [draft, setDraft] = useState(product);
 
@@ -253,7 +255,7 @@ export function AccessoryProductCard({
 
   return (
     <article
-      className={`catalog-card group flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
+      className={`catalog-card group flex h-full flex-col overflow-hidden ${className ?? ""}`}
     >
       <Link href={accessoryDetailPath(product)} className="relative block overflow-hidden">
         <img
@@ -279,24 +281,32 @@ export function AccessoryProductCard({
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 sm:p-4">
+      <div
+        className={`flex flex-1 flex-col ${compact ? "gap-1.5 p-3" : "gap-2 p-3 sm:gap-2.5 sm:p-4"}`}
+      >
         <div className="min-w-0">
           <p className="text-[10px] font-bold tracking-wide text-brand uppercase">
             {getCategoryLabel(product.category)}
           </p>
-          <h3 className={`mt-0.5 line-clamp-2 min-h-[2.5rem] ${vfCatalogCardTitle}`}>
+          <h3
+            className={`mt-0.5 line-clamp-2 ${compact ? "" : "min-h-[2.5rem]"} ${vfCatalogCardTitle}`}
+          >
             <Link href={accessoryDetailPath(product)} className="hover:text-brand">
               {product.name}
             </Link>
           </h3>
-          <p className="mt-1 line-clamp-2 min-h-10 text-[11px] leading-5 text-slate-500">
-            {product.description}
-          </p>
+          {!compact ? (
+            <p className="mt-1 line-clamp-2 min-h-10 text-[11px] leading-5 text-slate-500">
+              {product.description}
+            </p>
+          ) : null}
         </div>
 
-        <p className="line-clamp-1 min-h-4 text-[10px] font-semibold text-slate-500">
-          Dòng xe: {getVehicleLabels(product.vehicles)}
-        </p>
+        {!compact ? (
+          <p className="line-clamp-1 min-h-4 text-[10px] font-semibold text-slate-500">
+            Dòng xe: {getVehicleLabels(product.vehicles)}
+          </p>
+        ) : null}
 
         <div className="mt-auto space-y-2 border-t border-slate-100 pt-2.5">
           <div>
@@ -309,7 +319,7 @@ export function AccessoryProductCard({
 
           <Link
             href={accessoryDetailPath(product)}
-            className="flex w-full items-center justify-center gap-1.5 rounded border border-slate-200 py-2.5 text-[10px] font-extrabold text-slate-600 transition hover:border-brand hover:text-brand sm:text-[11px]"
+            className="flex w-full items-center justify-center gap-1.5 rounded-full border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-600 transition hover:border-brand hover:text-brand sm:text-[11px]"
           >
             XEM CHI TIẾT
             <ArrowRight className="size-3.5" />

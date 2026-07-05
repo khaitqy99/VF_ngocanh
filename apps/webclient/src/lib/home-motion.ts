@@ -11,8 +11,8 @@ import {
 
 export const homeViewport = {
   once: true,
-  amount: 0.18,
-  margin: "0px 0px -64px 0px",
+  amount: 0.12,
+  margin: "0px 0px -24px 0px",
 } as const;
 
 export const homeHeroDot = {
@@ -51,12 +51,11 @@ export const homeHeroSlide = {
 };
 
 export const homeSectionTitle: Variants = {
-  hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: DURATION.slow, ease: EASE_OUT_EXPO },
+    transition: { duration: DURATION.subtle, ease: EASE_OUT_EXPO },
   },
 };
 
@@ -134,13 +133,13 @@ export const homeSpecItem: Variants = {
 };
 
 export const homeCardReveal: Variants = {
-  hidden: { opacity: 0, y: 36, scale: 0.97 },
+  hidden: { opacity: 0, y: 16, scale: 0.98 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: DURATION.normal,
+      duration: DURATION.subtle,
       ease: EASE_OUT_EXPO,
       delay: i * STAGGER_STEP,
     },

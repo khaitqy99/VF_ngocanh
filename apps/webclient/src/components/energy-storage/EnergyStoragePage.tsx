@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
+
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import {
   Battery,
   Zap,
@@ -36,6 +38,10 @@ import {
 
 import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
+import { PageEditorialHero } from "@/components/shared/PageEditorialHero";
+import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
+import { FaqBlock } from "@/components/shared/FaqBlock";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -55,7 +61,6 @@ import {
   ENERGY_FAQS,
 } from "@/lib/energy-storage";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
-import { vfCtaHeading, vfSectionHeading, vfSectionHeadingLeft } from "@/lib/typography";
 
 const SOLUTION_ICONS = {
   residential: Home,
@@ -75,6 +80,7 @@ const ELECTRICAL_TIERS = [
 ];
 
 export default function EnergyStoragePage() {
+  const modalMotion = useModalMotion();
   const [isConsultOpen, setIsConsultOpen] = useState(false);
   const [isConsultSuccess, setIsConsultSuccess] = useState(false);
 
@@ -127,7 +133,7 @@ export default function EnergyStoragePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+    <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
       <Header />
 
@@ -139,26 +145,26 @@ export default function EnergyStoragePage() {
         <HeroSection onScrollToBooking={() => setIsConsultOpen(true)} />
 
         {/* Dynamic Navigation Sticky Bar */}
-        <section className="bg-white border-b border-slate-100 py-4 sticky top-14 z-20 shadow-sm">
-          <div className="container-vf flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="text-xs font-black text-brand-dark uppercase tracking-wider">
+        <section className="sticky top-14 z-20 border-b border-slate-100 bg-white py-4 shadow-sm">
+          <div className="container-vf flex flex-col gap-4">
+            <div className="text-xs font-black tracking-wider text-brand-dark uppercase">
               Hệ sinh thái lưu trữ năng lượng VinFast BESS
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
               <button
                 onClick={() =>
                   document
                     .getElementById("saving-calculator")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 py-2.5 text-xs font-extrabold tracking-wider text-white shadow-md transition-all hover:bg-blue-600 sm:w-auto"
               >
-                <Sliders className="size-4 text-accent-yellow animate-pulse" /> DỰ TOÁN TIẾT KIỆM
+                <Sliders className="size-4 animate-pulse text-accent-yellow" /> DỰ TOÁN TIẾT KIỆM
                 ĐIỆN
               </button>
               <button
                 onClick={() => setIsConsultOpen(true)}
-                className="bg-brand-dark hover:bg-brand text-white font-extrabold text-xs tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-dark px-5 py-2.5 text-xs font-extrabold tracking-wider text-white shadow-md transition-all hover:bg-brand sm:w-auto"
               >
                 <Calendar className="size-4 text-brand" /> ĐĂNG KÝ KHẢO SÁT 3D
               </button>
@@ -172,24 +178,17 @@ export default function EnergyStoragePage() {
         {/* Interactive Saving & Payback Estimator Calculator */}
         <section
           id="saving-calculator"
-          className="section-y relative overflow-hidden border-b border-slate-200 bg-white text-slate-800"
+          className="section-y relative overflow-hidden border-b border-border/60 bg-background text-slate-800"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
           <div className="container-vf relative z-10">
-            <div className="max-w-2xl mx-auto text-center mb-12">
-              <span className="bg-brand/10 text-brand px-4 py-1.5 rounded-full text-[10px] font-extrabold tracking-widest uppercase border border-brand/20">
-                Năng lượng tương lai
-              </span>
-              <h2 className={`${vfSectionHeadingLeft} mt-4 uppercase`}>
-                DỰ TOÁN HIỆU QUẢ ĐẦU TƯ & TIẾT KIỆM
-              </h2>
-              <p className="text-slate-500 text-xs md:text-sm mt-3 leading-relaxed">
-                Nhập số tiền điện tiêu thụ trung bình hàng tháng của bạn để tính toán ngay khả năng
-                tiết kiệm chi phí, giảm phát thải carbon CO2 và thời gian hoàn vốn đầu tư hệ thống
-                pin lưu trữ ESS.
-              </p>
-            </div>
+            <SectionHeader
+              align="centered"
+              eyebrow="Năng lượng tương lai"
+              title="Dự toán hiệu quả đầu tư & tiết kiệm"
+              description="Nhập số tiền điện tiêu thụ trung bình hàng tháng của bạn để tính toán ngay khả năng tiết kiệm chi phí, giảm phát thải carbon CO2 và thời gian hoàn vốn đầu tư hệ thống pin lưu trữ ESS."
+            />
 
             <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-5xl mx-auto grid lg:grid-cols-12">
               {/* Inputs Control Side */}
@@ -217,7 +216,7 @@ export default function EnergyStoragePage() {
                     onChange={(e) => setCalcBill(parseInt(e.target.value))}
                     className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand"
                   />
-                  <div className="flex justify-between text-[9px] text-slate-400 font-semibold mt-1">
+                  <div className="flex justify-between text-[11px] text-slate-400 font-semibold mt-1">
                     <span>1.000.000đ</span>
                     <span>10.000.000đ</span>
                     <span>20.000.000đ</span>
@@ -225,7 +224,7 @@ export default function EnergyStoragePage() {
                 </div>
 
                 {/* Solar setup status toggler */}
-                <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl flex items-center justify-between">
+                <div className="bg-surface-muted border border-slate-100 p-4 rounded-xl flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 bg-brand/10 text-brand rounded-lg">
                       <Sun className="size-5" />
@@ -255,7 +254,7 @@ export default function EnergyStoragePage() {
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
                     Cấu hình pin lưu trữ ESS đề xuất
                   </label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                     {[5, 10, 15, 20].map((cap) => (
                       <button
                         key={cap}
@@ -264,7 +263,7 @@ export default function EnergyStoragePage() {
                         className={`py-3 px-2 rounded-xl text-center border text-xs font-black transition-all ${
                           calcCapacity === cap
                             ? "border-brand bg-brand/10 text-brand shadow-md"
-                            : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                            : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                         }`}
                       >
                         {cap} kWh
@@ -278,7 +277,7 @@ export default function EnergyStoragePage() {
               </div>
 
               {/* Estimate Saving Results Side */}
-              <div className="lg:col-span-5 p-6 md:p-8 bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
+              <div className="lg:col-span-5 p-6 md:p-8 bg-surface-muted border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-black border-b border-slate-200 pb-3 text-brand-dark uppercase flex items-center gap-2">
                     <BarChart3 className="size-4 text-brand" /> Phân tích hiệu quả
@@ -298,10 +297,10 @@ export default function EnergyStoragePage() {
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {/* Yearly Savings Block */}
                       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Tiết kiệm / năm
                         </p>
                         <p className="text-base font-black text-brand-dark mt-1">
@@ -314,7 +313,7 @@ export default function EnergyStoragePage() {
 
                       {/* Payback period Block */}
                       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Thời gian hoàn vốn
                         </p>
                         <p className="text-base font-black text-brand mt-1">
@@ -329,7 +328,7 @@ export default function EnergyStoragePage() {
                     {/* CO2 block */}
                     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                       <div>
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Giảm phát thải khí nhà kính
                         </p>
                         <p className="text-base font-black text-brand mt-1">
@@ -386,16 +385,11 @@ export default function EnergyStoragePage() {
       <AnimatePresence>
         {isConsultOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            {...modalMotion.overlay}
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end"
           >
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 200 }}
+              {...modalMotion.drawer}
               className="bg-white border-l border-slate-200 text-slate-800 w-full max-w-md h-full flex flex-col justify-between"
             >
               {/* Modal header */}
@@ -421,11 +415,7 @@ export default function EnergyStoragePage() {
               <div className="p-6 overflow-y-auto flex-1 custom-scrollbar space-y-4">
                 <AnimatePresence mode="wait">
                   {isConsultSuccess ? (
-                    <motion.div
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="text-center py-12 space-y-5"
-                    >
+                    <motion.div {...modalMotion.step} className="text-center py-12 space-y-5">
                       <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand/10 text-brand border border-brand/20">
                         <Check className="size-7" strokeWidth={3} />
                       </div>
@@ -454,7 +444,7 @@ export default function EnergyStoragePage() {
                   ) : (
                     <form onSubmit={handleConsultSubmit} className="space-y-4">
                       {/* Short guide card */}
-                      <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-start gap-2.5">
+                      <div className="bg-surface-muted border border-slate-200 p-4 rounded-xl flex items-start gap-2.5">
                         <Info className="size-4.5 text-brand shrink-0 mt-0.5" />
                         <p className="text-[10px] text-slate-500 font-semibold leading-relaxed">
                           Chương trình khảo sát 3D hoàn toàn miễn phí của VF Ngọc Anh bao gồm đo đạc
@@ -463,7 +453,7 @@ export default function EnergyStoragePage() {
                         </p>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                             Họ tên của bạn *
@@ -476,7 +466,7 @@ export default function EnergyStoragePage() {
                               setConsultForm({ ...consultForm, name: e.target.value })
                             }
                             placeholder="Nguyễn Văn A"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                         <div>
@@ -491,7 +481,7 @@ export default function EnergyStoragePage() {
                               setConsultForm({ ...consultForm, phone: e.target.value })
                             }
                             placeholder="09xx xxx xxx"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                       </div>
@@ -508,11 +498,11 @@ export default function EnergyStoragePage() {
                             setConsultForm({ ...consultForm, address: e.target.value })
                           }
                           placeholder="Địa chỉ số nhà, quận huyện, tỉnh thành..."
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                             Phân khúc giải pháp
@@ -522,7 +512,7 @@ export default function EnergyStoragePage() {
                             onChange={(e) =>
                               setConsultForm({ ...consultForm, solutionType: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="residential">Hộ gia đình (5-20 kWh)</option>
                             <option value="commercial">Thương mại (50-500 kWh)</option>
@@ -538,7 +528,7 @@ export default function EnergyStoragePage() {
                             onChange={(e) =>
                               setConsultForm({ ...consultForm, monthlyBill: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="under-5m">Dưới 5 Triệu VNĐ</option>
                             <option value="5m-15m">Từ 5 - 15 Triệu VNĐ</option>
@@ -557,7 +547,7 @@ export default function EnergyStoragePage() {
                           onChange={(e) =>
                             setConsultForm({ ...consultForm, solarStatus: e.target.value })
                           }
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                         >
                           <option value="none">Chưa lắp đặt</option>
                           <option value="installed">Đã lắp đặt (Muốn đấu nối pin ESS)</option>
@@ -574,7 +564,7 @@ export default function EnergyStoragePage() {
                           onChange={(e) => setConsultForm({ ...consultForm, note: e.target.value })}
                           placeholder="Mô tả cụ thể nhu cầu lưu trữ (ví dụ: Cần nguồn dự phòng cho thang máy khi mất điện, phục vụ sạc đồng thời 2 xe VF 8...)"
                           rows={2.5}
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
                         />
                       </div>
 
@@ -590,7 +580,7 @@ export default function EnergyStoragePage() {
               </div>
 
               {/* Modal footer */}
-              <div className="bg-slate-50 p-4 border-t border-slate-200 text-center text-[10px] text-slate-500 font-semibold uppercase">
+              <div className="bg-surface-muted p-4 border-t border-slate-200 text-center text-[10px] text-slate-500 font-semibold uppercase">
                 Tổng đài chăm sóc năng lượng: {HOTLINE}
               </div>
             </motion.div>
@@ -605,7 +595,7 @@ export default function EnergyStoragePage() {
 
 function BreadcrumbBar() {
   return (
-    <div className="border-b border-slate-200 bg-white">
+    <div className="border-b border-border/60 bg-background">
       <div className="container-vf py-3.5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -634,74 +624,36 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
   return (
-    <section className="page-hero relative flex items-center overflow-hidden bg-slate-950 text-white">
-      <div className="absolute inset-0">
-        <img
-          src={IMAGES.chargingStations}
-          alt="Hệ thống lưu trữ năng lượng VinFast"
-          className="h-full w-full object-cover opacity-80 filter blur-[1px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/60 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
-      </div>
-
-      <div className="container-vf relative z-10">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col justify-center"
+    <PageEditorialHero
+      imageSrc={IMAGES.chargingStations}
+      imageAlt="Hệ thống lưu trữ năng lượng VinFast"
+      eyebrow="GIẢI PHÁP PIN LƯU TRỮ ESS QUY MÔ TOÀN CẦU"
+      title={
+        <>
+          NĂNG LƯỢNG THÔNG MINH <br />
+        </>
+      }
+      titleAccent="BÊN VỮNG TƯƠNG LAI"
+      description="VinFast ESS áp dụng công nghệ pin Lithium Iron Phosphate (LFP) siêu an toàn chịu nhiệt — mở ra kỷ nguyên mới về tự chủ nguồn điện cho hộ gia đình và tối ưu hóa hệ thống lưới điện công nghiệp sấy hồng ngoại sạc xe điện."
+      actions={
+        <>
+          <button
+            type="button"
+            onClick={onScrollToBooking}
+            className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
           >
-            <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-3.5 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase">
-              <Sparkles className="size-3.5 text-accent-yellow animate-pulse" /> GIẢI PHÁP PIN LƯU
-              TRỮ ESS QUY MÔ TOÀN CẦU
-            </div>
-            <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              NĂNG LƯỢNG THÔNG MINH <br />
-              <span className="bg-gradient-to-r from-brand via-teal-400 to-blue-400 bg-clip-text text-transparent italic">
-                BÊN VỮNG TƯƠNG LAI
-              </span>
-            </h1>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              VinFast ESS áp dụng công nghệ pin Lithium Iron Phosphate (LFP) siêu an toàn chịu nhiệt
-              — mở ra kỷ nguyên mới về tự chủ nguồn điện cho hộ gia đình và tối ưu hóa hệ thống lưới
-              điện công nghiệp sấy hồng ngoại sạc xe điện.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={onScrollToBooking}
-                className="bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-1.5"
-              >
-                <Calendar className="size-4" /> ĐĂNG KÝ TƯ VẤN KHẢO SÁT
-              </button>
-              <a
-                href={HOTLINE_TEL}
-                className="bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
-              >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
-              </a>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-3 pt-6 border-t border-white/10">
-              {ENERGY_STATS.map(({ value, label }) => (
-                <div key={label} className="flex items-start gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Battery className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-base font-black text-white">{value}</p>
-                    <p className="text-[10px] leading-snug text-slate-400 font-bold mt-0.5 uppercase tracking-wide">
-                      {label}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+            <Calendar className="size-4" /> ĐĂNG KÝ TƯ VẤN KHẢO SÁT
+          </button>
+          <a
+            href={HOTLINE_TEL}
+            className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
+          >
+            <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
+          </a>
+        </>
+      }
+      stats={ENERGY_STATS.map(({ value, label }) => ({ icon: Battery, value, label }))}
+    />
   );
 }
 
@@ -719,19 +671,14 @@ function IntroSection() {
             />
           </div>
           <div className="order-1 lg:order-2">
-            <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-              Công nghệ tiên phong
-            </span>
-            <h2 className={`${vfSectionHeadingLeft} mt-2 uppercase`}>
-              LƯU TRỮ NĂNG LƯỢNG ESS LÀ GÌ?
-            </h2>
-            <div className="mt-3 h-1 w-16 bg-brand rounded" />
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-400 font-semibold">
-              Hệ thống lưu trữ năng lượng ESS (Energy Storage System) là giải pháp tổ hợp pin công
-              nghệ cao cho phép tích lũy điện năng thừa từ lưới điện vào giờ thấp điểm, hoặc từ
-              nguồn điện tái tạo tự cung mặt trời để xả điện cấp nguồn khi có sự cố.
-            </p>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-400 font-semibold">
+            <SectionHeader
+              align="editorial"
+              eyebrow="Công nghệ tiên phong"
+              title="Lưu trữ năng lượng ESS là gì?"
+              description="Hệ thống lưu trữ năng lượng ESS (Energy Storage System) là giải pháp tổ hợp pin công nghệ cao cho phép tích lũy điện năng thừa từ lưới điện vào giờ thấp điểm, hoặc từ nguồn điện tái tạo tự cung mặt trời để xả điện cấp nguồn khi có sự cố."
+              className="mb-6 lg:mb-8"
+            />
+            <p className="text-sm leading-relaxed text-muted-foreground">
               VinFast tự hào đi đầu khi thương mại hóa các tháp pin LFP thông minh đạt chuẩn kháng
               bụi kháng nước, đồng bộ chuẩn 3D hóa dữ liệu đám mây giúp bạn quản lý tài sản điện
               năng an toàn tuyệt đối.
@@ -761,19 +708,14 @@ function IntroSection() {
 
 function SolutionsSection() {
   return (
-    <section id="giai-phap" className="section-y bg-slate-50 border-y border-slate-200/60">
+    <section id="giai-phap" className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Phân khúc sản phẩm
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>GIẢI PHÁP LƯU TRỮ THEO QUY MÔ</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-          <p className="mt-4 text-xs md:text-sm text-slate-400 font-semibold leading-relaxed">
-            Từ tháp pin lưu trữ dân dụng tinh gọn cho biệt thự hộ gia đình, đến các container pin
-            MWh phục vụ nhà máy và lưới điện khu công nghiệp.
-          </p>
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Phân khúc sản phẩm"
+          title="Giải pháp lưu trữ theo quy mô"
+          description="Từ tháp pin lưu trữ dân dụng tinh gọn cho biệt thự hộ gia đình, đến các container pin MWh phục vụ nhà máy và lưới điện khu công nghiệp."
+        />
 
         <div className="grid gap-6 md:grid-cols-3">
           {ENERGY_SOLUTIONS.map(({ id, title, subtitle, capacity, desc, features, idealFor }) => {
@@ -781,7 +723,7 @@ function SolutionsSection() {
             return (
               <div
                 key={id}
-                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
+                className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
@@ -809,7 +751,7 @@ function SolutionsSection() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-5 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3">
+                <div className="mt-5 rounded-xl bg-surface-muted border border-slate-100 px-4 py-3">
                   <p className="text-[10px] font-black text-brand-dark uppercase tracking-wide">
                     Đặc thù phù hợp:
                   </p>
@@ -828,13 +770,11 @@ function BenefitsSection() {
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Lý do đầu tư
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>LỢI ÍCH KINH TẾ & VẬN HÀNH VƯỢT TRỘI</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Lý do đầu tư"
+          title="Lợi ích kinh tế & vận hành vượt trội"
+        />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {ENERGY_BENEFITS.map(({ title, desc }, index) => {
@@ -842,7 +782,7 @@ function BenefitsSection() {
             return (
               <div
                 key={title}
-                className="flex gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-soft hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
+                className="flex gap-4 rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
               >
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                   <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
@@ -866,15 +806,13 @@ function BenefitsSection() {
 
 function ApplicationsSection() {
   return (
-    <section className="section-y bg-slate-50 border-y border-slate-200/60">
+    <section className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Kịch bản thực tế
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>ỨNG DỤNG HỆ THỐNG PIN ESS</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Kịch bản thực tế"
+          title="Ứng dụng hệ thống pin ESS"
+        />
 
         <div className="grid gap-6 md:grid-cols-2">
           {ENERGY_APPLICATIONS.map(({ title, desc, benefits }, index) => {
@@ -882,7 +820,7 @@ function ApplicationsSection() {
             return (
               <div
                 key={title}
-                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-soft hover:shadow-card transition-all duration-300"
+                className="page-section-card flex flex-col p-7 hover:shadow-card transition-all duration-300"
               >
                 <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
@@ -920,22 +858,19 @@ function SpecsSection() {
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
-            <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-              Đặc tính thiết bị
-            </span>
-            <h2 className={`${vfSectionHeadingLeft} mt-2 uppercase`}>BẢNG THÔNG SỐ KỸ THUẬT LÕI</h2>
-            <div className="mt-3 h-1 w-16 bg-brand rounded" />
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-400 font-semibold">
-              Hệ thống ESS được chế tạo theo tiêu chuẩn nghiêm ngặt nhất của VinFast toàn cầu, sử
-              dụng các cell pin chất lượng loại A, đạt các chứng chỉ an toàn chống bụi nước và chống
-              ăn mòn hóa học cao.
-            </p>
+            <SectionHeader
+              align="editorial"
+              eyebrow="Đặc tính thiết bị"
+              title="Bảng thông số kỹ thuật lõi"
+              description="Hệ thống ESS được chế tạo theo tiêu chuẩn nghiêm ngặt nhất của VinFast toàn cầu, sử dụng các cell pin chất lượng loại A, đạt các chứng chỉ an toàn chống bụi nước và chống ăn mòn hóa học cao."
+              className="mb-6 lg:mb-8"
+            />
 
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft">
+            <div className="mt-8 page-section-card overflow-hidden">
               <table className="w-full text-left">
                 <tbody>
                   {ENERGY_SPECS.map(({ label, value }, i) => (
-                    <tr key={label} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
+                    <tr key={label} className={i % 2 === 0 ? "bg-white" : "bg-surface-muted/50"}>
                       <td className="px-5 py-3.5 text-xs font-black text-brand-dark w-[45%] uppercase tracking-wide">
                         {label}
                       </td>
@@ -963,15 +898,13 @@ function SpecsSection() {
 
 function ProcessSection() {
   return (
-    <section className="section-y bg-slate-50 border-y border-slate-200/60 overflow-hidden">
+    <section className="section-y bg-surface-muted border-y border-slate-200/60 overflow-hidden">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Bàn giao chìa khóa trao tay
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>4 BƯỚC TRIỂN KHAI ESS CHUYÊN NGHIỆP</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Bàn giao chìa khóa trao tay"
+          title="4 bước triển khai ESS chuyên nghiệp"
+        />
 
         <div className="relative">
           <div className="absolute top-[22px] right-12 left-12 hidden h-[2px] bg-slate-200 lg:block" />
@@ -981,7 +914,7 @@ function ProcessSection() {
                 <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
                   <span className="text-xs font-black text-brand">{step}</span>
                 </div>
-                <div className="w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-soft h-full transition-shadow duration-300 hover:shadow-md">
+                <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
                   <h3 className="text-xs font-black text-brand-dark uppercase">{title}</h3>
                   <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold mt-2">
                     {desc}
@@ -1023,20 +956,18 @@ function WhyChooseSection() {
   return (
     <section className="section-y bg-white border-b border-slate-200">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Năng lực đại lý
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>VÌ SAO CHỌN DỊCH VỤ TẠI VF NGỌC ANH?</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Năng lực đại lý"
+          title="Vì sao chọn dịch vụ tại VF Ngọc Anh?"
+        />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <ul className="space-y-6 order-2 lg:order-1">
             {items.map(({ icon: Icon, title, desc }) => (
               <li
                 key={title}
-                className="flex gap-4 items-start bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-soft"
+                className="flex gap-4 items-start bg-surface-muted border border-slate-200 p-5 rounded-2xl shadow-soft"
               >
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                   <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
@@ -1068,82 +999,29 @@ function WhyChooseSection() {
 }
 
 function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <section className="section-y bg-slate-50 border-b border-slate-200">
-      <div className="container-vf max-w-3xl">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Cố vấn giải đáp
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CÂU HỎI THƯỜNG GẶP</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
-
-        <div className="space-y-3">
-          {ENERGY_FAQS.map(({ q, a }, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={q}
-                className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft transition-all duration-300"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-slate-50/60"
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-xs md:text-sm font-black text-brand-dark uppercase tracking-wide">
-                    {q}
-                  </span>
-                  <ChevronDown
-                    className={`size-4 shrink-0 text-brand transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="border-t border-slate-100 px-6 py-4 bg-slate-50/50">
-                    <p className="text-xs leading-relaxed text-slate-500 font-semibold">{a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <FaqBlock
+      items={ENERGY_FAQS.map(({ q, a }) => ({ question: q, answer: a }))}
+      eyebrow="Cố vấn giải đáp"
+      title="Câu hỏi thường gặp"
+      className="section-y border-b border-slate-200 bg-surface-muted"
+    />
   );
 }
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark section-y">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
-      <div className="container-vf relative z-10 text-center text-white">
-        <h2 className={vfCtaHeading}>SẴN SÀNG CHUYỂN ĐỔI NĂNG LƯỢNG XANH?</h2>
-        <p className="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-slate-300 font-medium mx-auto">
-          Hãy liên hệ với đội ngũ kỹ sư cơ điện của đại lý VF Ngọc Anh ngay hôm nay để nhận báo giá
-          ưu đãi độc quyền, hỗ trợ hồ sơ kết nối điện lực EVN và khảo sát hạ tầng hoàn toàn miễn
-          phí.
-        </p>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={HOTLINE_TEL}
-            className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
-          >
-            <Phone className="size-4 text-accent-yellow" /> TƯ VẤN HOTLINE: {HOTLINE}
-          </a>
-          <Link
-            href="/gioi-thieu"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all hover:bg-white/20"
-          >
-            TÌM SHOWROOM TRỰC THUỘC
-            <ChevronRight className="size-4 text-brand" />
-          </Link>
-        </div>
-      </div>
-    </section>
+    <PageCtaSection
+      title="Sẵn sàng chuyển đổi năng lượng xanh?"
+      description="Hãy liên hệ với đội ngũ kỹ sư cơ điện của đại lý VF Ngọc Anh ngay hôm nay để nhận báo giá ưu đãi độc quyền, hỗ trợ hồ sơ kết nối điện lực EVN và khảo sát hạ tầng hoàn toàn miễn phí."
+    >
+      <a href={HOTLINE_TEL} className={pageCtaPrimary}>
+        <Phone className="size-4 text-accent-yellow" /> TƯ VẤN HOTLINE: {HOTLINE}
+      </a>
+      <Link href="/gioi-thieu" className={pageCtaGhost}>
+        TÌM SHOWROOM TRỰC THUỘC
+        <ChevronRight className="size-4 text-accent-yellow" />
+      </Link>
+    </PageCtaSection>
   );
 }

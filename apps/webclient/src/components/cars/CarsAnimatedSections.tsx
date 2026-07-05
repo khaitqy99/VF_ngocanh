@@ -46,10 +46,9 @@ import {
   carsViewport,
   carsWhyIcon,
 } from "@/lib/cars-motion";
-import { aboutSectionEyebrow, aboutSectionHeader } from "@/lib/about-motion";
-import { homeSectionRule, homeSectionTitle } from "@/lib/home-motion";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import { HOTLINE_TEL } from "@/lib/contact";
-import { vfPanelTitle, vfSectionHeading } from "@/lib/typography";
+import { vfPanelTitle } from "@/lib/typography";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 type SortKey = "newest" | "price-asc" | "price-desc" | "range-desc" | "power-desc";
@@ -62,7 +61,7 @@ export function CarsBreadcrumbBar() {
       initial={reduced ? false : "hidden"}
       animate={reduced ? undefined : "visible"}
       variants={reduced ? undefined : carsBreadcrumb}
-      className="border-b border-slate-200 bg-white"
+      className="border-b border-border/60 bg-background"
     >
       <div className="container-vf py-3.5">
         <Breadcrumb>
@@ -118,7 +117,7 @@ export function CarsSearchBar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm xe (vd: VF 3, VF 8...)"
-            className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-10 pr-4 text-xs font-medium text-slate-800 transition-all focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+            className="w-full rounded-lg border border-slate-200 bg-surface-muted py-2 pl-10 pr-4 text-xs font-medium text-slate-800 transition-all focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
           />
           {searchQuery && (
             <button
@@ -144,42 +143,14 @@ export function CarsSectionHeader({
   title: string;
   description?: string;
 }) {
-  const reduced = useReducedMotion();
-
   return (
-    <motion.div
-      initial={reduced ? false : "hidden"}
-      whileInView={reduced ? undefined : "visible"}
-      viewport={carsViewport}
-      variants={reduced ? undefined : aboutSectionHeader}
-      className="mx-auto mb-12 max-w-2xl text-center"
-    >
-      <motion.span
-        variants={reduced ? undefined : aboutSectionEyebrow}
-        className="inline-block rounded-full border border-brand/20 bg-brand/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-brand"
-      >
-        {eyebrow}
-      </motion.span>
-      <motion.h2
-        variants={reduced ? undefined : homeSectionTitle}
-        className={`${vfSectionHeading} mt-4`}
-      >
-        {title}
-      </motion.h2>
-      {description && (
-        <motion.p
-          variants={reduced ? undefined : homeSectionRule}
-          className="mt-3 text-xs leading-relaxed text-slate-500 md:text-sm"
-        >
-          {description}
-        </motion.p>
-      )}
-      <motion.div
-        variants={reduced ? undefined : homeSectionRule}
-        className="mx-auto mt-4 h-1 w-16 origin-center rounded bg-brand"
-        aria-hidden
-      />
-    </motion.div>
+    <SectionHeader
+      align="centered"
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      className="mb-12"
+    />
   );
 }
 
@@ -246,7 +217,7 @@ export function CarsEmptyState({ onClear }: { onClear: () => void }) {
       <button
         type="button"
         onClick={onClear}
-        className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-xs font-bold text-white shadow-soft transition-all hover:bg-brand-dark"
+        className="home-cta-primary mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#0046cc]"
       >
         <RotateCcw className="size-3" /> Xóa bộ lọc & Tìm lại
       </button>
@@ -273,7 +244,7 @@ function WhyCard({
         initial="rest"
         whileHover={reduced ? undefined : "hover"}
         variants={reduced ? undefined : carsPromoCard}
-        className="group rounded-2xl border border-slate-200 bg-white p-4 text-center sm:p-6"
+        className="page-section-card group p-4 text-center sm:p-6"
       >
         <motion.div
           variants={reduced ? undefined : carsWhyIcon}
@@ -323,7 +294,7 @@ export function CarsPromoBanners() {
               </p>
               <MotionLinkButton
                 href={HOTLINE_TEL}
-                className="mt-5 self-center rounded-lg bg-brand px-5 py-2.5 text-center text-[11px] font-extrabold tracking-wider text-white hover:bg-blue-600"
+                className="home-cta-primary mt-5 self-center rounded-full px-5 py-2.5 text-center text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
               >
                 GỌI ĐĂNG KÝ NGAY
               </MotionLinkButton>
@@ -336,7 +307,7 @@ export function CarsPromoBanners() {
             initial="rest"
             whileHover={reduced ? undefined : "hover"}
             variants={reduced ? undefined : carsPromoCard}
-            className="relative flex min-h-[220px] flex-col justify-center overflow-hidden rounded-2xl border border-brand/10 bg-slate-50 p-6 md:p-8"
+            className="relative flex min-h-[220px] flex-col justify-center overflow-hidden rounded-2xl border border-brand/10 bg-surface-muted p-6 md:p-8"
           >
             <div className="absolute top-4 right-4 hidden opacity-10 sm:block">
               <Wallet className="size-24 text-brand" strokeWidth={1} />
@@ -380,7 +351,7 @@ export function CarsWhyVinFastSection({
   items: readonly { icon: LucideIcon; title: string; desc: string }[];
 }) {
   return (
-    <section className="section-y border-b border-slate-200 bg-white">
+    <section className="section-y border-b border-border/60 bg-background">
       <div className="container-vf">
         <CarsSectionHeader
           eyebrow="Tiêu chí xanh toàn cầu"

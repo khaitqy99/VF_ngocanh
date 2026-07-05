@@ -35,7 +35,7 @@ const ABOUT_LINKS = [
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
-    <h4 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-dark sm:mb-4">
+    <h4 className="mb-3 text-xs font-semibold tracking-[0.12em] text-brand-dark sm:mb-4">
       {children}
     </h4>
   );
@@ -85,7 +85,7 @@ export default function Footer({
   contact?: DealershipContact;
 }) {
   return (
-    <footer className="border-t border-border/60 bg-[#f4f6fa]">
+    <footer className="border-t border-border/60 bg-surface-muted">
       <div className="container-vf space-y-8 py-8 sm:space-y-10 sm:py-10 lg:py-12">
         <FadeIn className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <div className="min-w-0">

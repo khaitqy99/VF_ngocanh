@@ -31,8 +31,7 @@ import {
   carsSearchBar,
   carsWhyIcon,
 } from "@/lib/cars-motion";
-import { aboutSectionEyebrow, aboutSectionHeader } from "@/lib/about-motion";
-import { homeSectionRule, homeSectionTitle } from "@/lib/home-motion";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import { HOTLINE_TEL } from "@/lib/contact";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
@@ -42,7 +41,7 @@ export {
   EstimatorMotionShell,
   EstimatorTotalFooter,
 } from "@/components/cars/CarsAnimatedSections";
-import { vfPanelTitle, vfSectionHeading } from "@/lib/typography";
+import { vfPanelTitle } from "@/lib/typography";
 
 type SortKey = "newest" | "price-asc" | "price-desc" | "range-desc" | "speed-desc";
 
@@ -61,7 +60,7 @@ export function ScootersBreadcrumbBar() {
       initial={reduced ? false : "hidden"}
       animate={reduced ? undefined : "visible"}
       variants={reduced ? undefined : carsBreadcrumb}
-      className="border-b border-slate-200 bg-white"
+      className="border-b border-border/60 bg-background"
     >
       <div className="container-vf py-3.5">
         <Breadcrumb>
@@ -116,7 +115,7 @@ export function ScootersSearchBar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm tên xe ga, xe máy điện..."
-            className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-10 pr-4 text-xs font-medium text-slate-800 transition-all focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+            className="w-full rounded-lg border border-slate-200 bg-surface-muted py-2 pl-10 pr-4 text-xs font-medium text-slate-800 transition-all focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
           />
           {searchQuery && (
             <button
@@ -210,7 +209,7 @@ export function ScootersPromoBanners() {
               </p>
               <MotionLinkButton
                 href={HOTLINE_TEL}
-                className="mt-5 self-center rounded-lg bg-brand px-5 py-2.5 text-center text-[11px] font-extrabold tracking-wider text-white shadow-md hover:bg-blue-600"
+                className="home-cta-primary mt-5 self-center rounded-full px-5 py-2.5 text-center text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
               >
                 LIÊN HỆ SHOWROOM NGAY
               </MotionLinkButton>
@@ -280,7 +279,7 @@ function WhyCard({
         initial="rest"
         whileHover={reduced ? undefined : "hover"}
         variants={reduced ? undefined : carsPromoCard}
-        className="group rounded-2xl border border-slate-200 bg-white p-4 text-center sm:p-6"
+        className="page-section-card group p-4 text-center sm:p-6"
       >
         <motion.div
           variants={reduced ? undefined : carsWhyIcon}
@@ -305,30 +304,14 @@ export function ScootersWhyVinFastSection({
   items: readonly { icon: LucideIcon; title: string; desc: string }[];
 }) {
   return (
-    <section className="section-y border-b border-slate-200 bg-white">
+    <section className="section-y border-b border-border/60 bg-background">
       <div className="container-vf">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.18 }}
-          variants={aboutSectionHeader}
-          className="mx-auto mb-12 max-w-2xl text-center"
-        >
-          <motion.span
-            variants={aboutSectionEyebrow}
-            className="text-xs font-extrabold uppercase tracking-widest text-brand"
-          >
-            Tiêu chí xanh đô thị
-          </motion.span>
-          <motion.h2 variants={homeSectionTitle} className={`${vfSectionHeading} mt-2`}>
-            VÌ SAO CHỌN XE MÁY ĐIỆN VINFAST?
-          </motion.h2>
-          <motion.div
-            variants={homeSectionRule}
-            className="mx-auto mt-4 h-1 w-16 origin-center rounded bg-brand"
-            aria-hidden
-          />
-        </motion.div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Tiêu chí xanh đô thị"
+          title="Vì sao chọn xe máy điện VinFast?"
+          className="mb-12"
+        />
         <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
           {items.map((item, index) => (
             <WhyCard key={item.title} {...item} index={index} />

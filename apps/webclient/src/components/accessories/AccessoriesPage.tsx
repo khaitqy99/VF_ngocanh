@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
+
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import {
   Shield,
   Wrench,
@@ -31,8 +33,9 @@ import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem } from "@/components/motion";
-import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
-import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
+import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
+import { FaqBlock } from "@/components/shared/FaqBlock";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -66,7 +69,8 @@ import {
   type VehicleModel,
 } from "@/lib/accessories";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
-import { vfCtaHeading, vfPanelTitle, vfSectionHeading } from "@/lib/typography";
+import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
+import { vfPanelTitle } from "@/lib/typography";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "100% chính hãng", sub: "Bảo hành VinFast từ 6-24 tháng" },
@@ -166,6 +170,7 @@ export default function AccessoriesPage({
   embedded?: boolean;
   adminEdit?: boolean;
 }) {
+  const modalMotion = useModalMotion();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [sort, setSort] = useState<SortKey>("popular");
   const [mobileFilters, setMobileFilters] = useState(false);
@@ -297,7 +302,7 @@ export default function AccessoriesPage({
   }, [adminEdit, embedded]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white font-sans text-slate-800">
+    <div className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
       <Toaster position="top-right" richColors />
       {embedded ? (
         <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
@@ -345,7 +350,7 @@ export default function AccessoriesPage({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Tìm kiếm phụ kiện..."
-                    className="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:bg-white transition-all text-slate-800"
+                    className="w-full bg-surface-muted border border-slate-200 pl-10 pr-4 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:bg-white transition-all text-slate-800"
                   />
                   {searchQuery && (
                     <button
@@ -381,7 +386,7 @@ export default function AccessoriesPage({
             <button
               type="button"
               onClick={() => setMobileFilters(!mobileFilters)}
-              className={`mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark hover:bg-slate-50 lg:hidden ${adminEdit ? "hidden" : ""}`}
+              className={`page-section-card mb-6 flex w-full items-center justify-between px-5 py-4 text-sm font-bold text-brand-dark hover:bg-surface-muted/50 lg:hidden ${adminEdit ? "hidden" : ""}`}
             >
               <span className="flex items-center gap-2">
                 <SlidersHorizontal className="size-4 text-brand" /> Bộ lọc sản phẩm
@@ -394,7 +399,7 @@ export default function AccessoriesPage({
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
                 <aside
-                  className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+                  className={`${mobileFilters ? "block" : "hidden"} w-full max-h-[min(70vh,640px)] shrink-0 overflow-y-auto overscroll-contain lg:block lg:max-h-[80vh] lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10 lg:overflow-y-auto`}
                 >
                   <FilterSidebar filters={filters} setFilters={setFilters} onClear={clearFilters} />
                 </aside>
@@ -429,8 +434,8 @@ export default function AccessoriesPage({
                 {/* Empty State */}
                 {filteredProducts.length === 0 ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={modalMotion.reduced ? false : { opacity: 0, y: 10 }}
+                    animate={modalMotion.reduced ? undefined : { opacity: 1, y: 0 }}
                     className="rounded-2xl border-2 border-dashed border-slate-200 bg-white py-20 text-center shadow-sm"
                   >
                     <AlertCircleIcon className="size-12 mx-auto text-slate-300 mb-4" />
@@ -443,7 +448,7 @@ export default function AccessoriesPage({
                     <button
                       type="button"
                       onClick={clearFilters}
-                      className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-xs font-bold text-white shadow-soft hover:bg-brand-dark transition-all"
+                      className="home-cta-primary mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#0046cc]"
                     >
                       <RotateCcw className="size-3" /> Cài đặt lại bộ lọc
                     </button>
@@ -451,7 +456,7 @@ export default function AccessoriesPage({
                 ) : (
                   <CatalogGrid
                     id="accessory-catalog-grid"
-                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
+                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-3"
                   >
                     {filteredProducts.map((product, index) => (
                       <CatalogGridItem key={product.id} index={index}>
@@ -486,10 +491,7 @@ export default function AccessoriesPage({
               <div className="absolute inset-0" onClick={() => setIsCartOpen(false)} />
 
               <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "tween", duration: 0.3 }}
+                {...modalMotion.drawer}
                 className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col text-slate-800 z-10 border-l border-slate-100"
               >
                 {/* Drawer Header */}
@@ -516,11 +518,7 @@ export default function AccessoriesPage({
                 <div className="flex-1 overflow-y-auto p-5">
                   {isCheckoutSuccess ? (
                     // Success screen
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="text-center py-10 space-y-4"
-                    >
+                    <motion.div {...modalMotion.step} className="text-center py-10 space-y-4">
                       <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
                         <Check className="size-8" strokeWidth={2.5} />
                       </div>
@@ -537,7 +535,7 @@ export default function AccessoriesPage({
                         </p>
                       </div>
 
-                      <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 text-left text-xs font-semibold space-y-2.5">
+                      <div className="border border-slate-200 rounded-xl p-4 bg-surface-muted text-left text-xs font-semibold space-y-2.5">
                         <div className="flex justify-between border-b border-slate-200/60 pb-2">
                           <span className="text-slate-500">Người liên hệ:</span>
                           <span className="text-slate-800 font-bold">
@@ -575,7 +573,7 @@ export default function AccessoriesPage({
                           setIsCartOpen(false);
                           setIsCheckoutSuccess(false);
                         }}
-                        className="w-full bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider py-3 rounded-xl transition-all shadow-md"
+                        className="home-cta-primary w-full rounded-full py-3 text-xs font-semibold tracking-wide text-white transition hover:bg-[#0046cc] shadow-md"
                       >
                         QUAY LẠI CỬA HÀNG
                       </button>
@@ -619,7 +617,7 @@ export default function AccessoriesPage({
                           {cart.map((item) => (
                             <div
                               key={item.id}
-                              className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200 relative group"
+                              className="flex items-center gap-3 bg-surface-muted p-2.5 rounded-xl border border-slate-200 relative group"
                             >
                               <img
                                 src={item.image}
@@ -692,7 +690,7 @@ export default function AccessoriesPage({
                               setCheckoutForm({ ...checkoutForm, name: e.target.value })
                             }
                             placeholder="Nguyễn Văn A"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
 
@@ -708,7 +706,7 @@ export default function AccessoriesPage({
                               setCheckoutForm({ ...checkoutForm, phone: e.target.value })
                             }
                             placeholder="09xx xxx xxx"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
 
@@ -725,7 +723,7 @@ export default function AccessoriesPage({
                               className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
                                 checkoutForm.deliveryMethod === "showroom"
                                   ? "border-brand bg-brand/5 text-brand"
-                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                  : "border-slate-200 text-slate-600 hover:bg-surface-muted"
                               }`}
                             >
                               Lắp đặt tại Showroom
@@ -738,7 +736,7 @@ export default function AccessoriesPage({
                               className={`py-2 text-center rounded-lg border text-xs font-bold transition-all ${
                                 checkoutForm.deliveryMethod === "home"
                                   ? "border-brand bg-brand/5 text-brand"
-                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                  : "border-slate-200 text-slate-600 hover:bg-surface-muted"
                               }`}
                             >
                               Giao hàng tận nhà (COD)
@@ -748,8 +746,8 @@ export default function AccessoriesPage({
 
                         {checkoutForm.deliveryMethod === "home" && (
                           <motion.div
-                            initial={{ opacity: 0, y: -5 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={modalMotion.reduced ? false : { opacity: 0, y: -5 }}
+                            animate={modalMotion.reduced ? undefined : { opacity: 1, y: 0 }}
                           >
                             <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                               Địa chỉ nhận hàng chi tiết *
@@ -762,7 +760,7 @@ export default function AccessoriesPage({
                                 setCheckoutForm({ ...checkoutForm, address: e.target.value })
                               }
                               placeholder="Số nhà, ngõ/đường, Phường/Xã, Quận/Huyện, Tỉnh thành..."
-                              className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                              className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                             />
                           </motion.div>
                         )}
@@ -778,13 +776,13 @@ export default function AccessoriesPage({
                             }
                             placeholder="Tôi muốn được đặt hẹn lắp vào sáng thứ 7 tuần này, dán thêm phim cách nhiệt..."
                             rows={2}
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white resize-none"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white resize-none"
                           />
                         </div>
 
                         <button
                           type="submit"
-                          className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
+                          className="home-cta-primary mt-4 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs font-semibold tracking-wide text-white transition hover:bg-[#0046cc] shadow-md"
                         >
                           <Calendar className="size-4" /> GỬI YÊU CẦU BÁO GIÁ LẮP ĐẶT
                         </button>
@@ -824,7 +822,7 @@ function AlertCircleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function BreadcrumbBar() {
   return (
-    <div className="border-b border-slate-200 bg-white">
+    <div className="border-b border-border/60 bg-background">
       <div className="container-vf py-3.5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -861,25 +859,21 @@ function HeroSection({
   heroBanners: HeroBannerSlide[];
 }) {
   return (
-    <>
-      <section className="relative w-full overflow-hidden bg-white">
-        <PromoBannerCarousel banners={heroBanners} aspectLayout showControls={false} />
-      </section>
-
-      <CatalogHeroIntro
-        title="Cá nhân hóa xe sang"
-        titleAccent="nâng tầm đẳng cấp"
-        description="Nâng cấp xe điện VinFast với phụ kiện nội thất, ngoại thất, sạc pin và an toàn chính hãng — phân phối và lắp đặt tại VF Ngọc Anh."
-        primaryCta={{ label: "KHÁM PHÁ PHỤ KIỆN", onClick: onExplore }}
-        secondaryCta={{ label: `HOTLINE TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
-        highlights={[
-          { value: `${productCount}+`, label: "Sản phẩm chính hãng" },
-          { value: "6–24", label: "Tháng bảo hành" },
-          { value: "3S", label: "Lắp đặt tại xưởng" },
-        ]}
-        features={[...HERO_FEATURES]}
-      />
-    </>
+    <PageMarketingHero
+      banners={heroBanners}
+      showControls={false}
+      title="Cá nhân hóa xe sang"
+      titleAccent="nâng tầm đẳng cấp"
+      description="Nâng cấp xe điện VinFast với phụ kiện nội thất, ngoại thất, sạc pin và an toàn chính hãng — phân phối và lắp đặt tại VF Ngọc Anh."
+      primaryCta={{ label: "KHÁM PHÁ PHỤ KIỆN", onClick: onExplore }}
+      secondaryCta={{ label: `HOTLINE TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
+      highlights={[
+        { value: `${productCount}+`, label: "Sản phẩm chính hãng" },
+        { value: "6–24", label: "Tháng bảo hành" },
+        { value: "3S", label: "Lắp đặt tại xưởng" },
+      ]}
+      features={[...HERO_FEATURES]}
+    />
   );
 }
 
@@ -887,19 +881,17 @@ function InstallProcessSection() {
   return (
     <section className="bg-white section-y border-y border-slate-100">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Cam kết dịch vụ
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>QUY TRÌNH TƯ VẤN & LẮP ĐẶT PHỤ KIỆN</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Cam kết dịch vụ"
+          title="Quy trình tư vấn & lắp đặt phụ kiện"
+        />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {INSTALL_STEPS.map(({ step, title, desc }) => (
             <div
               key={step}
-              className="relative rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-soft hover:shadow-md transition-all group"
+              className="page-section-card relative p-6 transition-all group hover:shadow-md"
             >
               <span className="text-3xl font-black text-brand/20 group-hover:text-brand transition-colors">
                 {step}
@@ -916,9 +908,9 @@ function InstallProcessSection() {
 
 function PromoBanners() {
   return (
-    <section className="bg-slate-50 section-y">
+    <section className="bg-surface-muted section-y">
       <div className="container-vf grid gap-6 sm:grid-cols-2">
-        <div className="relative overflow-hidden rounded-2xl shadow-md border border-slate-100 flex min-h-[220px]">
+        <div className="relative overflow-hidden rounded-[1.75rem] shadow-md flex min-h-[220px]">
           <img
             src={ACCESSORY_IMAGES.promoInstall}
             alt="Lắp đặt phụ kiện tại showroom"
@@ -936,14 +928,14 @@ function PromoBanners() {
             </p>
             <a
               href={HOTLINE_TEL}
-              className="mt-5 bg-brand hover:bg-blue-600 text-white text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center self-start shadow-md"
+              className="home-cta-primary mt-5 inline-flex self-start rounded-full px-6 py-2.5 text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
             >
               GỌI ĐẶT LỊCH HẸN NGAY
             </a>
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-brand/10 bg-gradient-to-br from-blue-50/70 via-indigo-50/30 to-white shadow-soft p-6 md:p-8 flex flex-col justify-center min-h-[220px]">
+        <div className="page-section-card relative flex min-h-[220px] flex-col justify-center overflow-hidden p-6 md:p-8">
           <div className="absolute top-4 right-4 opacity-15">
             <Shield className="size-24 text-brand" strokeWidth={1} />
           </div>
@@ -968,7 +960,7 @@ function PromoBanners() {
             </ul>
             <a
               href={HOTLINE_TEL}
-              className="mt-5 inline-block border border-brand hover:bg-brand hover:text-white bg-white text-brand text-[11px] font-extrabold tracking-wider px-5 py-2.5 rounded-lg transition-all text-center"
+              className="mt-5 inline-block rounded-full border-2 border-brand bg-white px-6 py-2.5 text-[11px] font-semibold tracking-wide text-brand transition hover:bg-brand hover:text-white"
             >
               TRA CỨU Hạn BẢO HÀNH
             </a>
@@ -983,21 +975,17 @@ function WhyOfficialSection() {
   return (
     <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            An tâm tuyệt đối
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>
-            VÌ SAO NÊN CHỌN PHỤ KIỆN CHÍNH HÃNG VINFAST?
-          </h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="An tâm tuyệt đối"
+          title="Vì sao nên chọn phụ kiện chính hãng VinFast?"
+        />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {WHY_OFFICIAL.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="bg-white border border-slate-200 p-6 rounded-2xl shadow-soft hover:shadow-md transition-all text-center"
+              className="page-section-card p-6 text-center transition-all hover:shadow-md"
             >
               <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-brand/10 border border-brand/20 text-brand">
                 <Icon className="size-6 text-brand" strokeWidth={1.5} />
@@ -1014,62 +1002,30 @@ function WhyOfficialSection() {
 
 function FaqSection() {
   return (
-    <section className="bg-slate-50 section-y border-b border-slate-200">
-      <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Góc giải đáp thắc mắc
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CÂU HỎI THƯỜNG GẶP</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
-
-        <div className="mx-auto mt-8 max-w-3xl divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-soft overflow-hidden">
-          {FAQ.map(({ q, a }) => (
-            <details key={q} className="group px-6 py-5 hover:bg-slate-50/50 transition-all">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-brand-dark marker:content-none select-none">
-                {q}
-                <ChevronDown className="size-4 shrink-0 text-brand transition-transform duration-300 group-open:rotate-180" />
-              </summary>
-              <p className="mt-3.5 text-xs leading-relaxed text-slate-500 font-medium border-t border-slate-100 pt-3">
-                {a}
-              </p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
+    <FaqBlock
+      items={FAQ.map(({ q, a }) => ({ question: q, answer: a }))}
+      eyebrow="Góc giải đáp thắc mắc"
+      title="Câu hỏi thường gặp"
+      className="section-y border-b border-slate-200 bg-surface-muted"
+    />
   );
 }
 
 function ContactCta() {
   return (
-    <section className="bg-brand-dark section-y relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
-      <div className="container-vf relative z-10 flex flex-col items-center text-center">
-        <h2 className={vfCtaHeading}>Quý khách cần thêm thông tin phụ kiện?</h2>
-        <p className="mt-3 max-w-lg text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-          Đội ngũ VF Ngọc Anh luôn sẵn sàng phục vụ tư vấn chọn thảm lót, dán phim cách nhiệt, nâng
-          cấp camera hành trình chính hãng chuẩn xác nhất cho xế yêu của bạn.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={HOTLINE_TEL}
-            className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all shadow-md"
-          >
-            <Phone size={15} />
-            HOTLINE: {HOTLINE}
-          </a>
-          <Link
-            href="/oto"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all hover:bg-white/20"
-          >
-            <Check size={15} />
-            XEM CATALOG XE Ô TÔ
-          </Link>
-        </div>
-      </div>
-    </section>
+    <PageCtaSection
+      title="Quý khách cần thêm thông tin phụ kiện?"
+      description="Đội ngũ VF Ngọc Anh luôn sẵn sàng phục vụ tư vấn chọn thảm lót, dán phim cách nhiệt, nâng cấp camera hành trình chính hãng chuẩn xác nhất cho xế yêu của bạn."
+    >
+      <a href={HOTLINE_TEL} className={pageCtaPrimary}>
+        <Phone size={15} />
+        HOTLINE: {HOTLINE}
+      </a>
+      <Link href="/oto" className={pageCtaGhost}>
+        <Check size={15} />
+        XEM CATALOG XE Ô TÔ
+      </Link>
+    </PageCtaSection>
   );
 }
 
@@ -1102,7 +1058,7 @@ function FilterSidebar({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft lg:max-h-[80vh] lg:overflow-y-auto">
+    <div className="page-section-card p-5 lg:max-h-[80vh] lg:overflow-y-auto">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
         <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
           <SlidersHorizontal className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
@@ -1153,10 +1109,10 @@ function FilterSidebar({
             className="mt-4"
           />
           <div className="mt-3 flex items-center justify-between gap-1 text-[10px] text-slate-500 font-extrabold">
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+            <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
               {formatPrice(filters.priceRange[0])} đ
             </span>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+            <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
               {formatPrice(filters.priceRange[1])} đ
             </span>
           </div>

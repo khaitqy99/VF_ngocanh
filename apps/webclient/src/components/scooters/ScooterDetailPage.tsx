@@ -70,6 +70,13 @@ import {
   type TechFeature,
 } from "@/lib/scooter-details";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import {
+  pdpCtaPrimary,
+  pdpCtaSecondary,
+  pdpCtaInline,
+  pdpCtaInlineLight,
+  pdpCtaInlineGhost,
+} from "@/components/shared/PageCtaSection";
 import { vfCardTitleSm, vfSectionHeadingLeft } from "@/lib/typography";
 import { scooterDetailPath } from "@/lib/seo/slugs";
 import {
@@ -83,7 +90,7 @@ import {
   detailThumbDot,
   detailViewport,
 } from "@/lib/detail-motion";
-import { modalVariants, overlayVariants } from "@/lib/motion";
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
@@ -190,6 +197,7 @@ export default function ScooterDetailPage({
   const detail = (edit?.values as ScooterDetail | undefined) ?? initialDetail;
   const router = useRouter();
   const reduced = useReducedMotion();
+  const modalMotion = useModalMotion();
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -232,6 +240,7 @@ export default function ScooterDetailPage({
       { id: "thong-so" as const, label: "Thông số" },
       { id: "phu-kien" as const, label: "Phụ kiện" },
       { id: "tai-chinh" as const, label: "Tài chính" },
+      { id: "danh-gia" as const, label: "Đánh giá" },
     ],
     [],
   );
@@ -377,7 +386,7 @@ export default function ScooterDetailPage({
 
   return (
     <div
-      className={`min-h-screen overflow-x-hidden bg-white ${embedded ? "pb-8" : "pb-28 lg:pb-0"}`}
+      className={`relative min-h-screen overflow-x-hidden bg-background ${embedded ? "pb-8" : "pb-28 lg:pb-0"}`}
     >
       {!embedded && <Header />}
       <Toaster position="top-center" richColors />
@@ -436,7 +445,7 @@ export default function ScooterDetailPage({
                 initial={reduced ? false : "hidden"}
                 animate={reduced ? undefined : "visible"}
               >
-                <div className="box-border w-full min-w-0 max-w-full rounded-3xl border border-border/50 bg-white p-4 shadow-card ring-1 ring-black/[0.03] sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
+                <div className="page-showcase-shell box-border w-full min-w-0 max-w-full rounded-[1.75rem] p-4 sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
@@ -631,14 +640,14 @@ export default function ScooterDetailPage({
                     <button
                       type="button"
                       onClick={() => openBooking("Đặt mua ngay")}
-                      className="w-full rounded-xl bg-brand py-3.5 text-xs font-black tracking-wide text-white shadow-lg transition hover:bg-[#0046cc]"
+                      className={pdpCtaPrimary}
                     >
                       ĐẶT MUA NGAY
                     </button>
                     <button
                       type="button"
                       onClick={() => openBooking("Đăng ký lái thử")}
-                      className="w-full rounded-xl border-2 border-brand bg-white py-3.5 text-xs font-black tracking-wide text-brand transition hover:bg-brand/5"
+                      className={pdpCtaSecondary}
                     >
                       ĐĂNG KÝ LÁI THỬ
                     </button>
@@ -754,10 +763,7 @@ export default function ScooterDetailPage({
               ))}
             </motion.div>
             <div className="mt-8 text-center">
-              <Link
-                href="/xe-may-dien"
-                className="inline-flex items-center gap-2 rounded-xl border border-brand bg-white px-6 py-3 text-xs font-bold tracking-wide text-brand transition hover:bg-brand/5"
-              >
+              <Link href="/xe-may-dien" className={pdpCtaInline}>
                 Xem tất cả xe máy điện <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -807,16 +813,13 @@ export default function ScooterDetailPage({
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a
-                href={HOTLINE_TEL}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-xs font-black text-brand-dark transition hover:bg-white/90"
-              >
+              <a href={HOTLINE_TEL} className={pdpCtaInlineLight}>
                 <Phone className="size-4" /> Gọi {HOTLINE}
               </a>
               <button
                 type="button"
                 onClick={() => openBooking("Đăng ký lái thử")}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 px-6 py-3 text-xs font-black text-white transition hover:bg-white/10"
+                className={pdpCtaInlineGhost}
               >
                 <Calendar className="size-4" /> Đặt lịch lái thử
               </button>
@@ -843,14 +846,14 @@ export default function ScooterDetailPage({
               <button
                 type="button"
                 onClick={() => openBooking("Đăng ký lái thử")}
-                className="flex-1 rounded-xl border-2 border-brand py-2.5 text-[11px] font-black text-brand"
+                className={`flex-1 ${pdpCtaSecondary} py-2.5 text-[11px]`}
               >
                 LÁI THỬ
               </button>
               <button
                 type="button"
                 onClick={() => openBooking("Đặt mua ngay")}
-                className="flex-1 rounded-xl bg-brand py-2.5 text-[11px] font-black text-white"
+                className={`flex-1 ${pdpCtaPrimary} py-2.5 text-[11px]`}
               >
                 ĐẶT MUA
               </button>
@@ -863,10 +866,7 @@ export default function ScooterDetailPage({
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
+            {...modalMotion.overlay}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
             onClick={() => setLightboxOpen(false)}
           >
@@ -891,10 +891,7 @@ export default function ScooterDetailPage({
               key={activeImage}
               src={detail.gallery[activeImage]}
               alt={detail.name}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={modalVariants}
+              {...modalMotion.panel}
               className="max-h-[85vh] max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}
             />
@@ -916,18 +913,12 @@ export default function ScooterDetailPage({
       <AnimatePresence>
         {bookingOpen && (
           <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
+            {...modalMotion.overlay}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
             onClick={() => setBookingOpen(false)}
           >
             <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={modalVariants}
+              {...modalMotion.panel}
               onClick={(e) => e.stopPropagation()}
               className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
             >
@@ -962,13 +953,16 @@ export default function ScooterDetailPage({
                   <button
                     type="button"
                     onClick={() => setBookingOpen(false)}
-                    className="mt-6 rounded-xl bg-brand px-6 py-3 text-xs font-bold text-white"
+                    className={`mt-6 ${pdpCtaPrimary} w-auto px-6 py-3`}
                   >
                     Đóng
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleBookingSubmit} className="space-y-4 p-6">
+                <form
+                  onSubmit={handleBookingSubmit}
+                  className="max-h-[calc(90vh-5.5rem)] space-y-4 overflow-y-auto overscroll-contain p-6"
+                >
                   <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
                     <div className="size-14 shrink-0 overflow-hidden rounded-lg">
                       <img
@@ -1043,10 +1037,7 @@ export default function ScooterDetailPage({
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full rounded-xl bg-brand py-3.5 text-xs font-black tracking-wide text-white transition hover:bg-[#0046cc]"
-                  >
+                  <button type="submit" className={pdpCtaPrimary}>
                     GỬI YÊU CẦU
                   </button>
                 </form>
@@ -1228,7 +1219,7 @@ function TechnologySection({
             path="_section.technology.title"
             fallback="Công nghệ thông minh"
             adminEditable={adminEditable}
-            className="vfSectionHeadingLeft"
+            className={vfSectionHeadingLeft}
           />
         }
         subtitle={
@@ -1302,7 +1293,7 @@ function PerformanceSection({
             path="performance.title"
             fallback={detail.performance.title}
             adminEditable={adminEditable}
-            className="vfSectionHeadingLeft"
+            className={vfSectionHeadingLeft}
           />
         }
         subtitle={
@@ -1391,7 +1382,7 @@ function SafetySection({
       path="safety.title"
       fallback={detail.safety.title}
       adminEditable={adminEditable}
-      className="vfSectionHeadingLeft"
+      className={vfSectionHeadingLeft}
     />
   );
   const subtitleNode = (
@@ -1514,7 +1505,7 @@ function ChargingSection({
             path="_section.charging.title"
             fallback="Pin & Sạc"
             adminEditable={adminEditable}
-            className="vfSectionHeadingLeft"
+            className={vfSectionHeadingLeft}
           />
         }
         description={
@@ -1705,8 +1696,8 @@ function AccessoriesSection({
         adminEditable={adminEditable}
       />
       <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-4">
-        {products.map((product) => (
-          <AccessoryProductCard key={product.id} product={product} />
+        {products.slice(0, 4).map((product) => (
+          <AccessoryProductCard key={product.id} product={product} compact />
         ))}
       </div>
       <div className="mt-8 text-center">
@@ -1937,7 +1928,7 @@ function FinanceSection({
             ) : (
               <div className="space-y-4 text-xs">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-border bg-white p-4">
+                  <div className="page-section-card p-4">
                     <p className="text-[10px] font-bold text-muted-foreground uppercase">
                       Số tiền vay
                     </p>
@@ -1945,7 +1936,7 @@ function FinanceSection({
                       {formatPrice(installment.loanAmount)} đ
                     </p>
                   </div>
-                  <div className="rounded-xl border border-border bg-white p-4">
+                  <div className="page-section-card p-4">
                     <p className="text-[10px] font-bold text-muted-foreground uppercase">
                       Trả trước
                     </p>
@@ -1992,7 +1983,7 @@ function FinanceSection({
               <button
                 type="button"
                 onClick={onBook}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand py-3.5 text-xs font-black text-white transition hover:bg-[#0046cc] sm:w-auto sm:px-8"
+                className={`mt-4 ${pdpCtaPrimary} sm:w-auto sm:px-8`}
               >
                 <Calendar className="size-4" /> NHẬN BÁO GIÁ CHI TIẾT
               </button>

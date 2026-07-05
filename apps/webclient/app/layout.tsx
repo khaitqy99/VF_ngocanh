@@ -74,9 +74,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={`${plusJakartaSans.variable} font-sans antialiased`}>
+      <body className={`${plusJakartaSans.variable} relative font-sans antialiased`}>
+        <div
+          aria-hidden
+          className="home-grain pointer-events-none fixed inset-0 z-[60] opacity-[0.028]"
+        />
         <GoogleAnalytics />
-        {children}
+        <div className="relative">{children}</div>
         <SiteFooter />
       </body>
     </html>

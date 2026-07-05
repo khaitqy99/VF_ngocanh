@@ -5,6 +5,8 @@ import { Check, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { useModalMotion } from "@/hooks/use-modal-motion";
+
 export type ShowroomBookingModalProps = {
   open: boolean;
   onClose: () => void;
@@ -24,6 +26,7 @@ export function ShowroomBookingModal({
   service = "Đặt cọc ngay",
   serviceOptions = DEFAULT_SERVICES,
 }: ShowroomBookingModalProps) {
+  const modalMotion = useModalMotion();
   const [bookingService, setBookingService] = useState(service);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -78,16 +81,12 @@ export function ShowroomBookingModal({
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          {...modalMotion.overlay}
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
+            {...modalMotion.panel}
             className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -126,7 +125,7 @@ export function ShowroomBookingModal({
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto p-6 max-h-[70vh]">
                 <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
-                  <div className="size-14 shrink-0 overflow-hidden rounded-lg bg-[#f4f6fa]">
+                  <div className="size-14 shrink-0 overflow-hidden rounded-lg bg-surface-muted">
                     <img
                       src={vehicleImage}
                       alt={vehicleName}

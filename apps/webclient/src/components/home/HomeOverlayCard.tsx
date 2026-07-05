@@ -19,6 +19,9 @@ type HomeOverlayCardProps = {
   rel?: string;
   children?: ReactNode;
   heightClass?: string;
+  /** Mobile/tablet: ảnh trên + copy dưới; desktop giữ overlay */
+  stackOnMobile?: boolean;
+  mobilePanelClass?: string;
 };
 
 export function HomeOverlayCard({
@@ -33,8 +36,22 @@ export function HomeOverlayCard({
   rel,
   children,
   heightClass,
+  stackOnMobile = false,
+  mobilePanelClass = "bg-brand-dark p-5 text-white",
 }: HomeOverlayCardProps) {
   const reduced = useReducedMotion();
+
+  const rootClass = stackOnMobile
+    ? `group relative flex w-full flex-col overflow-hidden rounded-2xl shadow-soft transition-[box-shadow,transform] duration-300 hover:shadow-[var(--shadow-brand)] lg:relative lg:block ${
+        fillHeight ? "lg:h-full lg:min-h-[360px]" : "lg:min-h-[220px]"
+      } ${heightClass ?? ""}`
+    : `group relative block h-full w-full overflow-hidden rounded-2xl shadow-soft transition-[box-shadow,transform] duration-300 hover:shadow-[var(--shadow-brand)] ${
+        fillHeight ? "h-full" : ""
+      } ${heightClass ?? ""}`;
+
+  const imageShellClass = stackOnMobile
+    ? `relative w-full shrink-0 overflow-hidden bg-surface-muted aspect-[16/10] sm:aspect-[2.2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full ${aspectClass}`
+    : `relative h-full w-full overflow-hidden bg-surface-muted ${aspectClass}`;
 
   return (
     <motion.a
@@ -44,11 +61,9 @@ export function HomeOverlayCard({
       whileHover={reduced ? undefined : "hover"}
       whileTap={reduced ? undefined : "tap"}
       variants={homeOverlayCard}
-      className={`group relative block overflow-hidden rounded-xl shadow-soft transition-shadow hover:shadow-card ${
-        fillHeight ? "h-full" : ""
-      } ${heightClass ?? ""}`}
+      className={rootClass}
     >
-      <div className={`relative w-full overflow-hidden bg-[#e8ecf2] ${aspectClass}`}>
+      <div className={imageShellClass}>
         <motion.img
           src={image}
           alt={imageAlt}
@@ -56,8 +71,13 @@ export function HomeOverlayCard({
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="lazy"
         />
-        <div className={overlayClass}>{children ?? <h3 className={vfCardTitle}>{title}</h3>}</div>
+        <div className={stackOnMobile ? `hidden lg:block ${overlayClass}` : overlayClass}>
+          {children ?? <h3 className={vfCardTitle}>{title}</h3>}
+        </div>
       </div>
+      {stackOnMobile && children ? (
+        <div className={`lg:hidden ${mobilePanelClass}`}>{children}</div>
+      ) : null}
     </motion.a>
   );
 }

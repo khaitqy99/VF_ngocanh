@@ -3,6 +3,7 @@
 import { Sparkles } from "lucide-react";
 import { EditableText } from "@/components/admin-edit/EditableField";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
+import { FadeIn } from "@/components/motion";
 import { vfPdpHeroTitle } from "@/lib/typography";
 
 type Props = {
@@ -39,7 +40,7 @@ export function PdpHeroHeader({
       />
       <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwIDYuNjI3LTUuMzczIDEyLTEyIDEyUzEyIDI0LjYyNyAxMiAxOCAxNy4zNzMgNiAyNCA2czEyIDUuMzczIDEyIDEyem0wIDI0YzAgNi42MjctNS4zNzMgMTItMTIgMTJzLTEyLTUuMzczLTEyLTEyIDUuMzczLTEyIDEyLTEyIDEyIDUuMzczIDEyIDEyeiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuMDMiLz48L2c+PC9zdmc+')] opacity-40" />
 
-      <div className="container-vf relative py-7 sm:py-9 lg:py-11">
+      <FadeIn className="container-vf relative py-7 sm:py-9 lg:py-11">
         {showBadges && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {badges.map((badge, i) => (
@@ -80,7 +81,7 @@ export function PdpHeroHeader({
         )}
 
         {(tagline || editable) && (
-          <p className="text-[11px] font-bold tracking-[0.22em] text-blue-300/90 uppercase sm:text-xs">
+          <p className="text-[11px] font-bold tracking-[0.22em] text-accent-yellow/90 uppercase sm:text-xs">
             {editable ? (
               <EditableText
                 value={tagline ?? ""}
@@ -107,6 +108,11 @@ export function PdpHeroHeader({
           )}
         </h1>
 
+        <span
+          aria-hidden
+          className="mt-4 block h-1 w-12 rounded-full bg-accent-yellow shadow-[0_0_20px_rgba(255,213,0,0.35)]"
+        />
+
         {(slogan || editable) && (
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70 sm:text-[15px] lg:mt-4">
             {editable ? (
@@ -122,7 +128,7 @@ export function PdpHeroHeader({
             )}
           </p>
         )}
-      </div>
+      </FadeIn>
     </header>
   );
 }

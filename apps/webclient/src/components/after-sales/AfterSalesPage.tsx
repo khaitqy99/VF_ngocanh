@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
+
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import {
   Wrench,
   Shield,
@@ -34,8 +36,10 @@ import {
 
 import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
-import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
-import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
+import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
+import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
+import { FaqBlock } from "@/components/shared/FaqBlock";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -46,7 +50,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { AFTER_SALES_HERO_BANNERS, IMAGES, type HeroBannerSlide } from "@/lib/images";
 import { HOTLINE, HOTLINE_TEL, SHOWROOM_EMAIL } from "@/lib/contact";
-import { vfCtaHeading, vfSectionHeading, vfSectionHeadingLeft } from "@/lib/typography";
 
 const SERVICES = [
   {
@@ -257,6 +260,7 @@ export default function AfterSalesPage({
 }: {
   heroBanners: HeroBannerSlide[];
 }) {
+  const modalMotion = useModalMotion();
   // Booking Service State
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [bookingForm, setBookingForm] = useState({
@@ -281,7 +285,7 @@ export default function AfterSalesPage({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+    <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
       <Header />
 
@@ -316,21 +320,16 @@ export default function AfterSalesPage({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
           <div className="container-vf relative z-10">
-            <div className="max-w-2xl mx-auto text-center mb-12">
-              <span className="bg-brand/10 text-brand px-4 py-1.5 rounded-full text-xs font-extrabold tracking-widest uppercase border border-brand/20">
-                Dịch vụ thông minh
-              </span>
-              <h2 className={`${vfSectionHeadingLeft} mt-4`}>ĐĂNG KÝ ĐẶT LỊCH HẸN BẢO DƯỠNG</h2>
-              <p className="text-slate-500 text-xs md:text-sm mt-3 leading-relaxed">
-                Tiết kiệm 100% thời gian chờ đợi tại xưởng. Đăng ký trước lịch hẹn dịch vụ bảo dưỡng
-                định kỳ, sửa chữa hệ thống pin hoặc cập nhật phần mềm xe để được cố vấn đón tiếp chu
-                đáo nhất.
-              </p>
-            </div>
+            <SectionHeader
+              align="centered"
+              eyebrow="Dịch vụ thông minh"
+              title="Đăng ký đặt lịch hẹn bảo dưỡng"
+              description="Tiết kiệm 100% thời gian chờ đợi tại xưởng. Đăng ký trước lịch hẹn dịch vụ bảo dưỡng định kỳ, sửa chữa hệ thống pin hoặc cập nhật phần mềm xe để được cố vấn đón tiếp chu đáo nhất."
+            />
 
             <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-4xl mx-auto grid md:grid-cols-12">
               {/* Form Guidance Side */}
-              <div className="md:col-span-5 p-6 md:p-8 bg-slate-50 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between">
+              <div className="md:col-span-5 p-6 md:p-8 bg-surface-muted border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2">
                     <ShieldAlert className="size-4 text-brand" /> Cam kết dịch vụ 3S
@@ -370,12 +369,7 @@ export default function AfterSalesPage({
               <div className="md:col-span-7 p-6 md:p-8 bg-white">
                 <AnimatePresence mode="wait">
                   {isSubmitSuccess ? (
-                    <motion.div
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.95, opacity: 0 }}
-                      className="py-10 text-center space-y-5"
-                    >
+                    <motion.div {...modalMotion.step} className="py-10 text-center space-y-5">
                       <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
                         <Check className="size-8" strokeWidth={2.5} />
                       </div>
@@ -392,7 +386,7 @@ export default function AfterSalesPage({
                         </p>
                       </div>
 
-                      <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 text-left text-xs font-semibold space-y-2.5 max-w-sm mx-auto">
+                      <div className="border border-slate-200 rounded-xl p-4 bg-surface-muted text-left text-xs font-semibold space-y-2.5 max-w-sm mx-auto">
                         <div className="flex justify-between border-b border-slate-100 pb-2">
                           <span className="text-slate-400">Khách hàng:</span>
                           <span className="text-slate-800">
@@ -441,7 +435,7 @@ export default function AfterSalesPage({
                     </motion.div>
                   ) : (
                     <form onSubmit={handleBookingSubmit} className="space-y-4">
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
                             Họ và tên khách hàng *
@@ -454,7 +448,7 @@ export default function AfterSalesPage({
                               setBookingForm({ ...bookingForm, name: e.target.value })
                             }
                             placeholder="Nguyễn Văn A"
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                         <div>
@@ -469,12 +463,12 @@ export default function AfterSalesPage({
                               setBookingForm({ ...bookingForm, phone: e.target.value })
                             }
                             placeholder="09xx xxx xxx"
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
                             Dòng xe sở hữu
@@ -484,7 +478,7 @@ export default function AfterSalesPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, vehicleModel: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="vf3">VinFast VF 3</option>
                             <option value="vf5">VinFast VF 5</option>
@@ -507,7 +501,7 @@ export default function AfterSalesPage({
                               setBookingForm({ ...bookingForm, licensePlate: e.target.value })
                             }
                             placeholder="vd: 29A-123.45"
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                       </div>
@@ -516,16 +510,16 @@ export default function AfterSalesPage({
                         <span className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
                           Loại yêu cầu dịch vụ
                         </span>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                           {["Bảo dưỡng định kỳ", "Sửa chữa điện tử", "Sơn sấy vỏ xe"].map((svc) => (
                             <button
                               key={svc}
                               type="button"
                               onClick={() => setBookingForm({ ...bookingForm, serviceType: svc })}
-                              className={`py-2 px-1 text-center rounded-lg border text-[10px] font-extrabold transition-all uppercase ${
+                              className={`py-2.5 px-2 text-center rounded-lg border text-[11px] font-extrabold transition-all uppercase sm:px-1 sm:py-2 sm:text-[10px] ${
                                 bookingForm.serviceType === svc
                                   ? "border-brand bg-brand/10 text-brand shadow-md"
-                                  : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                  : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                               }`}
                             >
                               {svc}
@@ -534,7 +528,7 @@ export default function AfterSalesPage({
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
                             Ngày hẹn bảo dưỡng *
@@ -546,7 +540,7 @@ export default function AfterSalesPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, date: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800"
                           />
                         </div>
                         <div>
@@ -558,7 +552,7 @@ export default function AfterSalesPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, time: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="08:00">08:00 (Sáng)</option>
                             <option value="08:30">08:30 (Sáng)</option>
@@ -582,7 +576,7 @@ export default function AfterSalesPage({
                           onChange={(e) => setBookingForm({ ...bookingForm, note: e.target.value })}
                           placeholder="Mô tả hiện trạng xe (ví dụ: Xe bị xước cản trước cần sơn dặm, sạc pin không vào điện, cần dán thêm thảm lót sàn...)"
                           rows={2}
-                          className="w-full bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
                         />
                       </div>
 
@@ -617,7 +611,7 @@ export default function AfterSalesPage({
 
 function BreadcrumbBar() {
   return (
-    <div className="border-b border-slate-200 bg-white">
+    <div className="border-b border-border/60 bg-background">
       <div className="container-vf py-3.5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -646,49 +640,39 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
   return (
-    <>
-      <section className="relative w-full overflow-hidden bg-white">
-        <PromoBannerCarousel
-          banners={AFTER_SALES_HERO_BANNERS}
-          aspectLayout
-          showControls={AFTER_SALES_HERO_BANNERS.length > 1}
-        />
-      </section>
-
-      <CatalogHeroIntro
-        title="Chăm sóc xe toàn diện"
-        titleAccent="an tâm bứt phá"
-        description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VF Ngọc Anh — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
-        primaryCta={{ label: "ĐẶT LỊCH HẸN TRỰC TUYẾN", onClick: onScrollToBooking }}
-        secondaryCta={{ label: `HOTLINE CỨU HỘ: ${HOTLINE}`, href: HOTLINE_TEL }}
-        highlights={[
-          { value: "63+", label: "Tỉnh thành phủ sóng dịch vụ" },
-          { value: "10 năm", label: "Bảo hành ô tô điện" },
-          { value: "24/7", label: "Cứu hộ & hỗ trợ khẩn cấp" },
-        ]}
-        features={[...HERO_FEATURES]}
-      />
-    </>
+    <PageMarketingHero
+      banners={AFTER_SALES_HERO_BANNERS}
+      showControls={AFTER_SALES_HERO_BANNERS.length > 1}
+      title="Chăm sóc xe toàn diện"
+      titleAccent="an tâm bứt phá"
+      description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VF Ngọc Anh — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
+      primaryCta={{ label: "ĐẶT LỊCH HẸN TRỰC TUYẾN", onClick: onScrollToBooking }}
+      secondaryCta={{ label: `HOTLINE CỨU HỘ: ${HOTLINE}`, href: HOTLINE_TEL }}
+      highlights={[
+        { value: "63+", label: "Tỉnh thành phủ sóng dịch vụ" },
+        { value: "10 năm", label: "Bảo hành ô tô điện" },
+        { value: "24/7", label: "Cứu hộ & hỗ trợ khẩn cấp" },
+      ]}
+      features={[...HERO_FEATURES]}
+    />
   );
 }
 
 function ServicesSection() {
   return (
-    <section className="bg-slate-50 section-y">
+    <section className="bg-surface-muted section-y">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Danh mục dịch vụ
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>HỆ THỐNG DỊCH VỤ HẬU MÃI TOÀN DIỆN</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Danh mục dịch vụ"
+          title="Hệ thống dịch vụ hậu mãi toàn diện"
+        />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map(({ icon: Icon, title, desc, items }) => (
             <div
               key={title}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
+              className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
             >
               <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
                 <Icon className="size-6" strokeWidth={1.5} />
@@ -722,19 +706,17 @@ function WarrantySection() {
   return (
     <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Quyền lợi chủ xe
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CHÍNH SÁCH BẢO HÀNH CHÍNH HÃNG</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Quyền lợi chủ xe"
+          title="Chính sách bảo hành chính hãng"
+        />
 
         <div className="grid gap-6 md:grid-cols-3">
           {WARRANTY_POLICIES.map(({ icon: Icon, title, highlight, items }) => (
             <div
               key={title}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1"
+              className="flex flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1"
             >
               <div className="flex items-center gap-4">
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-white text-brand shadow-sm">
@@ -773,15 +755,13 @@ function WarrantySection() {
 
 function ProcessSection() {
   return (
-    <section className="bg-slate-50 section-y overflow-hidden border-b border-slate-200">
+    <section className="bg-surface-muted section-y overflow-hidden border-b border-slate-200">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Quy trình chuẩn mực
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>5 BƯỚC THỰC HIỆN DỊCH VỤ KHÉP KÍN</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Quy trình chuẩn mực"
+          title="5 bước thực hiện dịch vụ khép kín"
+        />
 
         <div className="relative">
           <div className="absolute top-[22px] right-12 left-12 hidden h-[2px] bg-slate-200 lg:block" />
@@ -791,7 +771,7 @@ function ProcessSection() {
                 <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
                   <span className="text-xs font-black text-brand">{step}</span>
                 </div>
-                <div className="w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-soft h-full transition-shadow duration-300 hover:shadow-md">
+                <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
                   <h3 className="text-xs font-black text-brand-dark uppercase">{title}</h3>
                   <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold mt-2.5">
                     {desc}
@@ -820,22 +800,20 @@ function MaintenanceSection() {
             />
           </div>
           <div>
-            <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-              Mốc thời gian quy định
-            </span>
-            <h2 className={`${vfSectionHeadingLeft} mt-2 uppercase`}>
-              MỐC BẢO DƯỠNG ĐỊNH KỲ QUAN TRỌNG
-            </h2>
-            <div className="mt-3 h-1 w-16 bg-brand rounded" />
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-400 font-semibold">
-              Khác với xe động cơ xăng, xe ô tô điện và xe máy điện VinFast có kết cấu tối giản và
-              đồng bộ cao, giúp giảm thiểu tối đa các hạng mục bảo dưỡng thông thường và tiết kiệm
-              tới 60% chi phí vận hành bảo trì.
-            </p>
+            <SectionHeader
+              align="editorial"
+              eyebrow="Mốc thời gian quy định"
+              title="Mốc bảo dưỡng định kỳ quan trọng"
+              description="Khác với xe động cơ xăng, xe ô tô điện và xe máy điện VinFast có kết cấu tối giản và đồng bộ cao, giúp giảm thiểu tối đa các hạng mục bảo dưỡng thông thường và tiết kiệm tới 60% chi phí vận hành bảo trì."
+              className="mb-6 lg:mb-8"
+            />
 
             <div className="mt-8 space-y-6">
               {MAINTENANCE_INTERVALS.map(({ type, intervals }) => (
-                <div key={type} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                <div
+                  key={type}
+                  className="rounded-2xl border border-slate-200 bg-surface-muted p-5"
+                >
                   <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
                     {type}
                   </h3>
@@ -873,15 +851,13 @@ function MaintenanceSection() {
 
 function WhyChooseSection() {
   return (
-    <section className="bg-slate-50 section-y border-t border-slate-200">
+    <section className="bg-surface-muted section-y border-t border-slate-200">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Trải nghiệm vượt trội
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>VÌ SAO LỰA CHỌN VF NGỌC ANH?</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Trải nghiệm vượt trội"
+          title="Vì sao lựa chọn VF Ngọc Anh?"
+        />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <ul className="space-y-6 order-2 lg:order-1">
@@ -920,110 +896,34 @@ function WhyChooseSection() {
 }
 
 function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <section className="bg-white section-y border-b border-slate-200">
-      <div className="container-vf max-w-3xl">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Cố vấn giải đáp
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CÂU HỎI THƯỜNG GẶP</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
-
-        <div className="space-y-3">
-          {FAQS.map(({ q, a }, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={q}
-                className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft transition-all duration-300"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-slate-50/60"
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-xs md:text-sm font-black text-brand-dark uppercase tracking-wide">
-                    {q}
-                  </span>
-                  <ChevronDown
-                    className={`size-4 shrink-0 text-brand transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="border-t border-slate-100 px-6 py-4 bg-slate-50/50">
-                    <p className="text-xs leading-relaxed text-slate-500 font-semibold">{a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <FaqBlock
+      items={FAQS.map(({ q, a }) => ({ question: q, answer: a }))}
+      eyebrow="Cố vấn giải đáp"
+      title="Câu hỏi thường gặp"
+      className="section-y border-b border-border/60 bg-background"
+    />
   );
 }
 
 function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark section-y">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
-      <div className="container-vf relative z-10">
-        <div className="grid items-center gap-8 lg:grid-cols-12">
-          <div className="text-white lg:col-span-7 text-center lg:text-left">
-            <h2 className={vfCtaHeading}>Cần hỗ trợ dịch vụ bảo dưỡng?</h2>
-            <p className="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-              Trung tâm Chăm sóc khách hàng của đại lý VF Ngọc Anh tại Cà Mau túc trực phục vụ quý
-              túc trực phục vụ quý khách 24/7/365. Hãy gọi ngay cho chúng tôi nếu quý khách cần hỗ
-              trợ cứu hộ khẩn cấp!
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-              <a
-                href={HOTLINE_TEL}
-                className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
-              >
-                <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
-              </a>
-              <button
-                onClick={() => {
-                  document
-                    .getElementById("service-booking-form")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all hover:bg-white/20"
-              >
-                ĐẶT HẸN KỸ THUẬT VIÊN
-              </button>
-            </div>
-
-            <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-6 text-xs text-slate-400 font-semibold">
-              <span className="flex items-center gap-2">
-                <MapPin className="size-4 text-brand" />
-                Showroom VF Ngọc Anh, Cà Mau
-              </span>
-              <span className="flex items-center gap-2">
-                <Mail className="size-4 text-brand" />
-                <a href={`mailto:${SHOWROOM_EMAIL}`} className="transition-colors hover:text-brand">
-                  {SHOWROOM_EMAIL}
-                </a>
-              </span>
-            </div>
-          </div>
-          <div className="hidden justify-end lg:flex lg:col-span-5">
-            <img
-              src={IMAGES.vf9Suv}
-              alt="VinFast VF 9"
-              className="max-h-[240px] w-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)]"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+    <PageCtaSection
+      title="Cần hỗ trợ dịch vụ bảo dưỡng?"
+      description="Trung tâm Chăm sóc khách hàng của đại lý VF Ngọc Anh tại Cà Mau túc trực phục vụ quý túc trực phục vụ quý khách 24/7/365. Hãy gọi ngay cho chúng tôi nếu quý khách cần hỗ trợ cứu hộ khẩn cấp!"
+    >
+      <a href={HOTLINE_TEL} className={pageCtaPrimary}>
+        <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
+      </a>
+      <button
+        type="button"
+        onClick={() => {
+          document.getElementById("service-booking-form")?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className={pageCtaGhost}
+      >
+        ĐẶT HẸN KỸ THUẬT VIÊN
+      </button>
+    </PageCtaSection>
   );
 }

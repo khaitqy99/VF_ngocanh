@@ -34,8 +34,7 @@ import {
   EstimatorMotionShell,
   EstimatorTotalFooter,
 } from "@/components/cars/CarsAnimatedSections";
-import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
-import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
+import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import Header from "@/components/site/Header";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
@@ -66,7 +65,7 @@ import {
 } from "@/lib/cars";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 import { carsBookingStep, carsEstimatorPanel } from "@/lib/cars-motion";
-import { modalVariants, overlayVariants } from "@/lib/motion";
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const HERO_FEATURES = [
@@ -135,6 +134,7 @@ export default function CarsPage({
   adminEdit?: boolean;
 }) {
   const reduced = useReducedMotion();
+  const modalMotion = useModalMotion();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [sort, setSort] = useState<SortKey>("newest");
   const [mobileFilters, setMobileFilters] = useState(false);
@@ -331,7 +331,7 @@ export default function CarsPage({
   }, [adminEdit, embedded]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white font-sans text-slate-800">
+    <div className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
       <Toaster position="top-right" richColors />
       {embedded ? (
         <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
@@ -370,7 +370,7 @@ export default function CarsPage({
             <button
               type="button"
               onClick={() => setMobileFilters(!mobileFilters)}
-              className={`mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark hover:bg-slate-50 lg:hidden ${adminEdit ? "hidden" : ""}`}
+              className={`page-section-card mb-6 flex w-full items-center justify-between px-5 py-4 text-sm font-bold text-brand-dark hover:bg-surface-muted/50 lg:hidden ${adminEdit ? "hidden" : ""}`}
             >
               <span className="flex items-center gap-2">
                 <SlidersIcon className="size-4 text-brand" /> Bộ lọc nâng cao
@@ -383,7 +383,7 @@ export default function CarsPage({
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
                 <aside
-                  className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+                  className={`${mobileFilters ? "block" : "hidden"} w-full max-h-[min(70vh,640px)] shrink-0 overflow-y-auto overscroll-contain lg:block lg:max-h-[80vh] lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10 lg:overflow-y-auto`}
                 >
                   <FadeIn direction="left">
                     <FilterSidebar
@@ -404,7 +404,7 @@ export default function CarsPage({
                 ) : (
                   <CatalogGrid
                     id="car-catalog-grid"
-                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
+                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-3"
                   >
                     {filteredCars.map((car, index) => (
                       <CatalogGridItem key={car.id} index={index}>
@@ -432,7 +432,7 @@ export default function CarsPage({
         {!adminEdit ? (
           <section
             id="estimator-tool"
-            className="section-y relative border-b border-slate-200 bg-white text-slate-800"
+            className="section-y relative border-b border-border/60 bg-background text-slate-800"
           >
             <div className="container-vf relative z-10">
               <CarsSectionHeader
@@ -442,7 +442,7 @@ export default function CarsPage({
               />
 
               <EstimatorMotionShell>
-                <div className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-12">
+                <div className="page-showcase-shell mx-auto grid max-w-5xl overflow-hidden rounded-[1.75rem] lg:grid-cols-12">
                   {/* Left Settings Panel */}
                   <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
                     <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
@@ -455,7 +455,7 @@ export default function CarsPage({
                         Chọn mẫu xe VinFast
                       </label>
                       <Select value={estimatorCarId} onValueChange={(v) => setEstimatorCarId(v)}>
-                        <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                        <SelectTrigger className="w-full bg-surface-muted border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
                           <SelectValue placeholder="Chọn xe" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-slate-200 text-slate-800">
@@ -473,7 +473,7 @@ export default function CarsPage({
                     </div>
 
                     {/* Tab switch inside estimator settings */}
-                    <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                    <div className="grid grid-cols-2 mt-6 bg-surface-muted p-1 rounded-lg border border-slate-200">
                       <button
                         onClick={() => setEstimatorTab("rolling")}
                         className={`rounded-md py-2 text-xs font-bold transition-colors ${
@@ -509,7 +509,7 @@ export default function CarsPage({
                             className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
                               estimatorBattery === "rent"
                                 ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                             }`}
                           >
                             <span>Thuê pin</span>
@@ -522,7 +522,7 @@ export default function CarsPage({
                             className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
                               estimatorBattery === "purchase"
                                 ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                             }`}
                           >
                             <span>Mua kèm pin</span>
@@ -542,7 +542,7 @@ export default function CarsPage({
                           value={estimatorLocation}
                           onValueChange={(v) => setEstimatorLocation(v)}
                         >
-                          <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                          <SelectTrigger className="w-full bg-surface-muted border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
                             <SelectValue placeholder="Chọn Tỉnh/Thành" />
                           </SelectTrigger>
                           <SelectContent className="bg-white border-slate-200 text-slate-800">
@@ -624,7 +624,7 @@ export default function CarsPage({
                               <span className="text-slate-500">Lãi suất ưu đãi hàng năm</span>
                               <span className="text-brand">{interestRate}% / năm</span>
                             </div>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                               {[5.9, 6.9, 7.9].map((rate) => (
                                 <button
                                   key={rate}
@@ -632,7 +632,7 @@ export default function CarsPage({
                                   className={`py-1 rounded text-xs font-bold border transition-all ${
                                     interestRate === rate
                                       ? "border-brand bg-brand/10 text-brand"
-                                      : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                      : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                                   }`}
                                 >
                                   {rate}% (Gói cố định)
@@ -646,7 +646,7 @@ export default function CarsPage({
                   </div>
 
                   {/* Right Results Panel */}
-                  <div className="lg:col-span-7 flex flex-col justify-between bg-slate-50 p-6 md:p-8">
+                  <div className="lg:col-span-7 flex flex-col justify-between bg-surface-muted p-6 md:p-8">
                     <AnimatePresence mode="wait" custom={estimatorTab}>
                       {estimatorTab === "rolling" ? (
                         <motion.div
@@ -723,7 +723,7 @@ export default function CarsPage({
                           </h3>
 
                           <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <div className="page-section-card p-4">
                               <p className="text-[10px] font-bold uppercase text-slate-500">
                                 Số tiền cần vay ({downPaymentPct}%)
                               </p>
@@ -731,7 +731,7 @@ export default function CarsPage({
                                 {formatPrice(installmentResult.loanAmount)} đ
                               </p>
                             </div>
-                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <div className="page-section-card p-4">
                               <p className="text-[10px] font-bold uppercase text-slate-500">
                                 Số tiền trả trước ({100 - downPaymentPct}%)
                               </p>
@@ -797,17 +797,11 @@ export default function CarsPage({
         {isBookingOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
+            {...modalMotion.overlay}
             onClick={() => setIsBookingOpen(false)}
           >
             <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={modalVariants}
+              {...modalMotion.panel}
               onClick={(e) => e.stopPropagation()}
               className="flex w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white text-slate-800 shadow-2xl"
             >
@@ -829,7 +823,7 @@ export default function CarsPage({
 
               {/* Steps Indicator */}
               {bookingStep < 4 && (
-                <div className="bg-slate-50 border-b border-slate-100 px-6 py-3 flex justify-between items-center text-[10px] font-bold text-slate-400">
+                <div className="bg-surface-muted border-b border-slate-100 px-6 py-3 flex justify-between items-center text-[10px] font-bold text-slate-400">
                   <span
                     className={`${bookingStep === 1 ? "text-brand" : bookingStep > 1 ? "text-slate-700" : ""}`}
                   >
@@ -869,7 +863,7 @@ export default function CarsPage({
                       </p>
 
                       {/* Car Selector visual list */}
-                      <div className="grid grid-cols-2 gap-3 max-h-[180px] overflow-y-auto border border-slate-100 p-2 rounded-xl bg-slate-50">
+                      <div className="grid grid-cols-2 gap-3 max-h-[180px] overflow-y-auto border border-slate-100 p-2 rounded-xl bg-surface-muted">
                         {CARS.map((car) => (
                           <button
                             key={car.id}
@@ -878,7 +872,7 @@ export default function CarsPage({
                             className={`flex items-center gap-3 p-2.5 rounded-lg border text-left transition-all ${
                               bookingCar?.id === car.id
                                 ? "border-brand bg-brand/5 ring-1 ring-brand font-bold"
-                                : "border-slate-200 bg-white hover:bg-slate-50"
+                                : "border-slate-200 bg-white hover:bg-surface-muted"
                             }`}
                           >
                             <img src={car.image} alt={car.name} className="size-8 object-contain" />
@@ -892,7 +886,7 @@ export default function CarsPage({
                         <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
                           Bạn đang cần tư vấn dịch vụ gì?
                         </span>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                           {["Đăng ký lái thử", "Nhận báo giá", "Tư vấn trả góp"].map((svc) => (
                             <button
                               key={svc}
@@ -901,7 +895,7 @@ export default function CarsPage({
                               className={`py-2 px-1 text-center rounded-lg border text-[11px] font-bold transition-all ${
                                 bookingForm.service === svc
                                   ? "border-brand bg-brand/5 text-brand font-black"
-                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                  : "border-slate-200 text-slate-600 hover:bg-surface-muted"
                               }`}
                             >
                               {svc}
@@ -947,7 +941,7 @@ export default function CarsPage({
                           value={bookingForm.name}
                           onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
                           placeholder="Nguyễn Văn A"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -963,7 +957,7 @@ export default function CarsPage({
                             setBookingForm({ ...bookingForm, phone: e.target.value })
                           }
                           placeholder="09xx xxx xxx"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -978,7 +972,7 @@ export default function CarsPage({
                             setBookingForm({ ...bookingForm, email: e.target.value })
                           }
                           placeholder="email@example.com"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -1015,7 +1009,7 @@ export default function CarsPage({
                         <button
                           type="button"
                           onClick={() => goBookingStep(1)}
-                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-surface-muted"
                         >
                           Quay lại
                         </button>
@@ -1074,7 +1068,7 @@ export default function CarsPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, date: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                         <div>
@@ -1086,7 +1080,7 @@ export default function CarsPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, time: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           >
                             {[
                               "08:00",
@@ -1115,7 +1109,7 @@ export default function CarsPage({
                           onChange={(e) => setBookingForm({ ...bookingForm, note: e.target.value })}
                           placeholder="Tôi muốn được lái thử phiên bản cao cấp Plus, tư vấn trả góp vay ngân hàng và cứu hộ 24/7..."
                           rows={3}
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -1123,7 +1117,7 @@ export default function CarsPage({
                         <button
                           type="button"
                           onClick={() => goBookingStep(2)}
-                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-surface-muted"
                         >
                           Quay lại
                         </button>
@@ -1166,7 +1160,7 @@ export default function CarsPage({
                         </p>
                       </div>
 
-                      <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 text-left text-xs font-semibold space-y-2 max-w-sm mx-auto">
+                      <div className="bg-surface-muted rounded-xl p-4 border border-slate-100 text-left text-xs font-semibold space-y-2 max-w-sm mx-auto">
                         <div className="flex justify-between text-slate-500">
                           <span>Mẫu xe đăng ký:</span>
                           <span className="text-slate-800 font-bold">{bookingCar?.name}</span>
@@ -1221,9 +1215,7 @@ export default function CarsPage({
 
 function EstimatorCostList({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white">
-      {children}
-    </ul>
+    <ul className="page-section-card divide-y divide-slate-100 overflow-hidden">{children}</ul>
   );
 }
 
@@ -1241,7 +1233,7 @@ function EstimatorCostRow({
   return (
     <li
       className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4 ${
-        sub ? "bg-slate-50" : ""
+        sub ? "bg-surface-muted" : ""
       }`}
     >
       <span className="min-w-0 text-[11px] leading-snug text-slate-600 sm:text-xs">{label}</span>
@@ -1281,25 +1273,20 @@ function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <>
-      <section className="relative w-full overflow-hidden bg-white">
-        <PromoBannerCarousel banners={CAR_HERO_BANNERS} aspectLayout />
-      </section>
-
-      <CatalogHeroIntro
-        title="Tương lai di chuyển"
-        titleAccent="thông minh, bền vững"
-        description="Showroom VinFast Ngọc Anh mang đến các dòng SUV điện đột phá, công nghệ an toàn hàng đầu, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi."
-        primaryCta={{ label: "KHÁM PHÁ CATALOG XE", onClick: onExplore }}
-        secondaryCta={{ label: `HOTLINE: ${HOTLINE}`, href: HOTLINE_TEL }}
-        highlights={[
-          { value: "13+", label: "Dòng ô tô điện" },
-          { value: "10 năm", label: "Bảo hành chính hãng" },
-          { value: "ADAS", label: "Công nghệ tự lái" },
-        ]}
-        features={[...HERO_FEATURES]}
-      />
-    </>
+    <PageMarketingHero
+      banners={CAR_HERO_BANNERS}
+      title="Tương lai di chuyển"
+      titleAccent="thông minh, bền vững"
+      description="Showroom VinFast Ngọc Anh mang đến các dòng SUV điện đột phá, công nghệ an toàn hàng đầu, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi."
+      primaryCta={{ label: "KHÁM PHÁ CATALOG XE", onClick: onExplore }}
+      secondaryCta={{ label: `HOTLINE: ${HOTLINE}`, href: HOTLINE_TEL }}
+      highlights={[
+        { value: "13+", label: "Dòng ô tô điện" },
+        { value: "10 năm", label: "Bảo hành chính hãng" },
+        { value: "ADAS", label: "Công nghệ tự lái" },
+      ]}
+      features={[...HERO_FEATURES]}
+    />
   );
 }
 
@@ -1334,7 +1321,7 @@ function FilterSidebar({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 lg:max-h-[80vh] lg:overflow-y-auto">
+    <div className="page-section-card p-5 lg:max-h-[80vh] lg:overflow-y-auto">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
         <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
           <SlidersIcon className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
@@ -1365,10 +1352,10 @@ function FilterSidebar({
           className="mt-4"
         />
         <div className="mt-3 flex items-center justify-between gap-1 text-[10px] text-slate-500 font-extrabold">
-          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+          <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
             {formatPrice(filters.priceRange[0])} đ
           </span>
-          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+          <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
             {formatPrice(filters.priceRange[1])} đ
           </span>
         </div>

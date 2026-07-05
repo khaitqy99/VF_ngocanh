@@ -7,13 +7,12 @@ import {
   defaultTransition,
   fadeLeft,
   fadeRight,
-  fadeUp,
+  fadeUpSubtle,
   fadeUpBlur,
   reducedVariants,
-  revealTransition,
-  scaleIn,
+  subtleRevealTransition,
   springGentle,
-  viewport,
+  subtleViewport,
 } from "@/lib/motion";
 
 type FadeInProps = HTMLMotionProps<"div"> & {
@@ -23,10 +22,10 @@ type FadeInProps = HTMLMotionProps<"div"> & {
 };
 
 const directionVariants: Record<NonNullable<FadeInProps["direction"]>, Variants> = {
-  up: fadeUp,
+  up: fadeUpSubtle,
   left: fadeLeft,
   right: fadeRight,
-  scale: scaleIn,
+  scale: fadeUpSubtle,
   none: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
 };
 
@@ -46,13 +45,13 @@ export function FadeIn({
       ? { ...defaultTransition, delay }
       : direction === "scale"
         ? { ...springGentle, delay }
-        : { ...revealTransition, delay };
+        : { ...subtleRevealTransition, delay };
 
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={viewport}
+      viewport={subtleViewport}
       variants={variants}
       transition={transition}
       className={className}

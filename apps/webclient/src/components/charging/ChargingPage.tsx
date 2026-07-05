@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
+
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import {
   Battery,
   BatteryCharging,
@@ -12,7 +14,6 @@ import {
   Clock,
   MapPin,
   Shield,
-  Smartphone,
   Zap,
   Gauge,
   Leaf,
@@ -33,8 +34,11 @@ import {
 
 import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
-import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
-import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
+import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
+import { PageStatsBar } from "@/components/shared/PageStatsBar";
+import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { FaqBlock } from "@/components/shared/FaqBlock";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -44,7 +48,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { CHARGING_HERO_BANNERS, type HeroBannerSlide } from "@/lib/images";
-import { vfCard, vfCtaHeading, vfSectionHeading, vfSectionHeadingLeft } from "@/lib/typography";
+import { vfCard } from "@/lib/typography";
 import {
   BATTERY_HIGHLIGHTS,
   CATEGORY_OPTIONS,
@@ -125,6 +129,7 @@ export default function ChargingPage({
 }: {
   heroBanners: HeroBannerSlide[];
 }) {
+  const modalMotion = useModalMotion();
   const [category, setCategory] = useState<ChargingProductCategory | "all">("all");
 
   // Interactive Product Inquiry State
@@ -216,7 +221,7 @@ export default function ChargingPage({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
+    <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
       <Header />
 
@@ -237,23 +242,17 @@ export default function ChargingPage({
         {/* Interactive Charging Time & Cost Simulator */}
         <section
           id="charging-simulator"
-          className="section-y relative overflow-hidden border-b border-slate-200 bg-white text-slate-800"
+          className="section-y relative overflow-hidden border-b border-border/60 bg-background text-slate-800"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
           <div className="container-vf relative z-10">
-            <div className="max-w-2xl mx-auto text-center mb-12">
-              <span className="bg-brand/10 text-brand px-4 py-1.5 rounded-full text-[10px] font-extrabold tracking-widest uppercase border border-brand/20">
-                Phòng lab công nghệ
-              </span>
-              <h2 className={`${vfSectionHeadingLeft} mt-4 uppercase`}>
-                BỘ DỰ TOÁN THỜI GIAN & CHI PHÍ SẠC
-              </h2>
-              <p className="text-slate-500 text-xs md:text-sm mt-3 leading-relaxed">
-                Mô phỏng thực tế thời gian nạp pin và chi phí dự kiến cho từng dòng xe điện VinFast
-                tương ứng với các loại bộ sạc gia đình hoặc trạm sạc công cộng hiện nay.
-              </p>
-            </div>
+            <SectionHeader
+              align="centered"
+              eyebrow="Phòng lab công nghệ"
+              title="Bộ dự toán thời gian & chi phí sạc"
+              description="Mô phỏng thực tế thời gian nạp pin và chi phí dự kiến cho từng dòng xe điện VinFast tương ứng với các loại bộ sạc gia đình hoặc trạm sạc công cộng hiện nay."
+            />
 
             <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-5xl mx-auto grid lg:grid-cols-12">
               {/* Configuration Panel Side */}
@@ -276,7 +275,7 @@ export default function ChargingPage({
                         className={`py-2.5 px-2 rounded-xl text-center border text-[11px] font-black transition-all ${
                           simCarId === car.id
                             ? "border-brand bg-brand/10 text-brand shadow-md"
-                            : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                            : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                         }`}
                       >
                         {car.name.replace("VinFast ", "")}
@@ -299,7 +298,7 @@ export default function ChargingPage({
                         className={`w-full text-left p-3 rounded-xl border flex items-center justify-between gap-3 transition-all ${
                           simChargerId === ch.id
                             ? "border-brand bg-brand/10 text-brand"
-                            : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                            : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -372,7 +371,7 @@ export default function ChargingPage({
               </div>
 
               {/* Simulation Result Presentation Side */}
-              <div className="lg:col-span-5 p-6 md:p-8 bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
+              <div className="lg:col-span-5 p-6 md:p-8 bg-surface-muted border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-black border-b border-slate-200 pb-3 text-brand-dark uppercase flex items-center gap-2">
                     <Gauge className="size-4 text-brand" /> Kết quả dự toán
@@ -395,10 +394,10 @@ export default function ChargingPage({
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {/* Cost Block */}
                       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Chi phí ước tính
                         </p>
                         <p className="text-base font-black text-emerald-500 mt-1">
@@ -411,7 +410,7 @@ export default function ChargingPage({
 
                       {/* Energy Block */}
                       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Điện năng nạp thêm
                         </p>
                         <p className="text-base font-black text-brand mt-1">{simResult.kwh} kWh</p>
@@ -424,7 +423,7 @@ export default function ChargingPage({
                     {/* Range Gained Block */}
                     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                       <div>
-                        <p className="text-[9px] text-slate-500 font-extrabold uppercase">
+                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
                           Quãng đường tăng thêm
                         </p>
                         <p className="text-lg font-black text-brand-dark mt-1">
@@ -496,15 +495,11 @@ export default function ChargingPage({
       <AnimatePresence>
         {selectedProduct && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            {...modalMotion.overlay}
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              {...modalMotion.panel}
               className="bg-white text-slate-800 rounded-3xl border border-slate-200 max-w-lg w-full overflow-hidden shadow-2xl"
             >
               {/* Modal Header */}
@@ -529,11 +524,7 @@ export default function ChargingPage({
               <div className="p-6">
                 <AnimatePresence mode="wait">
                   {isInquirySuccess ? (
-                    <motion.div
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="text-center py-8 space-y-4"
-                    >
+                    <motion.div {...modalMotion.step} className="text-center py-8 space-y-4">
                       <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
                         <Check className="size-6" strokeWidth={3} />
                       </div>
@@ -559,7 +550,7 @@ export default function ChargingPage({
                   ) : (
                     <form onSubmit={handleInquirySubmit} className="space-y-4">
                       {/* Product Overview Summary */}
-                      <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                      <div className="flex items-center gap-3 bg-surface-muted border border-slate-200 rounded-xl p-3.5">
                         <div className="size-14 bg-white rounded-lg overflow-hidden shrink-0 border border-slate-200">
                           <img
                             src={selectedProduct.image}
@@ -577,7 +568,7 @@ export default function ChargingPage({
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                             Họ tên của bạn *
@@ -590,7 +581,7 @@ export default function ChargingPage({
                               setInquiryForm({ ...inquiryForm, name: e.target.value })
                             }
                             placeholder="Nguyễn Văn A"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                         <div>
@@ -605,7 +596,7 @@ export default function ChargingPage({
                               setInquiryForm({ ...inquiryForm, phone: e.target.value })
                             }
                             placeholder="09xx xxx xxx"
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                       </div>
@@ -621,11 +612,11 @@ export default function ChargingPage({
                             setInquiryForm({ ...inquiryForm, address: e.target.value })
                           }
                           placeholder="Nhập địa chỉ nhà riêng của bạn..."
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                             Dòng xe điện sở hữu
@@ -635,7 +626,7 @@ export default function ChargingPage({
                             onChange={(e) =>
                               setInquiryForm({ ...inquiryForm, carModel: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="vf3">VinFast VF 3</option>
                             <option value="vf5">VinFast VF 5</option>
@@ -654,7 +645,7 @@ export default function ChargingPage({
                             onChange={(e) =>
                               setInquiryForm({ ...inquiryForm, receiveType: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                           >
                             <option value="showroom">Nhận tại showroom (Lắp đặt miễn phí)</option>
                             <option value="home">Giao hàng tận nhà (Tự lắp đặt)</option>
@@ -670,7 +661,7 @@ export default function ChargingPage({
                           value={inquiryForm.note}
                           onChange={(e) => setInquiryForm({ ...inquiryForm, note: e.target.value })}
                           rows={2}
-                          className="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-3 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
                         />
                       </div>
 
@@ -696,7 +687,7 @@ export default function ChargingPage({
 
 function BreadcrumbBar() {
   return (
-    <div className="border-b border-slate-200 bg-white">
+    <div className="border-b border-border/60 bg-background">
       <div className="container-vf py-3.5">
         <Breadcrumb>
           <BreadcrumbList>
@@ -725,55 +716,32 @@ function BreadcrumbBar() {
 
 function HeroSection({ onScrollToSection }: { onScrollToSection: (id: string) => void }) {
   return (
-    <>
-      <section className="relative w-full overflow-hidden bg-white">
-        <PromoBannerCarousel
-          banners={CHARGING_HERO_BANNERS}
-          aspectLayout
-          showControls={CHARGING_HERO_BANNERS.length > 1}
-        />
-      </section>
-
-      <CatalogHeroIntro
-        title="Hệ thống trạm sạc & pin"
-        titleAccent="toàn diện, thông minh"
-        description="VinFast tự hào xây dựng hạ tầng năng lượng hàng đầu Đông Nam Á với hơn 150.000 cổng sạc thông minh phủ khắp nẻo đường Việt Nam — đồng hành cùng công nghệ pin LFP siêu bền và giải pháp sạc tại nhà tiện ích."
-        primaryCta={{
-          label: "DỰ TOÁN THỜI GIAN SẠC",
-          onClick: () => onScrollToSection("charging-simulator"),
-        }}
-        secondaryCta={{
-          label: "XEM THIẾT BỊ SẠC GIA ĐÌNH",
-          href: "#san-pham-sac",
-        }}
-        highlights={[
-          { value: "150.000+", label: "Cổng sạc toàn quốc" },
-          { value: "2.500+", label: "Trạm sạc công cộng" },
-          { value: "24/7", label: "Hỗ trợ kỹ thuật" },
-        ]}
-        features={[...HERO_FEATURES]}
-      />
-    </>
+    <PageMarketingHero
+      banners={CHARGING_HERO_BANNERS}
+      showControls={CHARGING_HERO_BANNERS.length > 1}
+      title="Hệ thống trạm sạc & pin"
+      titleAccent="toàn diện, thông minh"
+      description="VinFast tự hào xây dựng hạ tầng năng lượng hàng đầu Đông Nam Á với hơn 150.000 cổng sạc thông minh phủ khắp nẻo đường Việt Nam — đồng hành cùng công nghệ pin LFP siêu bền và giải pháp sạc tại nhà tiện ích."
+      primaryCta={{
+        label: "DỰ TOÁN THỜI GIAN SẠC",
+        onClick: () => onScrollToSection("charging-simulator"),
+      }}
+      secondaryCta={{
+        label: "XEM THIẾT BỊ SẠC GIA ĐÌNH",
+        href: "#san-pham-sac",
+      }}
+      highlights={[
+        { value: "150.000+", label: "Cổng sạc toàn quốc" },
+        { value: "2.500+", label: "Trạm sạc công cộng" },
+        { value: "24/7", label: "Hỗ trợ kỹ thuật" },
+      ]}
+      features={[...HERO_FEATURES]}
+    />
   );
 }
 
 function StatsBar() {
-  return (
-    <section className="border-b border-slate-200 bg-white py-8 md:py-10 text-slate-800">
-      <div className="container-vf">
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
-          {NETWORK_STATS.map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-2xl md:text-3xl font-black text-brand tracking-wide">{value}</p>
-              <p className="mt-1 text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider">
-                {label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <PageStatsBar items={NETWORK_STATS.map(({ value, label }) => ({ value, label }))} />;
 }
 
 function EcosystemSection() {
@@ -793,17 +761,12 @@ function EcosystemSection() {
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Hạ tầng năng lượng
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>HỆ SINH THÁI PIN & SẠC ĐỒNG BỘ</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-          <p className="mt-4 text-xs md:text-sm text-slate-400 font-semibold leading-relaxed">
-            Từ trạm sạc công cộng công suất cực lớn dọc dải đất hình chữ S, đến các bộ sạc treo
-            tường tiện ích lắp đặt tại tư gia riêng của quý khách.
-          </p>
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Hạ tầng năng lượng"
+          title="Hệ sinh thái pin & sạc đồng bộ"
+          description="Từ trạm sạc công cộng công suất cực lớn dọc dải đất hình chữ S, đến các bộ sạc treo tường tiện ích lắp đặt tại tư gia riêng của quý khách."
+        />
 
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
           {tiles.map((item) => (
@@ -838,15 +801,13 @@ function EcosystemSection() {
 
 function StationTypesSection() {
   return (
-    <section className="section-y bg-slate-50 border-y border-slate-200/60">
+    <section className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Phân loại thiết bị
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CÁC LOẠI TRỤ SẠC TIÊU CHUẨN</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Phân loại thiết bị"
+          title="Các loại trụ sạc tiêu chuẩn"
+        />
 
         <div className="grid gap-6 md:grid-cols-3">
           {STATION_TYPES.map((station) => (
@@ -905,24 +866,18 @@ function BatterySection() {
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
-            <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-              Công nghệ lõi
-            </span>
-            <h2 className={`${vfSectionHeadingLeft} mt-2 uppercase`}>
-              PIN LFP — AN TOÀN TUYỆT ĐỐI, BỀN BỈ ĐƯỜNG DÀI
-            </h2>
-            <div className="mt-3 h-1 w-16 bg-brand rounded" />
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-400 font-semibold">
-              VinFast trang bị pin Lithium Iron Phosphate (LFP) thế hệ mới trên các phân khúc xe
-              điện. Đây là công nghệ pin được đánh giá cao bậc nhất thế giới nhờ đặc tính hóa học
-              cực kỳ ổn định nhiệt, loại bỏ triệt để rủi ro cháy nổ và chịu đựng tốt khí hậu nhiệt
-              đới gió mùa tại Việt Nam.
-            </p>
+            <SectionHeader
+              align="editorial"
+              eyebrow="Công nghệ lõi"
+              title="Pin LFP — an toàn tuyệt đối, bền bỉ đường dài"
+              description="VinFast trang bị pin Lithium Iron Phosphate (LFP) thế hệ mới trên các phân khúc xe điện. Đây là công nghệ pin được đánh giá cao bậc nhất thế giới nhờ đặc tính hóa học cực kỳ ổn định nhiệt, loại bỏ triệt để rủi ro cháy nổ và chịu đựng tốt khí hậu nhiệt đới gió mùa tại Việt Nam."
+              className="mb-6 lg:mb-8"
+            />
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {BATTERY_HIGHLIGHTS.map(({ title, desc }) => (
                 <div
                   key={title}
-                  className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
+                  className="rounded-xl border border-slate-200 bg-surface-muted p-4 shadow-sm"
                 >
                   <div className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-brand/10">
                     <Battery className="size-4.5 text-brand" />
@@ -983,19 +938,14 @@ function ProductsSection({
   ];
 
   return (
-    <section id="san-pham-sac" className="section-y bg-slate-50 border-t border-slate-200/60">
+    <section id="san-pham-sac" className="section-y bg-surface-muted border-t border-slate-200/60">
       <div id="bo-sac-tieu-chuan" className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Gian hàng công nghệ
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>THIẾT BỊ SẠC GIA ĐÌNH & PHỤ KIỆN</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-          <p className="mt-4 text-xs md:text-sm text-slate-400 font-semibold leading-relaxed">
-            Danh mục các bộ sạc treo tường tại nhà công suất cao, bộ sạc di động và dây cáp sạc mở
-            rộng chính hãng đang được ủy quyền phân phối & lắp đặt tại showroom VF Ngọc Anh.
-          </p>
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Gian hàng công nghệ"
+          title="Thiết bị sạc gia đình & phụ kiện"
+          description="Danh mục các bộ sạc treo tường tại nhà công suất cao, bộ sạc di động và dây cáp sạc mở rộng chính hãng đang được ủy quyền phân phối & lắp đặt tại showroom VF Ngọc Anh."
+        />
 
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           {tabs.map(({ value, label }) => (
@@ -1018,7 +968,7 @@ function ProductsSection({
           {products.map((product) => (
             <article
               key={product.id}
-              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
+              className="page-section-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-100">
                 <img
@@ -1058,7 +1008,7 @@ function ProductsSection({
                   <button
                     type="button"
                     onClick={() => onOrderProduct(product)}
-                    className="rounded-lg bg-brand hover:bg-brand-dark text-white font-extrabold text-[10px] tracking-wider uppercase px-4 py-2 transition-all shadow-md"
+                    className="home-cta-primary rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#0046cc] shadow-md"
                   >
                     Tư vấn & đặt mua
                   </button>
@@ -1076,23 +1026,18 @@ function GuideSection() {
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Cẩm nang vận hành
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>HƯỚNG DẪN SẠC XE TRẠM CÔNG CỘNG</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-          <p className="mt-4 text-xs md:text-sm text-slate-400 font-semibold leading-relaxed">
-            Quy trình 4 bước đơn giản, thuận tiện bậc nhất thế giới để sạc nhanh ô tô/xe máy điện
-            VinFast tại bất kỳ trạm sạc nào trên lãnh thổ Việt Nam.
-          </p>
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Cẩm nang vận hành"
+          title="Hướng dẫn sạc xe trạm công cộng"
+          description="Quy trình 4 bước đơn giản, thuận tiện bậc nhất thế giới để sạc nhanh ô tô/xe máy điện VinFast tại bất kỳ trạm sạc nào trên lãnh thổ Việt Nam."
+        />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {CHARGING_STEPS.map(({ step, title, desc }) => (
             <div
               key={step}
-              className="relative rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-soft transition-all duration-300 hover:shadow-md"
+              className="relative rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md"
             >
               <span className="text-3xl font-black text-brand/20 tracking-wider">{step}</span>
               <h3 className="mt-3 text-xs font-black text-brand-dark uppercase tracking-wider">
@@ -1116,17 +1061,13 @@ function AppSection() {
       <div className="container-vf relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider border border-brand/20 text-brand">
-              <Smartphone className="size-3.5 text-brand" /> App VinFast Club thông minh
-            </div>
-            <h2 className={`${vfSectionHeadingLeft} mt-2 uppercase text-white`}>
-              QUẢN LÝ TRẠM SẠC TRỰC TUYẾN TRÊN SMARTPHONE
-            </h2>
-            <p className="mt-4 text-xs md:text-sm leading-relaxed text-slate-500 font-medium">
-              Tìm kiếm trạm sạc gần nhất, đặt chỗ cổng sạc trước, theo dõi chi tiết % nạp pin theo
-              thời gian thực và thanh toán hóa đơn điện tử tự động qua ví liên kết — tất cả tích hợp
-              tinh gọn trong một ứng dụng duy nhất.
-            </p>
+            <SectionHeader
+              align="editorial"
+              eyebrow="App VinFast Club thông minh"
+              title="Quản lý trạm sạc trực tuyến trên smartphone"
+              description="Tìm kiếm trạm sạc gần nhất, đặt chỗ cổng sạc trước, theo dõi chi tiết % nạp pin theo thời gian thực và thanh toán hóa đơn điện tử tự động qua ví liên kết — tất cả tích hợp tinh gọn trong một ứng dụng duy nhất."
+              className="mb-6 lg:mb-8"
+            />
             <ul className="mt-6 space-y-3">
               {[
                 "Bản đồ số hóa định vị trạm sạc realtime cực kỳ chính xác.",
@@ -1144,7 +1085,7 @@ function AppSection() {
               ))}
             </ul>
           </div>
-          <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 bg-slate-50">
+          <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 bg-surface-muted">
             <img
               src={CHARGING_IMAGES.promoApp}
               alt="App VinFast quản lý sạc"
@@ -1162,15 +1103,13 @@ function WhySection() {
   const icons = [MapPin, Zap, Leaf, Headphones] as const;
 
   return (
-    <section className="section-y bg-slate-50 border-b border-slate-200/60">
+    <section className="section-y bg-surface-muted border-b border-slate-200/60">
       <div className="container-vf">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Thế mạnh vượt trội
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>ƯU THẾ HỆ SINH THÁI SẠC VINFAST</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
+        <SectionHeader
+          align="centered"
+          eyebrow="Thế mạnh vượt trội"
+          title="Ưu thế hệ sinh thái sạc VinFast"
+        />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {WHY_CHARGING.map(({ title, desc }, i) => {
@@ -1178,7 +1117,7 @@ function WhySection() {
             return (
               <div
                 key={title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-soft hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
+                className="page-section-card p-6 text-center hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
               >
                 <div className="mx-auto mb-3.5 flex size-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
                   <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
@@ -1199,82 +1138,29 @@ function WhySection() {
 }
 
 function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <section className="section-y bg-white border-b border-slate-200">
-      <div className="container-vf max-w-3xl">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <span className="text-brand font-extrabold text-xs tracking-widest uppercase">
-            Cố vấn giải đáp
-          </span>
-          <h2 className={vfSectionHeading + " mt-2"}>CÂU HỎI THƯỜNG GẶP</h2>
-          <div className="h-1 w-16 bg-brand mx-auto mt-4 rounded" />
-        </div>
-
-        <div className="space-y-3">
-          {CHARGING_FAQ.map(({ q, a }, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={q}
-                className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft transition-all duration-300"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-slate-50/60"
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-xs md:text-sm font-black text-brand-dark uppercase tracking-wide">
-                    {q}
-                  </span>
-                  <ChevronDown
-                    className={`size-4 shrink-0 text-brand transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="border-t border-slate-100 px-6 py-4 bg-slate-50/50">
-                    <p className="text-xs leading-relaxed text-slate-500 font-semibold">{a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <FaqBlock
+      items={CHARGING_FAQ.map(({ q, a }) => ({ question: q, answer: a }))}
+      eyebrow="Cố vấn giải đáp"
+      title="Câu hỏi thường gặp"
+      className="section-y border-b border-border/60 bg-background"
+    />
   );
 }
 
 function CtaSection() {
   return (
-    <section className="relative overflow-hidden bg-brand-dark section-y">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.15),transparent)] pointer-events-none" />
-      <div className="container-vf relative z-10 text-center text-white">
-        <h2 className={vfCtaHeading}>Cần tư vấn pin, trạm sạc hoặc lắp đặt tại nhà?</h2>
-        <p className="mx-auto mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-slate-300 font-medium">
-          Showroom VF Ngọc Anh phân phối chính hãng bộ sạc tại nhà 7,4kW, hỗ trợ khảo sát đường điện
-          và lắp đặt bàn giao tận tư gia của quý khách. Hãy liên hệ với chúng tôi để được đón tiếp
-          tận tâm!
-        </p>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={HOTLINE_TEL}
-            className="inline-flex items-center gap-2 rounded-xl bg-brand hover:bg-blue-600 px-6 py-3.5 text-xs font-black tracking-wider text-white shadow-md transition-all"
-          >
-            <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
-          </a>
-          <Link
-            href="/gioi-thieu"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-black tracking-wider text-white transition-all hover:bg-white/20"
-          >
-            TÌM SHOWROOM VF NGỌC ANH
-            <ChevronRight className="size-4 text-brand" />
-          </Link>
-        </div>
-      </div>
-    </section>
+    <PageCtaSection
+      title="Cần tư vấn pin, trạm sạc hoặc lắp đặt tại nhà?"
+      description="Showroom VF Ngọc Anh phân phối chính hãng bộ sạc tại nhà 7,4kW, hỗ trợ khảo sát đường điện và lắp đặt bàn giao tận tư gia của quý khách. Hãy liên hệ với chúng tôi để được đón tiếp tận tâm!"
+    >
+      <a href={HOTLINE_TEL} className={pageCtaPrimary}>
+        <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
+      </a>
+      <Link href="/gioi-thieu" className={pageCtaGhost}>
+        TÌM SHOWROOM VF NGỌC ANH
+        <ChevronRight className="size-4 text-accent-yellow" />
+      </Link>
+    </PageCtaSection>
   );
 }

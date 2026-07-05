@@ -26,7 +26,8 @@ import {
   type AccessoryProduct,
 } from "@/lib/accessories";
 import { HOTLINE_TEL } from "@/lib/contact";
-import { vfHeroTitle } from "@/lib/typography";
+import { pdpCtaPrimary, pdpCtaSecondary } from "@/components/shared/PageCtaSection";
+import { vfDisplayHero, vfHeroEyebrow, vfHeroTitle } from "@/lib/typography";
 
 const HIGHLIGHTS = [
   { icon: Shield, text: "100% chính hãng VinFast" },
@@ -163,7 +164,7 @@ export default function AccessoryDetailPage({
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white text-slate-800">
+    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <Toaster position="top-center" richColors />
       {!embedded && <Header />}
 
@@ -209,7 +210,7 @@ export default function AccessoryDetailPage({
           </div>
         ) : null}
 
-        <div className="border-b border-slate-200 bg-white">
+        <div className="border-b border-border/60 bg-background">
           <div className="container-vf py-3.5">
             <Breadcrumb>
               <BreadcrumbList>
@@ -242,215 +243,221 @@ export default function AccessoryDetailPage({
           </div>
         </div>
 
-        <section className="section-y bg-white">
+        <section className="section-y bg-surface-muted">
           <div className="container-vf">
             <Link
               href="/phu-kien"
-              className="mb-6 inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-brand"
+              className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-white px-4 py-2 text-xs font-semibold text-slate-500 transition hover:border-brand/30 hover:text-brand"
             >
               <ArrowLeft className="size-4" />
               Quay lại danh mục
             </Link>
 
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-              <FadeIn
-                direction="left"
-                className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
-              >
-                <img
-                  src={draft.image}
-                  alt={draft.name}
-                  className="aspect-square w-full object-cover"
-                />
-                {adminEdit ? (
-                  <button
-                    type="button"
-                    onClick={requestImage}
-                    className="absolute right-3 top-3 rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]"
-                  >
-                    Đổi ảnh
-                  </button>
-                ) : null}
-                {(draft.badge || !draft.inStock) && (
-                  <div className="absolute left-3 top-3 flex flex-col gap-1">
-                    {draft.badge && (
-                      <span className="rounded bg-brand px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
-                        {draft.badge}
-                      </span>
-                    )}
-                    {!draft.inStock && (
-                      <span className="rounded bg-slate-400 px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
-                        Hết hàng
-                      </span>
-                    )}
-                  </div>
-                )}
-              </FadeIn>
-
-              <FadeIn direction="right" delay={0.1} className="flex flex-col">
-                {adminEdit ? (
-                  <select
-                    value={draft.category}
-                    onChange={(e) =>
-                      setDraft((prev) => ({
-                        ...prev,
-                        category: e.target.value as AccessoryProduct["category"],
-                      }))
-                    }
-                    className="w-fit rounded-md border border-slate-300 bg-white px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-brand"
-                  >
-                    {CATEGORY_OPTIONS.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-brand">
-                    {getCategoryLabel(draft.category)}
-                  </p>
-                )}
-
-                {adminEdit ? (
-                  <input
-                    value={draft.name}
-                    onChange={(e) => setDraft((prev) => ({ ...prev, name: e.target.value }))}
-                    className={`mt-2 rounded-lg border border-slate-300 px-3 py-2 ${vfHeroTitle}`}
+            <div className="page-showcase-shell rounded-[1.75rem] p-5 sm:p-8 lg:p-10">
+              <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+                <FadeIn
+                  direction="left"
+                  className="relative overflow-hidden rounded-[1.25rem] border border-slate-200/80 bg-white"
+                >
+                  <img
+                    src={draft.image}
+                    alt={draft.name}
+                    className="aspect-square w-full object-cover"
                   />
-                ) : (
-                  <h1 className={`mt-2 ${vfHeroTitle}`}>{draft.name}</h1>
-                )}
-
-                {adminEdit ? (
-                  <textarea
-                    value={draft.description}
-                    onChange={(e) => setDraft((prev) => ({ ...prev, description: e.target.value }))}
-                    rows={4}
-                    className="mt-4 rounded-lg border border-slate-300 px-3 py-2 text-sm leading-relaxed text-slate-700"
-                  />
-                ) : (
-                  <p className="mt-4 text-sm leading-relaxed text-slate-600">{draft.description}</p>
-                )}
-
-                {adminEdit ? (
-                  <div className="mt-3">
-                    <label className="text-[11px] font-semibold text-slate-500">Badge</label>
-                    <input
-                      value={draft.badge ?? ""}
-                      onChange={(e) =>
-                        setDraft((prev) => ({ ...prev, badge: e.target.value || undefined }))
-                      }
-                      placeholder="Ví dụ: Bán chạy"
-                      className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
-                    />
-                  </div>
-                ) : null}
-
-                <dl className="mt-6 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
-                  <div className="flex justify-between gap-4">
-                    <dt className="font-semibold text-slate-500">Dòng xe tương thích</dt>
-                    <dd className="text-right font-bold text-slate-800">
-                      {adminEdit ? (
-                        <input
-                          value={vehiclesText}
-                          onChange={(e) =>
-                            setDraft((prev) => ({
-                              ...prev,
-                              vehicles: normalizeVehicles(
-                                e.target.value,
-                              ) as AccessoryProduct["vehicles"],
-                            }))
-                          }
-                          className="w-56 rounded-md border border-slate-300 px-2 py-1 text-right text-sm font-bold"
-                          placeholder="vf8, vf9, all"
-                        />
-                      ) : (
-                        getVehicleLabels(draft.vehicles)
-                      )}
-                    </dd>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <dt className="font-semibold text-slate-500">Tình trạng</dt>
-                    <dd
-                      className={`font-bold ${draft.inStock ? "text-emerald-600" : "text-slate-400"}`}
+                  {adminEdit ? (
+                    <button
+                      type="button"
+                      onClick={requestImage}
+                      className="absolute right-3 top-3 rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]"
                     >
-                      {adminEdit ? (
-                        <select
-                          value={draft.inStock ? "in" : "out"}
-                          onChange={(e) =>
-                            setDraft((prev) => ({ ...prev, inStock: e.target.value === "in" }))
-                          }
-                          className="rounded-md border border-slate-300 px-2 py-1 text-sm text-slate-800"
-                        >
-                          <option value="in">Còn hàng</option>
-                          <option value="out">Hết hàng</option>
-                        </select>
-                      ) : draft.inStock ? (
-                        "Còn hàng"
-                      ) : (
-                        "Hết hàng"
+                      Đổi ảnh
+                    </button>
+                  ) : null}
+                  {(draft.badge || !draft.inStock) && (
+                    <div className="absolute left-3 top-3 flex flex-col gap-1">
+                      {draft.badge && (
+                        <span className="rounded bg-brand px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
+                          {draft.badge}
+                        </span>
                       )}
-                    </dd>
-                  </div>
-                  <div className="flex justify-between gap-4 border-t border-slate-200 pt-3">
-                    <dt className="font-semibold text-slate-500">Giá bán ưu đãi</dt>
-                    <dd className="text-right text-xl font-black tabular-nums text-brand-dark">
-                      {adminEdit ? (
-                        <input
-                          value={new Intl.NumberFormat("vi-VN").format(draft.price)}
-                          onChange={(e) => {
-                            const digits = e.target.value.replace(/\D/g, "");
-                            setDraft((prev) => ({ ...prev, price: digits ? Number(digits) : 0 }));
-                          }}
-                          className="w-52 rounded-md border border-slate-300 px-2 py-1 text-right text-xl font-black"
-                        />
-                      ) : (
-                        <>
-                          {formatPrice(draft.price)}{" "}
-                          <span className="text-sm font-bold text-slate-500">đ</span>
-                        </>
+                      {!draft.inStock && (
+                        <span className="rounded bg-slate-400 px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
+                          Hết hàng
+                        </span>
                       )}
-                    </dd>
+                    </div>
+                  )}
+                </FadeIn>
+
+                <FadeIn direction="right" delay={0.1} className="flex flex-col">
+                  {adminEdit ? (
+                    <>
+                      <select
+                        value={draft.category}
+                        onChange={(e) =>
+                          setDraft((prev) => ({
+                            ...prev,
+                            category: e.target.value as AccessoryProduct["category"],
+                          }))
+                        }
+                        className="w-fit rounded-md border border-slate-300 bg-white px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-brand"
+                      >
+                        {CATEGORY_OPTIONS.map((item) => (
+                          <option key={item.value} value={item.value}>
+                            {item.label}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        value={draft.name}
+                        onChange={(e) => setDraft((prev) => ({ ...prev, name: e.target.value }))}
+                        className={`mt-2 rounded-lg border border-slate-300 px-3 py-2 ${vfHeroTitle}`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <p className={vfHeroEyebrow}>{getCategoryLabel(draft.category)}</p>
+                      <h1 className={`mt-3 ${vfDisplayHero} text-brand-dark`}>{draft.name}</h1>
+                      <span
+                        aria-hidden
+                        className="mt-4 block h-1 w-12 rounded-full bg-accent-yellow shadow-[0_0_20px_rgba(255,213,0,0.35)]"
+                      />
+                    </>
+                  )}
+
+                  {adminEdit ? (
+                    <textarea
+                      value={draft.description}
+                      onChange={(e) =>
+                        setDraft((prev) => ({ ...prev, description: e.target.value }))
+                      }
+                      rows={4}
+                      className="mt-4 rounded-lg border border-slate-300 px-3 py-2 text-sm leading-relaxed text-slate-700"
+                    />
+                  ) : (
+                    <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                      {draft.description}
+                    </p>
+                  )}
+
+                  {adminEdit ? (
+                    <div className="mt-3">
+                      <label className="text-[11px] font-semibold text-slate-500">Badge</label>
+                      <input
+                        value={draft.badge ?? ""}
+                        onChange={(e) =>
+                          setDraft((prev) => ({ ...prev, badge: e.target.value || undefined }))
+                        }
+                        placeholder="Ví dụ: Bán chạy"
+                        className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                      />
+                    </div>
+                  ) : null}
+
+                  <dl className="page-section-card mt-6 space-y-3 p-4 text-sm">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4">
+                      <dt className="font-semibold text-slate-500">Dòng xe tương thích</dt>
+                      <dd className="text-right font-bold text-slate-800">
+                        {adminEdit ? (
+                          <input
+                            value={vehiclesText}
+                            onChange={(e) =>
+                              setDraft((prev) => ({
+                                ...prev,
+                                vehicles: normalizeVehicles(
+                                  e.target.value,
+                                ) as AccessoryProduct["vehicles"],
+                              }))
+                            }
+                            className="w-56 rounded-md border border-slate-300 px-2 py-1 text-right text-sm font-bold"
+                            placeholder="vf8, vf9, all"
+                          />
+                        ) : (
+                          getVehicleLabels(draft.vehicles)
+                        )}
+                      </dd>
+                    </div>
+                    <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4">
+                      <dt className="font-semibold text-slate-500">Tình trạng</dt>
+                      <dd
+                        className={`font-bold ${draft.inStock ? "text-emerald-600" : "text-slate-400"}`}
+                      >
+                        {adminEdit ? (
+                          <select
+                            value={draft.inStock ? "in" : "out"}
+                            onChange={(e) =>
+                              setDraft((prev) => ({ ...prev, inStock: e.target.value === "in" }))
+                            }
+                            className="rounded-md border border-slate-300 px-2 py-1 text-sm text-slate-800"
+                          >
+                            <option value="in">Còn hàng</option>
+                            <option value="out">Hết hàng</option>
+                          </select>
+                        ) : draft.inStock ? (
+                          "Còn hàng"
+                        ) : (
+                          "Hết hàng"
+                        )}
+                      </dd>
+                    </div>
+                    <div className="flex flex-col gap-1 border-t border-slate-200 pt-3 sm:flex-row sm:justify-between sm:gap-4">
+                      <dt className="font-semibold text-slate-500">Giá bán ưu đãi</dt>
+                      <dd className="text-right text-xl font-black tabular-nums text-brand-dark">
+                        {adminEdit ? (
+                          <input
+                            value={new Intl.NumberFormat("vi-VN").format(draft.price)}
+                            onChange={(e) => {
+                              const digits = e.target.value.replace(/\D/g, "");
+                              setDraft((prev) => ({ ...prev, price: digits ? Number(digits) : 0 }));
+                            }}
+                            className="w-52 rounded-md border border-slate-300 px-2 py-1 text-right text-xl font-black"
+                          />
+                        ) : (
+                          <>
+                            {formatPrice(draft.price)}{" "}
+                            <span className="text-sm font-bold text-slate-500">đ</span>
+                          </>
+                        )}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <ul className="mt-6 space-y-2.5">
+                    {HIGHLIGHTS.map(({ icon: Icon, text }) => (
+                      <li key={text} className="flex items-center gap-2.5 text-sm text-slate-600">
+                        <Icon className="size-4 shrink-0 text-brand" />
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <a href={HOTLINE_TEL} className={pdpCtaPrimary}>
+                      <Phone className="size-4" />
+                      GỌI TƯ VẤN NGAY
+                    </a>
+                    <button
+                      type="button"
+                      onClick={addToCart}
+                      disabled={adminEdit || !draft.inStock}
+                      className={`${pdpCtaSecondary} disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 enabled:hover:border-brand enabled:hover:text-brand`}
+                    >
+                      <Plus className="size-4" />
+                      THÊM GIỎ TƯ VẤN
+                    </button>
                   </div>
-                </dl>
-
-                <ul className="mt-6 space-y-2.5">
-                  {HIGHLIGHTS.map(({ icon: Icon, text }) => (
-                    <li key={text} className="flex items-center gap-2.5 text-sm text-slate-600">
-                      <Icon className="size-4 shrink-0 text-brand" />
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <a
-                    href={HOTLINE_TEL}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-brand py-3.5 text-[11px] font-extrabold tracking-wide text-white hover:bg-[#0046cc]"
-                  >
-                    <Phone className="size-4" />
-                    GỌI TƯ VẤN NGAY
-                  </a>
-                  <button
-                    type="button"
-                    onClick={addToCart}
-                    disabled={adminEdit || !draft.inStock}
-                    className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 py-3.5 text-[11px] font-extrabold text-slate-700 disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 enabled:hover:border-brand enabled:hover:text-brand"
-                  >
-                    <Plus className="size-4" />
-                    THÊM GIỎ TƯ VẤN
-                  </button>
-                </div>
-              </FadeIn>
+                </FadeIn>
+              </div>
             </div>
           </div>
         </section>
 
         {related.length > 0 && (
-          <section className="border-t border-slate-100 bg-white pb-12 sm:pb-16">
+          <section className="border-t border-slate-100 bg-white pb-12 sm:pb-16 section-y">
             <div className="container-vf">
               <FadeIn>
-                <h2 className="text-lg font-black text-brand-dark sm:text-xl">
+                <span aria-hidden className="block h-1 w-10 rounded-full bg-accent-yellow" />
+                <h2 className="mt-4 text-lg font-black text-brand-dark sm:text-xl">
                   Phụ kiện liên quan
                 </h2>
               </FadeIn>

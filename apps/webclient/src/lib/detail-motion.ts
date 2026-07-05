@@ -38,11 +38,11 @@ export const detailGalleryImage = {
 };
 
 export const detailSectionReveal: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: DURATION.slow, ease: EASE_OUT_EXPO },
+    transition: { duration: DURATION.subtle, ease: EASE_OUT_EXPO, type: "tween" },
   },
 };
 

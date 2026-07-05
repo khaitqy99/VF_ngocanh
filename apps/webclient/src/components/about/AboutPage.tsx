@@ -34,8 +34,9 @@ import {
 import { MotionLinkButton } from "@/components/motion/MotionButton";
 import { StaggerGrid, StaggerItem } from "@/components/motion";
 import { IMAGES } from "@/lib/images";
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { PageEditorialHero } from "@/components/shared/PageEditorialHero";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
-import { vfSectionHeading } from "@/lib/typography";
 import {
   aboutBreadcrumb,
   aboutHeroKenBurns,
@@ -160,7 +161,7 @@ const ABOUT_CTA_SLIDES: FeatureCarouselSlide[] = [
 
 export default function AboutPage({ contact }: { contact: DealershipContact }) {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
+    <div className="relative min-h-screen bg-background font-sans text-foreground antialiased">
       <Header />
 
       <main>
@@ -169,7 +170,7 @@ export default function AboutPage({ contact }: { contact: DealershipContact }) {
         <MissionSection />
         <TimelineSection />
         <WhyChooseSection />
-        <ShowroomLocationSection className="section-y bg-slate-50" contact={contact} />
+        <ShowroomLocationSection className="section-y bg-surface-muted" contact={contact} />
         <CtaBanner />
       </main>
 
@@ -186,7 +187,7 @@ function BreadcrumbBar() {
       initial={reduced ? false : "hidden"}
       animate={reduced ? undefined : "visible"}
       variants={reduced ? undefined : aboutBreadcrumb}
-      className="border-b border-slate-200 bg-white"
+      className="border-b border-border/60 bg-background"
     >
       <div className="container-vf py-3.5">
         <Breadcrumb>
@@ -215,130 +216,40 @@ function BreadcrumbBar() {
 }
 
 function AboutSectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
-  const reduced = useReducedMotion();
-
-  return (
-    <motion.div
-      initial={reduced ? false : "hidden"}
-      whileInView={reduced ? undefined : "visible"}
-      viewport={aboutViewport}
-      variants={reduced ? undefined : aboutSectionHeader}
-      className="mx-auto mb-12 max-w-2xl text-center"
-    >
-      <motion.span
-        variants={reduced ? undefined : aboutSectionEyebrow}
-        className="text-xs font-extrabold uppercase tracking-widest text-brand"
-      >
-        {eyebrow}
-      </motion.span>
-      <motion.h2
-        variants={reduced ? undefined : homeSectionTitle}
-        className={`${vfSectionHeading} mt-2`}
-      >
-        {title}
-      </motion.h2>
-      <motion.div
-        variants={reduced ? undefined : homeSectionRule}
-        className="mx-auto mt-4 h-1 w-16 origin-center rounded bg-brand"
-        aria-hidden
-      />
-    </motion.div>
-  );
+  return <SectionHeader align="centered" eyebrow={eyebrow} title={title} className="mb-12" />;
 }
 
 function HeroSection() {
-  const reduced = useReducedMotion();
-
   return (
-    <section className="page-hero relative flex min-h-[380px] items-center overflow-hidden bg-slate-950 text-white sm:min-h-[440px] lg:min-h-[520px]">
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div className="absolute inset-0" {...(reduced ? {} : aboutHeroKenBurns)}>
-          <img
-            src={IMAGES.aboutShowroomBanner}
-            alt="Showroom VinFast Ngọc Anh - Cà Mau"
-            className="h-full w-full object-cover object-center"
-          />
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-black/70 lg:bg-gradient-to-r lg:from-black/85 lg:via-black/55 lg:to-black/25" />
-      </div>
-
-      <div className="container-vf relative z-10 text-white">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={reduced ? false : "hidden"}
-            animate={reduced ? undefined : "visible"}
-            variants={reduced ? undefined : aboutHeroStagger}
-            className="flex flex-col justify-center"
+    <PageEditorialHero
+      imageSrc={IMAGES.aboutShowroomBanner}
+      imageAlt="Showroom VinFast Ngọc Anh - Cà Mau"
+      eyebrow="ĐẠI LÝ ỦY QUYỀN CHÍNH THỨC VINFAST"
+      title={
+        <>
+          SHOWROOM VF NGỌC ANH <br />
+        </>
+      }
+      titleAccent="CÀ MAU — ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH"
+      description="Tọa lạc tại Cà Mau, VF Ngọc Anh tự hào là đại lý ủy quyền 3S chính thức của VinFast Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội."
+      actions={
+        <>
+          <MotionLinkButton
+            href="/oto"
+            className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
           >
-            <motion.div
-              variants={reduced ? undefined : aboutHeroLine}
-              className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-widest text-brand"
-            >
-              <Sparkles className="size-3.5 animate-pulse text-accent-yellow" /> ĐẠI LÝ ỦY QUYỀN
-              CHÍNH THỨC VINFAST
-            </motion.div>
-            <motion.h1
-              variants={reduced ? undefined : aboutHeroLine}
-              className="mt-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
-            >
-              SHOWROOM VF NGỌC ANH <br />
-              <span className="bg-gradient-to-r from-brand via-blue-400 to-emerald-400 bg-clip-text text-transparent italic">
-                CÀ MAU — ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH
-              </span>
-            </motion.h1>
-            <motion.p
-              variants={reduced ? undefined : aboutHeroLine}
-              className="mt-4 text-xs font-medium leading-relaxed text-slate-300 md:text-sm"
-            >
-              Tọa lạc tại Cà Mau, VF Ngọc Anh tự hào là đại lý ủy quyền 3S chính thức của VinFast
-              Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe
-              máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội.
-            </motion.p>
-
-            <motion.div
-              variants={reduced ? undefined : aboutHeroLine}
-              className="mt-8 flex flex-wrap gap-3"
-            >
-              <MotionLinkButton
-                href="/oto"
-                className="flex items-center gap-1.5 rounded-xl bg-brand px-6 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-blue-600"
-              >
-                Khám phá dòng xe <ChevronRight className="size-4" />
-              </MotionLinkButton>
-              <MotionLinkButton
-                href={HOTLINE_TEL}
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-6 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white transition-all hover:bg-white/20"
-              >
-                <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: {HOTLINE}
-              </MotionLinkButton>
-            </motion.div>
-
-            <motion.div
-              variants={reduced ? undefined : aboutStatStagger}
-              className="mt-10 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-3"
-            >
-              {STATS.map(({ icon: Icon, value, label }) => (
-                <motion.div
-                  key={label}
-                  variants={reduced ? undefined : aboutStatItem}
-                  className="flex items-start gap-3"
-                >
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand/20 bg-brand/10 text-brand">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-base font-black text-white">{value}</p>
-                    <p className="mt-0.5 text-[10px] font-bold uppercase leading-snug tracking-wide text-slate-400">
-                      {label}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+            Khám phá dòng xe <ChevronRight className="size-4" />
+          </MotionLinkButton>
+          <MotionLinkButton
+            href={HOTLINE_TEL}
+            className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
+          >
+            <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: {HOTLINE}
+          </MotionLinkButton>
+        </>
+      }
+      stats={STATS.map(({ icon, value, label }) => ({ icon, value, label }))}
+    />
   );
 }
 
@@ -358,7 +269,7 @@ function MissionCard({
       initial="rest"
       whileHover={reduced ? undefined : "hover"}
       variants={reduced ? undefined : aboutMissionCard}
-      className="group flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-soft transition-shadow duration-300 hover:shadow-card"
+      className="page-section-card group flex h-full flex-col items-center p-8 text-center transition-shadow duration-300 hover:shadow-card"
     >
       <motion.div
         variants={reduced ? undefined : aboutMissionIcon}
@@ -374,11 +285,11 @@ function MissionCard({
 
 function MissionSection() {
   return (
-    <section className="section-y border-b border-slate-200/60 bg-slate-50">
+    <section className="section-y border-b border-slate-200/60 bg-surface-muted">
       <div className="container-vf">
         <AboutSectionHeader
           eyebrow="Kim chỉ nam hoạt động"
-          title="SỨ MỆNH - TẦM NHÌN - GIÁ TRỊ CỐT LÕI"
+          title="Sứ mệnh — tầm nhìn — giá trị cốt lõi"
         />
 
         <StaggerGrid className="grid gap-6 md:grid-cols-3">
@@ -436,7 +347,7 @@ function TimelineSection() {
   return (
     <section className="section-y overflow-hidden border-b border-slate-200/60 bg-white">
       <div className="container-vf">
-        <AboutSectionHeader eyebrow="Lịch sử vàng son" title="HÀNH TRÌNH PHÁT TRIỂN CHÓI SÁNG" />
+        <AboutSectionHeader eyebrow="Lịch sử vàng son" title="Hành trình phát triển chói sáng" />
 
         <div className="relative">
           <motion.div
@@ -472,7 +383,7 @@ function TimelineSection() {
 
                   <motion.div
                     whileHover={reduced ? undefined : { y: -4, transition: { duration: 0.25 } }}
-                    className="flex h-full w-full flex-col items-center rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center shadow-soft transition-shadow duration-300 hover:shadow-md"
+                    className="flex h-full w-full flex-col items-center rounded-2xl border border-slate-200 bg-surface-muted p-5 text-center shadow-soft transition-shadow duration-300 hover:shadow-md"
                   >
                     <span className="text-sm font-black tracking-wider text-brand">{m.year}</span>
                     <h3 className="mt-1 flex min-h-[32px] items-center justify-center text-xs font-black uppercase tracking-wide text-brand-dark">
@@ -531,9 +442,9 @@ function WhyChooseSection() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="section-y bg-slate-50">
+    <section className="section-y bg-surface-muted">
       <div className="container-vf">
-        <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="VÌ SAO LỰA CHỌN VF NGỌC ANH?" />
+        <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="Vì sao lựa chọn VF Ngọc Anh?" />
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <motion.div
@@ -564,7 +475,7 @@ function WhyChooseSection() {
                 viewport={aboutViewport}
                 variants={reduced ? undefined : aboutWhyItem}
                 whileHover={reduced ? undefined : { x: 4, transition: { duration: 0.2 } }}
-                className="flex list-none items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-soft"
+                className="page-section-card flex list-none items-start gap-4 p-5"
               >
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                   <Icon className="size-5.5 text-brand" strokeWidth={1.5} />

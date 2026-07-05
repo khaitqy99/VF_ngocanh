@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+import { useMountReveal } from "@/hooks/use-scroll-reveal";
 
 export type PdpNavItem = { id: string; label: string };
 
 export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
   const [active, setActive] = useState(items[0]?.id ?? "");
+  const mount = useMountReveal(0.05);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -25,8 +29,11 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
   }, [items]);
 
   return (
-    <nav
+    <motion.nav
       aria-label="Mục nội dung sản phẩm"
+      initial={mount.initial}
+      animate={mount.animate}
+      transition={mount.transition}
       className="sticky top-14 z-30 border-b border-border/40 bg-white/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80"
     >
       <div className="container-vf py-2.5 sm:py-3">
@@ -57,6 +64,6 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
           </ul>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

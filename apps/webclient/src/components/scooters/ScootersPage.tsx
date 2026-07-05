@@ -40,9 +40,8 @@ import {
   ScootersSectionHeader,
   ScootersWhyVinFastSection,
 } from "@/components/scooters/ScootersAnimatedSections";
-import { CatalogHeroIntro } from "@/components/shared/CatalogHeroIntro";
+import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
-import { PromoBannerCarousel } from "@/components/shared/PromoBannerCarousel";
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/site/Header";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
@@ -71,7 +70,7 @@ import {
 } from "@/lib/scooters";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 import { carsBookingStep, carsEstimatorPanel } from "@/lib/cars-motion";
-import { modalVariants, overlayVariants } from "@/lib/motion";
+import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const HERO_FEATURES = [
@@ -143,6 +142,7 @@ export default function ScootersPage({
   adminEdit?: boolean;
 }) {
   const reduced = useReducedMotion();
+  const modalMotion = useModalMotion();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [sort, setSort] = useState<SortKey>("newest");
   const [mobileFilters, setMobileFilters] = useState(false);
@@ -333,7 +333,7 @@ export default function ScootersPage({
   }, [adminEdit, embedded]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white font-sans text-slate-800">
+    <div className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
       <Toaster position="top-right" richColors />
       {embedded ? (
         <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
@@ -374,7 +374,7 @@ export default function ScootersPage({
             <button
               type="button"
               onClick={() => setMobileFilters(!mobileFilters)}
-              className={`mb-6 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-brand-dark shadow-sm hover:bg-slate-50 lg:hidden ${adminEdit ? "hidden" : ""}`}
+              className={`page-section-card mb-6 flex w-full items-center justify-between px-5 py-4 text-sm font-bold text-brand-dark shadow-sm hover:bg-surface-muted/50 lg:hidden ${adminEdit ? "hidden" : ""}`}
             >
               <span className="flex items-center gap-2">
                 <SlidersIcon className="size-4 text-brand" /> Bộ lọc nâng cao
@@ -387,7 +387,7 @@ export default function ScootersPage({
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
                 <aside
-                  className={`${mobileFilters ? "block" : "hidden"} w-full shrink-0 lg:block lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10`}
+                  className={`${mobileFilters ? "block" : "hidden"} w-full max-h-[min(70vh,640px)] shrink-0 overflow-y-auto overscroll-contain lg:block lg:max-h-[80vh] lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10 lg:overflow-y-auto`}
                 >
                   <FadeIn direction="left">
                     <FilterSidebar
@@ -413,7 +413,7 @@ export default function ScootersPage({
                 ) : (
                   <CatalogGrid
                     id="scooter-catalog-grid"
-                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 xl:grid-cols-3"
+                    className="grid grid-cols-2 items-stretch gap-3 sm:gap-6 lg:grid-cols-3"
                   >
                     {filteredScooters.map((scooter, index) => (
                       <CatalogGridItem key={scooter.id} index={index}>
@@ -441,7 +441,7 @@ export default function ScootersPage({
         {!adminEdit ? (
           <section
             id="estimator-tool"
-            className="section-y overflow-hidden relative border-b border-slate-200 bg-white text-slate-800"
+            className="section-y overflow-hidden relative border-b border-border/60 bg-background text-slate-800"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
 
@@ -453,7 +453,7 @@ export default function ScootersPage({
               />
 
               <EstimatorMotionShell>
-                <div className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl lg:grid-cols-12">
+                <div className="page-showcase-shell mx-auto grid max-w-5xl overflow-hidden rounded-[1.75rem] shadow-xl lg:grid-cols-12">
                   {/* Left Settings Panel */}
                   <div className="lg:col-span-5 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white">
                     <h3 className="text-sm font-black tracking-wide border-b border-slate-100 pb-4 text-brand-dark uppercase flex items-center gap-2">
@@ -469,7 +469,7 @@ export default function ScootersPage({
                         value={estimatorScooterId}
                         onValueChange={(v) => setEstimatorScooterId(v)}
                       >
-                        <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                        <SelectTrigger className="w-full bg-surface-muted border-slate-200 text-slate-800 font-bold h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
                           <SelectValue placeholder="Chọn xe" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-slate-200 text-slate-800">
@@ -487,7 +487,7 @@ export default function ScootersPage({
                     </div>
 
                     {/* Tab switch inside estimator settings */}
-                    <div className="grid grid-cols-2 mt-6 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                    <div className="grid grid-cols-2 mt-6 bg-surface-muted p-1 rounded-lg border border-slate-200">
                       <button
                         onClick={() => setEstimatorTab("rolling")}
                         className={`py-2 text-xs font-bold rounded-md transition-all ${
@@ -523,7 +523,7 @@ export default function ScootersPage({
                             className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
                               estimatorBattery === "rent"
                                 ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                             }`}
                           >
                             <span>Thuê pin</span>
@@ -536,7 +536,7 @@ export default function ScootersPage({
                             className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
                               estimatorBattery === "purchase"
                                 ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                             }`}
                           >
                             <span>Mua đứt pin</span>
@@ -556,7 +556,7 @@ export default function ScootersPage({
                           value={estimatorLocation}
                           onValueChange={(v) => setEstimatorLocation(v)}
                         >
-                          <SelectTrigger className="w-full bg-slate-50 border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
+                          <SelectTrigger className="w-full bg-surface-muted border-slate-200 text-slate-800 font-medium h-11 text-xs focus:bg-white focus:ring-1 focus:ring-brand">
                             <SelectValue placeholder="Chọn Khu Vực" />
                           </SelectTrigger>
                           <SelectContent className="bg-white border-slate-200 text-slate-800">
@@ -632,7 +632,7 @@ export default function ScootersPage({
                                   className={`py-1 rounded text-xs font-bold border transition-all ${
                                     interestRate === rate
                                       ? "border-brand bg-brand/10 text-brand"
-                                      : "border-slate-200 bg-slate-50 text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                      : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
                                   }`}
                                 >
                                   {rate}% {rate === 0 ? "(Gói ưu đãi 0%)" : "(Gói tiêu chuẩn)"}
@@ -646,7 +646,7 @@ export default function ScootersPage({
                   </div>
 
                   {/* Right Results Panel */}
-                  <div className="flex flex-col justify-between bg-slate-50 p-6 md:p-8 lg:col-span-7">
+                  <div className="flex flex-col justify-between bg-surface-muted p-6 md:p-8 lg:col-span-7">
                     <AnimatePresence mode="wait" custom={estimatorTab}>
                       {estimatorTab === "rolling" ? (
                         <motion.div
@@ -705,7 +705,7 @@ export default function ScootersPage({
                           </h3>
 
                           <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <div className="page-section-card p-4">
                               <p className="text-[10px] font-bold uppercase text-slate-500">
                                 Số tiền trả góp ({downPaymentPct}%)
                               </p>
@@ -713,7 +713,7 @@ export default function ScootersPage({
                                 {formatPrice(installmentResult.loanAmount)} đ
                               </p>
                             </div>
-                            <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <div className="page-section-card p-4">
                               <p className="text-[10px] font-bold uppercase text-slate-500">
                                 Số tiền thanh toán trước ({100 - downPaymentPct}%)
                               </p>
@@ -779,17 +779,11 @@ export default function ScootersPage({
         {isBookingOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
+            {...modalMotion.overlay}
             onClick={() => setIsBookingOpen(false)}
           >
             <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={modalVariants}
+              {...modalMotion.panel}
               onClick={(e) => e.stopPropagation()}
               className="flex w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white text-slate-800 shadow-2xl"
             >
@@ -811,7 +805,7 @@ export default function ScootersPage({
 
               {/* Steps Indicator */}
               {bookingStep < 4 && (
-                <div className="bg-slate-50 border-b border-slate-100 px-6 py-3 flex justify-between items-center text-[10px] font-bold text-slate-400">
+                <div className="bg-surface-muted border-b border-slate-100 px-6 py-3 flex justify-between items-center text-[10px] font-bold text-slate-400">
                   <span
                     className={`${bookingStep === 1 ? "text-brand" : bookingStep > 1 ? "text-slate-700" : ""}`}
                   >
@@ -851,7 +845,7 @@ export default function ScootersPage({
                       </p>
 
                       {/* Scooter Selector visual list */}
-                      <div className="grid grid-cols-2 gap-3 max-h-[180px] overflow-y-auto border border-slate-100 p-2 rounded-xl bg-slate-50">
+                      <div className="grid grid-cols-2 gap-3 max-h-[180px] overflow-y-auto border border-slate-100 p-2 rounded-xl bg-surface-muted">
                         {SCOOTERS.map((scooter) => (
                           <button
                             key={scooter.id}
@@ -860,7 +854,7 @@ export default function ScootersPage({
                             className={`flex items-center gap-3 p-2.5 rounded-lg border text-left transition-all ${
                               bookingScooter?.id === scooter.id
                                 ? "border-brand bg-brand/5 ring-1 ring-brand font-bold"
-                                : "border-slate-200 bg-white hover:bg-slate-50"
+                                : "border-slate-200 bg-white hover:bg-surface-muted"
                             }`}
                           >
                             <img
@@ -878,7 +872,7 @@ export default function ScootersPage({
                         <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
                           Bạn cần tư vấn dịch vụ gì?
                         </span>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                           {["Đăng ký lái thử", "Nhận báo giá", "Hỗ trợ trả góp 0%"].map((svc) => (
                             <button
                               key={svc}
@@ -887,7 +881,7 @@ export default function ScootersPage({
                               className={`py-2 px-1 text-center rounded-lg border text-[11px] font-bold transition-all ${
                                 bookingForm.service === svc
                                   ? "border-brand bg-brand/5 text-brand font-black"
-                                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                  : "border-slate-200 text-slate-600 hover:bg-surface-muted"
                               }`}
                             >
                               {svc}
@@ -934,7 +928,7 @@ export default function ScootersPage({
                           value={bookingForm.name}
                           onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
                           placeholder="Nguyễn Văn A"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -950,7 +944,7 @@ export default function ScootersPage({
                             setBookingForm({ ...bookingForm, phone: e.target.value })
                           }
                           placeholder="09xx xxx xxx"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -965,7 +959,7 @@ export default function ScootersPage({
                             setBookingForm({ ...bookingForm, email: e.target.value })
                           }
                           placeholder="email@example.com"
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -1002,7 +996,7 @@ export default function ScootersPage({
                         <button
                           type="button"
                           onClick={() => goBookingStep(1)}
-                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-surface-muted"
                         >
                           Quay lại
                         </button>
@@ -1061,7 +1055,7 @@ export default function ScootersPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, date: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           />
                         </div>
                         <div>
@@ -1073,7 +1067,7 @@ export default function ScootersPage({
                             onChange={(e) =>
                               setBookingForm({ ...bookingForm, time: e.target.value })
                             }
-                            className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                           >
                             {[
                               "08:00",
@@ -1102,7 +1096,7 @@ export default function ScootersPage({
                           onChange={(e) => setBookingForm({ ...bookingForm, note: e.target.value })}
                           placeholder="Tôi muốn đăng ký mua xe trả góp 0%, tư vấn màu sơn đỏ mận hợp mệnh..."
                           rows={3}
-                          className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                          className="w-full bg-surface-muted border border-slate-200 px-4 py-2.5 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
                         />
                       </div>
 
@@ -1110,7 +1104,7 @@ export default function ScootersPage({
                         <button
                           type="button"
                           onClick={() => goBookingStep(2)}
-                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-slate-50"
+                          className="border border-slate-200 text-slate-500 font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-surface-muted"
                         >
                           Quay lại
                         </button>
@@ -1153,7 +1147,7 @@ export default function ScootersPage({
                         </p>
                       </div>
 
-                      <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 text-left text-xs font-semibold space-y-2 max-w-sm mx-auto">
+                      <div className="bg-surface-muted rounded-xl p-4 border border-slate-100 text-left text-xs font-semibold space-y-2 max-w-sm mx-auto">
                         <div className="flex justify-between text-slate-500">
                           <span>Mẫu xe đăng ký:</span>
                           <span className="text-slate-800 font-bold">{bookingScooter?.name}</span>
@@ -1208,9 +1202,7 @@ export default function ScootersPage({
 
 function EstimatorCostList({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white">
-      {children}
-    </ul>
+    <ul className="page-section-card divide-y divide-slate-100 overflow-hidden">{children}</ul>
   );
 }
 
@@ -1228,7 +1220,7 @@ function EstimatorCostRow({
   return (
     <li
       className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4 ${
-        sub ? "bg-slate-50" : ""
+        sub ? "bg-surface-muted" : ""
       }`}
     >
       <span className="min-w-0 text-[11px] leading-snug text-slate-600 sm:text-xs">{label}</span>
@@ -1268,25 +1260,20 @@ function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function HeroSection({ onExplore }: { onExplore: () => void }) {
   return (
-    <>
-      <section className="relative w-full overflow-hidden bg-white">
-        <PromoBannerCarousel banners={SCOOTER_HERO_BANNERS} aspectLayout />
-      </section>
-
-      <CatalogHeroIntro
-        title="Thời thượng, bứt phá"
-        titleAccent="công nghệ tương lai"
-        description="Sở hữu xe máy điện VinFast với pin LFP siêu bền, quãng đường lên tới 200 km/sạc, chống nước IP67 và chính sách trả góp 0% lãi suất tại VF Ngọc Anh."
-        primaryCta={{ label: "KHÁM PHÁ CATALOG XE MÁY", onClick: onExplore }}
-        secondaryCta={{ label: `GỌI TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
-        highlights={[
-          { value: "15+", label: "Dòng xe máy điện" },
-          { value: "LFP", label: "Pin bền bỉ" },
-          { value: "0%", label: "Trả góp lãi suất" },
-        ]}
-        features={[...HERO_FEATURES]}
-      />
-    </>
+    <PageMarketingHero
+      banners={SCOOTER_HERO_BANNERS}
+      title="Thời thượng, bứt phá"
+      titleAccent="công nghệ tương lai"
+      description="Sở hữu xe máy điện VinFast với pin LFP siêu bền, quãng đường lên tới 200 km/sạc, chống nước IP67 và chính sách trả góp 0% lãi suất tại VF Ngọc Anh."
+      primaryCta={{ label: "KHÁM PHÁ CATALOG XE MÁY", onClick: onExplore }}
+      secondaryCta={{ label: `GỌI TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
+      highlights={[
+        { value: "15+", label: "Dòng xe máy điện" },
+        { value: "LFP", label: "Pin bền bỉ" },
+        { value: "0%", label: "Trả góp lãi suất" },
+      ]}
+      features={[...HERO_FEATURES]}
+    />
   );
 }
 
@@ -1321,7 +1308,7 @@ function FilterSidebar({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft lg:max-h-[80vh] lg:overflow-y-auto">
+    <div className="page-section-card p-5 lg:max-h-[80vh] lg:overflow-y-auto">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
         <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
           <SlidersIcon className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
@@ -1352,10 +1339,10 @@ function FilterSidebar({
           className="mt-4"
         />
         <div className="mt-3 flex items-center justify-between gap-1 text-[10px] text-slate-500 font-extrabold">
-          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+          <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
             {formatPrice(filters.priceRange[0])} đ
           </span>
-          <span className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+          <span className="rounded border border-slate-200 bg-surface-muted px-2 py-1">
             {formatPrice(filters.priceRange[1])} đ
           </span>
         </div>

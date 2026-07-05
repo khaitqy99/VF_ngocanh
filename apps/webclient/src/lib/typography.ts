@@ -1,6 +1,6 @@
-/** Centered H2 — catalog & service page sections */
+/** Centered H2 — legacy sections migrating to SectionHeader */
 export const vfSectionHeading =
-  "text-center text-xl font-black leading-tight tracking-tight text-brand-dark sm:text-2xl md:text-3xl lg:text-4xl";
+  "text-balance text-center text-2xl font-extrabold leading-[1.08] tracking-tight text-brand-dark sm:text-3xl lg:text-[2.125rem]";
 
 /** Left-aligned H2 — PDP sections, split layouts */
 export const vfSectionHeadingLeft =
@@ -24,19 +24,32 @@ export const vfCardTitleSm = "text-sm font-bold text-brand-dark sm:text-[15px]";
 export const vfCatalogCardTitle = "text-sm font-black leading-snug text-brand-dark sm:text-base";
 
 /** H3 — promo / split panel cards */
-export const vfPanelTitle = "text-xl font-black uppercase leading-tight";
+export const vfPanelTitle = "text-xl font-extrabold leading-tight tracking-tight text-brand-dark";
 
 /** Standard content card shell */
-export const vfCard = "rounded-2xl border border-slate-200 bg-white shadow-soft";
+export const vfCard = "page-section-card rounded-2xl";
 
 /** Large image feature card */
 export const vfCardLg = "overflow-hidden rounded-3xl shadow-card ring-1 ring-black/5";
 
 /** Bottom CTA section heading */
-export const vfCtaHeading = "text-2xl font-black tracking-tight text-white uppercase sm:text-3xl";
+export const vfCtaHeading =
+  "text-balance text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-[2rem]";
 
 /** Eyebrow label above headings */
-export const vfEyebrow = "text-sm font-bold tracking-[0.15em] text-brand uppercase";
+export const vfEyebrow = "text-xs font-semibold tracking-[0.14em] text-brand uppercase";
+
+/** Home section — left-aligned editorial title */
+export const vfHomeSectionTitle =
+  "text-balance text-2xl font-extrabold leading-[1.08] tracking-tight text-brand-dark sm:text-3xl lg:text-[2.125rem]";
 
 /** Carousel / feature slide title */
 export const vfSlideTitle = "text-xl font-black tracking-tight sm:text-2xl";
+
+/** Display H1 — cinematic catalog / editorial heroes */
+export const vfDisplayHero =
+  "text-3xl font-extrabold leading-[1.06] tracking-tight sm:text-4xl lg:text-[2.75rem] xl:text-5xl";
+
+/** Eyebrow — homepage-style hero labels */
+export const vfHeroEyebrow =
+  "text-[11px] font-bold tracking-[0.22em] text-brand uppercase sm:text-xs";

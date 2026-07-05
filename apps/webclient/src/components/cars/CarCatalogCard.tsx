@@ -220,7 +220,7 @@ export function CarCatalogCard({
 
   return (
     <article
-      className={`catalog-card group flex h-full flex-col border border-slate-200 bg-white ${className ?? ""}`}
+      className={`catalog-card group flex h-full flex-col overflow-hidden ${className ?? ""}`}
     >
       <div className="relative">
         <Link href={carDetailPath(car)} prefetch className="block">
@@ -279,14 +279,14 @@ export function CarCatalogCard({
             <button
               type="button"
               onClick={onEstimatePrice}
-              className="rounded border border-slate-200 py-2.5 text-[10px] font-extrabold text-slate-600 sm:text-[11px]"
+              className="rounded-full border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-600 transition hover:border-brand/30 hover:text-brand sm:text-[11px]"
             >
               LĂN BÁNH
             </button>
             <button
               type="button"
               onClick={onBookDrive}
-              className="rounded bg-brand py-2.5 text-[10px] font-extrabold text-white sm:text-[11px]"
+              className="home-cta-primary rounded-full py-2.5 text-[10px] font-semibold text-white sm:text-[11px]"
             >
               LÁI THỬ
             </button>
@@ -295,7 +295,7 @@ export function CarCatalogCard({
           <Link
             href={carDetailPath(car)}
             prefetch
-            className="block rounded border border-brand/30 py-2.5 text-center text-[11px] font-bold leading-snug text-brand sm:text-xs"
+            className="block rounded-full border border-brand/25 py-2.5 text-center text-[11px] font-semibold leading-snug text-brand transition hover:border-brand hover:bg-brand/5 sm:text-xs"
           >
             Xem trọn bộ thông số
           </Link>

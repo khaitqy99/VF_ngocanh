@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useMountReveal } from "@/hooks/use-scroll-reveal";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IMAGES } from "@/lib/images";
 import { buttonHover, buttonTap, springSnappy } from "@/lib/motion";
 
@@ -21,7 +23,7 @@ const NAV = [
   { label: "Lưu trữ năng lượng", href: "/luu-tru-nang-luong" },
 ] as const;
 
-function BrandLogo({ className }: { className?: string }) {
+function BrandLogo() {
   return (
     <Image
       src={IMAGES.vinfastLogo}
@@ -29,7 +31,7 @@ function BrandLogo({ className }: { className?: string }) {
       width={140}
       height={32}
       priority
-      className={className ?? "h-7 w-auto sm:h-8"}
+      className="h-7 w-auto sm:h-8"
     />
   );
 }
@@ -38,6 +40,8 @@ export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const reduced = useReducedMotion();
+  const mount = useMountReveal(0.05);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -50,16 +54,28 @@ export default function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  const navLink = (active: boolean) =>
+    active ? "text-brand" : "text-foreground/80 hover:text-brand";
+
+  const ctaClass =
+    "hidden items-center rounded-full bg-brand px-4 py-2 text-[11px] font-semibold tracking-wide text-white shadow-sm shadow-brand/20 transition-colors hover:bg-[#0046cc] sm:inline-flex";
+
+  const menuBtnClass =
+    "inline-flex size-9 items-center justify-center rounded-md text-brand-dark transition-colors hover:bg-slate-100 lg:hidden";
+
   return (
     <>
       <motion.header
-        initial={{ y: -64, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ ...springSnappy, delay: 0.05 }}
-        className={`fixed inset-x-0 top-0 z-50 border-b bg-white/95 backdrop-blur-md transition-shadow duration-300 ${scrolled ? "border-border/60 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08)]" : "border-transparent"}`}
+        initial={mount.initial}
+        animate={mount.animate}
+        transition={mount.transition}
+        className={`fixed inset-x-0 top-0 z-50 border-b bg-white/90 backdrop-blur-xl transition-[box-shadow,border-color,background-color] duration-300 ${scrolled ? "border-border/60 shadow-[var(--shadow-brand)]" : "border-transparent"}`}
       >
         <div className="container-vf flex h-14 items-center justify-between gap-3 lg:gap-6">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={reduced ? undefined : { scale: 1.02 }}
+            whileTap={reduced ? undefined : { scale: 0.98 }}
+          >
             <Link href="/" className="flex shrink-0 items-center">
               <BrandLogo />
             </Link>
@@ -71,15 +87,13 @@ export default function Header() {
               return (
                 <motion.div
                   key={label}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ ...springSnappy, delay: 0.1 + i * 0.07 }}
+                  initial={reduced ? false : { opacity: 0, y: -8 }}
+                  animate={reduced ? undefined : { opacity: 1, y: 0 }}
+                  transition={reduced ? undefined : { ...springSnappy, delay: 0.1 + i * 0.07 }}
                 >
                   <Link
                     href={href}
-                    className={`relative whitespace-nowrap pb-0.5 text-xs font-medium transition-colors hover:text-brand ${
-                      active ? "text-brand" : "text-foreground/80"
-                    }`}
+                    className={`relative whitespace-nowrap pb-0.5 text-xs font-medium transition-colors ${navLink(active)}`}
                   >
                     {label}
                     {active && (
@@ -96,17 +110,13 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <motion.button
-              whileHover={buttonHover}
-              whileTap={buttonTap}
-              className="hidden items-center rounded-md bg-brand px-3.5 py-2 text-[11px] font-semibold tracking-wide text-white shadow-sm shadow-brand/20 transition-colors hover:bg-[#0046cc] sm:inline-flex"
-            >
+            <motion.button whileHover={buttonHover} whileTap={buttonTap} className={ctaClass}>
               ĐĂNG KÝ LÁI THỬ
             </motion.button>
 
             <button
               type="button"
-              className="inline-flex size-9 items-center justify-center rounded-md text-brand-dark transition-colors hover:bg-slate-100 lg:hidden"
+              className={menuBtnClass}
               aria-label="Mở menu điều hướng"
               onClick={() => setMobileOpen(true)}
             >
@@ -153,7 +163,7 @@ export default function Header() {
                           className={`block rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
                             active
                               ? "bg-brand/10 text-brand"
-                              : "text-foreground/80 hover:bg-slate-50 hover:text-brand"
+                              : "text-foreground/80 hover:bg-surface-muted hover:text-brand"
                           }`}
                         >
                           {label}
@@ -169,7 +179,7 @@ export default function Header() {
               <SheetClose asChild>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-center rounded-md bg-brand px-4 py-3 text-[12px] font-semibold tracking-wide text-white shadow-sm transition-colors hover:bg-[#0046cc]"
+                  className="home-cta-primary flex w-full items-center justify-center rounded-full px-4 py-3 text-[12px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
                 >
                   ĐĂNG KÝ LÁI THỬ
                 </button>

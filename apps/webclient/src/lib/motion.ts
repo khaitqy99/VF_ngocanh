@@ -5,6 +5,7 @@ export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const;
 
 export const DURATION = {
   fast: 0.32,
+  subtle: 0.42,
   normal: 0.85,
   slow: 1.1,
   hero: 1.2,
@@ -23,6 +24,19 @@ export const viewport = {
   margin: "0px 0px -48px 0px",
 } as const;
 
+/** Scroll-reveal nhẹ — dùng thống nhất section/block trên toàn site */
+export const subtleViewport = {
+  once: true,
+  amount: 0.12,
+  margin: "0px 0px -40px 0px",
+} as const;
+
+export const subtleRevealTransition: Transition = {
+  duration: DURATION.subtle,
+  ease: EASE_OUT_EXPO,
+  type: "tween",
+};
+
 /** Mỗi card trong catalog tự animate khi riêng nó vào viewport */
 export const catalogItemViewport = {
   once: true,
@@ -40,14 +54,19 @@ export const revealTransition: Transition = {
   ease: EASE_OUT_EXPO,
 };
 
-export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
+export const fadeUpSubtle: Variants = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { ...revealTransition, type: "tween" },
+    transition: subtleRevealTransition,
   },
 };
+
+/** Alias section scroll-reveal — PDP + marketing sections */
+export const sectionReveal: Variants = fadeUpSubtle;
+
+export const fadeUp: Variants = fadeUpSubtle;
 
 export const fadeUpBlur: Variants = {
   hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
@@ -65,20 +84,20 @@ export const fadeIn: Variants = {
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -36 },
+  hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { ...revealTransition, type: "tween" },
+    transition: subtleRevealTransition,
   },
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 36 },
+  hidden: { opacity: 0, x: 20 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { ...revealTransition, type: "tween" },
+    transition: subtleRevealTransition,
   },
 };
 
