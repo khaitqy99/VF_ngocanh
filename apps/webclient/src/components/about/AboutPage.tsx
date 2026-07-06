@@ -8,7 +8,6 @@ import {
   Gem,
   Check,
   ChevronRight,
-  ChevronLeft,
   Award,
   Users,
   Wrench,
@@ -55,8 +54,9 @@ import {
   aboutWhyImage,
   aboutWhyItem,
 } from "@/lib/about-motion";
-import { homeNavBtn, homeSectionRule, homeSectionTitle } from "@/lib/home-motion";
+import { homeSectionRule, homeSectionTitle } from "@/lib/home-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 import {
   FeatureCarouselSection,
   type FeatureCarouselSlide,
@@ -185,7 +185,7 @@ function BreadcrumbBar() {
   return (
     <motion.div
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : aboutBreadcrumb}
       className="border-b border-border/60 bg-background"
     >
@@ -335,103 +335,121 @@ function MissionSection() {
 }
 
 function TimelineSection() {
-  const reduced = useReducedMotion();
-
-  const scrollBy = (dir: "prev" | "next") => {
-    const el = document.getElementById("about-timeline");
-    if (!el) return;
-    const amount = el.clientWidth * 0.85;
-    el.scrollBy({ left: dir === "next" ? amount : -amount, behavior: "smooth" });
-  };
+  const { ref, reduced, initial, animate } = useSectionReveal(aboutViewport);
 
   return (
     <section className="section-y overflow-hidden border-b border-slate-200/60 bg-white">
       <div className="container-vf">
         <AboutSectionHeader eyebrow="Lịch sử vàng son" title="Hành trình phát triển chói sáng" />
 
-        <div className="relative">
+        {/* Mobile / tablet: timeline dọc — không cần cuộn ngang */}
+        <div className="relative mt-8 md:mt-10 lg:hidden" ref={ref}>
+          <div
+            className="absolute top-3 bottom-3 left-4 w-px bg-gradient-to-b from-brand/20 via-brand/50 to-brand/20"
+            aria-hidden
+          />
+          <ol className="space-y-6 sm:space-y-8">
+            {MILESTONES.map((m, index) => (
+              <motion.li
+                key={m.year}
+                custom={index}
+                initial={initial}
+                animate={animate}
+                viewport={aboutViewport}
+                variants={reduced ? undefined : aboutTimelineCard}
+                className="relative pl-11 sm:pl-12"
+              >
+                <div
+                  className="absolute top-5 left-0 z-10 flex size-8 items-center justify-center rounded-full border-2 border-brand bg-white shadow-sm sm:size-9"
+                  aria-hidden
+                >
+                  <div className="size-2.5 rounded-full bg-brand" />
+                </div>
+
+                <article className="overflow-hidden rounded-2xl border border-slate-200 bg-surface-muted shadow-soft">
+                  <div className="aspect-[16/9] overflow-hidden bg-white sm:aspect-[2/1]">
+                    <img
+                      src={m.image}
+                      alt={m.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4 sm:p-5">
+                    <span className="inline-block rounded-full bg-brand/10 px-2.5 py-0.5 text-[11px] font-extrabold tracking-wider text-brand">
+                      {m.year}
+                    </span>
+                    <h3 className="mt-2 text-sm font-black leading-snug text-brand-dark sm:text-base">
+                      {m.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:text-sm">
+                      {m.desc}
+                    </p>
+                  </div>
+                </article>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Desktop: timeline ngang 5 cột */}
+        <div className="relative mt-12 hidden lg:block">
           <motion.div
-            initial={reduced ? false : "hidden"}
-            whileInView={reduced ? undefined : "visible"}
+            initial={initial}
+            animate={animate}
             viewport={aboutViewport}
             variants={reduced ? undefined : aboutTimelineLine}
-            className="absolute top-[18px] right-8 left-8 hidden h-[2px] origin-left bg-slate-200 lg:block"
+            className="absolute top-5 right-10 left-10 h-0.5 origin-left bg-slate-200"
             aria-hidden
           />
 
-          <div
-            id="about-timeline"
-            className="scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:pb-0"
-          >
+          <div className="grid grid-cols-5 gap-4 xl:gap-5">
             {MILESTONES.map((m, index) => (
-              <motion.div
+              <motion.article
                 key={m.year}
                 custom={index}
-                initial={reduced ? false : "hidden"}
-                whileInView={reduced ? undefined : "visible"}
+                initial={initial}
+                animate={animate}
                 viewport={aboutViewport}
                 variants={reduced ? undefined : aboutTimelineCard}
-                className="w-[85%] shrink-0 snap-center sm:w-[48%] lg:w-full"
+                className="group flex flex-col"
               >
-                <div className="relative flex flex-col items-center">
+                <div className="relative z-10 mb-5 flex flex-col items-center">
                   <motion.div
                     variants={reduced ? undefined : aboutTimelineDot}
-                    className="relative z-10 mb-4 flex size-9 items-center justify-center rounded-full border border-brand bg-white shadow-sm"
+                    className="flex size-10 items-center justify-center rounded-full border-2 border-brand bg-white shadow-sm transition-shadow group-hover:shadow-md"
                   >
-                    <div className="size-2.5 rounded-full bg-brand" />
+                    <div className="size-3 rounded-full bg-brand" />
                   </motion.div>
+                  <span className="mt-2 text-xs font-black tracking-wider text-brand">
+                    {m.year}
+                  </span>
+                </div>
 
-                  <motion.div
-                    whileHover={reduced ? undefined : { y: -4, transition: { duration: 0.25 } }}
-                    className="flex h-full w-full flex-col items-center rounded-2xl border border-slate-200 bg-surface-muted p-5 text-center shadow-soft transition-shadow duration-300 hover:shadow-md"
-                  >
-                    <span className="text-sm font-black tracking-wider text-brand">{m.year}</span>
-                    <h3 className="mt-1 flex min-h-[32px] items-center justify-center text-xs font-black uppercase tracking-wide text-brand-dark">
+                <motion.div
+                  whileHover={reduced ? undefined : { y: -4, transition: { duration: 0.25 } }}
+                  className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-surface-muted shadow-soft transition-shadow duration-300 hover:shadow-md"
+                >
+                  <div className="aspect-[4/3] overflow-hidden bg-white">
+                    <img
+                      src={m.image}
+                      alt={m.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-4 xl:p-5">
+                    <h3 className="text-xs font-black uppercase leading-snug tracking-wide text-brand-dark xl:text-sm">
                       {m.title}
                     </h3>
-                    <p className="mt-2.5 min-h-[55px] text-[11px] font-semibold leading-relaxed text-slate-400">
+                    <p className="mt-2 flex-1 text-[11px] leading-relaxed text-slate-500 xl:text-xs">
                       {m.desc}
                     </p>
-                    <div className="mt-4 aspect-[16/10] w-full overflow-hidden rounded-xl border border-slate-200 bg-white">
-                      <motion.img
-                        src={m.image}
-                        alt={m.title}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                        whileHover={reduced ? undefined : { scale: 1.06 }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      />
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
+                  </div>
+                </motion.div>
+              </motion.article>
             ))}
           </div>
-
-          <motion.button
-            type="button"
-            onClick={() => scrollBy("prev")}
-            initial="rest"
-            whileHover={reduced ? undefined : "hover"}
-            whileTap={reduced ? undefined : "tap"}
-            variants={homeNavBtn}
-            className="absolute top-1/2 -left-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-dark shadow-md transition hover:text-brand lg:hidden"
-            aria-label="Mốc trước"
-          >
-            <ChevronLeft size={18} />
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={() => scrollBy("next")}
-            initial="rest"
-            whileHover={reduced ? undefined : "hover"}
-            whileTap={reduced ? undefined : "tap"}
-            variants={homeNavBtn}
-            className="absolute top-1/2 -right-2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-dark shadow-md transition hover:text-brand lg:-right-4 lg:hidden"
-            aria-label="Mốc tiếp"
-          >
-            <ChevronRight size={18} />
-          </motion.button>
         </div>
       </div>
     </section>
@@ -439,17 +457,17 @@ function TimelineSection() {
 }
 
 function WhyChooseSection() {
-  const reduced = useReducedMotion();
+  const { ref, reduced, initial, animate } = useSectionReveal(aboutViewport);
 
   return (
     <section className="section-y bg-surface-muted">
       <div className="container-vf">
         <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="Vì sao lựa chọn VF Ngọc Anh?" />
 
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14" ref={ref}>
           <motion.div
-            initial={reduced ? false : "hidden"}
-            whileInView={reduced ? undefined : "visible"}
+            initial={initial}
+            animate={animate}
             viewport={aboutViewport}
             variants={reduced ? undefined : aboutWhyImage}
             className="group relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-soft"
@@ -470,8 +488,8 @@ function WhyChooseSection() {
               <motion.li
                 key={title}
                 custom={index}
-                initial={reduced ? false : "hidden"}
-                whileInView={reduced ? undefined : "visible"}
+                initial={initial}
+                animate={animate}
                 viewport={aboutViewport}
                 variants={reduced ? undefined : aboutWhyItem}
                 whileHover={reduced ? undefined : { x: 4, transition: { duration: 0.2 } }}

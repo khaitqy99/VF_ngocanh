@@ -22,8 +22,12 @@
     "paths": {
       "@/lib/cms-data": ["./lib/cms-data.ts"],
       "@/lib/cms": ["./lib/cms.ts"],
+      "@/lib/auth": ["./lib/auth.ts"],
+      "@/lib/auth-users": ["./lib/auth-users.ts"],
       "@/lib/format": ["./lib/format.ts"],
       "@/lib/leads": ["./lib/leads.ts"],
+      "@/lib/use-leads-count": ["./lib/use-leads-count.ts"],
+      "@/lib/users": ["./lib/users.ts"],
       "@/lib/media-library": ["./lib/media-library.ts"],
       "@/lib/product-utils": ["./lib/product-utils.ts"],
       "@/lib/revalidate-webclient": ["./lib/revalidate-webclient.ts"],

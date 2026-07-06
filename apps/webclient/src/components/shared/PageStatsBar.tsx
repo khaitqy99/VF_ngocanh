@@ -3,8 +3,9 @@
 import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { homeViewport } from "@/lib/home-motion";
+import { revealAnimate, revealInitial, safeRevealTransition } from "@/lib/motion-safe";
 
 export function PageStatsBar({
   items,
@@ -13,7 +14,7 @@ export function PageStatsBar({
   items: readonly { value: string; label: string; icon?: LucideIcon }[];
   columns?: 2 | 3 | 4;
 }) {
-  const reduced = useReducedMotion();
+  const { ref, reduced, show } = useSectionReveal<HTMLUListElement>(homeViewport);
   const colClass =
     columns === 2
       ? "grid-cols-2"
@@ -28,10 +29,10 @@ export function PageStatsBar({
     >
       <div className="container-vf">
         <motion.ul
-          initial={reduced ? false : { opacity: 0, y: 16 }}
-          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-          viewport={homeViewport}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          ref={ref}
+          initial={revealInitial(reduced, { opacity: 0, y: 16 })}
+          animate={revealAnimate(reduced, show, { opacity: 0, y: 16 })}
+          transition={safeRevealTransition(reduced, { duration: 0.65, ease: [0.16, 1, 0.3, 1] })}
           className={`grid divide-x divide-white/10 ${colClass}`}
         >
           {items.map(({ icon: Icon, value, label }) => (

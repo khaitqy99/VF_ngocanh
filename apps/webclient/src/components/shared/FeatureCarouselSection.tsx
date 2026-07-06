@@ -5,7 +5,15 @@ import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 
+import { useInViewReveal } from "@/hooks/use-in-view-reveal";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import {
+  MOTION_INSTANT,
+  MOTION_VISIBLE,
+  revealAnimate,
+  revealInitial,
+  safeRevealTransition,
+} from "@/lib/motion-safe";
 import {
   homeCarouselImage,
   homeCarouselText,
@@ -53,6 +61,19 @@ export function FeatureCarouselSection({
   onPrimaryClick?: (slide: FeatureCarouselSlide) => void;
 }) {
   const reduced = useReducedMotion();
+  const { ref: sectionRef, show: sectionVisible } = useInViewReveal<HTMLElement>(homeViewport);
+  const carouselVariants = reduced
+    ? { enter: MOTION_VISIBLE, center: MOTION_VISIBLE, exit: MOTION_VISIBLE }
+    : homeCarouselImage;
+  const textVariants = reduced
+    ? { enter: MOTION_VISIBLE, center: MOTION_VISIBLE, exit: MOTION_VISIBLE }
+    : homeCarouselText;
+  const specStaggerVariants = reduced
+    ? { hidden: {}, visible: { transition: { staggerChildren: 0 } } }
+    : homeSpecStagger;
+  const specItemVariants = reduced
+    ? { hidden: MOTION_VISIBLE, visible: MOTION_VISIBLE }
+    : homeSpecItem;
   const [idx, setIdx] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -92,11 +113,11 @@ export function FeatureCarouselSection({
 
   return (
     <motion.section
+      ref={sectionRef}
       className="relative w-full overflow-hidden bg-white"
-      initial={reduced ? false : { opacity: 0, y: 40 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-      viewport={homeViewport}
-      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+      initial={revealInitial(reduced, { opacity: 0, y: 40 })}
+      animate={revealAnimate(reduced, sectionVisible, { opacity: 0, y: 40 })}
+      transition={safeRevealTransition(reduced, { duration: 0.85, ease: [0.16, 1, 0.3, 1] })}
     >
       <div className="relative w-full home-feature-surface">
         <div className="relative z-10">
@@ -106,10 +127,11 @@ export function FeatureCarouselSection({
                 <motion.div
                   key={`img-${activeSlide.image}`}
                   custom={direction}
-                  variants={reduced ? undefined : homeCarouselImage}
+                  variants={carouselVariants}
                   initial={reduced ? false : "enter"}
-                  animate={reduced ? undefined : "center"}
+                  animate="center"
                   exit={reduced ? undefined : "exit"}
+                  transition={reduced ? MOTION_INSTANT : undefined}
                   className="absolute inset-0 z-[1]"
                 >
                   <div className={featureImageInset}>
@@ -138,10 +160,11 @@ export function FeatureCarouselSection({
                 <motion.div
                   key={`text-${activeSlide.title}`}
                   custom={direction}
-                  variants={reduced ? undefined : homeCarouselText}
+                  variants={textVariants}
                   initial={reduced ? false : "enter"}
-                  animate={reduced ? undefined : "center"}
+                  animate="center"
                   exit={reduced ? undefined : "exit"}
+                  transition={reduced ? MOTION_INSTANT : undefined}
                   className="col-start-1 row-start-1 z-[1] lg:absolute lg:inset-0"
                 >
                   <div className={textPanelClass}>
@@ -156,9 +179,10 @@ export function FeatureCarouselSection({
                       )}
                       <motion.div
                         className={featureSpecGrid}
-                        variants={reduced ? undefined : homeSpecStagger}
+                        variants={specStaggerVariants}
                         initial={reduced ? false : "hidden"}
-                        animate={reduced ? undefined : "visible"}
+                        animate="visible"
+                        transition={reduced ? MOTION_INSTANT : undefined}
                       >
                         {(() => {
                           const priceSpec = activeSlide.specs.find((spec) =>
@@ -173,7 +197,7 @@ export function FeatureCarouselSection({
                               {otherSpecs.map((spec) => (
                                 <motion.div
                                   key={`${spec.value}-${spec.label}`}
-                                  variants={reduced ? undefined : homeSpecItem}
+                                  variants={specItemVariants}
                                 >
                                   <FeatureSpec
                                     feature
@@ -190,7 +214,7 @@ export function FeatureCarouselSection({
                               ))}
                               {priceSpec && (
                                 <motion.div
-                                  variants={reduced ? undefined : homeSpecItem}
+                                  variants={specItemVariants}
                                   className={
                                     otherSpecs.length <= 2 ? "col-span-2 xl:col-span-1" : undefined
                                   }
@@ -209,14 +233,12 @@ export function FeatureCarouselSection({
                       </motion.div>
                       <motion.div
                         className={featureActions}
-                        variants={reduced ? undefined : homeSpecStagger}
+                        variants={specStaggerVariants}
                         initial={reduced ? false : "hidden"}
-                        animate={reduced ? undefined : "visible"}
+                        animate="visible"
+                        transition={reduced ? MOTION_INSTANT : undefined}
                       >
-                        <motion.div
-                          variants={reduced ? undefined : homeSpecItem}
-                          className={featureActionItem}
-                        >
+                        <motion.div variants={specItemVariants} className={featureActionItem}>
                           <FeatureCta
                             variant="primary"
                             feature
@@ -226,10 +248,7 @@ export function FeatureCarouselSection({
                             {activeSlide.primaryCta}
                           </FeatureCta>
                         </motion.div>
-                        <motion.div
-                          variants={reduced ? undefined : homeSpecItem}
-                          className={featureActionItem}
-                        >
+                        <motion.div variants={specItemVariants} className={featureActionItem}>
                           <FeatureCta href={activeSlide.href} variant="outline" feature>
                             {activeSlide.secondaryCta}
                           </FeatureCta>

@@ -34,6 +34,7 @@ import {
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { HOTLINE_TEL } from "@/lib/contact";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 
 export {
   CarsEmptyState as ScootersEmptyState,
@@ -58,7 +59,7 @@ export function ScootersBreadcrumbBar() {
   return (
     <motion.div
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : carsBreadcrumb}
       className="border-b border-border/60 bg-background"
     >
@@ -100,7 +101,7 @@ export function ScootersSearchBar({
   return (
     <motion.section
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : carsSearchBar}
       className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20"
     >
@@ -143,13 +144,13 @@ export function ScootersCatalogListHeader({
   setSort: (v: SortKey) => void;
   segmentTab: string;
 }) {
-  const reduced = useReducedMotion();
+  const { ref, reduced, initial, animate } = useSectionReveal({ once: true, amount: 0.15 });
 
   return (
     <motion.div
-      initial={reduced ? false : "hidden"}
-      whileInView={reduced ? undefined : "visible"}
-      viewport={{ once: true, amount: 0.15 }}
+      ref={ref}
+      initial={initial}
+      animate={animate}
       variants={reduced ? undefined : carsListHeader}
       className="mb-6 flex flex-wrap items-center justify-between gap-4"
     >

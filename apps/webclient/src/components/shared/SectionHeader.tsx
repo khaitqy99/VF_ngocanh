@@ -4,8 +4,10 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { homeSectionRule, homeSectionTitle, homeViewport } from "@/lib/home-motion";
+import { reducedVariants } from "@/lib/motion";
 import { vfEyebrow, vfHomeSectionTitle } from "@/lib/typography";
 
 export function SectionHeader({
@@ -27,22 +29,20 @@ export function SectionHeader({
   id?: string;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
+  const { ref, reduced, initial, animate } = useSectionReveal(homeViewport);
   const centered = align === "centered";
+  const staggerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.04 } },
+  };
 
   return (
     <motion.div
-      initial={reduced ? false : "hidden"}
-      whileInView={reduced ? undefined : "visible"}
+      ref={ref}
+      initial={initial}
+      animate={animate}
       viewport={homeViewport}
-      variants={
-        reduced
-          ? undefined
-          : {
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.1, delayChildren: 0.04 } },
-            }
-      }
+      variants={reduced ? reducedVariants : staggerVariants}
       className={`relative mb-9 sm:mb-11 lg:mb-12 ${
         centered
           ? "mx-auto max-w-2xl text-center"

@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Car, Bike, Wrench, Users, Images, LogOut, Menu, Search } from "lucide-react";
+import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search } from "lucide-react";
 import { cn, Button } from "@/components/ui/core";
-import { countNewLeads, fetchLeads } from "@/lib/leads";
+import { useLeadsCounts } from "@/lib/use-leads-count";
 
 const MENU_ITEMS = [
   { href: "/admin/cars", label: "Ô tô", icon: Car },
@@ -14,6 +13,7 @@ const MENU_ITEMS = [
   { href: "/admin/seo", label: "SEO", icon: Search },
   { href: "/admin/media", label: "Thư viện ảnh", icon: Images },
   { href: "/admin/leads", label: "Lead khách", icon: Users, badge: true },
+  { href: "/admin/users", label: "Tài khoản admin", icon: UserCog },
 ];
 
 export function AdminSidebar({
@@ -24,17 +24,7 @@ export function AdminSidebar({
   onLogout: () => void;
 }) {
   const pathname = usePathname();
-  const [newLeads, setNewLeads] = useState(0);
-
-  useEffect(() => {
-    fetchLeads()
-      .then((data) => {
-        if (data.configured) {
-          setNewLeads(countNewLeads(data.leads));
-        }
-      })
-      .catch(() => undefined);
-  }, []);
+  const { new: newLeads } = useLeadsCounts();
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");

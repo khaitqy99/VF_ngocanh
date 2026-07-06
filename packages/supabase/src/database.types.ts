@@ -60,6 +60,36 @@ export type Database = {
         };
         Relationships: [];
       };
+      admin_users: {
+        Row: {
+          id: string;
+          email: string;
+          full_name: string | null;
+          role: string;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          email: string;
+          full_name?: string | null;
+          role?: string;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          email?: string;
+          full_name?: string | null;
+          role?: string;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       banners: {
         Row: {
           alt_text: string | null;

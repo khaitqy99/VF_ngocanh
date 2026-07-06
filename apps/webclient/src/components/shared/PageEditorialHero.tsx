@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { MOTION_VISIBLE, safeRevealTransition } from "@/lib/motion-safe";
 import { vfDisplayHero, vfHeroEyebrow } from "@/lib/typography";
 
 export function PageEditorialHero({
@@ -34,8 +35,8 @@ export function PageEditorialHero({
         <motion.div
           className="absolute inset-0"
           initial={reduced ? false : { scale: 1.08 }}
-          animate={reduced ? undefined : { scale: 1 }}
-          transition={{ duration: 9, ease: [0.16, 1, 0.3, 1] }}
+          animate={reduced ? MOTION_VISIBLE : { scale: 1 }}
+          transition={safeRevealTransition(reduced, { duration: 9, ease: [0.16, 1, 0.3, 1] })}
         >
           <img src={imageSrc} alt={imageAlt} className="h-full w-full object-cover object-center" />
         </motion.div>
@@ -46,8 +47,8 @@ export function PageEditorialHero({
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <motion.div
             initial={reduced ? false : { opacity: 0, y: 28 }}
-            animate={reduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            animate={MOTION_VISIBLE}
+            transition={safeRevealTransition(reduced, { duration: 0.85, ease: [0.16, 1, 0.3, 1] })}
             className="max-w-2xl"
           >
             <p className={`${vfHeroEyebrow} text-accent-yellow`}>{eyebrow}</p>
@@ -68,8 +69,12 @@ export function PageEditorialHero({
           {stats?.length ? (
             <motion.div
               initial={reduced ? false : { opacity: 0, y: 20 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              animate={MOTION_VISIBLE}
+              transition={safeRevealTransition(reduced, {
+                duration: 0.75,
+                delay: reduced ? 0 : 0.15,
+                ease: [0.16, 1, 0.3, 1],
+              })}
               className="w-full lg:ml-auto lg:max-w-md"
             >
               <div className="home-hero-stat-grid">

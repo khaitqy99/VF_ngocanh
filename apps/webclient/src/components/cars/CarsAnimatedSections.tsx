@@ -50,6 +50,7 @@ import { SectionHeader } from "@/components/shared/SectionHeader";
 import { HOTLINE_TEL } from "@/lib/contact";
 import { vfPanelTitle } from "@/lib/typography";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 
 type SortKey = "newest" | "price-asc" | "price-desc" | "range-desc" | "power-desc";
 
@@ -59,7 +60,7 @@ export function CarsBreadcrumbBar() {
   return (
     <motion.div
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : carsBreadcrumb}
       className="border-b border-border/60 bg-background"
     >
@@ -101,7 +102,7 @@ export function CarsSearchBar({
   return (
     <motion.section
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : carsSearchBar}
       className="border-b border-slate-100 bg-white py-4 lg:sticky lg:top-14 lg:z-20"
     >
@@ -163,13 +164,13 @@ export function CarsCatalogListHeader({
   sort: SortKey;
   setSort: (v: SortKey) => void;
 }) {
-  const reduced = useReducedMotion();
+  const { ref, reduced, initial, animate } = useSectionReveal(carsViewport);
 
   return (
     <motion.div
-      initial={reduced ? false : "hidden"}
-      whileInView={reduced ? undefined : "visible"}
-      viewport={carsViewport}
+      ref={ref}
+      initial={initial}
+      animate={animate}
       variants={reduced ? undefined : carsListHeader}
       className="mb-6 flex flex-wrap items-center justify-between gap-4"
     >
@@ -205,7 +206,7 @@ export function CarsEmptyState({ onClear }: { onClear: () => void }) {
   return (
     <motion.div
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : carsEmptyState}
       className="rounded-2xl border-2 border-dashed border-slate-200 bg-white py-20 text-center shadow-sm"
     >
@@ -410,7 +411,7 @@ export function EstimatorTotalFooter({
         <motion.div
           key={totalKey}
           initial={reduced ? false : "hidden"}
-          animate={reduced ? undefined : "visible"}
+          animate="visible"
           variants={reduced ? undefined : carsTotalReveal}
         >
           {estimatorTab === "rolling" ? (

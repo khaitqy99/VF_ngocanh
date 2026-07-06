@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { createServerClient } from "@vinfast3s/supabase/server";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { mapLeadRow } from "@vinfast3s/supabase/leads";
 import { isSupabaseConfigured, type Json, type TablesUpdate } from "@vinfast3s/supabase";
@@ -9,8 +8,8 @@ export async function GET() {
     return NextResponse.json({ leads: [], configured: false });
   }
 
-  const supabase = await createServerClient();
-  const { data, error } = await supabase
+  const admin = createAdminClient();
+  const { data, error } = await admin
     .from("leads")
     .select("*")
     .order("created_at", { ascending: false });

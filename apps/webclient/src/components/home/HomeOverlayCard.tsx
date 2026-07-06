@@ -22,6 +22,8 @@ type HomeOverlayCardProps = {
   /** Mobile/tablet: ảnh trên + copy dưới; desktop giữ overlay */
   stackOnMobile?: boolean;
   mobilePanelClass?: string;
+  imageFit?: "cover" | "contain";
+  imageZoom?: boolean;
 };
 
 export function HomeOverlayCard({
@@ -38,6 +40,8 @@ export function HomeOverlayCard({
   heightClass,
   stackOnMobile = false,
   mobilePanelClass = "bg-brand-dark p-5 text-white",
+  imageFit = "cover",
+  imageZoom = true,
 }: HomeOverlayCardProps) {
   const reduced = useReducedMotion();
 
@@ -53,6 +57,11 @@ export function HomeOverlayCard({
     ? `relative w-full shrink-0 overflow-hidden bg-surface-muted aspect-[16/10] sm:aspect-[2.2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full ${aspectClass}`
     : `relative h-full w-full overflow-hidden bg-surface-muted ${aspectClass}`;
 
+  const imageClass =
+    imageFit === "contain"
+      ? "absolute inset-0 h-full w-full object-contain object-center p-5 sm:p-6 lg:p-8"
+      : "absolute inset-0 h-full w-full object-cover object-center";
+
   return (
     <motion.a
       href={href}
@@ -67,8 +76,8 @@ export function HomeOverlayCard({
         <motion.img
           src={image}
           alt={imageAlt}
-          variants={reduced ? undefined : homeImageZoom}
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          variants={reduced || !imageZoom ? undefined : homeImageZoom}
+          className={imageClass}
           loading="lazy"
         />
         <div className={stackOnMobile ? `hidden lg:block ${overlayClass}` : overlayClass}>

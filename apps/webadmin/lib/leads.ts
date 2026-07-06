@@ -63,22 +63,6 @@ export function getLeadStatusVariant(
   }
 }
 
-export const MOCK_LEADS: Lead[] = [
-  {
-    id: "LD-001",
-    fullName: "Trần Văn B",
-    phone: "0901234567",
-    email: "tranvb@gmail.com",
-    type: "test_drive",
-    vehicleInterest: "VF 8 All New",
-    source: "website",
-    status: "new",
-    message: "Muốn lái thử VF 8 cuối tuần này tại Cà Mau.",
-    createdAt: "2026-06-30T08:12:00",
-    updatedAt: "2026-06-30T08:12:00",
-  },
-];
-
 export function formatLeadDate(iso: string): string {
   return new Intl.DateTimeFormat("vi-VN", {
     day: "2-digit",
@@ -95,6 +79,20 @@ export async function fetchLeads(): Promise<{ leads: Lead[]; configured: boolean
     throw new Error("Không tải được danh sách lead");
   }
   return response.json();
+}
+
+export async function updateLead(
+  id: string,
+  updates: { status?: LeadStatus; message?: string; assignedTo?: string; type?: LeadType },
+): Promise<void> {
+  const response = await fetch("/api/leads", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, ...updates }),
+  });
+  if (!response.ok) {
+    throw new Error("Không cập nhật được lead");
+  }
 }
 
 export function countNewLeads(leads: Lead[]): number {

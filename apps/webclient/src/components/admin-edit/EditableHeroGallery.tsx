@@ -74,7 +74,7 @@ export function EditableHeroGallery({
                 className="absolute inset-0 h-full w-full object-contain p-2 sm:p-4"
                 variants={reduced ? undefined : detailGalleryImage}
                 initial={reduced ? false : "enter"}
-                animate={reduced ? undefined : "center"}
+                animate="center"
                 exit={reduced ? undefined : "exit"}
               />
             </AnimatePresence>
@@ -169,7 +169,7 @@ export function EditableHeroGallery({
                   <motion.button
                     type="button"
                     onClick={() => onActiveChange(i)}
-                    animate={reduced ? undefined : safeIndex === i ? "active" : "inactive"}
+                    animate={safeIndex === i ? "active" : "inactive"}
                     variants={reduced ? undefined : detailThumbDot}
                     className={`relative size-14 shrink-0 overflow-hidden rounded-lg border-2 sm:size-[72px] sm:rounded-xl ${
                       safeIndex === i

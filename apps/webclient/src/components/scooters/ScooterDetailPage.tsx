@@ -92,6 +92,7 @@ import {
 } from "@/lib/detail-motion";
 import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
 import { AdminEditToolbar } from "@/components/admin-edit/AdminEditToolbar";
@@ -197,6 +198,8 @@ export default function ScooterDetailPage({
   const detail = (edit?.values as ScooterDetail | undefined) ?? initialDetail;
   const router = useRouter();
   const reduced = useReducedMotion();
+  const relatedReveal = useSectionReveal(detailViewport);
+  const servicesReveal = useSectionReveal(detailViewport);
   const modalMotion = useModalMotion();
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -418,7 +421,7 @@ export default function ScooterDetailPage({
                 className="min-w-0 w-full lg:col-span-7"
                 variants={reduced ? undefined : detailHeroStagger}
                 initial={reduced ? false : "hidden"}
-                animate={reduced ? undefined : "visible"}
+                animate="visible"
               >
                 <EditableHeroGallery
                   images={detail.gallery}
@@ -443,7 +446,7 @@ export default function ScooterDetailPage({
                 className="min-w-0 w-full lg:col-span-5"
                 variants={reduced ? undefined : detailHeroCol}
                 initial={reduced ? false : "hidden"}
-                animate={reduced ? undefined : "visible"}
+                animate="visible"
               >
                 <div className="page-showcase-shell box-border w-full min-w-0 max-w-full rounded-[1.75rem] p-4 sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
@@ -457,7 +460,7 @@ export default function ScooterDetailPage({
                             key={selectedVariant}
                             variants={reduced ? undefined : detailPricePulse}
                             initial={reduced ? false : "hidden"}
-                            animate={reduced ? undefined : "visible"}
+                            animate="visible"
                             className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl"
                           >
                             {adminEdit && edit?.editMode ? (
@@ -741,10 +744,10 @@ export default function ScooterDetailPage({
               adminEditable={adminEdit}
             />
             <motion.div
+              ref={relatedReveal.ref}
               className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5"
-              initial={reduced ? false : "hidden"}
-              whileInView={reduced ? undefined : "visible"}
-              viewport={detailViewport}
+              initial={relatedReveal.initial}
+              animate={relatedReveal.animate}
               variants={reduced ? undefined : { hidden: {}, visible: {} }}
             >
               {related.map((scooter, i) => (
@@ -774,10 +777,10 @@ export default function ScooterDetailPage({
         <section className="section-y border-t border-border/40 bg-white">
           <div className="container-vf">
             <motion.div
+              ref={servicesReveal.ref}
               className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-              initial={reduced ? false : "hidden"}
-              whileInView={reduced ? undefined : "visible"}
-              viewport={detailViewport}
+              initial={servicesReveal.initial}
+              animate={servicesReveal.animate}
               variants={reduced ? undefined : { hidden: {}, visible: {} }}
             >
               {SERVICE_BAR.map(({ icon: Icon, title, sub }, i) => (
@@ -2076,7 +2079,7 @@ function BreadcrumbBar({
     <motion.div
       className="border-b border-border/40 bg-white"
       initial={reduced ? false : "hidden"}
-      animate={reduced ? undefined : "visible"}
+      animate="visible"
       variants={reduced ? undefined : detailBreadcrumb}
     >
       <div className="container-vf overflow-x-auto py-2.5 sm:py-3 scrollbar-none">

@@ -1,27 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Car, Bike, Wrench, Users, Images, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
 import type { AdminDashboardStats } from "@/lib/cms-data";
-import { countNewLeads, fetchLeads, MOCK_LEADS } from "@/lib/leads";
+import { useLeadsCounts } from "@/lib/use-leads-count";
 
 export function DashboardClient({ stats }: { stats: AdminDashboardStats }) {
-  const [leadCount, setLeadCount] = useState(MOCK_LEADS.length);
-  const [newLeadCount, setNewLeadCount] = useState(countNewLeads(MOCK_LEADS));
-
-  useEffect(() => {
-    fetchLeads()
-      .then((data) => {
-        if (data.configured) {
-          setLeadCount(data.leads.length);
-          setNewLeadCount(countNewLeads(data.leads));
-        }
-      })
-      .catch(() => undefined);
-  }, []);
+  const { new: newLeadCount, total: leadCount } = useLeadsCounts();
 
   const links = [
     { href: "/admin/cars", label: "Ô tô điện", count: stats.carCount, icon: Car },

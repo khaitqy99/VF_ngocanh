@@ -654,7 +654,7 @@ export default function ScootersPage({
                           custom="rolling"
                           variants={reduced ? undefined : carsEstimatorPanel}
                           initial={reduced ? false : "enter"}
-                          animate={reduced ? undefined : "center"}
+                          animate="center"
                           exit={reduced ? undefined : "exit"}
                         >
                           <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
@@ -697,7 +697,7 @@ export default function ScootersPage({
                           custom="installment"
                           variants={reduced ? undefined : carsEstimatorPanel}
                           initial={reduced ? false : "enter"}
-                          animate={reduced ? undefined : "center"}
+                          animate="center"
                           exit={reduced ? undefined : "exit"}
                         >
                           <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2 mb-6">
@@ -836,7 +836,7 @@ export default function ScootersPage({
                       custom={bookingStepDir}
                       variants={reduced ? undefined : carsBookingStep}
                       initial={reduced ? false : "enter"}
-                      animate={reduced ? undefined : "center"}
+                      animate="center"
                       exit={reduced ? undefined : "exit"}
                       className="space-y-4"
                     >
@@ -909,7 +909,7 @@ export default function ScootersPage({
                       custom={bookingStepDir}
                       variants={reduced ? undefined : carsBookingStep}
                       initial={reduced ? false : "enter"}
-                      animate={reduced ? undefined : "center"}
+                      animate="center"
                       exit={reduced ? undefined : "exit"}
                       className="space-y-4"
                     >
@@ -1023,7 +1023,7 @@ export default function ScootersPage({
                       custom={bookingStepDir}
                       variants={reduced ? undefined : carsBookingStep}
                       initial={reduced ? false : "enter"}
-                      animate={reduced ? undefined : "center"}
+                      animate="center"
                       exit={reduced ? undefined : "exit"}
                       className="space-y-4"
                     >
@@ -1124,7 +1124,7 @@ export default function ScootersPage({
                       custom={bookingStepDir}
                       variants={reduced ? undefined : carsBookingStep}
                       initial={reduced ? false : "enter"}
-                      animate={reduced ? undefined : "center"}
+                      animate="center"
                       exit={reduced ? undefined : "exit"}
                       className="space-y-4 py-6 text-center"
                     >

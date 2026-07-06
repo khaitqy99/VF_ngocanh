@@ -64,7 +64,7 @@ function parseOverridesExport(exportName) {
     }
   }
   const code = `(${OVERRIDES_TS.slice(brace, end)})`;
-  // eslint-disable-next-line no-eval
+
   return eval(code);
 }
 

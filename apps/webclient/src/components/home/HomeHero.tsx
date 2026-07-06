@@ -11,6 +11,7 @@ import {
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { type HeroBannerSlide } from "@/lib/images";
 import { homeHeroDot, homeHeroDotTransition, homeHeroSlide, homeNavBtn } from "@/lib/home-motion";
+import { MOTION_INSTANT, MOTION_VISIBLE } from "@/lib/motion-safe";
 
 const carouselNavBtnSize = "glass-nav h-9 w-9 md:h-10 md:w-10";
 
@@ -63,10 +64,15 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
                   <motion.div
                     key={slide.desktop}
                     custom={direction}
-                    variants={reduced ? undefined : homeHeroSlide}
+                    variants={
+                      reduced
+                        ? { enter: MOTION_VISIBLE, center: MOTION_VISIBLE, exit: MOTION_VISIBLE }
+                        : homeHeroSlide
+                    }
                     initial={reduced ? false : "enter"}
-                    animate={reduced ? undefined : "center"}
+                    animate="center"
                     exit={reduced ? undefined : "exit"}
+                    transition={reduced ? MOTION_INSTANT : undefined}
                     className="absolute inset-0"
                   >
                     <HeroBannerSlideImages slide={slide} priority={i === 0} variant="cover" />

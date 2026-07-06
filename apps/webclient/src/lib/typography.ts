@@ -27,10 +27,10 @@ export const vfCatalogCardTitle = "text-sm font-black leading-snug text-brand-da
 export const vfPanelTitle = "text-xl font-extrabold leading-tight tracking-tight text-brand-dark";
 
 /** Standard content card shell */
-export const vfCard = "page-section-card rounded-2xl";
+export const vfCard = "page-section-card";
 
 /** Large image feature card */
-export const vfCardLg = "overflow-hidden rounded-3xl shadow-card ring-1 ring-black/5";
+export const vfCardLg = "overflow-hidden rounded-xl shadow-card ring-1 ring-black/5";
 
 /** Bottom CTA section heading */
 export const vfCtaHeading =

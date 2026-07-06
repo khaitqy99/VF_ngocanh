@@ -1,16 +1,23 @@
 import { NextResponse } from "next/server";
-import { createAnonClient } from "@vinfast3s/supabase/anon";
+import { createAdminClient } from "@vinfast3s/supabase/admin";
+import { isSupabaseAdminConfigured, isSupabaseConfigured } from "@vinfast3s/supabase";
 import {
   SERVICE_TO_LEAD_TYPE,
   toLeadInsert,
   type CreateLeadInput,
 } from "@vinfast3s/supabase/leads";
-import { isSupabaseConfigured } from "@vinfast3s/supabase";
 
 export async function POST(request: Request) {
   if (!isSupabaseConfigured()) {
     return NextResponse.json(
       { error: "Database chưa được cấu hình. Thêm biến môi trường Supabase vào file .env ở root." },
+      { status: 503 },
+    );
+  }
+
+  if (!isSupabaseAdminConfigured()) {
+    return NextResponse.json(
+      { error: "Server chưa cấu hình SUPABASE_SERVICE_ROLE_KEY." },
       { status: 503 },
     );
   }
@@ -50,8 +57,8 @@ export async function POST(request: Request) {
     message: typeof body.message === "string" ? body.message : service,
   };
 
-  const supabase = createAnonClient();
-  const { data, error } = await supabase
+  const admin = createAdminClient();
+  const { data, error } = await admin
     .from("leads")
     .insert(toLeadInsert(input))
     .select("id")

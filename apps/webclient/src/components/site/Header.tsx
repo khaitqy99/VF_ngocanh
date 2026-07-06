@@ -12,6 +12,7 @@ import { useMountReveal } from "@/hooks/use-scroll-reveal";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IMAGES } from "@/lib/images";
 import { buttonHover, buttonTap, springSnappy } from "@/lib/motion";
+import { MOTION_INSTANT } from "@/lib/motion-safe";
 
 const NAV = [
   { label: "Giới thiệu", href: "/gioi-thieu" },
@@ -88,8 +89,8 @@ export default function Header() {
                 <motion.div
                   key={label}
                   initial={reduced ? false : { opacity: 0, y: -8 }}
-                  animate={reduced ? undefined : { opacity: 1, y: 0 }}
-                  transition={reduced ? undefined : { ...springSnappy, delay: 0.1 + i * 0.07 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={reduced ? MOTION_INSTANT : { ...springSnappy, delay: 0.1 + i * 0.07 }}
                 >
                   <Link
                     href={href}

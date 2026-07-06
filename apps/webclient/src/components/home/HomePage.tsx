@@ -25,7 +25,7 @@ import { FeatureCarouselSection, FeatureSpec } from "@/components/shared/Feature
 import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
 import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 import { vfCardTitle, vfSectionHeadingLeft, vfSlideTitle } from "@/lib/typography";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { Toaster } from "sonner";
 
 import { HomeHero } from "./HomeHero";
@@ -191,6 +191,8 @@ const CHARGING_TILES = [
     href: "/pin-va-tram-sac#san-pham-sac",
     aspect: "lg:min-h-full",
     theme: "light" as const,
+    imageFit: "contain" as const,
+    imageZoom: false,
   },
 ];
 
@@ -220,6 +222,8 @@ function ChargingCard({ item, index }: { item: (typeof CHARGING_TILES)[number]; 
         fillHeight={fillHeight}
         stackOnMobile
         mobilePanelClass={mobilePanel}
+        imageFit={item.imageFit ?? "cover"}
+        imageZoom={item.imageZoom ?? true}
       >
         <h3 className={`${vfCardTitle} ${item.theme === "light" ? "" : "text-stroke-white"}`}>
           {item.title}
@@ -334,15 +338,14 @@ const BRAND_POINTS = [
 ];
 
 function BrandStory() {
-  const reduced = useReducedMotion();
+  const { ref: sectionRef, reduced, initial, animate } = useSectionReveal(homeViewport);
 
   const brandCopy = (
     <div className="w-full max-w-xl text-white lg:max-w-md xl:max-w-lg">
       <motion.h3
         custom={0}
-        initial={reduced ? false : "hidden"}
-        whileInView={reduced ? undefined : "visible"}
-        viewport={homeViewport}
+        initial={initial}
+        animate={animate}
         variants={reduced ? undefined : homeBrandLine}
         className={vfSlideTitle}
       >
@@ -350,9 +353,8 @@ function BrandStory() {
       </motion.h3>
       <motion.p
         custom={1}
-        initial={reduced ? false : "hidden"}
-        whileInView={reduced ? undefined : "visible"}
-        viewport={homeViewport}
+        initial={initial}
+        animate={animate}
         variants={reduced ? undefined : homeBrandLine}
         className="mt-2 text-sm opacity-90 md:mt-2.5"
       >
@@ -363,9 +365,8 @@ function BrandStory() {
           <motion.li
             key={t}
             custom={i + 2}
-            initial={reduced ? false : "hidden"}
-            whileInView={reduced ? undefined : "visible"}
-            viewport={homeViewport}
+            initial={initial}
+            animate={animate}
             variants={reduced ? undefined : homeBrandLine}
             className="flex items-start gap-2.5"
           >
@@ -376,9 +377,8 @@ function BrandStory() {
       </ul>
       <motion.div
         custom={5}
-        initial={reduced ? false : "hidden"}
-        whileInView={reduced ? undefined : "visible"}
-        viewport={homeViewport}
+        initial={initial}
+        animate={animate}
         variants={reduced ? undefined : homeBrandLine}
         className="mt-6 md:mt-8"
       >
@@ -398,17 +398,17 @@ function BrandStory() {
     <section className="bg-white py-14 sm:py-16 lg:py-24">
       <div className="container-vf">
         <motion.div
-          initial={reduced ? false : "hidden"}
-          whileInView={reduced ? undefined : "visible"}
-          viewport={homeViewport}
+          ref={sectionRef}
+          initial={initial}
+          animate={animate}
           variants={reduced ? undefined : homeBrandClip}
           className="relative flex flex-col overflow-hidden rounded-2xl shadow-[var(--shadow-brand)] ring-1 ring-black/[0.06] lg:block lg:h-[560px]"
         >
-          <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+          <div className="relative w-full shrink-0 overflow-hidden bg-brand-dark lg:absolute lg:inset-0 lg:h-full">
             <img
               src={IMAGES.brandStory}
               alt="VinFast - Vì một Việt Nam mạnh mẽ"
-              className="h-full w-full object-cover object-[center_35%] lg:object-center"
+              className="block h-auto w-full lg:absolute lg:inset-0 lg:h-full lg:object-cover lg:object-center"
               loading="lazy"
             />
             <div
@@ -487,7 +487,7 @@ function ShowroomCommunity() {
 
 function Newsletter() {
   const [email, setEmail] = useState("");
-  const reduced = useReducedMotion();
+  const { ref, reduced, initial, animate } = useSectionReveal(homeViewport);
 
   return (
     <section id="block-join-the-charge" className="relative mt-16 overflow-hidden py-24 md:mt-24">
@@ -502,9 +502,9 @@ function Newsletter() {
       />
       <div className="container-vf relative">
         <motion.div
-          initial={reduced ? false : "hidden"}
-          whileInView={reduced ? undefined : "visible"}
-          viewport={homeViewport}
+          ref={ref}
+          initial={initial}
+          animate={animate}
           variants={reduced ? undefined : homeNewsletterBlock}
           className="mx-auto max-w-[668px] text-center"
         >

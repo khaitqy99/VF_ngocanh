@@ -4,9 +4,9 @@ import type { HeroBannerSlide } from "@/lib/images";
 export function HeroBannerHeightSpacer({ slide }: { slide: HeroBannerSlide }) {
   return (
     <div aria-hidden className="pointer-events-none select-none">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {}
       <img src={slide.mobile} alt="" className="block h-auto w-full opacity-0 lg:hidden" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {}
       <img src={slide.desktop} alt="" className="hidden h-auto w-full opacity-0 lg:block" />
     </div>
   );
@@ -26,7 +26,7 @@ export function HeroBannerSlideImages({
 
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {}
       <img
         src={slide.mobile}
         alt={slide.alt}
@@ -35,7 +35,7 @@ export function HeroBannerSlideImages({
         fetchPriority={priority ? "high" : "auto"}
         className={`block lg:hidden ${imgClass}`}
       />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {}
       <img
         src={slide.desktop}
         alt={slide.alt}

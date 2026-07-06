@@ -95,7 +95,7 @@ export function PromoBannerCarousel({
                   custom={direction}
                   variants={reduced ? undefined : homeHeroSlide}
                   initial={reduced ? false : "enter"}
-                  animate={reduced ? undefined : "center"}
+                  animate="center"
                   exit={reduced ? undefined : "exit"}
                   className="absolute inset-0"
                 >

@@ -4,6 +4,8 @@ import { Phone, type LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useInViewReveal } from "@/hooks/use-in-view-reveal";
+import { revealAnimate, revealInitial, safeRevealTransition } from "@/lib/motion-safe";
 import { subtleRevealTransition } from "@/lib/motion";
 import { vfDisplayHero, vfHeroEyebrow } from "@/lib/typography";
 import {
@@ -46,6 +48,10 @@ export function CatalogHeroIntro({
   overlap?: boolean;
 }) {
   const reduced = useReducedMotion();
+  const { ref: featuresRef, show: featuresVisible } = useInViewReveal<HTMLUListElement>({
+    once: true,
+    margin: "-40px",
+  });
 
   return (
     <section
@@ -116,16 +122,19 @@ export function CatalogHeroIntro({
                 ))}
               </StaggerGrid>
 
-              <ul className="divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/60 bg-white/90 backdrop-blur-sm">
+              <ul
+                ref={featuresRef}
+                className="divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/60 bg-white/90 backdrop-blur-sm"
+              >
                 {features.map(({ icon: Icon, text, sub }, i) => (
                   <motion.li
                     key={text}
-                    initial={reduced ? false : { opacity: 0, x: 16 }}
-                    whileInView={reduced ? undefined : { opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={
-                      reduced ? undefined : { delay: 0.12 + i * 0.06, ...subtleRevealTransition }
-                    }
+                    initial={revealInitial(reduced, { opacity: 0, x: 16 })}
+                    animate={revealAnimate(reduced, featuresVisible, { opacity: 0, x: 16 })}
+                    transition={safeRevealTransition(reduced, {
+                      delay: 0.12 + i * 0.06,
+                      ...subtleRevealTransition,
+                    })}
                     className="flex items-center gap-3 px-4 py-3.5 sm:px-5 sm:py-4"
                   >
                     <div className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-brand/15 bg-brand/5 text-brand">
