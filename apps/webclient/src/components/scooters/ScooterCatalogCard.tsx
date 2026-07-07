@@ -223,7 +223,7 @@ export function ScooterCatalogCard({
       className={`catalog-card group flex h-full flex-col overflow-hidden ${className ?? ""}`}
     >
       <div className="relative">
-        <Link href={scooterDetailPath(scooter)} prefetch className="block">
+        <ResilientLink href={scooterDetailPath(scooter)} prefetch className="block">
           <div className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-slate-100">
             <img
               src={scooter.image}
@@ -233,7 +233,7 @@ export function ScooterCatalogCard({
               decoding="async"
             />
           </div>
-        </Link>
+        </ResilientLink>
         {(scooter.isBestSeller || scooter.isNew || scooter.isPromo) && (
           <div className="pointer-events-none absolute left-2 top-2 z-10 flex flex-col gap-1">
             {scooter.isBestSeller && (

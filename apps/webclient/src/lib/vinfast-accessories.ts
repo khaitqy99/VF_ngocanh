@@ -141,7 +141,8 @@ export const VINFAST_ACCESSORIES = [
     id: "eep69072176ab",
     shopPid: "EEP69072176AB",
     name: "Sạc Tại Nhà 3KW",
-    description: "Sạc Tại Nhà 3KW — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Sạc Tại Nhà 3KW — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 8836365,
     image: "/images/vinfast/accessories/eep69072176ab.webp",
     category: "sac-pin",
@@ -176,7 +177,8 @@ export const VINFAST_ACCESSORIES = [
     id: "bin69052209aa",
     shopPid: "BIN69052209AA",
     name: "Thảm Nhựa VF3",
-    description: "Thảm Nhựa VF3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Thảm Nhựa VF3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 1668000,
     image: "/images/vinfast/accessories/bin69052209aa.webp",
     category: "noi-that",
@@ -223,7 +225,8 @@ export const VINFAST_ACCESSORIES = [
     id: "eep73090003ab",
     shopPid: "EEP73090003AB",
     name: "Camera Lùi VF 3",
-    description: "Camera Lùi VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Camera Lùi VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 2671656,
     image: "/images/vinfast/accessories/eep73090003ab.webp",
     category: "an-toan",
@@ -246,7 +249,8 @@ export const VINFAST_ACCESSORIES = [
     id: "vhc69011000aa",
     shopPid: "VHC69011000AA",
     name: "Bọc Ghế Da VF 3",
-    description: "Bọc Ghế Da VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Bọc Ghế Da VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 6713000,
     image: "/images/vinfast/accessories/vhc69011000aa.webp",
     category: "phu-kien-chung",
@@ -257,7 +261,8 @@ export const VINFAST_ACCESSORIES = [
     id: "chs69060008ab",
     shopPid: "CHS69060008AB",
     name: "Ốp La-zăng VF 3",
-    description: "Ốp La-zăng VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Ốp La-zăng VF 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 842400,
     image: "/images/vinfast/accessories/chs69060008ab.webp",
     category: "phu-kien-chung",
@@ -304,7 +309,8 @@ export const VINFAST_ACCESSORIES = [
     id: "vf7tshirt",
     shopPid: "VF7TSHIRT",
     name: "Áo Phông VF 7",
-    description: "Áo Phông VF 7 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Áo Phông VF 7 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 663000,
     image: "/images/vinfast/accessories/vf7tshirt.webp",
     category: "phu-kien-chung",
@@ -627,7 +633,8 @@ export const VINFAST_ACCESSORIES = [
     id: "malepoloshirt",
     shopPid: "MALEPOLOSHIRT",
     name: "Áo Polo Nam",
-    description: "Áo Polo Nam — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Áo Polo Nam — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 423000,
     image: "/images/vinfast/accessories/malepoloshirt.webp",
     category: "phu-kien-chung",
@@ -638,7 +645,8 @@ export const VINFAST_ACCESSORIES = [
     id: "uneckpillow",
     shopPid: "UNECKPILLOW",
     name: "Gối Cổ Chữ U",
-    description: "Gối Cổ Chữ U — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Gối Cổ Chữ U — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 116000,
     image: "/images/vinfast/accessories/uneckpillow.webp",
     category: "noi-that",
@@ -673,7 +681,8 @@ export const VINFAST_ACCESSORIES = [
     id: "acs30000028",
     shopPid: "ACS30000028",
     name: "Mũ Lưỡi Trai",
-    description: "Mũ Lưỡi Trai — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Mũ Lưỡi Trai — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 379000,
     image: "/images/vinfast/accessories/acs30000028.webp",
     category: "phu-kien-chung",
@@ -732,7 +741,8 @@ export const VINFAST_ACCESSORIES = [
     id: "acs20000012",
     shopPid: "ACS20000012",
     name: "Ô Gập 3",
-    description: "Ô Gập 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Ô Gập 3 — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 313000,
     image: "/images/vinfast/accessories/acs20000012.webp",
     category: "phu-kien-chung",
@@ -743,7 +753,8 @@ export const VINFAST_ACCESSORIES = [
     id: "acs20000013",
     shopPid: "ACS20000013",
     name: "Ô Golf 2 Tầng",
-    description: "Ô Golf 2 Tầng — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Ô Golf 2 Tầng — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 404000,
     image: "/images/vinfast/accessories/acs20000013.webp",
     category: "phu-kien-chung",
@@ -754,7 +765,8 @@ export const VINFAST_ACCESSORIES = [
     id: "femalepoloshirt",
     shopPid: "FEMALEPOLOSHIRT",
     name: "Áo Polo Nữ",
-    description: "Áo Polo Nữ — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Áo Polo Nữ — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 423000,
     image: "/images/vinfast/accessories/femalepoloshirt.webp",
     category: "phu-kien-chung",
@@ -825,7 +837,8 @@ export const VINFAST_ACCESSORIES = [
     id: "headleatherpillow",
     shopPid: "HEADLEATHERPILLOW",
     name: "Gối Da Tựa Đầu",
-    description: "Gối Da Tựa Đầu — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
+    description:
+      "Gối Da Tựa Đầu — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.",
     price: 643000,
     image: "/images/vinfast/accessories/headleatherpillow.webp",
     category: "noi-that",

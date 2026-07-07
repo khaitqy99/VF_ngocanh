@@ -1112,8 +1112,8 @@ export default function CarsPage({
                         <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-800">{bookingForm.name}</strong> đã tin
-                          tưởng showroom VinFast Ngọc Anh Cà Mau. Tư vấn viên sẽ liên hệ lại với quý khách trong
-                          vòng 15 phút qua{" "}
+                          tưởng showroom VinFast Ngọc Anh Cà Mau. Tư vấn viên sẽ liên hệ lại với quý
+                          khách trong vòng 15 phút qua{" "}
                           <strong className="text-slate-800">
                             {bookingForm.contactMethod === "Phone"
                               ? "Số điện thoại"

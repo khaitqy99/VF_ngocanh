@@ -1090,8 +1090,8 @@ export default function ScootersPage({
                         <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-800">{bookingForm.name}</strong> đã tin
-                          tưởng showroom VinFast Ngọc Anh Cà Mau. Chuyên viên tư vấn xe máy điện sẽ liên hệ trực
-                          tiếp hỗ trợ quý khách trong vòng 10 phút qua{" "}
+                          tưởng showroom VinFast Ngọc Anh Cà Mau. Chuyên viên tư vấn xe máy điện sẽ
+                          liên hệ trực tiếp hỗ trợ quý khách trong vòng 10 phút qua{" "}
                           <strong className="text-slate-800">
                             {bookingForm.contactMethod === "Phone"
                               ? "Số điện thoại"

@@ -380,9 +380,9 @@ export default function AfterSalesPage({
                         <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-700">{bookingForm.name}</strong> đã đăng ký
-                          lịch hẹn dịch vụ tại VinFast Ngọc Anh Cà Mau. Cố vấn kỹ thuật của chúng tôi sẽ gọi
-                          điện xác nhận chính xác ngày giờ hẹn và chuẩn bị linh kiện thay thế phục
-                          vụ quý khách trong 10 phút.
+                          lịch hẹn dịch vụ tại VinFast Ngọc Anh Cà Mau. Cố vấn kỹ thuật của chúng
+                          tôi sẽ gọi điện xác nhận chính xác ngày giờ hẹn và chuẩn bị linh kiện thay
+                          thế phục vụ quý khách trong 10 phút.
                         </p>
                       </div>
 

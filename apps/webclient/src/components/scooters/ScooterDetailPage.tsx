@@ -806,8 +806,8 @@ export default function ScooterDetailPage({
                 Trải nghiệm {detail.name} tại showroom
               </h2>
               <p className="mt-2 text-sm text-white/75">
-                VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao xe
-                nhanh chóng.
+                VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao
+                xe nhanh chóng.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">

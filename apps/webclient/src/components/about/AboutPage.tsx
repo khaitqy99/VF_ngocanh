@@ -462,7 +462,10 @@ function WhyChooseSection() {
   return (
     <section className="section-y bg-surface-muted">
       <div className="container-vf">
-        <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="Vì sao lựa chọn VinFast Ngọc Anh Cà Mau?" />
+        <AboutSectionHeader
+          eyebrow="Trải nghiệm khác biệt"
+          title="Vì sao lựa chọn VinFast Ngọc Anh Cà Mau?"
+        />
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14" ref={ref}>
           <motion.div

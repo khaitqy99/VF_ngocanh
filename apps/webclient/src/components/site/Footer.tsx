@@ -98,7 +98,9 @@ export default function Footer({
                 className="h-7 w-auto sm:h-8"
               />
             </ResilientLink>
-            <p className="mt-1 text-xs font-bold tracking-wide text-brand">VINFAST NGỌC ANH CÀ MAU</p>
+            <p className="mt-1 text-xs font-bold tracking-wide text-brand">
+              VINFAST NGỌC ANH CÀ MAU
+            </p>
             <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-muted-foreground sm:mt-2.5">
               {contact.businessName}. Trải nghiệm xe điện thông minh cùng dịch vụ 3S tận tâm tại Cà
               Mau.

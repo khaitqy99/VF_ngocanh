@@ -426,9 +426,9 @@ export default function EnergyStoragePage() {
                         <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-700">{consultForm.name}</strong>. Đội ngũ kỹ
-                          sư cơ điện của VinFast Ngọc Anh Cà Mau sẽ gọi điện xác nhận trong vòng 10 phút để lên
-                          phương án thiết kế hệ thống và cử người trực tiếp đến khảo sát hạ tầng
-                          điện miễn phí tại nhà cho quý khách.
+                          sư cơ điện của VinFast Ngọc Anh Cà Mau sẽ gọi điện xác nhận trong vòng 10
+                          phút để lên phương án thiết kế hệ thống và cử người trực tiếp đến khảo sát
+                          hạ tầng điện miễn phí tại nhà cho quý khách.
                         </p>
                       </div>
                       <button
@@ -447,9 +447,9 @@ export default function EnergyStoragePage() {
                       <div className="bg-surface-muted border border-slate-200 p-4 rounded-xl flex items-start gap-2.5">
                         <Info className="size-4.5 text-brand shrink-0 mt-0.5" />
                         <p className="text-[10px] text-slate-500 font-semibold leading-relaxed">
-                          Chương trình khảo sát 3D hoàn toàn miễn phí của VinFast Ngọc Anh Cà Mau bao gồm đo đạc
-                          công suất sạc khả dụng, kiểm tra chất lượng cáp điện gia đình và mô phỏng
-                          lắp đặt thẩm mỹ.
+                          Chương trình khảo sát 3D hoàn toàn miễn phí của VinFast Ngọc Anh Cà Mau
+                          bao gồm đo đạc công suất sạc khả dụng, kiểm tra chất lượng cáp điện gia
+                          đình và mô phỏng lắp đặt thẩm mỹ.
                         </p>
                       </div>
 
