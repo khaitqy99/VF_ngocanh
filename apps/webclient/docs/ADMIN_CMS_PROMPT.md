@@ -1,4 +1,4 @@
-# PROMPT: Thiết kế UX/UI Web Admin CMS — VF Ngọc Anh
+# PROMPT: Thiết kế UX/UI Web Admin CMS — VinFast Ngọc Anh Cà Mau
 
 > **Phạm vi:** Chỉ tạo **giao diện UX/UI** (frontend prototype). Không làm backend, database, API, auth thật, upload thật.
 >
@@ -10,7 +10,7 @@
 
 ---
 
-Bạn là senior UI/UX developer chuyên **shadcn/ui**. Hãy thiết kế và code **toàn bộ giao diện Web Admin CMS** cho website đại lý VinFast **VF Ngọc Anh** (Cà Mau), tích hợp vào dự án Next.js hiện có.
+Bạn là senior UI/UX developer chuyên **shadcn/ui**. Hãy thiết kế và code **toàn bộ giao diện Web Admin CMS** cho website đại lý VinFast **VinFast Ngọc Anh Cà Mau** (Cà Mau), tích hợp vào dự án Next.js hiện có.
 
 ---
 
@@ -41,7 +41,7 @@ Bạn là senior UI/UX developer chuyên **shadcn/ui**. Hãy thiết kế và co
 
 ### 1. BỐI CẢNH
 
-**Website public:** VF Ngọc Anh — Đại lý VinFast 3S Cà Mau  
+**Website public:** VinFast Ngọc Anh Cà Mau — Đại lý VinFast 3S Cà Mau  
 **Tech:** Next.js 15, React 19, TypeScript, Tailwind CSS 4  
 **UI kit:** shadcn/ui style `new-york`, base `slate`, icons `lucide-react`  
 **Font:** Inter (Vietnamese)  
@@ -185,7 +185,7 @@ src/components/admin/
 ### 4. SIDEBAR NAVIGATION
 
 ```
-[Logo VF Ngọc Anh]
+[Logo VinFast Ngọc Anh Cà Mau]
 
 📊 Tổng quan
 
@@ -793,4 +793,4 @@ Bắt đầu từ **Giai đoạn 1**: tạo admin shell (sidebar + header + dash
 
 ---
 
-_VF Ngọc Anh — Admin CMS UX/UI Prototype Prompt_
+_VinFast Ngọc Anh Cà Mau — Admin CMS UX/UI Prototype Prompt_

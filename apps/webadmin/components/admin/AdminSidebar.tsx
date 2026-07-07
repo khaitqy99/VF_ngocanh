@@ -42,7 +42,7 @@ export function AdminSidebar({
           V
         </div>
         <span className={cn("ml-3 font-semibold text-zinc-900", !isOpen && "hidden")}>
-          VF Ngọc Anh
+          VinFast Ngọc Anh Cà Mau
         </span>
       </div>
 

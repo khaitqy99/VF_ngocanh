@@ -72,7 +72,7 @@ const MILESTONES = [
   {
     year: "2019",
     title: "Đặt Nền Móng Khởi Đầu",
-    desc: "Thành lập VF Ngọc Anh, chính thức bắt tay cùng VinFast trên hành trình khai phá thị trường xe điện Việt Nam đầy tiềm năng.",
+    desc: "Thành lập VinFast Ngọc Anh Cà Mau, chính thức bắt tay cùng VinFast trên hành trình khai phá thị trường xe điện Việt Nam đầy tiềm năng.",
     image: IMAGES.aboutShowroomBanner,
   },
   {
@@ -205,7 +205,7 @@ function BreadcrumbBar() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-xs font-extrabold text-brand-dark">
-                Về showroom VF Ngọc Anh
+                Về showroom VinFast Ngọc Anh Cà Mau
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -223,15 +223,15 @@ function HeroSection() {
   return (
     <PageEditorialHero
       imageSrc={IMAGES.aboutShowroomBanner}
-      imageAlt="Showroom VinFast Ngọc Anh - Cà Mau"
+      imageAlt="Showroom VinFast Ngọc Anh Cà Mau"
       eyebrow="ĐẠI LÝ ỦY QUYỀN CHÍNH THỨC VINFAST"
       title={
         <>
-          SHOWROOM VF NGỌC ANH <br />
+          SHOWROOM VINFAST NGỌC ANH CÀ MAU <br />
         </>
       }
       titleAccent="CÀ MAU — ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH"
-      description="Tọa lạc tại Cà Mau, VF Ngọc Anh tự hào là đại lý ủy quyền 3S chính thức của VinFast Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội."
+      description="Tọa lạc tại Cà Mau, VinFast Ngọc Anh Cà Mau tự hào là đại lý ủy quyền 3S chính thức của VinFast Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội."
       actions={
         <>
           <MotionLinkButton
@@ -462,7 +462,7 @@ function WhyChooseSection() {
   return (
     <section className="section-y bg-surface-muted">
       <div className="container-vf">
-        <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="Vì sao lựa chọn VF Ngọc Anh?" />
+        <AboutSectionHeader eyebrow="Trải nghiệm khác biệt" title="Vì sao lựa chọn VinFast Ngọc Anh Cà Mau?" />
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14" ref={ref}>
           <motion.div
@@ -475,7 +475,7 @@ function WhyChooseSection() {
             <div className="pointer-events-none absolute inset-0 z-10 bg-brand-dark/5 transition-all duration-300 group-hover:bg-brand-dark/15" />
             <motion.img
               src={IMAGES.aboutShowroomBanner}
-              alt="Showroom VinFast Ngọc Anh - Cà Mau"
+              alt="Showroom VinFast Ngọc Anh Cà Mau"
               className="h-full w-full object-cover object-center"
               loading="lazy"
               whileHover={reduced ? undefined : { scale: 1.05 }}

@@ -426,7 +426,7 @@ export default function EnergyStoragePage() {
                         <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-700">{consultForm.name}</strong>. Đội ngũ kỹ
-                          sư cơ điện của VF Ngọc Anh sẽ gọi điện xác nhận trong vòng 10 phút để lên
+                          sư cơ điện của VinFast Ngọc Anh Cà Mau sẽ gọi điện xác nhận trong vòng 10 phút để lên
                           phương án thiết kế hệ thống và cử người trực tiếp đến khảo sát hạ tầng
                           điện miễn phí tại nhà cho quý khách.
                         </p>
@@ -447,7 +447,7 @@ export default function EnergyStoragePage() {
                       <div className="bg-surface-muted border border-slate-200 p-4 rounded-xl flex items-start gap-2.5">
                         <Info className="size-4.5 text-brand shrink-0 mt-0.5" />
                         <p className="text-[10px] text-slate-500 font-semibold leading-relaxed">
-                          Chương trình khảo sát 3D hoàn toàn miễn phí của VF Ngọc Anh bao gồm đo đạc
+                          Chương trình khảo sát 3D hoàn toàn miễn phí của VinFast Ngọc Anh Cà Mau bao gồm đo đạc
                           công suất sạc khả dụng, kiểm tra chất lượng cáp điện gia đình và mô phỏng
                           lắp đặt thẩm mỹ.
                         </p>
@@ -934,7 +934,7 @@ function WhyChooseSection() {
     {
       icon: Award,
       title: "Nhà phân phối ủy quyền chính thức 3S",
-      desc: "VF Ngọc Anh cam kết phân phối 100% dòng pin lưu trữ ESS chính hãng, chế độ bảo hành chuẩn hãng lâu dài và giá thành minh bạch nhất.",
+      desc: "VinFast Ngọc Anh Cà Mau cam kết phân phối 100% dòng pin lưu trữ ESS chính hãng, chế độ bảo hành chuẩn hãng lâu dài và giá thành minh bạch nhất.",
     },
     {
       icon: Users,
@@ -959,7 +959,7 @@ function WhyChooseSection() {
         <SectionHeader
           align="centered"
           eyebrow="Năng lực đại lý"
-          title="Vì sao chọn dịch vụ tại VF Ngọc Anh?"
+          title="Vì sao chọn dịch vụ tại VinFast Ngọc Anh Cà Mau?"
         />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
@@ -987,7 +987,7 @@ function WhyChooseSection() {
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
             <img
               src={IMAGES.showroom}
-              alt="VF Ngọc Anh — Đại lý VinFast"
+              alt="VinFast Ngọc Anh Cà Mau — Đại lý VinFast"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
@@ -1013,7 +1013,7 @@ function CtaBanner() {
   return (
     <PageCtaSection
       title="Sẵn sàng chuyển đổi năng lượng xanh?"
-      description="Hãy liên hệ với đội ngũ kỹ sư cơ điện của đại lý VF Ngọc Anh ngay hôm nay để nhận báo giá ưu đãi độc quyền, hỗ trợ hồ sơ kết nối điện lực EVN và khảo sát hạ tầng hoàn toàn miễn phí."
+      description="Hãy liên hệ với đội ngũ kỹ sư cơ điện của đại lý VinFast Ngọc Anh Cà Mau ngay hôm nay để nhận báo giá ưu đãi độc quyền, hỗ trợ hồ sơ kết nối điện lực EVN và khảo sát hạ tầng hoàn toàn miễn phí."
     >
       <a href={HOTLINE_TEL} className={pageCtaPrimary}>
         <Phone className="size-4 text-accent-yellow" /> TƯ VẤN HOTLINE: {HOTLINE}

@@ -17,13 +17,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const SITE_KEYWORDS = [
-  "VinFast Cà Mau",
-  "VF Ngọc Anh",
+  "VinFast Ngọc Anh Cà Mau",
+  "VinFast Ngọc Anh Cà Mau",
   "Vinfast 3S Cà Mau",
-  "đại lý VinFast Cà Mau",
+  "đại lý VinFast Ngọc Anh Cà Mau",
   "ô tô điện Cà Mau",
   "xe máy điện Cà Mau",
-  "showroom VinFast Cà Mau",
+  "showroom VinFast Ngọc Anh Cà Mau",
 ];
 
 const GOOGLE_SITE_VERIFICATION = "sxgFg7V_2_LtDK9QCin2ka8viud2xHBRLTD";

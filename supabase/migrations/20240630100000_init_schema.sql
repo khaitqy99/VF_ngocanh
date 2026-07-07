@@ -321,6 +321,6 @@ insert into public.cms_pages (slug, title, status, content) values
 on conflict (slug) do nothing;
 
 insert into public.site_settings (key, value) values
-  ('dealership', '{"name":"VF Ngọc Anh","address":"","hotline_sales":"","hotline_service":"","email":""}'::jsonb),
-  ('seo', '{"title_template":"%s | VF Ngọc Anh - Cà Mau","default_description":""}'::jsonb)
+  ('dealership', '{"name":"VinFast Ngọc Anh Cà Mau","address":"","hotline_sales":"","hotline_service":"","email":""}'::jsonb),
+  ('seo', '{"title_template":"%s | VinFast Ngọc Anh Cà Mau - Cà Mau","default_description":""}'::jsonb)
 on conflict (key) do nothing;

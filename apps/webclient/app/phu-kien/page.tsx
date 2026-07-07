@@ -24,7 +24,7 @@ export default async function PhuKienPage() {
   ]);
   const itemList = buildItemListSchema({
     name: "Danh mục phụ kiện VinFast chính hãng tại Cà Mau",
-    description: "Phụ kiện VinFast chính hãng đang phân phối tại VF Ngọc Anh — Vinfast 3S Cà Mau.",
+    description: "Phụ kiện VinFast chính hãng đang phân phối tại VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau.",
     items: accessories.map((product) => ({
       name: product.name,
       url: accessoryDetailPath(product),

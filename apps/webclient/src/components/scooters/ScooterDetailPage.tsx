@@ -806,7 +806,7 @@ export default function ScooterDetailPage({
                 Trải nghiệm {detail.name} tại showroom
               </h2>
               <p className="mt-2 text-sm text-white/75">
-                VF Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao xe
+                VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao xe
                 nhanh chóng.
               </p>
             </div>
@@ -2020,7 +2020,7 @@ function ReviewsSection({
             <div className="mt-5 hidden text-xs leading-relaxed text-muted-foreground lg:block">
               <InlineText
                 path="_section.reviews.asideNote"
-                fallback="Phản hồi từ khách hàng đã trải nghiệm và mua xe tại VF Ngọc Anh Cà Mau."
+                fallback="Phản hồi từ khách hàng đã trải nghiệm và mua xe tại VinFast Ngọc Anh Cà Mau."
                 adminEditable={adminEditable}
                 className="text-xs leading-relaxed text-muted-foreground"
                 multiline

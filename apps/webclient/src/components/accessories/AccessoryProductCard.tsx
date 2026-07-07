@@ -26,6 +26,7 @@ import {
   type AccessoryProduct,
 } from "@/lib/accessories";
 import { vfCatalogCardTitle } from "@/lib/typography";
+import { ResilientLink } from "@/components/site/ResilientLink";
 
 export function AccessoryProductCard({
   product,
@@ -257,7 +258,7 @@ export function AccessoryProductCard({
     <article
       className={`catalog-card group flex h-full flex-col overflow-hidden ${className ?? ""}`}
     >
-      <Link href={accessoryDetailPath(product)} className="relative block overflow-hidden">
+      <ResilientLink href={accessoryDetailPath(product)} className="relative block overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
@@ -279,7 +280,7 @@ export function AccessoryProductCard({
             )}
           </div>
         )}
-      </Link>
+      </ResilientLink>
 
       <div
         className={`flex flex-1 flex-col ${compact ? "gap-1.5 p-3" : "gap-2 p-3 sm:gap-2.5 sm:p-4"}`}
@@ -291,9 +292,9 @@ export function AccessoryProductCard({
           <h3
             className={`mt-0.5 line-clamp-2 ${compact ? "" : "min-h-[2.5rem]"} ${vfCatalogCardTitle}`}
           >
-            <Link href={accessoryDetailPath(product)} className="hover:text-brand">
+            <ResilientLink href={accessoryDetailPath(product)} className="hover:text-brand">
               {product.name}
-            </Link>
+            </ResilientLink>
           </h3>
           {!compact ? (
             <p className="mt-1 line-clamp-2 min-h-10 text-[11px] leading-5 text-slate-500">
@@ -317,13 +318,13 @@ export function AccessoryProductCard({
             </p>
           </div>
 
-          <Link
+          <ResilientLink
             href={accessoryDetailPath(product)}
             className="flex w-full items-center justify-center gap-1.5 rounded-full border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-600 transition hover:border-brand hover:text-brand sm:text-[11px]"
           >
             XEM CHI TIẾT
             <ArrowRight className="size-3.5" />
-          </Link>
+          </ResilientLink>
         </div>
       </div>
     </article>

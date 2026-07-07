@@ -198,7 +198,7 @@ export const DEFAULT_HOME_SECTIONS: HomeSectionsContent = {
   },
   faq: {
     eyebrow: "Hỏi đáp",
-    title: "Câu hỏi thường gặp về VinFast Cà Mau",
+    title: "Câu hỏi thường gặp về VinFast Ngọc Anh Cà Mau",
     description: "Thông tin nhanh về showroom, sản phẩm, trả góp và dịch vụ hậu mãi tại Cà Mau.",
     items: DEALERSHIP_FAQ,
   },

@@ -65,7 +65,7 @@ export default function AdminLoginForm() {
           </div>
           <div>
             <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
-            <p className="mt-2 text-sm text-zinc-500">VF Ngọc Anh Admin CMS</p>
+            <p className="mt-2 text-sm text-zinc-500">VinFast Ngọc Anh Cà Mau Admin CMS</p>
           </div>
         </CardHeader>
         <CardContent>

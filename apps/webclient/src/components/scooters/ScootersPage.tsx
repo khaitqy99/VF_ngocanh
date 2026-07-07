@@ -746,7 +746,7 @@ export default function ScootersPage({
                 <div>
                   <h3 className="text-base font-black">LIÊN HỆ & ĐẶT MUA XE MÁY ĐIỆN</h3>
                   <p className="text-xs text-brand-light opacity-85 mt-1">
-                    Mua sắm an tâm tại Showroom VF Ngọc Anh
+                    Mua sắm an tâm tại Showroom VinFast Ngọc Anh Cà Mau
                   </p>
                 </div>
                 <button
@@ -1090,7 +1090,7 @@ export default function ScootersPage({
                         <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-800">{bookingForm.name}</strong> đã tin
-                          tưởng showroom VF Ngọc Anh. Chuyên viên tư vấn xe máy điện sẽ liên hệ trực
+                          tưởng showroom VinFast Ngọc Anh Cà Mau. Chuyên viên tư vấn xe máy điện sẽ liên hệ trực
                           tiếp hỗ trợ quý khách trong vòng 10 phút qua{" "}
                           <strong className="text-slate-800">
                             {bookingForm.contactMethod === "Phone"
@@ -1218,7 +1218,7 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
       banners={SCOOTER_HERO_BANNERS}
       title="Thời thượng, bứt phá"
       titleAccent="công nghệ tương lai"
-      description="Sở hữu xe máy điện VinFast với pin LFP siêu bền, quãng đường lên tới 200 km/sạc, chống nước IP67 và chính sách trả góp 0% lãi suất tại VF Ngọc Anh."
+      description="Sở hữu xe máy điện VinFast với pin LFP siêu bền, quãng đường lên tới 200 km/sạc, chống nước IP67 và chính sách trả góp 0% lãi suất tại VinFast Ngọc Anh Cà Mau."
       primaryCta={{ label: "KHÁM PHÁ CATALOG XE MÁY", onClick: onExplore }}
       secondaryCta={{ label: `GỌI TƯ VẤN: ${HOTLINE}`, href: HOTLINE_TEL }}
       highlights={[

@@ -139,7 +139,7 @@ export function defaultSiteSeoSettings(): SiteSeoSettings {
     titleTemplate: `%s | ${SITE_BRAND_NAME}`,
     defaultTitle: `${SITE_BRAND_NAME} — Đại lý VinFast chính hãng`,
     defaultDescription:
-      "VF Ngọc Anh — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi tại Cà Mau.",
+      "VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi tại Cà Mau.",
     defaultOgTitle: `${SITE_BRAND_NAME} — Đại lý VinFast chính hãng`,
     defaultOgDescription:
       "Khám phá ô tô điện, xe máy điện VinFast với nhiều ưu đãi hấp dẫn tại Cà Mau.",

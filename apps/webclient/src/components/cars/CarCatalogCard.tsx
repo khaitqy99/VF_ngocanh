@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Save, Undo2 } from "lucide-react";
 import { toast } from "sonner";
@@ -14,6 +13,7 @@ import {
 import { formatPrice, type CarModel } from "@/lib/cars";
 import { carDetailPath } from "@/lib/seo/slugs";
 import { vfCatalogCardTitle } from "@/lib/typography";
+import { ResilientLink } from "@/components/site/ResilientLink";
 
 export function CarCatalogCard({
   car,
@@ -207,12 +207,12 @@ export function CarCatalogCard({
             </button>
           </div>
 
-          <Link
+          <ResilientLink
             href={`${carDetailPath(car)}/preview`}
             className="block text-center text-[10px] font-bold text-brand hover:underline"
           >
             Sửa trang chi tiết →
-          </Link>
+          </ResilientLink>
         </div>
       </article>
     );
@@ -258,9 +258,9 @@ export function CarCatalogCard({
       <div className="flex flex-1 flex-col gap-2.5 p-3 sm:gap-3 sm:p-4">
         <div className="min-w-0">
           <h3 className={`truncate whitespace-nowrap ${vfCatalogCardTitle}`}>
-            <Link href={carDetailPath(car)} prefetch>
+            <ResilientLink href={carDetailPath(car)} prefetch>
               {car.name}
-            </Link>
+            </ResilientLink>
           </h3>
         </div>
 
@@ -292,13 +292,13 @@ export function CarCatalogCard({
             </button>
           </div>
 
-          <Link
+          <ResilientLink
             href={carDetailPath(car)}
             prefetch
             className="block rounded-full border border-brand/25 py-2.5 text-center text-[11px] font-semibold leading-snug text-brand transition hover:border-brand hover:bg-brand/5 sm:text-xs"
           >
             Xem trọn bộ thông số
-          </Link>
+          </ResilientLink>
         </div>
       </div>
     </article>

@@ -773,7 +773,7 @@ export default function CarsPage({
                 <div>
                   <h3 className="text-base font-black">LIÊN HỆ & ĐẶT LỊCH HẸN SHOWROOM</h3>
                   <p className="text-xs text-brand-light opacity-85 mt-1">
-                    Trải nghiệm dịch vụ chuyên nghiệp tại Showroom VF Ngọc Anh
+                    Trải nghiệm dịch vụ chuyên nghiệp tại Showroom VinFast Ngọc Anh Cà Mau
                   </p>
                 </div>
                 <button
@@ -1112,7 +1112,7 @@ export default function CarsPage({
                         <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-800">{bookingForm.name}</strong> đã tin
-                          tưởng showroom VF Ngọc Anh. Tư vấn viên sẽ liên hệ lại với quý khách trong
+                          tưởng showroom VinFast Ngọc Anh Cà Mau. Tư vấn viên sẽ liên hệ lại với quý khách trong
                           vòng 15 phút qua{" "}
                           <strong className="text-slate-800">
                             {bookingForm.contactMethod === "Phone"
@@ -1240,7 +1240,7 @@ function HeroSection({ onExplore }: { onExplore: () => void }) {
       banners={CAR_HERO_BANNERS}
       title="Tương lai di chuyển"
       titleAccent="thông minh, bền vững"
-      description="Showroom VinFast Ngọc Anh mang đến các dòng SUV điện đột phá, công nghệ an toàn hàng đầu, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi."
+      description="Showroom VinFast Ngọc Anh Cà Mau mang đến các dòng SUV điện đột phá, công nghệ an toàn hàng đầu, bảo hành tới 10 năm và chính sách trả góp siêu ưu đãi."
       primaryCta={{ label: "KHÁM PHÁ CATALOG XE", onClick: onExplore }}
       secondaryCta={{ label: `HOTLINE: ${HOTLINE}`, href: HOTLINE_TEL }}
       highlights={[

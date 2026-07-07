@@ -535,7 +535,7 @@ export default function ChargingPage({
                         <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-700">{inquiryForm.name}</strong>. Cố vấn
-                          dịch vụ của VF Ngọc Anh sẽ sớm liên hệ tới số điện thoại{" "}
+                          dịch vụ của VinFast Ngọc Anh Cà Mau sẽ sớm liên hệ tới số điện thoại{" "}
                           <strong className="text-slate-700">{inquiryForm.phone}</strong> để tiến
                           hành khảo sát đường điện và bàn giao thiết bị trong vòng 12-24 giờ.
                         </p>
@@ -944,7 +944,7 @@ function ProductsSection({
           align="centered"
           eyebrow="Gian hàng công nghệ"
           title="Thiết bị sạc gia đình & phụ kiện"
-          description="Danh mục các bộ sạc treo tường tại nhà công suất cao, bộ sạc di động và dây cáp sạc mở rộng chính hãng đang được ủy quyền phân phối & lắp đặt tại showroom VF Ngọc Anh."
+          description="Danh mục các bộ sạc treo tường tại nhà công suất cao, bộ sạc di động và dây cáp sạc mở rộng chính hãng đang được ủy quyền phân phối & lắp đặt tại showroom VinFast Ngọc Anh Cà Mau."
         />
 
         <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -1152,13 +1152,13 @@ function CtaSection() {
   return (
     <PageCtaSection
       title="Cần tư vấn pin, trạm sạc hoặc lắp đặt tại nhà?"
-      description="Showroom VF Ngọc Anh phân phối chính hãng bộ sạc tại nhà 7,4kW, hỗ trợ khảo sát đường điện và lắp đặt bàn giao tận tư gia của quý khách. Hãy liên hệ với chúng tôi để được đón tiếp tận tâm!"
+      description="Showroom VinFast Ngọc Anh Cà Mau phân phối chính hãng bộ sạc tại nhà 7,4kW, hỗ trợ khảo sát đường điện và lắp đặt bàn giao tận tư gia của quý khách. Hãy liên hệ với chúng tôi để được đón tiếp tận tâm!"
     >
       <a href={HOTLINE_TEL} className={pageCtaPrimary}>
         <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}
       </a>
       <Link href="/gioi-thieu" className={pageCtaGhost}>
-        TÌM SHOWROOM VF NGỌC ANH
+        TÌM SHOWROOM VINFAST NGỌC ANH CÀ MAU
         <ChevronRight className="size-4 text-accent-yellow" />
       </Link>
     </PageCtaSection>

@@ -73,7 +73,7 @@ export function CatalogHeroIntro({
           <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <FadeIn direction="left" blur className="text-center lg:text-left">
               <p className={`${vfHeroEyebrow} ${overlap ? "text-brand" : ""}`}>
-                VinFast · VF Ngọc Anh
+                VinFast · VinFast Ngọc Anh Cà Mau
               </p>
               <h1 className={`${vfDisplayHero} mt-3 text-balance text-brand-dark`}>
                 {title}

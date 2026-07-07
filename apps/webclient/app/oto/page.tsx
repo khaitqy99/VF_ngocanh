@@ -21,7 +21,7 @@ export default async function OtoPage() {
   ]);
   const itemList = buildItemListSchema({
     name: "Danh mục ô tô điện VinFast tại Cà Mau",
-    description: "Các dòng ô tô điện VinFast đang phân phối tại VF Ngọc Anh — Vinfast 3S Cà Mau.",
+    description: "Các dòng ô tô điện VinFast đang phân phối tại VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau.",
     items: cars.map((car) => ({ name: car.name, url: carDetailPath(car) })),
   });
 

@@ -279,7 +279,7 @@ export function CarsPromoBanners() {
           >
             <motion.img
               src={CAR_IMAGES.promoTestDrive}
-              alt="Ô tô điện VinFast — Đăng ký lái thử tại Showroom VF Ngọc Anh"
+              alt="Ô tô điện VinFast — Đăng ký lái thử tại Showroom VinFast Ngọc Anh Cà Mau"
               className="absolute inset-0 h-full w-full object-cover object-right"
               variants={reduced ? undefined : carsPromoImage}
             />
@@ -291,7 +291,7 @@ export function CarsPromoBanners() {
               <h3 className={`${vfPanelTitle} text-white`}>Đăng ký lái thử ngay hôm nay</h3>
               <p className="mt-2 text-xs font-medium leading-relaxed text-slate-300">
                 Trải nghiệm thực tế các dòng xe điện thông minh hoàn toàn miễn phí tại Showroom
-                VinFast Ngọc Anh. Quà tặng check-in hấp dẫn.
+                VinFast Ngọc Anh Cà Mau. Quà tặng check-in hấp dẫn.
               </p>
               <MotionLinkButton
                 href={HOTLINE_TEL}

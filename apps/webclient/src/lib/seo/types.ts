@@ -76,7 +76,7 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     group: "core",
     defaultTitle: "Vinfast 3S Cà Mau — Đại lý VinFast chính hãng",
     defaultDescription:
-      "VF Ngọc Anh — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện VinFast với ưu đãi hấp dẫn, hỗ trợ trả góp và dịch vụ hậu mãi tại Cà Mau.",
+      "VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau. Khám phá ô tô điện, xe máy điện VinFast với ưu đãi hấp dẫn, hỗ trợ trả góp và dịch vụ hậu mãi tại Cà Mau.",
     defaultOgImage: "/images/cars/oto-hero.webp",
   },
   {
@@ -86,7 +86,7 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     group: "core",
     defaultTitle: "Giới thiệu Vinfast 3S Cà Mau",
     defaultDescription:
-      "VF Ngọc Anh — Vinfast 3S Cà Mau. Tìm hiểu đại lý ủy quyền VinFast tại Cà Mau — sứ mệnh, tầm nhìn và dịch vụ 3S chuyên nghiệp.",
+      "VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau. Tìm hiểu đại lý ủy quyền VinFast tại Cà Mau — sứ mệnh, tầm nhìn và dịch vụ 3S chuyên nghiệp.",
     defaultOgImage: "/images/showroom.webp",
   },
   {

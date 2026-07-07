@@ -194,7 +194,7 @@ export function ScootersPromoBanners() {
           >
             <motion.img
               src={SCOOTER_IMAGES.promoTestDrive}
-              alt="Xe máy điện VinFast — Trải nghiệm lái thử tại Showroom VF Ngọc Anh"
+              alt="Xe máy điện VinFast — Trải nghiệm lái thử tại Showroom VinFast Ngọc Anh Cà Mau"
               className="absolute inset-0 h-full w-full object-cover object-right"
               variants={reduced ? undefined : carsPromoImage}
             />
@@ -206,7 +206,7 @@ export function ScootersPromoBanners() {
               <h3 className={`${vfPanelTitle} text-white`}>Hành trình xanh — Lái thử ngay</h3>
               <p className="mt-2 text-xs font-medium leading-relaxed text-slate-300">
                 Trải nghiệm khả năng tăng tốc mượt mà, công nghệ định vị thông minh của xe máy điện
-                VinFast tại Showroom VF Ngọc Anh hoàn toàn miễn phí.
+                VinFast tại Showroom VinFast Ngọc Anh Cà Mau hoàn toàn miễn phí.
               </p>
               <MotionLinkButton
                 href={HOTLINE_TEL}

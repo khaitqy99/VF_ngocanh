@@ -21,7 +21,7 @@ export default async function XeMayDienPage() {
   ]);
   const itemList = buildItemListSchema({
     name: "Danh mục xe máy điện VinFast tại Cà Mau",
-    description: "Các dòng xe máy điện VinFast đang phân phối tại VF Ngọc Anh — Vinfast 3S Cà Mau.",
+    description: "Các dòng xe máy điện VinFast đang phân phối tại VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau.",
     items: scooters.map((scooter) => ({ name: scooter.name, url: scooterDetailPath(scooter) })),
   });
 

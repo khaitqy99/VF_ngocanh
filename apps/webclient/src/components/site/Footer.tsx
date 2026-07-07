@@ -1,12 +1,12 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Youtube, MapPin, Phone, Mail } from "lucide-react";
 import { resolveDealershipContact, type DealershipContact } from "@/lib/dealership";
 import { IMAGES } from "@/lib/images";
 import { FadeIn } from "@/components/motion";
+import { ResilientLink } from "@/components/site/ResilientLink";
 
 const PRODUCT_LINKS = [
   { label: "VF 3", href: "/oto/vf3" },
@@ -46,12 +46,12 @@ function FooterLinkList({ items }: { items: readonly { label: string; href: stri
     <ul className="space-y-2">
       {items.map(({ label, href }) => (
         <li key={label}>
-          <Link
+          <ResilientLink
             href={href}
             className="text-[13px] leading-snug text-foreground/75 transition-colors hover:text-brand"
           >
             {label}
-          </Link>
+          </ResilientLink>
         </li>
       ))}
     </ul>
@@ -89,16 +89,16 @@ export default function Footer({
       <div className="container-vf space-y-8 py-8 sm:space-y-10 sm:py-10 lg:py-12">
         <FadeIn className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <div className="min-w-0">
-            <Link href="/" className="inline-flex items-center">
+            <ResilientLink href="/" className="inline-flex items-center">
               <Image
                 src={IMAGES.vinfastLogo}
-                alt="VinFast — Đại lý VF Ngọc Anh"
+                alt="VinFast — Đại lý VinFast Ngọc Anh Cà Mau"
                 width={140}
                 height={32}
                 className="h-7 w-auto sm:h-8"
               />
-            </Link>
-            <p className="mt-1 text-xs font-bold tracking-wide text-brand">VF NGỌC ANH</p>
+            </ResilientLink>
+            <p className="mt-1 text-xs font-bold tracking-wide text-brand">VINFAST NGỌC ANH CÀ MAU</p>
             <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-muted-foreground sm:mt-2.5">
               {contact.businessName}. Trải nghiệm xe điện thông minh cùng dịch vụ 3S tận tâm tại Cà
               Mau.
@@ -174,14 +174,14 @@ export default function Footer({
 
       <div className="border-t border-border/50 bg-white/60">
         <div className="container-vf flex flex-col items-center justify-between gap-3 py-4 text-[11px] text-muted-foreground sm:flex-row sm:py-5">
-          <p>© 2026 VF Ngọc Anh. All rights reserved.</p>
+          <p>© 2026 VinFast Ngọc Anh Cà Mau. All rights reserved.</p>
           <div className="flex gap-5">
-            <Link href="/gioi-thieu" className="transition-colors hover:text-brand">
+            <ResilientLink href="/gioi-thieu" className="transition-colors hover:text-brand">
               Chính sách bảo mật
-            </Link>
-            <Link href="/gioi-thieu" className="transition-colors hover:text-brand">
+            </ResilientLink>
+            <ResilientLink href="/gioi-thieu" className="transition-colors hover:text-brand">
               Điều khoản sử dụng
-            </Link>
+            </ResilientLink>
           </div>
         </div>
       </div>

@@ -227,7 +227,7 @@ function buildReviews(scooter: ScooterModel): ReviewsSection {
         rating: 5,
         date: "12/03/2026",
         variant: scooter.name,
-        content: `${scooter.name} chạy rất êm, tiết kiệm điện. Pin đủ dùng cả ngày đi làm. Đội ngũ VF Ngọc Anh tư vấn nhiệt tình.`,
+        content: `${scooter.name} chạy rất êm, tiết kiệm điện. Pin đủ dùng cả ngày đi làm. Đội ngũ VinFast Ngọc Anh Cà Mau tư vấn nhiệt tình.`,
       },
       {
         name: "Trần Thị Hoa",

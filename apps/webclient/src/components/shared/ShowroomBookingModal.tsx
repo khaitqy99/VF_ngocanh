@@ -135,7 +135,7 @@ export function ShowroomBookingModal({
                   <div>
                     <p className="text-sm font-bold text-brand-dark">{vehicleName}</p>
                     <p className="text-[11px] text-muted-foreground">
-                      Showroom VF Ngọc Anh · Cà Mau
+                      Showroom VinFast Ngọc Anh Cà Mau
                     </p>
                   </div>
                 </div>

@@ -132,7 +132,7 @@ export const CHARGING_PRODUCTS: ChargingProduct[] = [
     id: "goi-lap-dat-sac-nha",
     name: "Gói lắp đặt sạc tại nhà",
     description:
-      "Khảo sát, lắp đặt và bàn giao bộ sạc treo tường — trọn gói tại showroom VF Ngọc Anh.",
+      "Khảo sát, lắp đặt và bàn giao bộ sạc treo tường — trọn gói tại showroom VinFast Ngọc Anh Cà Mau.",
     price: 3_500_000,
     image: IMAGES.showroom,
     category: "sac-tai-nha",
@@ -222,8 +222,8 @@ export const CHARGING_FAQ = [
     a: "Tải app VinFast, vào mục Trạm sạc để xem bản đồ realtime. App hiển thị trạng thái cổng (trống/đang sạc), công suất, giá và hỗ trợ dẫn đường.",
   },
   {
-    q: "VF Ngọc Anh có hỗ trợ lắp bộ sạc tại nhà không?",
-    a: `Có. Showroom VF Ngọc Anh cung cấp gói khảo sát, lắp đặt và bàn giao bộ sạc treo tường 7,4kW chính hãng. Liên hệ hotline ${HOTLINE} để đặt lịch.`,
+    q: "VinFast Ngọc Anh Cà Mau có hỗ trợ lắp bộ sạc tại nhà không?",
+    a: `Có. Showroom VinFast Ngọc Anh Cà Mau cung cấp gói khảo sát, lắp đặt và bàn giao bộ sạc treo tường 7,4kW chính hãng. Liên hệ hotline ${HOTLINE} để đặt lịch.`,
   },
   {
     q: "Sạc pin thường xuyên có làm hỏng pin không?",

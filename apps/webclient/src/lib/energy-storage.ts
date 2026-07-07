@@ -156,7 +156,7 @@ export const ENERGY_FAQS = [
   },
   {
     q: "Tôi cần dung lượng pin bao nhiêu cho gia đình?",
-    a: "Thông thường, hộ gia đình cần từ 5–20 kWh tùy mức tiêu thụ và nhu cầu dự phòng. Nếu có trạm sạc xe điện tại nhà, nên cộng thêm 10–15 kWh. VF Ngọc Anh sẽ khảo sát và tư vấn cấu hình phù hợp nhất.",
+    a: "Thông thường, hộ gia đình cần từ 5–20 kWh tùy mức tiêu thụ và nhu cầu dự phòng. Nếu có trạm sạc xe điện tại nhà, nên cộng thêm 10–15 kWh. VinFast Ngọc Anh Cà Mau sẽ khảo sát và tư vấn cấu hình phù hợp nhất.",
   },
   {
     q: "Có thể kết hợp với điện mặt trời không?",
@@ -172,10 +172,10 @@ export const ENERGY_FAQS = [
   },
   {
     q: "Chi phí đầu tư và thời gian hoàn vốn?",
-    a: "Chi phí phụ thuộc vào công suất, cấu hình và nhu cầu cụ thể. Thời gian hoàn vốn thường từ 5–8 năm với hộ gia đình và 3–6 năm với doanh nghiệp (khi kết hợp điện mặt trời). Liên hệ VF Ngọc Anh để nhận báo giá chi tiết.",
+    a: "Chi phí phụ thuộc vào công suất, cấu hình và nhu cầu cụ thể. Thời gian hoàn vốn thường từ 5–8 năm với hộ gia đình và 3–6 năm với doanh nghiệp (khi kết hợp điện mặt trời). Liên hệ VinFast Ngọc Anh Cà Mau để nhận báo giá chi tiết.",
   },
   {
-    q: "VF Ngọc Anh có hỗ trợ bảo hành và bảo trì không?",
+    q: "VinFast Ngọc Anh Cà Mau có hỗ trợ bảo hành và bảo trì không?",
     a: "Có. Chúng tôi cung cấp gói bảo hành chính hãng VinFast, giám sát từ xa, bảo dưỡng định kỳ và hỗ trợ kỹ thuật 24/7 trong suốt vòng đời hệ thống.",
   },
 ] as const;

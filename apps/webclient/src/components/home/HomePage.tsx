@@ -28,6 +28,7 @@ import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 import { vfCardTitle, vfSectionHeadingLeft, vfSlideTitle } from "@/lib/typography";
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { Toaster } from "sonner";
+import { toast } from "sonner";
 
 import { HomeHero } from "./HomeHero";
 import { HomeOverlayCard } from "./HomeOverlayCard";
@@ -103,7 +104,7 @@ export default function HomePage({
       <Toaster position="top-center" richColors />
       <Header />
       <main>
-        <h1 className="sr-only">VF Ngọc Anh — Đại lý ủy quyền chính thức VinFast Cà Mau</h1>
+        <h1 className="sr-only">VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast</h1>
         <HomeHero banners={heroBanners} />
         <FeaturedVehicle
           slides={featuredCars}
@@ -1257,6 +1258,7 @@ function Newsletter({ section }: { section: HomeSectionsContent["newsletter"] })
             variants={reduced ? undefined : homeNewsletterChild}
             onSubmit={(e) => {
               e.preventDefault();
+              toast.success("Đăng ký thành công. Chúng tôi sẽ liên hệ sớm.");
               setEmail("");
             }}
             className="mt-4"

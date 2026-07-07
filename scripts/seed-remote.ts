@@ -311,7 +311,7 @@ async function seedSiteSettings() {
     {
       key: "dealership",
       value: {
-        name: "VF Ngọc Anh",
+        name: "VinFast Ngọc Anh Cà Mau",
         address: SHOWROOM_ADDRESS,
         hotline_sales: SHOWROOM_PHONE,
         hotline_service: RESCUE_HOTLINE,

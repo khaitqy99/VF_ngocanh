@@ -3,10 +3,10 @@
  * Schema, footer, map embed, and CMS defaults all derive from here.
  */
 
-export const DEALERSHIP_NAME = "VF Ngọc Anh";
+export const DEALERSHIP_NAME = "VinFast Ngọc Anh Cà Mau";
 export const SITE_DISPLAY_NAME = "Vinfast 3S Cà Mau";
 /** Canonical business name for JSON-LD — must match Google Business Profile */
-export const SCHEMA_BUSINESS_NAME = "VF Ngọc Anh — Vinfast 3S Cà Mau";
+export const SCHEMA_BUSINESS_NAME = "VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau";
 
 export const SHOWROOM_STREET = "Số 111 Lý Thường Kiệt";
 export const SHOWROOM_WARD = "Phường Tân Thành";

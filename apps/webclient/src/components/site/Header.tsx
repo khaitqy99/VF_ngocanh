@@ -28,7 +28,7 @@ function BrandLogo() {
   return (
     <Image
       src={IMAGES.vinfastLogo}
-      alt="VinFast — Đại lý VF Ngọc Anh"
+      alt="VinFast — Đại lý VinFast Ngọc Anh Cà Mau"
       width={140}
       height={32}
       priority
@@ -141,7 +141,7 @@ export default function Header() {
             </SheetClose>
 
             <SheetHeader className="border-b border-border/60 px-5 py-4 text-left">
-              <SheetTitle className="sr-only">Menu điều hướng VF Ngọc Anh</SheetTitle>
+              <SheetTitle className="sr-only">Menu điều hướng VinFast Ngọc Anh Cà Mau</SheetTitle>
               <div className="flex items-center pr-10">
                 <BrandLogo />
               </div>

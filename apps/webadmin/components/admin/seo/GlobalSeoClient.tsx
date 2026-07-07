@@ -127,7 +127,7 @@ export function GlobalSeoClient() {
                 organization: { ...s.organization, name: e.target.value },
               }))
             }
-            placeholder="Tên schema (VD: VF Ngọc Anh — Vinfast 3S Cà Mau)"
+            placeholder="Tên schema (VD: VinFast Ngọc Anh Cà Mau — Vinfast 3S Cà Mau)"
           />
           <Input
             value={settings.organization?.telephone ?? ""}

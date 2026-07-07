@@ -134,7 +134,7 @@ export function buildLocalBusinessSchema(site?: SiteSeoSettings | null) {
     "@type": "LocalBusiness",
     "@id": `${PRODUCTION_SITE_URL}/gioi-thieu#business`,
     description:
-      "VF Ngọc Anh — Đại lý VinFast 3S chính thức tại Cà Mau, cung cấp ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi.",
+      "VinFast Ngọc Anh Cà Mau — Đại lý VinFast 3S chính thức tại Cà Mau, cung cấp ô tô điện, xe máy điện, phụ kiện và dịch vụ hậu mãi.",
   };
 }
 

@@ -234,7 +234,7 @@ const WHY_CHOOSE = [
 
 const FAQS = [
   {
-    q: "Làm sao để đặt lịch bảo dưỡng trực tuyến nhanh nhất tại VF Ngọc Anh?",
+    q: "Làm sao để đặt lịch bảo dưỡng trực tuyến nhanh nhất tại VinFast Ngọc Anh Cà Mau?",
     a: `Quý khách có thể sử dụng biểu mẫu Đăng ký đặt hẹn dịch vụ ở ngay phía dưới trang web này, gọi trực tiếp tới Hotline chăm sóc khách hàng ${HOTLINE}, hoặc đặt qua ứng dụng di động VinFast Club. Sau khi gửi thông tin, cố vấn dịch vụ sẽ gọi điện xác nhận lịch hẹn trong 10 phút.`,
   },
   {
@@ -247,11 +247,11 @@ const FAQS = [
   },
   {
     q: "Sửa chữa xe tại gara ngoài có làm mất hiệu lực bảo hành chính hãng không?",
-    a: "Có rủi ro lớn. Theo chính sách của hãng, nếu quý khách thực hiện sửa chữa các bộ phận liên quan đến hệ thống pin, phần mềm, hoặc động cơ tại các cơ sở không được VinFast ủy quyền và gây ra hư hỏng, VinFast có quyền từ chối bảo hành đối với các bộ phận đó. Quý khách nên mang xe đến xưởng 3S của VF Ngọc Anh để đảm bảo tối đa quyền lợi.",
+    a: "Có rủi ro lớn. Theo chính sách của hãng, nếu quý khách thực hiện sửa chữa các bộ phận liên quan đến hệ thống pin, phần mềm, hoặc động cơ tại các cơ sở không được VinFast ủy quyền và gây ra hư hỏng, VinFast có quyền từ chối bảo hành đối với các bộ phận đó. Quý khách nên mang xe đến xưởng 3S của VinFast Ngọc Anh Cà Mau để đảm bảo tối đa quyền lợi.",
   },
   {
     q: "Làm thế nào để tôi kiểm tra thời hạn bảo hành còn lại của xe?",
-    a: "Thời hạn bảo hành và lịch sử bảo dưỡng của xe được số hóa và đồng bộ trực tiếp lên hệ thống máy chủ của VinFast. Quý khách có thể tự tra cứu trên ứng dụng VinFast hoặc cung cấp số khung xe (VIN) cho cố vấn dịch vụ tại xưởng của VF Ngọc Anh để được hỗ trợ kiểm tra trực tuyến trong 2 phút.",
+    a: "Thời hạn bảo hành và lịch sử bảo dưỡng của xe được số hóa và đồng bộ trực tiếp lên hệ thống máy chủ của VinFast. Quý khách có thể tự tra cứu trên ứng dụng VinFast hoặc cung cấp số khung xe (VIN) cho cố vấn dịch vụ tại xưởng của VinFast Ngọc Anh Cà Mau để được hỗ trợ kiểm tra trực tuyến trong 2 phút.",
   },
 ] as const;
 
@@ -356,7 +356,7 @@ export default function AfterSalesPage({
 
                 <div className="mt-8 pt-6 border-t border-slate-200 text-xs text-slate-500 font-semibold space-y-2">
                   <p className="flex items-center gap-2">
-                    <MapPin className="size-4 text-brand" /> Showroom VF Ngọc Anh, Cà Mau
+                    <MapPin className="size-4 text-brand" /> Showroom VinFast Ngọc Anh Cà Mau
                   </p>
                   <p className="flex items-center gap-2">
                     <Clock className="size-4 text-brand" /> Giờ làm việc: Sáng 8:00 - 12:00 | Chiều
@@ -380,7 +380,7 @@ export default function AfterSalesPage({
                         <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                           Cảm ơn quý khách{" "}
                           <strong className="text-slate-700">{bookingForm.name}</strong> đã đăng ký
-                          lịch hẹn dịch vụ tại VF Ngọc Anh. Cố vấn kỹ thuật của chúng tôi sẽ gọi
+                          lịch hẹn dịch vụ tại VinFast Ngọc Anh Cà Mau. Cố vấn kỹ thuật của chúng tôi sẽ gọi
                           điện xác nhận chính xác ngày giờ hẹn và chuẩn bị linh kiện thay thế phục
                           vụ quý khách trong 10 phút.
                         </p>
@@ -645,7 +645,7 @@ function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
       showControls={AFTER_SALES_HERO_BANNERS.length > 1}
       title="Chăm sóc xe toàn diện"
       titleAccent="an tâm bứt phá"
-      description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VF Ngọc Anh — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
+      description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VinFast Ngọc Anh Cà Mau — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
       primaryCta={{ label: "ĐẶT LỊCH HẸN TRỰC TUYẾN", onClick: onScrollToBooking }}
       secondaryCta={{ label: `HOTLINE CỨU HỘ: ${HOTLINE}`, href: HOTLINE_TEL }}
       highlights={[
@@ -856,7 +856,7 @@ function WhyChooseSection() {
         <SectionHeader
           align="centered"
           eyebrow="Trải nghiệm vượt trội"
-          title="Vì sao lựa chọn VF Ngọc Anh?"
+          title="Vì sao lựa chọn VinFast Ngọc Anh Cà Mau?"
         />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
@@ -910,7 +910,7 @@ function CtaBanner() {
   return (
     <PageCtaSection
       title="Cần hỗ trợ dịch vụ bảo dưỡng?"
-      description="Trung tâm Chăm sóc khách hàng của đại lý VF Ngọc Anh tại Cà Mau túc trực phục vụ quý túc trực phục vụ quý khách 24/7/365. Hãy gọi ngay cho chúng tôi nếu quý khách cần hỗ trợ cứu hộ khẩn cấp!"
+      description="Trung tâm Chăm sóc khách hàng của đại lý VinFast Ngọc Anh Cà Mau túc trực phục vụ quý túc trực phục vụ quý khách 24/7/365. Hãy gọi ngay cho chúng tôi nếu quý khách cần hỗ trợ cứu hộ khẩn cấp!"
     >
       <a href={HOTLINE_TEL} className={pageCtaPrimary}>
         <Phone className="size-4 text-accent-yellow" /> HOTLINE CỨU HỘ: {HOTLINE}

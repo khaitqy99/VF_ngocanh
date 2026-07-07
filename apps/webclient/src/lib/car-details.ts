@@ -245,7 +245,7 @@ function buildReviews(car: CarModel): ReviewsSection {
         rating: 5,
         date: "15/03/2026",
         variant: car.name,
-        content: `Xe ${car.name} rất đẹp, nội thất sang trọng. Vận hành êm, tiết kiệm điện. Đội ngũ VF Ngọc Anh tư vấn nhiệt tình, giao xe đúng hẹn.`,
+        content: `Xe ${car.name} rất đẹp, nội thất sang trọng. Vận hành êm, tiết kiệm điện. Đội ngũ VinFast Ngọc Anh Cà Mau tư vấn nhiệt tình, giao xe đúng hẹn.`,
       },
       {
         name: "Trần Thị B",
