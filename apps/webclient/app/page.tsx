@@ -11,7 +11,6 @@ import {
   buildFaqPageSchema,
   buildWebSiteSchema,
 } from "@/lib/seo/local-business";
-import { DEALERSHIP_FAQ } from "@/lib/faq";
 
 export const revalidate = 120;
 
@@ -28,7 +27,7 @@ export default async function Page() {
         data={[
           buildWebSiteSchema(site),
           buildAutoDealerSchema(site),
-          buildFaqPageSchema(DEALERSHIP_FAQ),
+          buildFaqPageSchema(home.sections.faq.items),
         ]}
       />
       <HomePage
@@ -37,6 +36,7 @@ export default async function Page() {
         featuredScooters={home.featuredScooters}
         accessories={home.accessories}
         contact={resolveDealershipContact(site)}
+        sections={home.sections}
       />
     </>
   );

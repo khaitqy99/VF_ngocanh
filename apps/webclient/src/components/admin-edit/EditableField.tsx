@@ -95,7 +95,8 @@ export function EditableTextBlock({
   const [focused, setFocused] = useState(false);
 
   if (!edit?.editMode) {
-    return <div className={className}>{value}</div>;
+    if (!className) return <>{value}</>;
+    return <span className={className}>{value}</span>;
   }
 
   return (

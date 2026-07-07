@@ -22,10 +22,11 @@ export function canEnablePreviewEdit(options: { referer?: string | null }): bool
   return false;
 }
 
-export type PreviewEditScope = "oto" | "xe-may-dien" | "phu-kien";
+export type PreviewEditScope = "oto" | "xe-may-dien" | "phu-kien" | "home";
 
 export function previewScopeFromRequestPath(pathname: string): PreviewEditScope | null {
   const path = pathname.split("?")[0];
+  if (path === "/preview") return "home";
   if (path === "/oto/preview" || path.startsWith("/oto/")) return "oto";
   if (path === "/xe-may-dien/preview" || path.startsWith("/xe-may-dien/")) return "xe-may-dien";
   if (path === "/phu-kien/preview" || path.startsWith("/phu-kien/")) return "phu-kien";

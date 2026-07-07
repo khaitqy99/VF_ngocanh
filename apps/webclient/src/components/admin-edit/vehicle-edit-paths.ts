@@ -89,3 +89,9 @@ export function resolveField(
   if (v != null && v !== "") return String(v);
   return fallback;
 }
+
+/** Gallery index for a color preview image URL (exact match). */
+export function galleryIndexForImage(gallery: string[], image?: string | null): number {
+  if (!image) return -1;
+  return gallery.findIndex((src) => src === image);
+}

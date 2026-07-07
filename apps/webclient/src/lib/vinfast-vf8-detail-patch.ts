@@ -1,5 +1,8 @@
 import type { CarDetail } from "./car-details";
 
+/** Ảnh PDP VF 8 All New — host local, tránh hotlink VinFast (403). */
+const VF8N = "/images/vinfast/gallery/vf8-all-new";
+
 /** Nội dung PDP VF 8 — chỉnh tay, ưu tiên hơn auto-generate trong vinfast-detail-overrides.ts */
 export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
   "vf8-all-new": {
@@ -24,50 +27,50 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
         "Pin 60,13 kWh — sạc nhanh dưới 30 phút (10%–70%)",
         "Màn hình giải trí 12,9 inch — mâm 19 inch",
       ],
-      image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-21.webp",
+      image: `${VF8N}/PDP-vf8-img-top.webp`,
     },
     exterior: [
       {
         title: "Dải đèn LED chữ V đặc trưng",
         desc: "Ngoại thất VF 8 All New gây ấn tượng với diện mạo xe điện thế hệ mới, dải đèn cánh chim kéo dài tạo chiều sâu và nhận diện thương hiệu mạnh mẽ.",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-13.webp",
+        image: `${VF8N}/VF8-exterior-product-CE18.webp`,
       },
       {
         title: "Thiết kế khí động học cân bằng",
         desc: "Triết lý “Cân bằng động” với các khối cong mềm mại và đường nét sắc sảo, tối ưu lực cản không khí và hiệu quả vận hành.",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-15.webp",
+        image: `${VF8N}/VF8-exterior-product-CE1V.webp`,
       },
       {
         title: "Mâm hợp kim 19 inch thể thao",
         desc: "La-zăng 19 inch tạo điểm nhấn thể thao, kết hợp hài hòa với tổng thể SUV cỡ D hiện đại.",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-17.webp",
+        image: `${VF8N}/VF8-exterior-product-CE17.webp`,
       },
       {
         title: "Cảm biến và camera hỗ trợ quan sát",
         desc: "Hệ thống cảm biến tiên tiến hỗ trợ quan sát và đỗ xe an toàn trong không gian hẹp hay khu vực đông đúc.",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-23.webp",
+        image: `${VF8N}/VF8-exterior-product-CE22.webp`,
       },
     ],
     interior: [
       {
         title: "Nội thất khoáng đạt — nâng tầm tiện nghi",
         desc: "Ghế ngồi thiết kế ergonomic giúp giảm mỏi, hỗ trợ tuần hoàn tốt hơn trên mọi hành trình dài.",
-        image: "/images/vinfast/gallery/vf8/reserves-VF8-interior-img1.webp",
+        image: `${VF8N}/interior-img1.webp`,
       },
       {
         title: "Màn hình giải trí 12,9 inch",
         desc: "Màn hình cảm ứng trung tâm kích thước lớn, giao diện trực quan điều khiển giải trí, điều hòa và tiện ích thông minh.",
-        image: "/images/vinfast/gallery/vf8/reserves-VF8-interior-img2.webp",
+        image: `${VF8N}/interior-img2.webp`,
       },
       {
         title: "Không gian cabin rộng rãi 5 chỗ",
         desc: "Thiết kế nội thất tối ưu không gian, vật liệu cao cấp và ánh sáng tự nhiên cho trải nghiệm thoải mái.",
-        image: "/images/vinfast/gallery/vf8/reserves-VF8-interior-img3.webp",
+        image: `${VF8N}/interior-img3.webp`,
       },
       {
         title: "Tiện nghi hàng ghế sau",
         desc: "Hàng ghế sau rộng rãi, cốp xe linh hoạt đáp ứng nhu cầu gia đình và du lịch cuối tuần.",
-        image: "/images/vinfast/gallery/vf8/reserves-VF8-interior-img4.webp",
+        image: `${VF8N}/interior-img4.webp`,
       },
     ],
     technology: [
@@ -97,7 +100,7 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
     performance: {
       title: "HIỆU SUẤT VƯỢT TRỘI",
       subtitle: "Vận hành mạnh mẽ 228 hp — quãng đường 480–500 km (NEDC)",
-      image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-21.webp",
+      image: `${VF8N}/vf8-lux.webp`,
       features: [
         {
           title: "Động cơ điện 170 kW",
@@ -125,7 +128,7 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
     safety: {
       title: "AN TOÀN VƯỢT TRỘI",
       subtitle: "Hệ thống an toàn chủ động và thụ động bảo vệ toàn diện cho mọi hành khách",
-      image: "/images/vinfast/gallery/vf8/VF8-exterior-product-CE22.webp",
+      image: `${VF8N}/VF8-exterior-product-CE11.webp`,
       features: [
         {
           title: "Camera 360°",
@@ -164,37 +167,37 @@ export const VF8_DETAIL_PATCHES: Partial<Record<string, Partial<CarDetail>>> = {
         id: "color-0",
         name: "Solar Ruby",
         hex: "#DC2626",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-13.webp",
+        image: `${VF8N}/product-CE1M.webp`,
       },
       {
         id: "color-1",
         name: "Infinity Blanc",
         hex: "#FFFFFF",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-15.webp",
+        image: `${VF8N}/product-CE18.webp`,
       },
       {
         id: "color-2",
         name: "Jet Black",
         hex: "#111827",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-21.webp",
+        image: `${VF8N}/product-CE11.webp`,
       },
       {
         id: "color-3",
         name: "Starburst Blue",
         hex: "#2563EB",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-17.webp",
+        image: `${VF8N}/product-CE17.webp`,
       },
       {
         id: "color-4",
         name: "Mysterioso Purple",
         hex: "#7C3AED",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-19.webp",
+        image: `${VF8N}/product-CE1V.webp`,
       },
       {
         id: "color-5",
         name: "Vitality Orange",
         hex: "#EA580C",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-23.webp",
+        image: `${VF8N}/product-1V18.webp`,
       },
     ],
   },

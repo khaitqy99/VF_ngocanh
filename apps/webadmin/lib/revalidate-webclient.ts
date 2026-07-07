@@ -65,3 +65,10 @@ export function accessoryRevalidatePayload(id: string, slug?: string): Revalidat
     paths: uniquePaths([`/phu-kien/${id}`, slug ? `/phu-kien/${slug}` : "", "/phu-kien", "/phu-kien/preview", "/"]),
   };
 }
+
+export function homePageRevalidatePayload(): RevalidatePayload {
+  return {
+    tags: ["cms", "cms-home", "cms-banners-home"],
+    paths: ["/"],
+  };
+}

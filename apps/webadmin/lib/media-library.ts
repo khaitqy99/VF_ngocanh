@@ -1,4 +1,5 @@
 import type { CarModel } from "@webclient/lib/cars";
+import { resolveVehicleMediaPaths } from "@webclient/lib/cms/vehicle-images";
 import { getCarGallery } from "@webclient/lib/vinfast-galleries";
 import type { ScooterModel } from "@webclient/lib/scooters";
 import type { AccessoryProduct } from "@webclient/lib/accessories";
@@ -78,7 +79,7 @@ export function buildMediaFolders(
   const carFolders: MediaFolder[] = cars.map((car) => {
     const fromDb = galleriesByVehicleId.get(car.id);
     const paths = withSharedAssets(
-      uniquePaths(fromDb?.length ? fromDb : getCarGallery(car)),
+      resolveVehicleMediaPaths(car.id, fromDb, getCarGallery(car)),
     );
     return {
       category: "cars",
@@ -94,7 +95,9 @@ export function buildMediaFolders(
 
   const scooterFolders: MediaFolder[] = scooters.map((scooter) => {
     const fromDb = galleriesByVehicleId.get(scooter.id);
-    const paths = withSharedAssets(uniquePaths(fromDb?.length ? fromDb : [scooter.image]));
+    const paths = withSharedAssets(
+      resolveVehicleMediaPaths(scooter.id, fromDb, [scooter.image]),
+    );
     return {
       category: "scooters",
       slug: scooter.id,

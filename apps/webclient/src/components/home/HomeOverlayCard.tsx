@@ -47,10 +47,10 @@ export function HomeOverlayCard({
 
   const rootClass = stackOnMobile
     ? `group relative flex w-full flex-col overflow-hidden rounded-2xl shadow-soft transition-[box-shadow,transform] duration-300 hover:shadow-[var(--shadow-brand)] lg:relative lg:block ${
-        fillHeight ? "lg:h-full lg:min-h-[360px]" : "lg:min-h-[220px]"
+        fillHeight ? "h-full lg:h-full lg:min-h-[360px]" : "lg:min-h-[220px]"
       } ${heightClass ?? ""}`
     : `group relative block h-full w-full overflow-hidden rounded-2xl shadow-soft transition-[box-shadow,transform] duration-300 hover:shadow-[var(--shadow-brand)] ${
-        fillHeight ? "h-full" : ""
+        fillHeight ? "h-full min-h-[280px]" : ""
       } ${heightClass ?? ""}`;
 
   const imageShellClass = stackOnMobile

@@ -74,7 +74,7 @@ export const CARS: CarModel[] = [
       {
         name: "Đen Jet Black",
         hex: "#111827",
-        image: "https://vinfastauto.com/themes/porto/img/vf8-new-product/color/car/VF8PH-21.webp",
+        image: "/images/vinfast/gallery/vf8-all-new/product-CE11.webp",
       },
       {
         name: "Xanh Deep Ocean",

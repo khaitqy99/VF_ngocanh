@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, GripVertical, Plus, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,14 +12,23 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { type HeroBannerSlide } from "@/lib/images";
 import { homeHeroDot, homeHeroDotTransition, homeHeroSlide, homeNavBtn } from "@/lib/home-motion";
 import { MOTION_INSTANT, MOTION_VISIBLE } from "@/lib/motion-safe";
+import {
+  useHomeAdminEdit,
+  homeEditSectionClass,
+} from "@/components/admin-edit/home/HomeAdminEditContext";
+import { moveListItem } from "@/components/admin-edit/home/HomeEditListControls";
+import { HomeEditableText } from "@/components/admin-edit/home/HomeEditableText";
 
 const carouselNavBtnSize = "glass-nav h-9 w-9 md:h-10 md:w-10";
 
 export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
+  const edit = useHomeAdminEdit();
   const HERO_BANNERS = banners;
   const reduced = useReducedMotion();
   const [idx, setIdx] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [dragBannerIndex, setDragBannerIndex] = useState<number | null>(null);
+  const [dragBannerOver, setDragBannerOver] = useState<number | null>(null);
   const activeSlide = HERO_BANNERS[idx];
 
   const goTo = useCallback((next: number) => {
@@ -38,7 +47,7 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
   }, [goTo, idx, HERO_BANNERS.length]);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || edit?.editMode) return;
     const t = setInterval(() => {
       setIdx((current) => {
         setDirection(1);
@@ -46,13 +55,28 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
       });
     }, 5500);
     return () => clearInterval(t);
-  }, [reduced, HERO_BANNERS.length]);
+  }, [reduced, edit?.editMode, HERO_BANNERS.length]);
+
+  useEffect(() => {
+    if (idx >= HERO_BANNERS.length) {
+      setIdx(Math.max(0, HERO_BANNERS.length - 1));
+    }
+  }, [idx, HERO_BANNERS.length]);
 
   const slideTotal = String(HERO_BANNERS.length).padStart(2, "0");
   const slideCurrent = String(idx + 1).padStart(2, "0");
 
   return (
-    <section className="relative w-full overflow-hidden bg-brand-dark">
+    <section
+      className={`relative w-full overflow-hidden bg-brand-dark ${edit?.editMode ? homeEditSectionClass() : ""}`}
+    >
+      {edit?.editMode ? (
+        <div className="absolute inset-x-0 top-0 z-30 border-b border-white/15 bg-brand-dark/80 px-4 py-2 text-center text-[11px] font-medium text-white backdrop-blur-sm">
+          Đang chỉnh banner {slideCurrent}/{slideTotal} — carousel tạm dừng, dùng{" "}
+          <span className="font-bold text-accent-yellow">mũi tên</span> hoặc{" "}
+          <span className="font-bold text-accent-yellow">chấm tròn</span> bên dưới để chọn slide
+        </div>
+      ) : null}
       <div className="relative w-full">
         {activeSlide ? <HeroBannerHeightSpacer slide={activeSlide} /> : null}
 
@@ -80,6 +104,70 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
                       aria-hidden
                       className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,31,91,0.35)_0%,transparent_28%,transparent_62%,rgba(11,31,91,0.55)_100%)]"
                     />
+                    {edit?.editMode && edit.draft.banners[idx] ? (
+                      <div className="absolute inset-x-0 bottom-0 z-20 space-y-2 bg-gradient-to-t from-brand-dark/90 via-brand-dark/70 to-transparent p-4 pt-10 sm:p-6">
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => edit.requestImage(`banners.${idx}.desktop`)}
+                            className="rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]"
+                          >
+                            Đổi ảnh desktop
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => edit.requestImage(`banners.${idx}.mobile`)}
+                            className="rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]"
+                          >
+                            Đổi ảnh mobile
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nextBanners = [
+                                ...edit.draft.banners,
+                                {
+                                  desktop: "",
+                                  mobile: "",
+                                  alt: "",
+                                  sortOrder: edit.draft.banners.length,
+                                },
+                              ];
+                              edit.setBanners(nextBanners);
+                              setIdx(nextBanners.length - 1);
+                            }}
+                            className="inline-flex items-center gap-1 rounded-md border border-white/30 bg-white/10 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm"
+                          >
+                            <Plus className="h-3 w-3" />
+                            Thêm banner
+                          </button>
+                          {edit.draft.banners.length > 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const nextBanners = edit.draft.banners.filter(
+                                  (_, bannerIndex) => bannerIndex !== idx,
+                                );
+                                edit.setBanners(nextBanners);
+                                setIdx((current) =>
+                                  Math.min(current, Math.max(0, nextBanners.length - 1)),
+                                );
+                              }}
+                              className="inline-flex items-center gap-1 rounded-md border border-red-300/50 bg-red-500/20 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                              Xóa banner
+                            </button>
+                          ) : null}
+                        </div>
+                        <HomeEditableText
+                          value={edit.draft.banners[idx]?.alt ?? ""}
+                          onChange={(alt) => edit.updateBanner(idx, { alt })}
+                          className="text-xs text-white/90"
+                          label="Mô tả ảnh (alt)"
+                        />
+                      </div>
+                    ) : null}
                   </motion.div>
                 ),
             )}
@@ -93,7 +181,7 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
           whileHover={reduced ? undefined : "hover"}
           whileTap={reduced ? undefined : "tap"}
           variants={homeNavBtn}
-          className={`absolute top-1/2 left-3 z-10 -translate-y-1/2 md:left-5 ${carouselNavBtnSize}`}
+          className={`absolute top-1/2 left-3 ${edit?.editMode ? "z-40" : "z-10"} -translate-y-1/2 md:left-5 ${carouselNavBtnSize}`}
           aria-label="Banner trước"
         >
           <ChevronLeft size={18} strokeWidth={1.75} />
@@ -105,7 +193,7 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
           whileHover={reduced ? undefined : "hover"}
           whileTap={reduced ? undefined : "tap"}
           variants={homeNavBtn}
-          className={`absolute top-1/2 right-3 z-10 -translate-y-1/2 md:right-5 ${carouselNavBtnSize}`}
+          className={`absolute top-1/2 right-3 ${edit?.editMode ? "z-40" : "z-10"} -translate-y-1/2 md:right-5 ${carouselNavBtnSize}`}
           aria-label="Banner sau"
         >
           <ChevronRight size={18} strokeWidth={1.75} />
@@ -122,7 +210,9 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
           </p>
         </div>
 
-        <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 md:bottom-5">
+        <div
+          className={`absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 md:bottom-5 ${edit?.editMode ? "z-40" : "z-10"}`}
+        >
           {HERO_BANNERS.map((_, i) => (
             <button
               key={i}
@@ -142,6 +232,50 @@ export function HomeHero({ banners }: { banners: HeroBannerSlide[] }) {
           ))}
         </div>
       </div>
+
+      {edit?.editMode && edit.draft.banners.length > 1 ? (
+        <div className="border-t border-white/10 bg-brand-dark px-4 py-3">
+          <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-wide text-white/70">
+            Kéo thả để sắp xếp thứ tự banner
+          </p>
+          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-2">
+            {edit.draft.banners.map((banner, bannerIndex) => (
+              <button
+                key={`${banner.id ?? banner.desktop}-${bannerIndex}`}
+                type="button"
+                draggable
+                onClick={() => goTo(bannerIndex)}
+                onDragStart={() => setDragBannerIndex(bannerIndex)}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setDragBannerOver(bannerIndex);
+                }}
+                onDragEnd={() => {
+                  if (
+                    dragBannerIndex != null &&
+                    dragBannerOver != null &&
+                    dragBannerIndex !== dragBannerOver
+                  ) {
+                    const next = moveListItem(edit.draft.banners, dragBannerIndex, dragBannerOver);
+                    edit.setBanners(next);
+                    setIdx(dragBannerOver);
+                  }
+                  setDragBannerIndex(null);
+                  setDragBannerOver(null);
+                }}
+                className={`inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[10px] font-semibold text-white ${
+                  idx === bannerIndex
+                    ? "border-accent-yellow bg-white/15"
+                    : "border-white/20 bg-white/5"
+                }`}
+              >
+                <GripVertical className="size-3 opacity-70" />
+                {bannerIndex + 1}. {banner.alt.slice(0, 24) || "Banner"}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

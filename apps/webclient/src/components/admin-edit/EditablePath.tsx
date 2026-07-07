@@ -90,7 +90,10 @@ export function InlineTextBlock({
   const text = resolveField(edit?.values, edit?.patches, path, fallback);
   const active = adminEditable && edit?.editMode;
 
-  if (!active || !edit) return <div className={className}>{text}</div>;
+  if (!active || !edit) {
+    if (!className) return <>{text}</>;
+    return <span className={className}>{text}</span>;
+  }
 
   return (
     <EditableTextBlock

@@ -105,7 +105,6 @@ import {
   mapEditableMetrics,
   InlineSectionTitle,
   InlineText,
-  InlineTextBlock,
   mapEditableFeatures,
   mapEditableTech,
 } from "@/components/admin-edit/EditablePath";
@@ -223,6 +222,17 @@ export default function ScooterDetailPage({
 
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
+
+  const handleColorSelect = useCallback(
+    (colorId: string) => {
+      setSelectedColor(colorId);
+      const colorIndex = detail.colors.findIndex((c) => c.id === colorId);
+      if (colorIndex >= 0 && colorIndex < detail.gallery.length) {
+        setActiveImage(colorIndex);
+      }
+    },
+    [detail.colors, detail.gallery],
+  );
 
   useEffect(() => {
     if (detail.colors.length && !detail.colors.some((c) => c.id === selectedColor)) {
@@ -600,7 +610,7 @@ export default function ScooterDetailPage({
                         colors={detail.colors}
                         adminEditable={adminEdit}
                         selectedColor={selectedColor}
-                        onSelectColor={setSelectedColor}
+                        onSelectColor={handleColorSelect}
                         selectedColorName={selectedColorObj?.name}
                         withImage={false}
                       />
@@ -1101,20 +1111,19 @@ function OverviewSection({
     <PdpSplitOverview
       eyebrow="Tổng quan"
       title={
-        <InlineTextBlock
+        <InlineText
           path="overview.title"
           fallback={detail.overview.title}
           adminEditable={adminEditable}
-          className={vfSectionHeadingLeft}
           label="Tiêu đề tổng quan"
         />
       }
       description={
-        <InlineTextBlock
+        <InlineText
           path="overview.subtitle"
           fallback={detail.overview.subtitle}
           adminEditable={adminEditable}
-          className="text-sm leading-relaxed text-muted-foreground sm:text-[15px] lg:text-base"
+          multiline
           label="Mô tả tổng quan"
         />
       }

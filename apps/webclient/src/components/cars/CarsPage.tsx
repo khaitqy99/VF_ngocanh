@@ -172,13 +172,20 @@ export default function CarsPage({
 
   // Filter cars based on sidebar filters + segment tab + search query
   const filteredCars = useMemo(() => {
+    if (adminEdit) return CARS;
+
+    const isDefaultPriceRange =
+      filters.priceRange[0] === PRICE_MIN && filters.priceRange[1] === PRICE_MAX;
+
     let result = CARS.filter((car) => {
       // 1. Sidebar filters
       const segmentOk =
         filters.segments.has("all") ||
         filters.segments.size === 0 ||
         filters.segments.has(car.segment);
-      const priceOk = car.price >= filters.priceRange[0] && car.price <= filters.priceRange[1];
+      const priceOk =
+        isDefaultPriceRange ||
+        (car.price >= filters.priceRange[0] && car.price <= filters.priceRange[1]);
       const seatsOk = filters.seats.size === 0 || filters.seats.has(car.seats);
       const rangeOk = filters.ranges.size === 0 || filters.ranges.has(car.rangeBucket);
       const driveOk = filters.drives.size === 0 || filters.drives.has(car.drive);
@@ -208,7 +215,7 @@ export default function CarsPage({
     if (sort === "range-desc") result = [...result].sort((a, b) => b.range - a.range);
     if (sort === "power-desc") result = [...result].sort((a, b) => b.power - a.power);
     return result;
-  }, [filters, sort, segmentTab, searchQuery]);
+  }, [CARS, adminEdit, filters, sort, segmentTab, searchQuery]);
 
   const clearFilters = () => {
     setFilters(defaultFilters());

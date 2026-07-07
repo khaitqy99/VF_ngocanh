@@ -33,7 +33,15 @@ import {
   parseHomeCms,
   applyVehicleContentPatches,
   hydrateFeaturedVehicleSlides,
+  buildFeaturedSlidesFromIds,
+  applyFeaturedPriceOverrides,
+  applyFeaturedSlideOverrides,
 } from "./mappers";
+import {
+  mergeHomeSections,
+  resolveFeaturedAccessories,
+  type HomeSectionsContent,
+} from "./home-content";
 import { resolveProductSlug } from "@/lib/seo/slugs";
 import { CMS_TAGS, vehicleTag } from "./cache-tags";
 
@@ -249,12 +257,49 @@ export const getHomeData = unstable_cache(
     ]);
 
     const parsed = homeContent ? parseHomeCms(homeContent) : null;
-    const featuredCarsBase = parsed?.featuredCars?.length
-      ? parsed.featuredCars
-      : VINFAST_FEATURED_CARS;
-    const featuredScootersBase = parsed?.featuredScooters?.length
-      ? parsed.featuredScooters
-      : VINFAST_FEATURED_SCOOTERS;
+
+    const featuredCarsBase = parsed?.featuredCarIds?.length
+      ? buildFeaturedSlidesFromIds(parsed.featuredCarIds, VINFAST_FEATURED_CARS, cars, "car")
+      : parsed?.featuredCars?.length
+        ? parsed.featuredCars
+        : VINFAST_FEATURED_CARS;
+
+    const featuredScootersBase = parsed?.featuredScooterIds?.length
+      ? buildFeaturedSlidesFromIds(
+          parsed.featuredScooterIds,
+          VINFAST_FEATURED_SCOOTERS,
+          scooters,
+          "scooter",
+        )
+      : parsed?.featuredScooters?.length
+        ? parsed.featuredScooters
+        : VINFAST_FEATURED_SCOOTERS;
+
+    const featuredCars = applyFeaturedSlideOverrides(
+      applyFeaturedPriceOverrides(
+        hydrateFeaturedVehicleSlides(featuredCarsBase, cars),
+        parsed?.featuredCarIds ?? [],
+        parsed?.featuredCarPrices ?? {},
+      ),
+      parsed?.featuredCarIds ?? [],
+      parsed?.featuredCarSlideOverrides ?? {},
+    );
+
+    const featuredScooters = applyFeaturedSlideOverrides(
+      applyFeaturedPriceOverrides(
+        hydrateFeaturedVehicleSlides(featuredScootersBase, scooters),
+        parsed?.featuredScooterIds ?? [],
+        parsed?.featuredScooterPrices ?? {},
+      ),
+      parsed?.featuredScooterIds ?? [],
+      parsed?.featuredScooterSlideOverrides ?? {},
+    );
+
+    const sections: HomeSectionsContent = mergeHomeSections(parsed?.sections);
+    const featuredAccessories = resolveFeaturedAccessories(
+      accessories,
+      parsed?.featuredAccessoryIds,
+    );
 
     return {
       heroBanners:
@@ -263,12 +308,13 @@ export const getHomeData = unstable_cache(
           : parsed?.heroBannersAll?.length
             ? parsed.heroBannersAll
             : HERO_BANNERS,
-      featuredCars: hydrateFeaturedVehicleSlides(featuredCarsBase, cars),
-      featuredScooters: hydrateFeaturedVehicleSlides(featuredScootersBase, scooters),
+      featuredCars,
+      featuredScooters,
       vinfastHeroBanners: homeBanners.length
         ? (await fetchBannersByPlacement("home").catch(() => [])).map(mapHomeHeroBanner)
         : VINFAST_HERO_BANNERS,
-      accessories: accessories.slice(0, 8),
+      accessories: featuredAccessories,
+      sections,
     };
   },
   ["cms-home"],

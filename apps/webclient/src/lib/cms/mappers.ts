@@ -6,14 +6,28 @@ import type { ScooterDetail } from "@/lib/scooter-details";
 import { SCOOTERS, type ScooterModel } from "@/lib/scooters";
 import type { AccessoryProduct } from "@/lib/accessories";
 import type { HeroBannerSlide } from "@/lib/images";
-import type { VinFastHeroBanner, VinFastHomeSlide } from "@/lib/vinfast-home";
+import type { HomeFeaturedPrices, HomeFeaturedSlideOverrides } from "./home-content";
+import type { VinFastHeroBanner, VinFastHomeSlide, VinFastHomeSpec } from "@/lib/vinfast-home";
 import { formatPrice } from "@/lib/cars";
 import { resolveProductSlug } from "@/lib/seo/slugs";
-import { parseDbColors, resolveVehicleGallery } from "./vehicle-images";
+import { localizeVinfastHotlink, parseDbColors, resolveVehicleGallery } from "./vehicle-images";
 
 type VehicleRow = Tables<"vehicles">;
 type AccessoryRow = Tables<"accessories">;
 type BannerRow = Tables<"banners">;
+
+function localizeCarDetailImages(detail: CarDetail): CarDetail {
+  const fix = (url?: string) => localizeVinfastHotlink(url, detail.id) ?? url ?? "";
+  return {
+    ...detail,
+    overview: { ...detail.overview, image: fix(detail.overview.image) },
+    exterior: detail.exterior.map((item) => ({ ...item, image: fix(item.image) })),
+    interior: detail.interior.map((item) => ({ ...item, image: fix(item.image) })),
+    performance: { ...detail.performance, image: fix(detail.performance.image) },
+    safety: detail.safety ? { ...detail.safety, image: fix(detail.safety.image) } : detail.safety,
+    colors: detail.colors.map((color) => ({ ...color, image: fix(color.image) })),
+  };
+}
 
 function asObject(value: Json | null | undefined): Record<string, unknown> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
@@ -351,7 +365,7 @@ export function mapVehicleToCarDetail(row: VehicleRow): CarDetail | undefined {
     },
     row.content,
   );
-  return applyCarQuickSpecPatch(merged, row.content);
+  return localizeCarDetailImages(applyCarQuickSpecPatch(merged, row.content));
 }
 
 export function mapVehicleToScooterDetail(row: VehicleRow): ScooterDetail | undefined {
@@ -427,12 +441,207 @@ export function mapHomeHeroBanner(row: BannerRow): VinFastHeroBanner {
   };
 }
 
+function isPriceSpecLabel(label: string, value: string) {
+  return /giá/i.test(label) || /vnđ/i.test(value);
+}
+
+function parseFeaturedPrices(value: unknown): HomeFeaturedPrices {
+  const obj = asObject(value as Json | null | undefined);
+  if (!obj) return {};
+
+  const result: HomeFeaturedPrices = {};
+  for (const [id, entry] of Object.entries(obj)) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) continue;
+    const row = entry as Record<string, unknown>;
+    const listPrice = typeof row.listPrice === "number" ? row.listPrice : undefined;
+    if (listPrice !== undefined) {
+      result[id] = { listPrice };
+    }
+  }
+  return result;
+}
+
+/** Áp giá cũ (gạch ngang) lên slide — giá ưu đãi luôn lấy từ catalog Ô tô */
+export function applyFeaturedPriceOverrides(
+  slides: VinFastHomeSlide[],
+  ids: string[],
+  overrides: HomeFeaturedPrices,
+): VinFastHomeSlide[] {
+  if (!Object.keys(overrides).length) return slides;
+
+  return slides.map((slide, index) => {
+    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href);
+    if (!id) return slide;
+    const listPrice = overrides[id]?.listPrice;
+    if (listPrice == null) return slide;
+
+    let updatedPrice = false;
+    const specs = slide.specs.map((spec) => {
+      if (!spec.highlight && !isPriceSpecLabel(spec.label, spec.value)) return spec;
+      updatedPrice = true;
+      const baseValue = spec.value.replace(/\s*\*+$/, "").trim();
+      return {
+        ...spec,
+        label: spec.label || "Giá bán từ",
+        highlight: true,
+        value: `${baseValue}*`,
+        listPrice: `${formatPrice(listPrice)} VNĐ`,
+      };
+    });
+
+    if (!updatedPrice) return slide;
+
+    return { ...slide, specs };
+  });
+}
+
+export function applyFeaturedSlideOverrides(
+  slides: VinFastHomeSlide[],
+  ids: string[],
+  overrides: HomeFeaturedSlideOverrides,
+): VinFastHomeSlide[] {
+  if (!Object.keys(overrides).length) return slides;
+
+  return slides.map((slide, index) => {
+    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href);
+    if (!id) return slide;
+    const patch = overrides[id];
+    if (!patch) return slide;
+
+    const nextSpecs =
+      patch.specs?.length && patch.specs.some((spec) => spec.value?.trim() || spec.label?.trim())
+        ? slide.specs.map((spec, specIndex) => {
+            const override = patch.specs?.[specIndex];
+            if (!override) return spec;
+            return {
+              ...spec,
+              value: override.value?.trim() ? override.value : spec.value,
+              label: override.label?.trim() ? override.label : spec.label,
+              highlight:
+                typeof override.highlight === "boolean" ? override.highlight : spec.highlight,
+              seats: typeof override.seats === "boolean" ? override.seats : spec.seats,
+              listPrice: override.listPrice?.trim() ? override.listPrice : spec.listPrice,
+            };
+          })
+        : slide.specs;
+
+    return {
+      ...slide,
+      title: patch.title?.trim() ? patch.title : slide.title,
+      subtitle:
+        patch.subtitle !== undefined && patch.subtitle.trim() !== ""
+          ? patch.subtitle
+          : slide.subtitle,
+      specs: nextSpecs,
+    };
+  });
+}
+
 export function parseHomeCms(content: Json) {
   const obj = asObject(content);
+  const slideOverrides = (raw: unknown): HomeFeaturedSlideOverrides => {
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+    const entries = Object.entries(raw as Record<string, unknown>).filter(
+      ([key]) => typeof key === "string",
+    );
+    const result: HomeFeaturedSlideOverrides = {};
+    for (const [id, value] of entries) {
+      const patch = asObject(value as Json);
+      if (!patch) continue;
+      const specsRaw = patch.specs;
+      let specs: VinFastHomeSpec[] | undefined;
+      if (Array.isArray(specsRaw)) {
+        specs = [];
+        for (const item of specsRaw) {
+          const row = asObject(item as Json);
+          if (!row) continue;
+          specs.push({
+            value: typeof row.value === "string" ? row.value : "",
+            label: typeof row.label === "string" ? row.label : "",
+            highlight: typeof row.highlight === "boolean" ? row.highlight : undefined,
+            seats: typeof row.seats === "boolean" ? row.seats : undefined,
+            listPrice: typeof row.listPrice === "string" ? row.listPrice : undefined,
+          });
+        }
+        if (!specs.length) specs = undefined;
+      }
+
+      result[id] = {
+        title: typeof patch.title === "string" ? patch.title : undefined,
+        subtitle: typeof patch.subtitle === "string" ? patch.subtitle : undefined,
+        specs: specs?.length ? specs : undefined,
+      };
+    }
+    return result;
+  };
+
   return {
     featuredCars: (obj?.featuredCars ?? []) as VinFastHomeSlide[],
     featuredScooters: (obj?.featuredScooters ?? []) as VinFastHomeSlide[],
+    featuredCarIds: Array.isArray(obj?.featuredCarIds)
+      ? (obj.featuredCarIds as string[]).filter((id) => typeof id === "string")
+      : [],
+    featuredScooterIds: Array.isArray(obj?.featuredScooterIds)
+      ? (obj.featuredScooterIds as string[]).filter((id) => typeof id === "string")
+      : [],
+    featuredAccessoryIds: Array.isArray(obj?.featuredAccessoryIds)
+      ? (obj.featuredAccessoryIds as string[]).filter((id) => typeof id === "string")
+      : [],
+    featuredCarPrices: parseFeaturedPrices(obj?.featuredCarPrices),
+    featuredScooterPrices: parseFeaturedPrices(obj?.featuredScooterPrices),
+    featuredCarSlideOverrides: slideOverrides(obj?.featuredCarSlideOverrides),
+    featuredScooterSlideOverrides: slideOverrides(obj?.featuredScooterSlideOverrides),
     heroBanners: (obj?.heroBanners ?? []) as VinFastHeroBanner[],
     heroBannersAll: (obj?.heroBannersAll ?? []) as HeroBannerSlide[],
+    sections: obj?.sections ?? null,
   };
+}
+
+export function buildFeaturedSlidesFromIds(
+  ids: string[],
+  defaults: VinFastHomeSlide[],
+  vehicles: { id: string; name: string; subtitle: string; image: string; price: number }[],
+  vehicleType: "car" | "scooter",
+): VinFastHomeSlide[] {
+  if (!ids.length) return [];
+
+  const defaultById = new Map(
+    defaults
+      .map((slide) => {
+        const id = vehicleIdFromSlideHref(slide.href);
+        return id ? ([id, slide] as const) : null;
+      })
+      .filter((entry): entry is [string, VinFastHomeSlide] => entry !== null),
+  );
+
+  const prefix = vehicleType === "car" ? "/oto" : "/xe-may-dien";
+  const slides = ids
+    .map((id) => {
+      const fallback = defaultById.get(id);
+      if (fallback) return fallback;
+
+      const vehicle = vehicles.find((v) => v.id === id);
+      if (!vehicle) return null;
+
+      return {
+        title: vehicle.name,
+        subtitle: vehicle.subtitle,
+        image: vehicle.image,
+        imageAlt: vehicle.name,
+        imageClass: "h-full w-full object-contain object-left",
+        specs: [
+          {
+            value: `${formatPrice(vehicle.price)} VNĐ`,
+            label: "Giá bán từ",
+            highlight: true,
+          },
+        ],
+        primaryCta: vehicleType === "car" ? "ĐẶT CỌC" : "ĐẶT MUA",
+        secondaryCta: "KHÁM PHÁ NGAY",
+        href: `${prefix}/${id}`,
+      } satisfies VinFastHomeSlide;
+    })
+    .filter((slide): slide is VinFastHomeSlide => slide !== null);
+
+  return hydrateFeaturedVehicleSlides(slides, vehicles);
 }

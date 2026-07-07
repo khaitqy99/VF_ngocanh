@@ -1,11 +1,35 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { Search, X, FolderOpen } from "lucide-react";
+import { ImageIcon, Search, X, FolderOpen } from "lucide-react";
 import { Button, Input } from "@/components/ui/core";
 import { type MediaCategory, type MediaFolder } from "@/lib/media-library";
 import { clientAssetUrl } from "@/lib/product-utils";
+
+function PickerThumb({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-zinc-100 p-1 text-zinc-400">
+        <ImageIcon className="h-5 w-5" />
+        <span className="line-clamp-2 text-center text-[8px] leading-tight">{alt}</span>
+      </div>
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      className="h-full w-full object-contain p-1"
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export function MediaLibraryPicker({
   open,
@@ -101,7 +125,7 @@ export function MediaLibraryPicker({
                 : "Không có ảnh phù hợp."}
             </p>
           ) : (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
               {images.map((img) => (
                 <button
                   key={img.id}
@@ -110,18 +134,17 @@ export function MediaLibraryPicker({
                     onSelect(img.path);
                     onClose();
                   }}
-                  className="group relative aspect-square overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 transition hover:border-red-400 hover:ring-2 hover:ring-red-200"
+                  className="group overflow-hidden rounded-lg border border-zinc-200 bg-white text-left transition hover:border-red-400 hover:ring-2 hover:ring-red-200"
                 >
-                  <Image
-                    src={clientAssetUrl(img.path)}
-                    alt={img.name}
-                    fill
-                    className="object-contain p-1"
-                    unoptimized
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-1.5 opacity-0 transition group-hover:opacity-100">
-                    <p className="truncate text-[9px] text-white">{img.name}</p>
+                  <div className="relative aspect-square bg-zinc-50">
+                    <PickerThumb src={clientAssetUrl(img.path)} alt={img.name} />
                   </div>
+                  <p
+                    className="truncate border-t border-zinc-100 px-1.5 py-1 font-mono text-[9px] text-zinc-500"
+                    title={img.name}
+                  >
+                    {img.name}
+                  </p>
                 </button>
               ))}
             </div>

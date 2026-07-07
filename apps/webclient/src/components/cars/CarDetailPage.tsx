@@ -73,7 +73,6 @@ import {
   mapEditableMetrics,
   InlineSectionTitle,
   InlineText,
-  InlineTextBlock,
   mapEditableFeatures,
   mapEditableTech,
 } from "@/components/admin-edit/EditablePath";
@@ -88,6 +87,7 @@ import {
 import { EditableColorPicker } from "@/components/admin-edit/EditableColorPicker";
 import { EditableHeroGallery } from "@/components/admin-edit/EditableHeroGallery";
 import { EditableBatteryPanel } from "@/components/admin-edit/EditableBatteryPanel";
+import { galleryIndexForImage } from "@/components/admin-edit/vehicle-edit-paths";
 import { EditableImage } from "@/components/admin-edit/EditableImage";
 import { EditableListControls } from "@/components/admin-edit/EditableListControls";
 import {
@@ -309,10 +309,21 @@ export default function CarDetailPage({
 
   const heroImages = adminEdit ? detail.gallery : displayGallery;
 
-  const handleColorSelect = (colorId: string) => {
-    setSelectedColor(colorId);
-    setActiveImage(0);
-  };
+  const handleColorSelect = useCallback(
+    (colorId: string) => {
+      setSelectedColor(colorId);
+      const color = detail.colors.find((c) => c.id === colorId);
+
+      if (adminEdit) {
+        const galleryIndex = galleryIndexForImage(detail.gallery, color?.image);
+        if (galleryIndex >= 0) setActiveImage(galleryIndex);
+        return;
+      }
+
+      setActiveImage(0);
+    },
+    [adminEdit, detail.colors, detail.gallery],
+  );
 
   useEffect(() => {
     if (detail.colors.length && !detail.colors.some((c) => c.id === selectedColor)) {
@@ -1169,20 +1180,19 @@ function OverviewSection({
     <PdpSplitOverview
       eyebrow="Tổng quan"
       title={
-        <InlineTextBlock
+        <InlineText
           path="overview.title"
           fallback={detail.overview.title}
           adminEditable={adminEditable}
-          className={vfSectionHeadingLeft}
           label="Tiêu đề tổng quan"
         />
       }
       description={
-        <InlineTextBlock
+        <InlineText
           path="overview.subtitle"
           fallback={detail.overview.subtitle}
           adminEditable={adminEditable}
-          className="text-sm leading-relaxed text-muted-foreground sm:text-[15px] lg:text-base"
+          multiline
           label="Mô tả tổng quan"
         />
       }
