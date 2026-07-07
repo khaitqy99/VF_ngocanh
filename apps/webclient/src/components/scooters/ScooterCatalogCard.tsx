@@ -266,9 +266,7 @@ export function ScooterCatalogCard({
 
         <div className="mt-auto space-y-2 border-t border-slate-100 pt-2.5">
           <div>
-            <p className="text-[10px] font-semibold text-slate-500 sm:text-[11px]">
-              Giá niêm yết (Xe chưa pin)
-            </p>
+            <p className="text-[10px] font-semibold text-slate-500 sm:text-[11px]">Giá niêm yết</p>
             <p className="text-base font-black tabular-nums text-brand-dark sm:text-lg">
               {formatPrice(scooter.price)}{" "}
               <span className="text-[11px] font-bold text-slate-500">đ</span>

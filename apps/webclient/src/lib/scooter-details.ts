@@ -197,19 +197,11 @@ function buildSpecGroups(scooter: ScooterModel): SpecGroup[] {
       items: [
         { label: "Loại pin", value: scooter.batteryType },
         { label: "Thời gian sạc", value: scooter.chargingTime },
-        { label: "Giá mua pin", value: `${formatPrice(scooter.batteryPurchasePrice)} VNĐ` },
-        { label: "Giá thuê pin", value: `${formatPrice(scooter.rentBatteryPrice)} VNĐ/tháng` },
       ],
     },
     {
       category: "Giá bán",
-      items: [
-        { label: "Giá xe (chưa pin)", value: `${formatPrice(scooter.price)} VNĐ` },
-        {
-          label: "Giá mua kèm pin",
-          value: `${formatPrice(scooter.price + scooter.batteryPurchasePrice)} VNĐ`,
-        },
-      ],
+      items: [{ label: "Giá niêm yết", value: `${formatPrice(scooter.price)} VNĐ` }],
     },
   ];
 }

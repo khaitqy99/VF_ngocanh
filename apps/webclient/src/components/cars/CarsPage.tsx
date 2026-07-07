@@ -161,7 +161,6 @@ export default function CarsPage({
   // Rolling Cost Estimator State
   const [estimatorCarId, setEstimatorCarId] = useState<string>("vf3");
   const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
-  const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
   const [includeInsurance, setIncludeInsurance] = useState<boolean>(true);
 
   // Installment Calculator State
@@ -254,8 +253,7 @@ export default function CarsPage({
   // Rolling Cost Calculation
   const rollingCostResult = useMemo(() => {
     const car = selectedEstimatorCar;
-    const basePrice =
-      estimatorBattery === "purchase" ? car.price + car.batteryPurchasePrice : car.price;
+    const basePrice = car.price;
 
     // Taxes & Fees in Vietnam
     const registrationTax = 0; // 0% for Electric Vehicles
@@ -291,7 +289,7 @@ export default function CarsPage({
       physicalInsurance,
       totalRolling,
     };
-  }, [selectedEstimatorCar, estimatorLocation, estimatorBattery, includeInsurance]);
+  }, [selectedEstimatorCar, estimatorLocation, includeInsurance]);
 
   // Installment Calculator Calculation
   const installmentResult = useMemo(() => {
@@ -445,7 +443,7 @@ export default function CarsPage({
               <CarsSectionHeader
                 eyebrow="Công cụ mua xe"
                 title="DỰ TOÁN CHI PHÍ & TRẢ GÓP"
-                description="Tính toán chi phí lăn bánh chính xác tùy thuộc vào tỉnh thành, lựa chọn thuê pin hoặc mua kèm pin và dự toán kế hoạch trả góp ngân hàng tối ưu nhất."
+                description="Tính toán chi phí lăn bánh chính xác tùy thuộc vào tỉnh thành và dự toán kế hoạch trả góp ngân hàng tối ưu nhất."
               />
 
               <EstimatorMotionShell>
@@ -505,41 +503,6 @@ export default function CarsPage({
 
                     {/* Common options for both tabs */}
                     <div className="mt-6 space-y-4">
-                      {/* Battery option */}
-                      <div>
-                        <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
-                          Phương án pin
-                        </span>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            onClick={() => setEstimatorBattery("rent")}
-                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                              estimatorBattery === "rent"
-                                ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                            }`}
-                          >
-                            <span>Thuê pin</span>
-                            <span className="text-[10px] font-semibold opacity-70 mt-1">
-                              + {formatPrice(selectedEstimatorCar.rentBatteryPrice)} đ/tháng
-                            </span>
-                          </button>
-                          <button
-                            onClick={() => setEstimatorBattery("purchase")}
-                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                              estimatorBattery === "purchase"
-                                ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                            }`}
-                          >
-                            <span>Mua kèm pin</span>
-                            <span className="text-[10px] font-semibold opacity-70 mt-1">
-                              + {formatPrice(selectedEstimatorCar.batteryPurchasePrice)} đ
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-
                       {/* Province Selection */}
                       <div>
                         <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
@@ -673,13 +636,6 @@ export default function CarsPage({
                               label="Giá niêm yết của xe"
                               value={`${formatPrice(selectedEstimatorCar.price)} đ`}
                             />
-                            {estimatorBattery === "purchase" && (
-                              <EstimatorCostRow
-                                label="Mua đứt pin lithium-ion"
-                                value={`+${formatPrice(selectedEstimatorCar.batteryPurchasePrice)} đ`}
-                                sub
-                              />
-                            )}
                             <EstimatorCostRow
                               label={
                                 <span className="flex flex-wrap items-center gap-1.5">

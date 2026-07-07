@@ -86,7 +86,6 @@ import {
 } from "@/components/admin-edit/EditableSections";
 import { EditableColorPicker } from "@/components/admin-edit/EditableColorPicker";
 import { EditableHeroGallery } from "@/components/admin-edit/EditableHeroGallery";
-import { EditableBatteryPanel } from "@/components/admin-edit/EditableBatteryPanel";
 import { galleryIndexForImage } from "@/components/admin-edit/vehicle-edit-paths";
 import { EditableImage } from "@/components/admin-edit/EditableImage";
 import { EditableListControls } from "@/components/admin-edit/EditableListControls";
@@ -212,7 +211,6 @@ export default function CarDetailPage({
     detail.variants[Math.min(1, detail.variants.length - 1)]?.id ?? detail.variants[0].id,
   );
   const [selectedColor, setSelectedColor] = useState(detail.colors[0]?.id ?? "color-0");
-  const [batteryMode, setBatteryMode] = useState<"rent" | "purchase">("rent");
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState("Đăng ký lái thử");
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
@@ -232,7 +230,6 @@ export default function CarDetailPage({
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
   const related = getRelatedCars(detail.id);
-  const hideBatteryOption = detail.hideBatteryOption ?? false;
   const fixedRollingCost = variant.rollingCost;
 
   const sectionNavItems = useMemo(() => {
@@ -331,11 +328,7 @@ export default function CarDetailPage({
     }
   }, [detail.colors, selectedColor]);
 
-  const basePrice = hideBatteryOption
-    ? variant.price
-    : batteryMode === "purchase"
-      ? variant.price + detail.batteryPurchasePrice
-      : variant.price;
+  const basePrice = variant.price;
 
   const rollingCost = useMemo(() => {
     if (fixedRollingCost != null) {
@@ -625,7 +618,7 @@ export default function CarDetailPage({
                     </div>
                   )}
 
-                  {/* Mobile config toggle — màu sắc & pin */}
+                  {/* Mobile config toggle */}
                   <button
                     type="button"
                     onClick={() => setConfigOpen((o) => !o)}
@@ -633,13 +626,9 @@ export default function CarDetailPage({
                     aria-expanded={configOpen}
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-brand-dark">
-                        {hideBatteryOption ? "Màu sắc" : "Màu sắc & hình thức pin"}
-                      </p>
+                      <p className="text-sm font-bold text-brand-dark">Màu sắc</p>
                       <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
                         {selectedColorObj?.name}
-                        {!hideBatteryOption &&
-                          ` · ${batteryMode === "rent" ? "Thuê pin" : "Mua pin"}`}
                       </p>
                     </div>
                     <ChevronDown
@@ -665,16 +654,6 @@ export default function CarDetailPage({
                         withImage
                       />
                     </div>
-
-                    {!hideBatteryOption && (
-                      <EditableBatteryPanel
-                        rentPrice={detail.rentBatteryPrice}
-                        purchasePrice={detail.batteryPurchasePrice}
-                        batteryMode={batteryMode}
-                        onModeChange={setBatteryMode}
-                        adminEditable={adminEdit}
-                      />
-                    )}
                   </div>
 
                   {/* Estimated rolling cost preview */}
@@ -780,10 +759,7 @@ export default function CarDetailPage({
               variant={variant}
               adminEditable={adminEdit}
               basePrice={basePrice}
-              hideBatteryOption={hideBatteryOption}
               fixedRollingCost={fixedRollingCost}
-              batteryMode={batteryMode}
-              setBatteryMode={setBatteryMode}
               estimatorLocation={estimatorLocation}
               setEstimatorLocation={setEstimatorLocation}
               includeInsurance={includeInsurance}
@@ -1850,10 +1826,7 @@ type FinanceProps = {
   variant: { name: string; price: number; rollingCost?: number };
   adminEditable?: boolean;
   basePrice: number;
-  hideBatteryOption: boolean;
   fixedRollingCost?: number;
-  batteryMode: "rent" | "purchase";
-  setBatteryMode: (v: "rent" | "purchase") => void;
   estimatorLocation: string;
   setEstimatorLocation: (v: string) => void;
   includeInsurance: boolean;
@@ -1890,10 +1863,7 @@ function FinanceSection({
   variant,
   adminEditable,
   basePrice,
-  hideBatteryOption,
   fixedRollingCost,
-  batteryMode,
-  setBatteryMode,
   estimatorLocation,
   setEstimatorLocation,
   includeInsurance,
@@ -1952,16 +1922,6 @@ function FinanceSection({
             </div>
 
             <div className="space-y-4">
-              {!hideBatteryOption && (
-                <EditableBatteryPanel
-                  rentPrice={detail.rentBatteryPrice}
-                  purchasePrice={detail.batteryPurchasePrice}
-                  batteryMode={batteryMode}
-                  onModeChange={setBatteryMode}
-                  adminEditable={adminEditable}
-                />
-              )}
-
               {fixedRollingCost == null && (
                 <>
                   <div>
@@ -2061,13 +2021,6 @@ function FinanceSection({
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
                 <CostRow label="Giá bán xe (đã bao gồm pin)" value={formatPrice(variant.price)} />
-                {!hideBatteryOption && batteryMode === "purchase" && (
-                  <CostRow
-                    label="Mua đứt pin"
-                    value={`+ ${formatPrice(detail.batteryPurchasePrice)}`}
-                    indent
-                  />
-                )}
                 {fixedRollingCost == null ? (
                   <>
                     <CostRow label="Lệ phí trước bạ (miễn 0%)" value="0" highlight />

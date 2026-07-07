@@ -118,7 +118,6 @@ import {
 } from "@/components/admin-edit/EditableSections";
 import { EditableColorPicker } from "@/components/admin-edit/EditableColorPicker";
 import { EditableHeroGallery } from "@/components/admin-edit/EditableHeroGallery";
-import { EditableBatteryPanel } from "@/components/admin-edit/EditableBatteryPanel";
 import { EditableImage } from "@/components/admin-edit/EditableImage";
 import { EditableListControls } from "@/components/admin-edit/EditableListControls";
 import {
@@ -206,7 +205,6 @@ export default function ScooterDetailPage({
     detail.variants[Math.min(1, detail.variants.length - 1)]?.id ?? detail.variants[0].id,
   );
   const [selectedColor, setSelectedColor] = useState(detail.colors[0]?.id ?? "color-0");
-  const [batteryMode, setBatteryMode] = useState<"rent" | "purchase">("rent");
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState("Đăng ký lái thử");
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
@@ -304,8 +302,7 @@ export default function ScooterDetailPage({
     [detail.quickSpecs, adminEdit],
   );
 
-  const basePrice =
-    batteryMode === "purchase" ? variant.price + detail.batteryPurchasePrice : variant.price;
+  const basePrice = variant.price;
 
   const rollingCost = useMemo(() => {
     const province = PROVINCES.find((p) => p.id === estimatorLocation) ?? PROVINCES[0];
@@ -462,7 +459,7 @@ export default function ScooterDetailPage({
                   <div className="flex items-start justify-between gap-2 sm:gap-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Giá bán từ (chưa pin)
+                        Giá bán từ
                       </p>
                       <div className="mt-0.5">
                         <AnimatePresence mode="wait">
@@ -536,8 +533,7 @@ export default function ScooterDetailPage({
                     <div className="min-w-0">
                       <p className="text-sm font-bold text-brand-dark">Cấu hình xe</p>
                       <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
-                        {variant.name} · {selectedColorObj?.name} ·{" "}
-                        {batteryMode === "rent" ? "Thuê pin" : "Mua pin"}
+                        {variant.name} · {selectedColorObj?.name}
                       </p>
                     </div>
                     <ChevronDown
@@ -615,15 +611,6 @@ export default function ScooterDetailPage({
                         withImage={false}
                       />
                     </div>
-
-                    {/* Battery mode */}
-                    <EditableBatteryPanel
-                      rentPrice={detail.rentBatteryPrice}
-                      purchasePrice={detail.batteryPurchasePrice}
-                      batteryMode={batteryMode}
-                      onModeChange={setBatteryMode}
-                      adminEditable={adminEdit}
-                    />
                   </div>
 
                   {/* Estimated rolling cost preview */}
@@ -720,8 +707,6 @@ export default function ScooterDetailPage({
               detail={detail}
               variant={variant}
               adminEditable={adminEdit}
-              batteryMode={batteryMode}
-              setBatteryMode={setBatteryMode}
               estimatorLocation={estimatorLocation}
               setEstimatorLocation={setEstimatorLocation}
               estimatorTab={estimatorTab}
@@ -1728,8 +1713,6 @@ type FinanceProps = {
   detail: ScooterDetail;
   variant: { name: string; price: number };
   adminEditable?: boolean;
-  batteryMode: "rent" | "purchase";
-  setBatteryMode: (v: "rent" | "purchase") => void;
   estimatorLocation: string;
   setEstimatorLocation: (v: string) => void;
   estimatorTab: "rolling" | "installment";
@@ -1762,8 +1745,6 @@ function FinanceSection({
   detail,
   variant,
   adminEditable,
-  batteryMode,
-  setBatteryMode,
   estimatorLocation,
   setEstimatorLocation,
   estimatorTab,
@@ -1820,14 +1801,6 @@ function FinanceSection({
             </div>
 
             <div className="space-y-4">
-              <EditableBatteryPanel
-                rentPrice={detail.rentBatteryPrice}
-                purchasePrice={detail.batteryPurchasePrice}
-                batteryMode={batteryMode}
-                onModeChange={setBatteryMode}
-                adminEditable={adminEditable}
-              />
-
               <div>
                 <p className="mb-2 text-[10px] font-bold text-muted-foreground uppercase">
                   Khu vực đăng ký
@@ -1918,14 +1891,7 @@ function FinanceSection({
           <div className="bg-surface p-4 sm:p-6 lg:col-span-7">
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
-                <CostRow label="Giá xe (chưa pin)" value={formatPrice(variant.price)} />
-                {batteryMode === "purchase" && (
-                  <CostRow
-                    label="Mua đứt pin"
-                    value={`+ ${formatPrice(detail.batteryPurchasePrice)}`}
-                    indent
-                  />
-                )}
+                <CostRow label="Giá bán xe (đã bao gồm pin)" value={formatPrice(variant.price)} />
                 <CostRow label="Lệ phí trước bạ" value={formatPrice(rollingCost.registrationTax)} />
                 <CostRow label="Phí đăng ký biển số" value={formatPrice(rollingCost.plateFee)} />
                 <CostRow

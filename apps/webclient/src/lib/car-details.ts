@@ -209,8 +209,6 @@ function buildSpecGroups(car: CarModel): SpecGroup[] {
         { label: "Dung lượng pin", value: `${car.batteryCapacity} kWh` },
         { label: "Quãng đường (WLTP)", value: `${car.range} km` },
         { label: "Sạc nhanh DC", value: car.chargingTime },
-        { label: "Giá mua pin", value: `${formatPrice(car.batteryPurchasePrice)} VNĐ` },
-        { label: "Giá thuê pin", value: `${formatPrice(car.rentBatteryPrice)} VNĐ/tháng` },
       ],
     },
     {

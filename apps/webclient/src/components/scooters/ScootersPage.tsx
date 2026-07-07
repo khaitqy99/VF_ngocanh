@@ -169,7 +169,6 @@ export default function ScootersPage({
   // Rolling Cost Estimator State
   const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo");
   const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
-  const [estimatorBattery, setEstimatorBattery] = useState<"rent" | "purchase">("rent");
 
   // Installment Calculator State
   const [downPaymentPct, setDownPaymentPct] = useState<number>(30);
@@ -252,10 +251,7 @@ export default function ScootersPage({
   // Rolling Cost Calculation for Scooter
   const rollingCostResult = useMemo(() => {
     const scooter = selectedEstimatorScooter;
-    const basePrice =
-      estimatorBattery === "purchase"
-        ? scooter.price + scooter.batteryPurchasePrice
-        : scooter.price;
+    const basePrice = scooter.price;
 
     // Vietnam Motorcycle Registration fee
     const province = PROVINCES.find((p) => p.id === estimatorLocation) || PROVINCES[0];
@@ -287,7 +283,7 @@ export default function ScootersPage({
       civilInsurance,
       totalRolling,
     };
-  }, [selectedEstimatorScooter, estimatorLocation, estimatorBattery]);
+  }, [selectedEstimatorScooter, estimatorLocation]);
 
   // Installment Calculator Calculation
   const installmentResult = useMemo(() => {
@@ -449,7 +445,7 @@ export default function ScootersPage({
               <ScootersSectionHeader
                 eyebrow="Công cụ tính toán"
                 title="DỰ TOÁN CHI PHÍ & TRẢ GÓP XE MÁY"
-                description="Tính toán chi phí lăn bánh chính xác bao gồm lệ phí trước bạ xe máy điện, lệ phí cấp biển số theo quy định mới, phương án thuê pin hoặc mua đứt pin LFP, và dự toán kế hoạch mua xe trả góp 0% lãi suất."
+                description="Tính toán chi phí lăn bánh chính xác bao gồm lệ phí trước bạ xe máy điện, lệ phí cấp biển số theo quy định mới, và dự toán kế hoạch mua xe trả góp 0% lãi suất."
               />
 
               <EstimatorMotionShell>
@@ -512,41 +508,6 @@ export default function ScootersPage({
 
                     {/* Common options for both tabs */}
                     <div className="mt-6 space-y-4">
-                      {/* Battery option */}
-                      <div>
-                        <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
-                          Phương án pin xe máy
-                        </span>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            onClick={() => setEstimatorBattery("rent")}
-                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                              estimatorBattery === "rent"
-                                ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                            }`}
-                          >
-                            <span>Thuê pin</span>
-                            <span className="text-[10px] font-semibold opacity-70 mt-1">
-                              + {formatPrice(selectedEstimatorScooter.rentBatteryPrice)} đ/tháng
-                            </span>
-                          </button>
-                          <button
-                            onClick={() => setEstimatorBattery("purchase")}
-                            className={`py-2 px-3 border rounded-lg text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                              estimatorBattery === "purchase"
-                                ? "border-brand bg-brand/10 text-brand"
-                                : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                            }`}
-                          >
-                            <span>Mua đứt pin</span>
-                            <span className="text-[10px] font-semibold opacity-70 mt-1">
-                              + {formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-
                       {/* Province Selection */}
                       <div>
                         <label className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mb-2">
@@ -666,13 +627,6 @@ export default function ScootersPage({
                               label="Giá niêm yết của xe máy"
                               value={`${formatPrice(selectedEstimatorScooter.price)} đ`}
                             />
-                            {estimatorBattery === "purchase" && (
-                              <EstimatorCostRow
-                                label="Mua đứt pin LFP công nghệ mới"
-                                value={`+${formatPrice(selectedEstimatorScooter.batteryPurchasePrice)} đ`}
-                                sub
-                              />
-                            )}
                             <EstimatorCostRow
                               label="Lệ phí trước bạ xe máy điện"
                               value={`${formatPrice(rollingCostResult.registrationTax)} đ`}
