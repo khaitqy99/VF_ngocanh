@@ -36,7 +36,6 @@ import {
 
 import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
-import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { FaqBlock } from "@/components/shared/FaqBlock";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -50,116 +49,20 @@ import {
 } from "@/components/ui/breadcrumb";
 import { AFTER_SALES_HERO_BANNERS, IMAGES, type HeroBannerSlide } from "@/lib/images";
 import { HOTLINE, HOTLINE_TEL, SHOWROOM_EMAIL } from "@/lib/contact";
+import type { AfterSalesPageContent } from "@/lib/cms/static-pages";
+import { DEFAULT_AFTER_SALES_CONTENT } from "@/lib/cms/static-page-defaults";
+import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/StaticPageAdminEditContext";
+import { StaticEditableFaqBlock } from "@/components/admin-edit/static-page/StaticEditableFaqBlock";
+import { StaticEditableText } from "@/components/admin-edit/static-page/StaticEditableText";
+import { StaticEditablePageMarketingHero } from "@/components/admin-edit/static-page/StaticEditablePageMarketingHero";
 
-const SERVICES = [
-  {
-    icon: Wrench,
-    title: "Bảo dưỡng định kỳ",
-    desc: "Quy trình chăm sóc, bảo dưỡng định kỳ khép kín theo tiêu chuẩn hãng, đảm bảo xế yêu luôn vận hành êm ái, kéo dài tuổi thọ hệ thống pin Lithium.",
-    items: [
-      "Kiểm tra sức khỏe tổng thể pin LFP",
-      "Vệ sinh, bảo dưỡng hệ thống phanh tái sinh",
-      "Kiểm tra chất lỏng làm mát & bôi trơn pin",
-      "Quét lỗi phần mềm bằng máy chuyên dụng",
-    ],
-  },
-  {
-    icon: Stethoscope,
-    title: "Sửa chữa chính hãng",
-    desc: "Xưởng dịch vụ quy mô lớn được trang bị cầu nâng hiện đại, máy cân chỉnh thước lái laser và các thiết bị chẩn đoán điện tử thế hệ mới nhất.",
-    items: [
-      "Chẩn đoán và xử lý lỗi hệ thống điện tử",
-      "Sửa chữa, đồng sơn công nghệ cao sấy hồng ngoại",
-      "Cân chỉnh thước lái, hệ thống treo & khung gầm",
-      "Sửa chữa, phục hồi hệ thống pin truyền động",
-    ],
-  },
-  {
-    icon: Shield,
-    title: "Bảo hành xe mới",
-    desc: "Chính sách bảo hành dài hạn nhất thị trường Việt Nam dành cho cả xe ô tô và xe máy điện, giúp quý khách hoàn toàn an tâm trên mọi cung đường.",
-    items: [
-      "Bảo hành ô tô lên tới 10 năm/200.000 km",
-      "Bảo hành xe máy điện lên tới 5 năm",
-      "Hệ thống cập nhật thông tin bảo hành trực tuyến",
-      "Cam kết bảo hành phụ tùng thay thế chính hãng",
-    ],
-  },
-  {
-    icon: Truck,
-    title: "Cứu hộ 24/7 khẩn cấp",
-    desc: "Tổng đài cứu hộ túc trực ngày đêm, sẵn sàng điều động xe kéo sạc pin lưu động hoặc hỗ trợ kỹ thuật tại chỗ bất cứ khi nào quý khách cần.",
-    items: [
-      "Hotline cứu hộ khẩn cấp 24/7/365",
-      "Kéo xe về xưởng dịch vụ gần nhất an toàn",
-      "Dịch vụ sạc pin lưu động Mobile Charging",
-      "Cung cấp xe thay thế tạm thời cho khách hàng VIP",
-    ],
-  },
-  {
-    icon: Package,
-    title: "Phụ tùng chính hãng",
-    desc: "Cam kết cung cấp 100% phụ tùng, linh kiện chính hãng VinFast sản xuất dưới sự giám sát nghiêm ngặt của đội ngũ chuyên gia quốc tế.",
-    items: [
-      "Linh kiện đồng bộ chuẩn kích thước 3D",
-      "Chính sách bảo hành riêng cho phụ tùng thay thế",
-      "Kho linh kiện dồi dào, sẵn sàng cung ứng ngay",
-      "Giá bán niêm yết công khai, minh bạch toàn hệ thống",
-    ],
-  },
-  {
-    icon: Cpu,
-    title: "Cập nhật phần mềm FOTA",
-    desc: "Công nghệ cập nhật phần mềm không dây từ xa FOTA liên tục tối ưu hóa thuật toán quản lý pin BMS, hệ thống ADAS và sửa lỗi vận hành.",
-    items: [
-      "Tự động tải bản cập nhật qua SIM 4G",
-      "Nâng cấp tính năng tự lái ADAS liên tục",
-      "Tối ưu hóa tầm vận hành, tiết kiệm năng lượng",
-      "Hỗ trợ cài đặt trực tiếp tại xưởng dịch vụ",
-    ],
-  },
-] as const;
+const SERVICE_ICONS = [Wrench, Stethoscope, Shield, Truck, Package, Cpu] as const;
+const WARRANTY_ICONS = [Car, Bike, Battery] as const;
 
 const HERO_FEATURES = [
   { icon: Wrench, text: "Bảo dưỡng định kỳ", sub: "Quy trình chuẩn hãng, kiểm tra pin LFP" },
   { icon: Stethoscope, text: "Sửa chữa chính hãng", sub: "Máy chẩn đoán điện tử thế hệ mới" },
   { icon: Shield, text: "Bảo hành xe mới", sub: "Ô tô lên tới 10 năm / 200.000 km" },
-] as const;
-
-const WARRANTY_POLICIES = [
-  {
-    icon: Car,
-    title: "Ô tô điện VinFast",
-    highlight: "Bảo hành đỉnh cấp 10 năm",
-    items: [
-      "Bảo hành xe: 10 năm hoặc 200.000 km tùy điều kiện nào đến trước.",
-      "Bảo hành pin Lithium: 8 - 10 năm không giới hạn số km (tùy theo model).",
-      "Hỗ trợ sạc pin lưu động Mobile Charging tại chỗ 24/7 cực nhanh.",
-      "Chính sách cam kết mua lại xe điện đã qua sử dụng sau 5 năm.",
-    ],
-  },
-  {
-    icon: Bike,
-    title: "Xe máy điện VinFast",
-    highlight: "Bảo hành tới 5 năm",
-    items: [
-      "Bảo hành xe: 3 - 5 năm hoặc 30.000 - 50.000 km tùy dòng xe máy.",
-      "Bảo hành pin LFP: 3 năm, hỗ trợ đổi trả nếu dung lượng pin hao hụt dưới 70%.",
-      "Bảo dưỡng định kỳ miễn phí công tại toàn bộ xưởng dịch vụ đại lý.",
-      "Cứu hộ khẩn cấp xe máy điện trên mọi cung đường nội đô.",
-    ],
-  },
-  {
-    icon: Battery,
-    title: "Gói thuê pin ưu đãi",
-    highlight: "An tâm trọn vòng đời",
-    items: [
-      "VinFast chịu hoàn toàn rủi ro về chất lượng pin trong suốt quá trình thuê.",
-      "Thay thế/Sửa chữa pin hoàn toàn miễn phí khi dung lượng tối đa dưới 70%.",
-      "Chi phí thuê pin cực rẻ, tiết kiệm chi phí vận hành hơn so với xe xăng.",
-      "Hỗ trợ đổi pin nhanh chóng tại hệ thống xưởng ủy quyền.",
-    ],
-  },
 ] as const;
 
 const PROCESS_STEPS = [
@@ -232,33 +135,12 @@ const WHY_CHOOSE = [
   },
 ] as const;
 
-const FAQS = [
-  {
-    q: "Làm sao để đặt lịch bảo dưỡng trực tuyến nhanh nhất tại VinFast Ngọc Anh Cà Mau?",
-    a: `Quý khách có thể sử dụng biểu mẫu Đăng ký đặt hẹn dịch vụ ở ngay phía dưới trang web này, gọi trực tiếp tới Hotline chăm sóc khách hàng ${HOTLINE}, hoặc đặt qua ứng dụng di động VinFast Club. Sau khi gửi thông tin, cố vấn dịch vụ sẽ gọi điện xác nhận lịch hẹn trong 10 phút.`,
-  },
-  {
-    q: "Chi phí bảo dưỡng định kỳ của ô tô điện VinFast khoảng bao nhiêu?",
-    a: "Do động cơ điện có cấu tạo tối giản hơn rất nhiều so với xe xăng (không có bugi, lọc dầu, xích cam...), chi phí bảo dưỡng định kỳ của ô tô điện VinFast cực kỳ tiết kiệm, thường chỉ bằng khoảng 30% - 40% so với xe xăng cùng phân khúc. Mức phí bảo dưỡng trung bình ở cấp nhỏ (12.000 km) dao động từ 1 - 2 triệu VNĐ.",
-  },
-  {
-    q: "Hệ thống cứu hộ pin lưu động Mobile Charging hoạt động ra sao?",
-    a: `Khi xe của quý khách cạn kiệt pin giữa đường hoặc gặp sự cố nguồn điện, chỉ cần gọi Hotline cứu hộ ${HOTLINE}. Đội cứu hộ Mobile Charging chuyên dụng của chúng tôi sẽ di chuyển tới hiện trường và cung cấp dịch vụ sạc pin nhanh khẩn cấp (cho phép xe chạy tiếp khoảng 30 - 50 km) với mức chi phí vô cùng hỗ trợ.`,
-  },
-  {
-    q: "Sửa chữa xe tại gara ngoài có làm mất hiệu lực bảo hành chính hãng không?",
-    a: "Có rủi ro lớn. Theo chính sách của hãng, nếu quý khách thực hiện sửa chữa các bộ phận liên quan đến hệ thống pin, phần mềm, hoặc động cơ tại các cơ sở không được VinFast ủy quyền và gây ra hư hỏng, VinFast có quyền từ chối bảo hành đối với các bộ phận đó. Quý khách nên mang xe đến xưởng 3S của VinFast Ngọc Anh Cà Mau để đảm bảo tối đa quyền lợi.",
-  },
-  {
-    q: "Làm thế nào để tôi kiểm tra thời hạn bảo hành còn lại của xe?",
-    a: "Thời hạn bảo hành và lịch sử bảo dưỡng của xe được số hóa và đồng bộ trực tiếp lên hệ thống máy chủ của VinFast. Quý khách có thể tự tra cứu trên ứng dụng VinFast hoặc cung cấp số khung xe (VIN) cho cố vấn dịch vụ tại xưởng của VinFast Ngọc Anh Cà Mau để được hỗ trợ kiểm tra trực tuyến trong 2 phút.",
-  },
-] as const;
-
 export default function AfterSalesPage({
   heroBanners: AFTER_SALES_HERO_BANNERS,
+  content = DEFAULT_AFTER_SALES_CONTENT,
 }: {
   heroBanners: HeroBannerSlide[];
+  content?: AfterSalesPageContent;
 }) {
   const modalMotion = useModalMotion();
   // Booking Service State
@@ -295,16 +177,18 @@ export default function AfterSalesPage({
 
         {/* Hero Section Banner */}
         <HeroSection
+          content={content}
+          heroBanners={AFTER_SALES_HERO_BANNERS}
           onScrollToBooking={() => {
             document.getElementById("service-booking-form")?.scrollIntoView({ behavior: "smooth" });
           }}
         />
 
         {/* 6 Core Services Grids */}
-        <ServicesSection />
+        <ServicesSection content={content} />
 
         {/* Detailed Warranty Grid with high-contrast badge */}
-        <WarrantySection />
+        <WarrantySection content={content} />
 
         {/* Progressive 5-Step Process Section */}
         <ProcessSection />
@@ -598,7 +482,7 @@ export default function AfterSalesPage({
         <WhyChooseSection />
 
         {/* FAQ Accordion list */}
-        <FaqSection />
+        <FaqSection content={content} />
 
         {/* CTA Section and Map detail */}
         <CtaBanner />
@@ -638,27 +522,32 @@ function BreadcrumbBar() {
   );
 }
 
-function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
+function HeroSection({
+  content,
+  heroBanners,
+  onScrollToBooking,
+}: {
+  content: AfterSalesPageContent;
+  heroBanners: HeroBannerSlide[];
+  onScrollToBooking: () => void;
+}) {
   return (
-    <PageMarketingHero
-      banners={AFTER_SALES_HERO_BANNERS}
-      showControls={AFTER_SALES_HERO_BANNERS.length > 1}
-      title="Chăm sóc xe toàn diện"
-      titleAccent="an tâm bứt phá"
-      description="Trung tâm dịch vụ ủy quyền chính thức VinFast tại VinFast Ngọc Anh Cà Mau — máy móc hiện đại, linh kiện chính hãng 100%, bảo hành dài hạn và cứu hộ pin lưu động 24/7."
+    <StaticEditablePageMarketingHero
+      banners={heroBanners}
+      hero={content.hero}
+      defaultHero={DEFAULT_AFTER_SALES_CONTENT.hero!}
+      features={[...HERO_FEATURES]}
       primaryCta={{ label: "ĐẶT LỊCH HẸN TRỰC TUYẾN", onClick: onScrollToBooking }}
       secondaryCta={{ label: `HOTLINE CỨU HỘ: ${HOTLINE}`, href: HOTLINE_TEL }}
-      highlights={[
-        { value: "63+", label: "Tỉnh thành phủ sóng dịch vụ" },
-        { value: "10 năm", label: "Bảo hành ô tô điện" },
-        { value: "24/7", label: "Cứu hộ & hỗ trợ khẩn cấp" },
-      ]}
-      features={[...HERO_FEATURES]}
+      showControls={heroBanners.length > 1}
     />
   );
 }
 
-function ServicesSection() {
+function ServicesSection({ content }: { content: AfterSalesPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const services = content.services ?? DEFAULT_AFTER_SALES_CONTENT.services ?? [];
+
   return (
     <section className="bg-surface-muted section-y">
       <div className="container-vf">
@@ -669,40 +558,58 @@ function ServicesSection() {
         />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map(({ icon: Icon, title, desc, items }) => (
-            <div
-              key={title}
-              className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
-            >
-              <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                <Icon className="size-6" strokeWidth={1.5} />
+          {services.map(({ title, desc, items }, index) => {
+            const Icon = SERVICE_ICONS[index] ?? Wrench;
+            return (
+              <div
+                key={title}
+                className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
+              >
+                <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
+                  <Icon className="size-6" strokeWidth={1.5} />
+                </div>
+                <h3 className="mt-5 text-sm font-black tracking-wide text-brand-dark uppercase">
+                  <StaticEditableText
+                    value={title}
+                    onChange={(value) => edit?.updateField(`services.${index}.title`, value)}
+                  />
+                </h3>
+                <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3 min-h-[50px]">
+                  <StaticEditableText
+                    value={desc}
+                    onChange={(value) => edit?.updateField(`services.${index}.desc`, value)}
+                    multiline
+                  />
+                </p>
+                <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
+                  {items.map((item, itemIndex) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
+                    >
+                      <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
+                      <StaticEditableText
+                        value={item}
+                        onChange={(value) =>
+                          edit?.updateField(`services.${index}.items.${itemIndex}`, value)
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="mt-5 text-sm font-black tracking-wide text-brand-dark uppercase">
-                {title}
-              </h3>
-              <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3 min-h-[50px]">
-                {desc}
-              </p>
-              <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
-                {items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
-                  >
-                    <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function WarrantySection() {
+function WarrantySection({ content }: { content: AfterSalesPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const warranty = content.warranty ?? DEFAULT_AFTER_SALES_CONTENT.warranty ?? [];
+
   return (
     <section className="bg-white section-y border-b border-slate-200">
       <div className="container-vf">
@@ -713,35 +620,54 @@ function WarrantySection() {
         />
 
         <div className="grid gap-6 md:grid-cols-3">
-          {WARRANTY_POLICIES.map(({ icon: Icon, title, highlight, items }) => (
-            <div
-              key={title}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-white text-brand shadow-sm">
-                  <Icon className="size-6" strokeWidth={1.5} />
+          {warranty.map(({ title, highlight, items }, index) => {
+            const Icon = WARRANTY_ICONS[index] ?? Car;
+            return (
+              <div
+                key={title}
+                className="flex flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-white text-brand shadow-sm">
+                    <Icon className="size-6" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black text-brand-dark uppercase">
+                      <StaticEditableText
+                        value={title}
+                        onChange={(value) => edit?.updateField(`warranty.${index}.title`, value)}
+                      />
+                    </h3>
+                    <p className="text-xs font-black text-brand mt-0.5 uppercase tracking-wide">
+                      <StaticEditableText
+                        value={highlight}
+                        onChange={(value) =>
+                          edit?.updateField(`warranty.${index}.highlight`, value)
+                        }
+                      />
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-black text-brand-dark uppercase">{title}</h3>
-                  <p className="text-xs font-black text-brand mt-0.5 uppercase tracking-wide">
-                    {highlight}
-                  </p>
-                </div>
+                <ul className="mt-6 space-y-3 border-t border-slate-200/60 pt-5">
+                  {items.map((item, itemIndex) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-xs leading-relaxed text-slate-500 font-semibold"
+                    >
+                      <Check size={14} className="shrink-0 mt-0.5 text-brand" strokeWidth={3} />
+                      <StaticEditableText
+                        value={item}
+                        onChange={(value) =>
+                          edit?.updateField(`warranty.${index}.items.${itemIndex}`, value)
+                        }
+                        multiline
+                      />
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-6 space-y-3 border-t border-slate-200/60 pt-5">
-                {items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-xs leading-relaxed text-slate-500 font-semibold"
-                  >
-                    <Check size={14} className="shrink-0 mt-0.5 text-brand" strokeWidth={3} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <p className="mt-8 text-center text-[10px] text-slate-400 font-extrabold uppercase">
@@ -895,10 +821,24 @@ function WhyChooseSection() {
   );
 }
 
-function FaqSection() {
+function FaqSection({ content }: { content: AfterSalesPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const faq = content.faq ?? DEFAULT_AFTER_SALES_CONTENT.faq ?? [];
+
+  if (edit?.editMode) {
+    return (
+      <StaticEditableFaqBlock
+        items={faq}
+        eyebrow="Cố vấn giải đáp"
+        title="Câu hỏi thường gặp"
+        className="section-y border-b border-border/60 bg-background"
+      />
+    );
+  }
+
   return (
     <FaqBlock
-      items={FAQS.map(({ q, a }) => ({ question: q, answer: a }))}
+      items={faq.map(({ q, a }) => ({ question: q, answer: a }))}
       eyebrow="Cố vấn giải đáp"
       title="Câu hỏi thường gặp"
       className="section-y border-b border-border/60 bg-background"

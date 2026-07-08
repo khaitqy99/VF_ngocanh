@@ -9,7 +9,7 @@ import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { accessoryDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
-export const revalidate = 120;
+export const revalidate = 86400;
 
 type Props = { params: Promise<{ slug: string }> };
 

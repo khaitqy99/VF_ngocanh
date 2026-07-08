@@ -2,6 +2,7 @@
 
 import { Phone, type LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useInViewReveal } from "@/hooks/use-in-view-reveal";
@@ -17,8 +18,8 @@ import {
 } from "@/components/motion";
 
 export type CatalogHeroHighlight = {
-  value: string;
-  label: string;
+  value: ReactNode;
+  label: ReactNode;
 };
 
 export type CatalogHeroFeature = {
@@ -37,9 +38,9 @@ export function CatalogHeroIntro({
   features,
   overlap = false,
 }: {
-  title: string;
-  titleAccent: string;
-  description: string;
+  title: ReactNode;
+  titleAccent: ReactNode;
+  description: ReactNode;
   primaryCta: { label: string; onClick: () => void };
   secondaryCta: { label: string; href: string };
   highlights: CatalogHeroHighlight[];
@@ -109,7 +110,7 @@ export function CatalogHeroIntro({
             <FadeIn direction="right" delay={0.12} className="flex flex-col gap-4">
               <StaggerGrid className="home-hero-stat-grid">
                 {highlights.map((item, index) => (
-                  <StaggerItem key={item.label} index={index} variant="home">
+                  <StaggerItem key={index} index={index} variant="home">
                     <div className="home-stat-chip-light rounded-2xl p-4 text-center">
                       <p className="font-mono text-lg font-bold tabular-nums tracking-tight text-brand-dark sm:text-xl">
                         {item.value}

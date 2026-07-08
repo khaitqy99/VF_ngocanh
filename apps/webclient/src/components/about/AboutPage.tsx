@@ -61,73 +61,16 @@ import {
   FeatureCarouselSection,
   type FeatureCarouselSlide,
 } from "@/components/shared/FeatureCarouselSection";
+import type { AboutPageContent } from "@/lib/cms/static-pages";
+import { DEFAULT_ABOUT_CONTENT } from "@/lib/cms/static-page-defaults";
+import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/StaticPageAdminEditContext";
+import {
+  StaticEditableText,
+  StaticEditImageButton,
+} from "@/components/admin-edit/static-page/StaticEditableText";
 
-const STATS = [
-  { icon: Award, value: "5+", label: "Năm kinh nghiệm đồng hành cùng VinFast" },
-  { icon: Users, value: "10.000+", label: "Khách hàng tin tưởng lựa chọn sản phẩm" },
-  { icon: Car, value: "15.000+", label: "Xe điện thông minh đã bàn giao toàn quốc" },
-] as const;
-
-const MILESTONES = [
-  {
-    year: "2019",
-    title: "Đặt Nền Móng Khởi Đầu",
-    desc: "Thành lập VinFast Ngọc Anh Cà Mau, chính thức bắt tay cùng VinFast trên hành trình khai phá thị trường xe điện Việt Nam đầy tiềm năng.",
-    image: IMAGES.aboutShowroomBanner,
-  },
-  {
-    year: "2020",
-    title: "Đạt chuẩn Đại Lý Ủy Quyền 3S",
-    desc: "Chính thức được VinFast công nhận là đại lý ủy quyền 3S tiêu chuẩn toàn cầu, bao gồm Bán hàng, Dịch vụ và Phụ tùng chính hãng.",
-    image: IMAGES.community,
-  },
-  {
-    year: "2021",
-    title: "Mở Rộng Hệ Thống Trạm Sạc",
-    desc: "Phối hợp cùng hãng đầu tư mở rộng hạ tầng mạng lưới trạm sạc công suất cao quanh khu vực, tăng khả năng tiếp cận cho khách hàng.",
-    image: IMAGES.chargingStations,
-  },
-  {
-    year: "2022 - 2023",
-    title: "Tăng Trưởng Bứt Phá Doanh Số",
-    desc: "Nằm trong TOP các đại lý có doanh số bàn giao xe điện (VF e34, VF 8, VF 9) dẫn đầu miền Bắc, được khách hàng tin yêu tuyệt đối.",
-    image: IMAGES.vfMpv7,
-  },
-  {
-    year: "2024 - Nay",
-    title: "Vững Bước Kỷ Nguyên Di Chuyển Xanh",
-    desc: "Hoàn thiện hệ sinh thái xanh toàn diện gồm xe ô tô điện, xe máy điện, bộ sạc treo tường thông minh tại nhà và giải pháp lưu trữ ESS.",
-    image: IMAGES.newsletterBg,
-  },
-] as const;
-
-const WHY_CHOOSE = [
-  {
-    icon: Award,
-    title: "Đại lý ủy quyền 3S chính thức của VinFast",
-    desc: "Đảm bảo phân phối xe ô tô điện, xe máy điện, phụ tùng và tháp pin lưu trữ ESS chính hãng 100%, bảo hành chuẩn mực toàn cầu.",
-  },
-  {
-    icon: Users,
-    title: "Đội ngũ cố vấn và kỹ thuật viên cao cấp",
-    desc: "Nhân viên được đào tạo khắt khe theo giáo trình chuẩn hóa từ chuyên gia công nghệ quốc tế của VinFast, am hiểu kỹ thuật chuyên sâu.",
-  },
-  {
-    icon: Wrench,
-    title: "Dịch vụ hậu mãi 3S khép kín hoàn hảo",
-    desc: "Hệ thống xưởng dịch vụ quy mô lớn, đầu tư cầu nâng và thiết bị chẩn đoán điện tử thế hệ mới, hỗ trợ bảo dưỡng sạc pin khẩn cấp 24/7.",
-  },
-  {
-    icon: Cpu,
-    title: "Hạ tầng Showroom & Công nghệ hiện đại",
-    desc: "Không gian trưng bày đạt chuẩn nhận diện 3S mới của VinFast, nâng cao trải nghiệm mua sắm số hóa trực quan cho khách hàng.",
-  },
-  {
-    icon: Headphones,
-    title: "Chăm sóc khách hàng trọn vòng đời xe",
-    desc: "Cam kết đồng hành trọn vẹn từ khâu lái thử, hỗ trợ thủ tục trả góp 0%, làm hồ sơ đăng ký ra biển đến bảo dưỡng định kỳ lâu dài.",
-  },
-] as const;
+const STAT_ICONS = [Award, Users, Car] as const;
+const WHY_ICONS = [Award, Users, Wrench, Cpu, Headphones] as const;
 
 const CORE_VALUES = [
   "Khách hàng là trọng tâm cốt lõi",
@@ -159,17 +102,23 @@ const ABOUT_CTA_SLIDES: FeatureCarouselSlide[] = [
   },
 ];
 
-export default function AboutPage({ contact }: { contact: DealershipContact }) {
+export default function AboutPage({
+  contact,
+  content = DEFAULT_ABOUT_CONTENT,
+}: {
+  contact: DealershipContact;
+  content?: AboutPageContent;
+}) {
   return (
     <div className="relative min-h-screen bg-background font-sans text-foreground antialiased">
       <Header />
 
       <main>
         <BreadcrumbBar />
-        <HeroSection />
-        <MissionSection />
-        <TimelineSection />
-        <WhyChooseSection />
+        <HeroSection content={content} />
+        <MissionSection content={content} />
+        <TimelineSection content={content} />
+        <WhyChooseSection content={content} />
         <ShowroomLocationSection className="section-y bg-surface-muted" contact={contact} />
         <CtaBanner />
       </main>
@@ -219,71 +168,90 @@ function AboutSectionHeader({ eyebrow, title }: { eyebrow: string; title: string
   return <SectionHeader align="centered" eyebrow={eyebrow} title={title} className="mb-12" />;
 }
 
-function HeroSection() {
+function HeroSection({ content }: { content: AboutPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const hero = content.hero ?? DEFAULT_ABOUT_CONTENT.hero!;
+  const stats = (content.stats ?? DEFAULT_ABOUT_CONTENT.stats ?? []).map((stat, index) => ({
+    icon: STAT_ICONS[index] ?? Award,
+    value: (
+      <StaticEditableText
+        value={stat.value}
+        onChange={(value) => edit?.updateField(`stats.${index}.value`, value)}
+        className="text-white font-black"
+      />
+    ),
+    label: (
+      <StaticEditableText
+        value={stat.label}
+        onChange={(value) => edit?.updateField(`stats.${index}.label`, value)}
+        className="text-white/80 text-xs"
+        multiline
+      />
+    ),
+  }));
+
   return (
-    <PageEditorialHero
-      imageSrc={IMAGES.aboutShowroomBanner}
-      imageAlt="Showroom VinFast Ngọc Anh Cà Mau"
-      eyebrow="ĐẠI LÝ ỦY QUYỀN CHÍNH THỨC VINFAST"
-      title={
-        <>
-          SHOWROOM VINFAST NGỌC ANH CÀ MAU <br />
-        </>
-      }
-      titleAccent="CÀ MAU — ĐỒNG HÀNH CÙNG TƯƠNG LAI XANH"
-      description="Tọa lạc tại Cà Mau, VinFast Ngọc Anh Cà Mau tự hào là đại lý ủy quyền 3S chính thức của VinFast Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội."
-      actions={
-        <>
-          <MotionLinkButton
-            href="/oto"
-            className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
-          >
-            Khám phá dòng xe <ChevronRight className="size-4" />
-          </MotionLinkButton>
-          <MotionLinkButton
-            href={HOTLINE_TEL}
-            className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
-          >
-            <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: {HOTLINE}
-          </MotionLinkButton>
-        </>
-      }
-      stats={STATS.map(({ icon, value, label }) => ({ icon, value, label }))}
-    />
+    <div className="relative">
+      <StaticEditImageButton imagePath="hero.image" />
+      <PageEditorialHero
+        imageSrc={hero.image ?? IMAGES.aboutShowroomBanner}
+        imageAlt="Showroom VinFast Ngọc Anh Cà Mau"
+        eyebrow={
+          <StaticEditableText
+            value={hero.eyebrow ?? ""}
+            onChange={(value) => edit?.updateField("hero.eyebrow", value)}
+            className="text-white"
+          />
+        }
+        title={
+          <StaticEditableText
+            value={hero.title ?? ""}
+            onChange={(value) => edit?.updateField("hero.title", value)}
+            className="text-white"
+          />
+        }
+        titleAccent={
+          <StaticEditableText
+            value={hero.subtitle ?? ""}
+            onChange={(value) => edit?.updateField("hero.subtitle", value)}
+            className="text-white"
+          />
+        }
+        description={
+          <StaticEditableText
+            value={hero.description ?? DEFAULT_ABOUT_CONTENT.hero?.description ?? ""}
+            onChange={(value) => edit?.updateField("hero.description", value)}
+            className="text-white/75"
+            multiline
+          />
+        }
+        actions={
+          <>
+            <MotionLinkButton
+              href="/oto"
+              className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
+            >
+              Khám phá dòng xe <ChevronRight className="size-4" />
+            </MotionLinkButton>
+            <MotionLinkButton
+              href={HOTLINE_TEL}
+              className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
+            >
+              <Phone className="size-4 text-accent-yellow" /> ĐƯỜNG DÂY NÓNG: {HOTLINE}
+            </MotionLinkButton>
+          </>
+        }
+        stats={stats}
+      />
+    </div>
   );
 }
 
-function MissionCard({
-  icon: Icon,
-  title,
-  children,
-}: {
-  icon: typeof Target;
-  title: string;
-  children: React.ReactNode;
-}) {
-  const reduced = useReducedMotion();
+function MissionSection({ content }: { content: AboutPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const mission = content.mission ?? DEFAULT_ABOUT_CONTENT.mission;
+  const vision = content.vision ?? DEFAULT_ABOUT_CONTENT.vision;
 
-  return (
-    <motion.div
-      initial="rest"
-      whileHover={reduced ? undefined : "hover"}
-      variants={reduced ? undefined : aboutMissionCard}
-      className="page-section-card group flex h-full flex-col items-center p-8 text-center transition-shadow duration-300 hover:shadow-card"
-    >
-      <motion.div
-        variants={reduced ? undefined : aboutMissionIcon}
-        className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand shadow-sm transition-colors duration-300 group-hover:bg-brand group-hover:text-white"
-      >
-        <Icon className="size-7" strokeWidth={1.5} />
-      </motion.div>
-      <h3 className="mt-6 text-xs font-black uppercase tracking-widest text-brand-dark">{title}</h3>
-      {children}
-    </motion.div>
-  );
-}
-
-function MissionSection() {
   return (
     <section className="section-y border-b border-slate-200/60 bg-surface-muted">
       <div className="container-vf">
@@ -294,21 +262,41 @@ function MissionSection() {
 
         <StaggerGrid className="grid gap-6 md:grid-cols-3">
           <StaggerItem variant="home" index={0}>
-            <MissionCard icon={Target} title="SỨ MỆNH CỐT LÕI">
+            <MissionCard
+              icon={Target}
+              title={
+                <StaticEditableText
+                  value={mission?.title ?? "SỨ MỆNH CỐT LÕI"}
+                  onChange={(value) => edit?.updateField("mission.title", value)}
+                />
+              }
+            >
               <p className="mt-4 text-xs font-semibold leading-relaxed text-slate-400">
-                Xây dựng chiếc cầu nối vững chắc đưa các giải pháp di chuyển xanh, xe điện thông
-                minh thân thiện môi trường của VinFast tới tay mỗi người dân Việt Nam, kiến tạo lối
-                sống văn minh, bền vững.
+                <StaticEditableText
+                  value={mission?.content ?? ""}
+                  onChange={(value) => edit?.updateField("mission.content", value)}
+                  multiline
+                />
               </p>
             </MissionCard>
           </StaggerItem>
 
           <StaggerItem variant="home" index={1}>
-            <MissionCard icon={Eye} title="TẦM NHÌN CHIẾN LƯỢC">
+            <MissionCard
+              icon={Eye}
+              title={
+                <StaticEditableText
+                  value={vision?.title ?? "TẦM NHÌN CHIẾN LƯỢC"}
+                  onChange={(value) => edit?.updateField("vision.title", value)}
+                />
+              }
+            >
               <p className="mt-4 text-xs font-semibold leading-relaxed text-slate-400">
-                Trở thành biểu tượng showroom 3S dẫn đầu cả nước về quy mô doanh số lẫn chỉ số hài
-                lòng của khách hàng (CSI), là địa chỉ tin cậy hàng đầu khi nhắc đến thương hiệu xe
-                điện VinFast.
+                <StaticEditableText
+                  value={vision?.content ?? ""}
+                  onChange={(value) => edit?.updateField("vision.content", value)}
+                  multiline
+                />
               </p>
             </MissionCard>
           </StaggerItem>
@@ -334,7 +322,39 @@ function MissionSection() {
   );
 }
 
-function TimelineSection() {
+function MissionCard({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: typeof Target;
+  title: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      initial="rest"
+      whileHover={reduced ? undefined : "hover"}
+      variants={reduced ? undefined : aboutMissionCard}
+      className="page-section-card group flex h-full flex-col items-center p-8 text-center transition-shadow duration-300 hover:shadow-card"
+    >
+      <motion.div
+        variants={reduced ? undefined : aboutMissionIcon}
+        className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand shadow-sm transition-colors duration-300 group-hover:bg-brand group-hover:text-white"
+      >
+        <Icon className="size-7" strokeWidth={1.5} />
+      </motion.div>
+      <h3 className="mt-6 text-xs font-black uppercase tracking-widest text-brand-dark">{title}</h3>
+      {children}
+    </motion.div>
+  );
+}
+
+function TimelineSection({ content }: { content: AboutPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const milestones = content.milestones ?? DEFAULT_ABOUT_CONTENT.milestones ?? [];
   const { ref, reduced, initial, animate } = useSectionReveal(aboutViewport);
 
   return (
@@ -349,7 +369,7 @@ function TimelineSection() {
             aria-hidden
           />
           <ol className="space-y-6 sm:space-y-8">
-            {MILESTONES.map((m, index) => (
+            {milestones.map((m, index) => (
               <motion.li
                 key={m.year}
                 custom={index}
@@ -367,7 +387,8 @@ function TimelineSection() {
                 </div>
 
                 <article className="overflow-hidden rounded-2xl border border-slate-200 bg-surface-muted shadow-soft">
-                  <div className="aspect-[16/9] overflow-hidden bg-white sm:aspect-[2/1]">
+                  <div className="aspect-[16/9] overflow-hidden bg-white sm:aspect-[2/1] relative">
+                    <StaticEditImageButton imagePath={`milestones.${index}.image`} />
                     <img
                       src={m.image}
                       alt={m.title}
@@ -377,13 +398,23 @@ function TimelineSection() {
                   </div>
                   <div className="p-4 sm:p-5">
                     <span className="inline-block rounded-full bg-brand/10 px-2.5 py-0.5 text-[11px] font-extrabold tracking-wider text-brand">
-                      {m.year}
+                      <StaticEditableText
+                        value={m.year}
+                        onChange={(value) => edit?.updateField(`milestones.${index}.year`, value)}
+                      />
                     </span>
                     <h3 className="mt-2 text-sm font-black leading-snug text-brand-dark sm:text-base">
-                      {m.title}
+                      <StaticEditableText
+                        value={m.title}
+                        onChange={(value) => edit?.updateField(`milestones.${index}.title`, value)}
+                      />
                     </h3>
                     <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:text-sm">
-                      {m.desc}
+                      <StaticEditableText
+                        value={m.desc}
+                        onChange={(value) => edit?.updateField(`milestones.${index}.desc`, value)}
+                        multiline
+                      />
                     </p>
                   </div>
                 </article>
@@ -404,7 +435,7 @@ function TimelineSection() {
           />
 
           <div className="grid grid-cols-5 gap-4 xl:gap-5">
-            {MILESTONES.map((m, index) => (
+            {milestones.map((m, index) => (
               <motion.article
                 key={m.year}
                 custom={index}
@@ -422,7 +453,10 @@ function TimelineSection() {
                     <div className="size-3 rounded-full bg-brand" />
                   </motion.div>
                   <span className="mt-2 text-xs font-black tracking-wider text-brand">
-                    {m.year}
+                    <StaticEditableText
+                      value={m.year}
+                      onChange={(value) => edit?.updateField(`milestones.${index}.year`, value)}
+                    />
                   </span>
                 </div>
 
@@ -430,7 +464,8 @@ function TimelineSection() {
                   whileHover={reduced ? undefined : { y: -4, transition: { duration: 0.25 } }}
                   className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-surface-muted shadow-soft transition-shadow duration-300 hover:shadow-md"
                 >
-                  <div className="aspect-[4/3] overflow-hidden bg-white">
+                  <div className="aspect-[4/3] overflow-hidden bg-white relative">
+                    <StaticEditImageButton imagePath={`milestones.${index}.image`} />
                     <img
                       src={m.image}
                       alt={m.title}
@@ -440,10 +475,17 @@ function TimelineSection() {
                   </div>
                   <div className="flex flex-1 flex-col p-4 xl:p-5">
                     <h3 className="text-xs font-black uppercase leading-snug tracking-wide text-brand-dark xl:text-sm">
-                      {m.title}
+                      <StaticEditableText
+                        value={m.title}
+                        onChange={(value) => edit?.updateField(`milestones.${index}.title`, value)}
+                      />
                     </h3>
                     <p className="mt-2 flex-1 text-[11px] leading-relaxed text-slate-500 xl:text-xs">
-                      {m.desc}
+                      <StaticEditableText
+                        value={m.desc}
+                        onChange={(value) => edit?.updateField(`milestones.${index}.desc`, value)}
+                        multiline
+                      />
                     </p>
                   </div>
                 </motion.div>
@@ -456,7 +498,9 @@ function TimelineSection() {
   );
 }
 
-function WhyChooseSection() {
+function WhyChooseSection({ content }: { content: AboutPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const whyChoose = content.whyChoose ?? DEFAULT_ABOUT_CONTENT.whyChoose ?? [];
   const { ref, reduced, initial, animate } = useSectionReveal(aboutViewport);
 
   return (
@@ -487,30 +531,40 @@ function WhyChooseSection() {
           </motion.div>
 
           <ul className="space-y-6">
-            {WHY_CHOOSE.map(({ icon: Icon, title, desc }, index) => (
-              <motion.li
-                key={title}
-                custom={index}
-                initial={initial}
-                animate={animate}
-                viewport={aboutViewport}
-                variants={reduced ? undefined : aboutWhyItem}
-                whileHover={reduced ? undefined : { x: 4, transition: { duration: 0.2 } }}
-                className="page-section-card flex list-none items-start gap-4 p-5"
-              >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-brand-dark">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 text-xs font-semibold leading-relaxed text-slate-400">
-                    {desc}
-                  </p>
-                </div>
-              </motion.li>
-            ))}
+            {whyChoose.map(({ title, desc }, index) => {
+              const Icon = WHY_ICONS[index] ?? Award;
+              return (
+                <motion.li
+                  key={title}
+                  custom={index}
+                  initial={initial}
+                  animate={animate}
+                  viewport={aboutViewport}
+                  variants={reduced ? undefined : aboutWhyItem}
+                  whileHover={reduced ? undefined : { x: 4, transition: { duration: 0.2 } }}
+                  className="page-section-card flex list-none items-start gap-4 p-5"
+                >
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-wider text-brand-dark">
+                      <StaticEditableText
+                        value={title}
+                        onChange={(value) => edit?.updateField(`whyChoose.${index}.title`, value)}
+                      />
+                    </h3>
+                    <p className="mt-1.5 text-xs font-semibold leading-relaxed text-slate-400">
+                      <StaticEditableText
+                        value={desc}
+                        onChange={(value) => edit?.updateField(`whyChoose.${index}.desc`, value)}
+                        multiline
+                      />
+                    </p>
+                  </div>
+                </motion.li>
+              );
+            })}
           </ul>
         </div>
       </div>

@@ -12,7 +12,7 @@ import {
   buildWebSiteSchema,
 } from "@/lib/seo/local-business";
 
-export const revalidate = 120;
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildStaticPageMetadata("home");

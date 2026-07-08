@@ -25,8 +25,8 @@ export const RESCUE_HOTLINE = "0707 54 6666";
 export const RESCUE_HOTLINE_TEL = "tel:0707546666";
 
 /** GPS for 111 Lý Thường Kiệt, Phường Tân Thành — align with Google Maps pin */
-export const SHOWROOM_LAT = 9.176413;
-export const SHOWROOM_LNG = 105.152389;
+export const SHOWROOM_LAT = 9.173417;
+export const SHOWROOM_LNG = 105.19138;
 
 export const SHOWROOM_OPENING = {
   opens: "08:00",
@@ -38,7 +38,9 @@ const SHOWROOM_MAP_SEARCH = `${SHOWROOM_ADDRESS}, Việt Nam`;
 
 export const SHOWROOM_MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SHOWROOM_MAP_SEARCH)}`;
 
-export const SHOWROOM_MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(SHOWROOM_MAP_SEARCH)}&hl=vi&z=17&output=embed`;
+/** Official Google Maps embed — VinFast Ngọc Anh Cà Mau (GBP place pin) */
+export const SHOWROOM_MAP_EMBED =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3938.7898914633984!2d105.1913802!3d9.173416900000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a1491f151723bb%3A0xe4402cd9bdb639f4!2zVmluRmFzdCBOZ-G7jWMgQW5oIEPDoCBNYXU!5e0!3m2!1sen!2s!4v1783481544891!5m2!1sen!2s";
 
 /** Social / GBP links — add URLs via env when available */
 export function getShowroomSameAs(): string[] {

@@ -61,6 +61,14 @@ import {
   ENERGY_FAQS,
 } from "@/lib/energy-storage";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import type { EnergyPageContent } from "@/lib/cms/static-pages";
+import { getDefaultStaticPageContent } from "@/lib/cms/static-pages";
+import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/StaticPageAdminEditContext";
+import { StaticEditableFaqBlock } from "@/components/admin-edit/static-page/StaticEditableFaqBlock";
+import {
+  StaticEditableText,
+  StaticEditImageButton,
+} from "@/components/admin-edit/static-page/StaticEditableText";
 
 const SOLUTION_ICONS = {
   residential: Home,
@@ -79,7 +87,11 @@ const ELECTRICAL_TIERS = [
   { name: "Khung giờ cao điểm (Peak)", rate: 3076 },
 ];
 
-export default function EnergyStoragePage() {
+export default function EnergyStoragePage({
+  content = getDefaultStaticPageContent("energy"),
+}: {
+  content?: EnergyPageContent;
+}) {
   const modalMotion = useModalMotion();
   const [isConsultOpen, setIsConsultOpen] = useState(false);
   const [isConsultSuccess, setIsConsultSuccess] = useState(false);
@@ -142,7 +154,7 @@ export default function EnergyStoragePage() {
         <BreadcrumbBar />
 
         {/* Hero Section Banner with premium animations */}
-        <HeroSection onScrollToBooking={() => setIsConsultOpen(true)} />
+        <HeroSection content={content} onScrollToBooking={() => setIsConsultOpen(true)} />
 
         {/* Dynamic Navigation Sticky Bar */}
         <section className="sticky top-14 z-20 border-b border-slate-100 bg-white py-4 shadow-sm">
@@ -357,25 +369,25 @@ export default function EnergyStoragePage() {
         </section>
 
         {/* Solutions Grid Section */}
-        <SolutionsSection />
+        <SolutionsSection content={content} />
 
         {/* Benefits Section */}
-        <BenefitsSection />
+        <BenefitsSection content={content} />
 
         {/* Applications Section */}
-        <ApplicationsSection />
+        <ApplicationsSection content={content} />
 
         {/* Product Specs Detail Table */}
-        <SpecsSection />
+        <SpecsSection content={content} />
 
         {/* Installation 4-Steps Process */}
-        <ProcessSection />
+        <ProcessSection content={content} />
 
         {/* Why choose energy storage solution at VF Ngoc Anh */}
         <WhyChooseSection />
 
         {/* FAQ Area */}
-        <FaqSection />
+        <FaqSection content={content} />
 
         {/* CTA Section map info */}
         <CtaBanner />
@@ -622,38 +634,85 @@ function BreadcrumbBar() {
   );
 }
 
-function HeroSection({ onScrollToBooking }: { onScrollToBooking: () => void }) {
+function HeroSection({
+  content,
+  onScrollToBooking,
+}: {
+  content: EnergyPageContent;
+  onScrollToBooking: () => void;
+}) {
+  const edit = useStaticPageAdminEdit();
+  const hero = content.hero ?? getDefaultStaticPageContent("energy").hero;
+  const stats = (content.stats ?? ENERGY_STATS.map(({ value, label }) => ({ value, label }))).map(
+    (stat, index) => ({
+      icon: Battery,
+      value: (
+        <StaticEditableText
+          value={stat.value}
+          onChange={(value) => edit?.updateField(`stats.${index}.value`, value)}
+          className="text-white font-bold"
+        />
+      ),
+      label: (
+        <StaticEditableText
+          value={stat.label}
+          onChange={(value) => edit?.updateField(`stats.${index}.label`, value)}
+          className="text-white/60 text-xs"
+          multiline
+        />
+      ),
+    }),
+  );
+
   return (
-    <PageEditorialHero
-      imageSrc={IMAGES.chargingStations}
-      imageAlt="Hệ thống lưu trữ năng lượng VinFast"
-      eyebrow="GIẢI PHÁP PIN LƯU TRỮ ESS QUY MÔ TOÀN CẦU"
-      title={
-        <>
-          NĂNG LƯỢNG THÔNG MINH <br />
-        </>
-      }
-      titleAccent="BÊN VỮNG TƯƠNG LAI"
-      description="VinFast ESS áp dụng công nghệ pin Lithium Iron Phosphate (LFP) siêu an toàn chịu nhiệt — mở ra kỷ nguyên mới về tự chủ nguồn điện cho hộ gia đình và tối ưu hóa hệ thống lưới điện công nghiệp sấy hồng ngoại sạc xe điện."
-      actions={
-        <>
-          <button
-            type="button"
-            onClick={onScrollToBooking}
-            className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
-          >
-            <Calendar className="size-4" /> ĐĂNG KÝ TƯ VẤN KHẢO SÁT
-          </button>
-          <a
-            href={HOTLINE_TEL}
-            className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
-          >
-            <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
-          </a>
-        </>
-      }
-      stats={ENERGY_STATS.map(({ value, label }) => ({ icon: Battery, value, label }))}
-    />
+    <div className="relative">
+      <StaticEditImageButton imagePath="hero.image" />
+      <PageEditorialHero
+        imageSrc={hero?.image ?? IMAGES.chargingStations}
+        imageAlt="Hệ thống lưu trữ năng lượng VinFast"
+        eyebrow={
+          <StaticEditableText
+            value={hero?.eyebrow ?? ""}
+            onChange={(value) => edit?.updateField("hero.eyebrow", value)}
+            className="text-white"
+          />
+        }
+        title={
+          <StaticEditableText
+            value={hero?.title ?? ""}
+            onChange={(value) => edit?.updateField("hero.title", value)}
+            className="text-white"
+          />
+        }
+        titleAccent=""
+        description={
+          <StaticEditableText
+            value={hero?.subtitle ?? ""}
+            onChange={(value) => edit?.updateField("hero.subtitle", value)}
+            className="text-white/75"
+            multiline
+          />
+        }
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={onScrollToBooking}
+              className="home-cta-primary inline-flex items-center gap-1.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white"
+            >
+              <Calendar className="size-4" /> ĐĂNG KÝ TƯ VẤN KHẢO SÁT
+            </button>
+            <a
+              href={HOTLINE_TEL}
+              className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
+            >
+              <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
+            </a>
+          </>
+        }
+        stats={stats}
+      />
+    </div>
   );
 }
 
@@ -706,7 +765,10 @@ function IntroSection() {
   );
 }
 
-function SolutionsSection() {
+function SolutionsSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const solutions = content.solutions ?? ENERGY_SOLUTIONS;
+
   return (
     <section id="giai-phap" className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
@@ -718,7 +780,7 @@ function SolutionsSection() {
         />
 
         <div className="grid gap-6 md:grid-cols-3">
-          {ENERGY_SOLUTIONS.map(({ id, title, subtitle, capacity, desc, features, idealFor }) => {
+          {solutions.map(({ id, title, subtitle, capacity, desc, features, idealFor }, index) => {
             const Icon = SOLUTION_ICONS[id as keyof typeof SOLUTION_ICONS];
             return (
               <div
@@ -730,24 +792,44 @@ function SolutionsSection() {
                     <Icon className="size-6" strokeWidth={1.5} />
                   </div>
                   <span className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand">
-                    {capacity}
+                    <StaticEditableText
+                      value={capacity}
+                      onChange={(value) => edit?.updateField(`solutions.${index}.capacity`, value)}
+                    />
                   </span>
                 </div>
                 <p className="mt-5 text-[10px] font-black tracking-wider text-brand uppercase">
-                  {subtitle}
+                  <StaticEditableText
+                    value={subtitle}
+                    onChange={(value) => edit?.updateField(`solutions.${index}.subtitle`, value)}
+                  />
                 </p>
                 <h3 className="mt-1 text-sm font-black tracking-wide text-brand-dark uppercase">
-                  {title}
+                  <StaticEditableText
+                    value={title}
+                    onChange={(value) => edit?.updateField(`solutions.${index}.title`, value)}
+                  />
                 </h3>
-                <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold">{desc}</p>
+                <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold">
+                  <StaticEditableText
+                    value={desc}
+                    onChange={(value) => edit?.updateField(`solutions.${index}.desc`, value)}
+                    multiline
+                  />
+                </p>
                 <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
-                  {features.map((item) => (
+                  {features.map((item, featureIndex) => (
                     <li
                       key={item}
                       className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
                     >
                       <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
-                      <span>{item}</span>
+                      <StaticEditableText
+                        value={item}
+                        onChange={(value) =>
+                          edit?.updateField(`solutions.${index}.features.${featureIndex}`, value)
+                        }
+                      />
                     </li>
                   ))}
                 </ul>
@@ -755,7 +837,13 @@ function SolutionsSection() {
                   <p className="text-[10px] font-black text-brand-dark uppercase tracking-wide">
                     Đặc thù phù hợp:
                   </p>
-                  <p className="mt-0.5 text-[11px] text-slate-400 font-bold">{idealFor}</p>
+                  <p className="mt-0.5 text-[11px] text-slate-400 font-bold">
+                    <StaticEditableText
+                      value={idealFor}
+                      onChange={(value) => edit?.updateField(`solutions.${index}.idealFor`, value)}
+                      multiline
+                    />
+                  </p>
                 </div>
               </div>
             );
@@ -766,7 +854,10 @@ function SolutionsSection() {
   );
 }
 
-function BenefitsSection() {
+function BenefitsSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const benefits = content.benefits ?? ENERGY_BENEFITS;
+
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
@@ -777,8 +868,8 @@ function BenefitsSection() {
         />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {ENERGY_BENEFITS.map(({ title, desc }, index) => {
-            const Icon = BENEFIT_ICONS[index];
+          {benefits.map(({ title, desc }, index) => {
+            const Icon = BENEFIT_ICONS[index] ?? BarChart3;
             return (
               <div
                 key={title}
@@ -789,10 +880,17 @@ function BenefitsSection() {
                 </div>
                 <div>
                   <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`benefits.${index}.title`, value)}
+                    />
                   </h3>
                   <p className="mt-2 text-xs leading-relaxed text-slate-400 font-semibold">
-                    {desc}
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`benefits.${index}.desc`, value)}
+                      multiline
+                    />
                   </p>
                 </div>
               </div>
@@ -804,7 +902,10 @@ function BenefitsSection() {
   );
 }
 
-function ApplicationsSection() {
+function ApplicationsSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const applications = content.applications ?? ENERGY_APPLICATIONS;
+
   return (
     <section className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
@@ -815,8 +916,8 @@ function ApplicationsSection() {
         />
 
         <div className="grid gap-6 md:grid-cols-2">
-          {ENERGY_APPLICATIONS.map(({ title, desc, benefits }, index) => {
-            const Icon = APPLICATION_ICONS[index];
+          {applications.map(({ title, desc, benefits }, index) => {
+            const Icon = APPLICATION_ICONS[index] ?? Sun;
             return (
               <div
                 key={title}
@@ -827,19 +928,31 @@ function ApplicationsSection() {
                     <Icon className="size-6 text-brand" strokeWidth={1.5} />
                   </div>
                   <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`applications.${index}.title`, value)}
+                    />
                   </h3>
                 </div>
                 <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold flex-1">
-                  {desc}
+                  <StaticEditableText
+                    value={desc}
+                    onChange={(value) => edit?.updateField(`applications.${index}.desc`, value)}
+                    multiline
+                  />
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2 pt-4 border-t border-slate-100">
-                  {benefits.map((b) => (
+                  {benefits.map((benefit, benefitIndex) => (
                     <span
-                      key={b}
+                      key={benefit}
                       className="rounded-lg border border-brand/25 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand uppercase tracking-wide"
                     >
-                      {b}
+                      <StaticEditableText
+                        value={benefit}
+                        onChange={(value) =>
+                          edit?.updateField(`applications.${index}.benefits.${benefitIndex}`, value)
+                        }
+                      />
                     </span>
                   ))}
                 </div>
@@ -852,7 +965,10 @@ function ApplicationsSection() {
   );
 }
 
-function SpecsSection() {
+function SpecsSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const specs = content.specs ?? ENERGY_SPECS;
+
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
@@ -869,12 +985,21 @@ function SpecsSection() {
             <div className="mt-8 page-section-card overflow-hidden">
               <table className="w-full text-left">
                 <tbody>
-                  {ENERGY_SPECS.map(({ label, value }, i) => (
+                  {specs.map(({ label, value }, i) => (
                     <tr key={label} className={i % 2 === 0 ? "bg-white" : "bg-surface-muted/50"}>
                       <td className="px-5 py-3.5 text-xs font-black text-brand-dark w-[45%] uppercase tracking-wide">
-                        {label}
+                        <StaticEditableText
+                          value={label}
+                          onChange={(v) => edit?.updateField(`specs.${i}.label`, v)}
+                        />
                       </td>
-                      <td className="px-5 py-3.5 text-xs text-slate-500 font-semibold">{value}</td>
+                      <td className="px-5 py-3.5 text-xs text-slate-500 font-semibold">
+                        <StaticEditableText
+                          value={value}
+                          onChange={(v) => edit?.updateField(`specs.${i}.value`, v)}
+                          multiline
+                        />
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -896,7 +1021,10 @@ function SpecsSection() {
   );
 }
 
-function ProcessSection() {
+function ProcessSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const steps = content.steps ?? INSTALLATION_STEPS;
+
   return (
     <section className="section-y bg-surface-muted border-y border-slate-200/60 overflow-hidden">
       <div className="container-vf">
@@ -909,15 +1037,29 @@ function ProcessSection() {
         <div className="relative">
           <div className="absolute top-[22px] right-12 left-12 hidden h-[2px] bg-slate-200 lg:block" />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {INSTALLATION_STEPS.map(({ step, title, desc }) => (
+            {steps.map(({ step, title, desc }, index) => (
               <div key={step} className="relative flex flex-col items-center text-center">
                 <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
-                  <span className="text-xs font-black text-brand">{step}</span>
+                  <span className="text-xs font-black text-brand">
+                    <StaticEditableText
+                      value={step}
+                      onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
+                    />
+                  </span>
                 </div>
                 <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
-                  <h3 className="text-xs font-black text-brand-dark uppercase">{title}</h3>
-                  <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold mt-2">
-                    {desc}
+                  <h3 className="text-xs font-black text-brand-dark uppercase">
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
+                    />
+                  </h3>
+                  <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
+                      multiline
+                    />
                   </p>
                 </div>
               </div>
@@ -998,10 +1140,24 @@ function WhyChooseSection() {
   );
 }
 
-function FaqSection() {
+function FaqSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const faq = content.faq ?? ENERGY_FAQS.map(({ q, a }) => ({ q, a }));
+
+  if (edit?.editMode) {
+    return (
+      <StaticEditableFaqBlock
+        items={faq}
+        eyebrow="Cố vấn giải đáp"
+        title="Câu hỏi thường gặp"
+        className="section-y border-b border-slate-200 bg-surface-muted"
+      />
+    );
+  }
+
   return (
     <FaqBlock
-      items={ENERGY_FAQS.map(({ q, a }) => ({ question: q, answer: a }))}
+      items={faq.map(({ q, a }) => ({ question: q, answer: a }))}
       eyebrow="Cố vấn giải đáp"
       title="Câu hỏi thường gặp"
       className="section-y border-b border-slate-200 bg-surface-muted"

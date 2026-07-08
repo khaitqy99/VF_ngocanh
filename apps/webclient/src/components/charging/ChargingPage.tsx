@@ -34,7 +34,6 @@ import {
 
 import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
-import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { PageStatsBar } from "@/components/shared/PageStatsBar";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -63,6 +62,15 @@ import {
   type ChargingProductCategory,
 } from "@/lib/charging";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
+import type { ChargingPageContent } from "@/lib/cms/static-pages";
+import { getDefaultStaticPageContent } from "@/lib/cms/static-pages";
+import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/StaticPageAdminEditContext";
+import { StaticEditableFaqBlock } from "@/components/admin-edit/static-page/StaticEditableFaqBlock";
+import {
+  StaticEditableText,
+  StaticEditImageButton,
+} from "@/components/admin-edit/static-page/StaticEditableText";
+import { StaticEditablePageMarketingHero } from "@/components/admin-edit/static-page/StaticEditablePageMarketingHero";
 
 const HERO_FEATURES = [
   { icon: MapPin, text: "150.000+ cổng sạc", sub: "Phủ sóng khắp 63 tỉnh thành" },
@@ -126,16 +134,23 @@ const CHARGERS = [
 
 export default function ChargingPage({
   heroBanners: CHARGING_HERO_BANNERS,
+  content = getDefaultStaticPageContent("charging"),
 }: {
   heroBanners: HeroBannerSlide[];
+  content?: ChargingPageContent;
 }) {
   const modalMotion = useModalMotion();
   const [category, setCategory] = useState<ChargingProductCategory | "all">("all");
 
   // Interactive Product Inquiry State
-  const [selectedProduct, setSelectedProduct] = useState<(typeof CHARGING_PRODUCTS)[0] | null>(
-    null,
-  );
+  const chargingProducts = content.products ?? CHARGING_PRODUCTS;
+
+  const products = useMemo(() => {
+    if (category === "all") return chargingProducts;
+    return chargingProducts.filter((p) => p.category === category);
+  }, [category, chargingProducts]);
+
+  const [selectedProduct, setSelectedProduct] = useState<(typeof chargingProducts)[0] | null>(null);
   const [isInquirySuccess, setIsInquirySuccess] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
     name: "",
@@ -152,11 +167,6 @@ export default function ChargingPage({
   const [simChargerId, setSimChargerId] = useState("ac-home");
   const [simCurrentPct, setSimCurrentPct] = useState(20);
   const [simTargetPct, setSimTargetPct] = useState(80);
-
-  const products = useMemo(() => {
-    if (category === "all") return CHARGING_PRODUCTS;
-    return CHARGING_PRODUCTS.filter((p) => p.category === category);
-  }, [category]);
 
   const activeCar = useMemo(() => {
     return CALCULATOR_CARS.find((c) => c.id === simCarId) || CALCULATOR_CARS[0];
@@ -231,13 +241,17 @@ export default function ChargingPage({
 
         {/* Hero Section Banner */}
         <HeroSection
+          content={content}
+          heroBanners={CHARGING_HERO_BANNERS}
           onScrollToSection={(id) => {
             document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
           }}
         />
 
         {/* Stats Grid Bar */}
-        <StatsBar />
+        <StatsBar
+          stats={content.stats ?? NETWORK_STATS.map(({ value, label }) => ({ value, label }))}
+        />
 
         {/* Interactive Charging Time & Cost Simulator */}
         <section
@@ -455,7 +469,7 @@ export default function ChargingPage({
         <EcosystemSection />
 
         {/* Charging Stations specifications */}
-        <StationTypesSection />
+        <StationTypesSection content={content} />
 
         {/* Battery technology and safety features */}
         <BatterySection />
@@ -465,6 +479,7 @@ export default function ChargingPage({
           category={category}
           setCategory={setCategory}
           products={products}
+          allProducts={chargingProducts}
           onOrderProduct={(product) => {
             setSelectedProduct(product);
             setInquiryForm({
@@ -476,16 +491,16 @@ export default function ChargingPage({
         />
 
         {/* 4 steps to charging at public station */}
-        <GuideSection />
+        <GuideSection content={content} />
 
         {/* Application Integration Section */}
         <AppSection />
 
         {/* Why choose charging ecosystem of VinFast */}
-        <WhySection />
+        <WhySection content={content} />
 
         {/* FAQ Area with clean accordion details */}
-        <FaqSection />
+        <FaqSection faq={content.faq ?? CHARGING_FAQ.map(({ q, a }) => ({ q, a }))} />
 
         {/* CTA and showroom contact info */}
         <CtaSection />
@@ -714,14 +729,23 @@ function BreadcrumbBar() {
   );
 }
 
-function HeroSection({ onScrollToSection }: { onScrollToSection: (id: string) => void }) {
+function HeroSection({
+  content,
+  heroBanners,
+  onScrollToSection,
+}: {
+  content: ChargingPageContent;
+  heroBanners: HeroBannerSlide[];
+  onScrollToSection: (id: string) => void;
+}) {
+  const defaultHero = getDefaultStaticPageContent("charging").hero!;
+
   return (
-    <PageMarketingHero
-      banners={CHARGING_HERO_BANNERS}
-      showControls={CHARGING_HERO_BANNERS.length > 1}
-      title="Hệ thống trạm sạc & pin"
-      titleAccent="toàn diện, thông minh"
-      description="VinFast tự hào xây dựng hạ tầng năng lượng hàng đầu Đông Nam Á với hơn 150.000 cổng sạc thông minh phủ khắp nẻo đường Việt Nam — đồng hành cùng công nghệ pin LFP siêu bền và giải pháp sạc tại nhà tiện ích."
+    <StaticEditablePageMarketingHero
+      banners={heroBanners}
+      hero={content.hero}
+      defaultHero={defaultHero}
+      features={[...HERO_FEATURES]}
       primaryCta={{
         label: "DỰ TOÁN THỜI GIAN SẠC",
         onClick: () => onScrollToSection("charging-simulator"),
@@ -730,18 +754,32 @@ function HeroSection({ onScrollToSection }: { onScrollToSection: (id: string) =>
         label: "XEM THIẾT BỊ SẠC GIA ĐÌNH",
         href: "#san-pham-sac",
       }}
-      highlights={[
-        { value: "150.000+", label: "Cổng sạc toàn quốc" },
-        { value: "2.500+", label: "Trạm sạc công cộng" },
-        { value: "24/7", label: "Hỗ trợ kỹ thuật" },
-      ]}
-      features={[...HERO_FEATURES]}
+      showControls={heroBanners.length > 1}
     />
   );
 }
 
-function StatsBar() {
-  return <PageStatsBar items={NETWORK_STATS.map(({ value, label }) => ({ value, label }))} />;
+function StatsBar({ stats }: { stats: { value: string; label: string }[] }) {
+  const edit = useStaticPageAdminEdit();
+  const items = stats.map((stat, index) => ({
+    value: (
+      <StaticEditableText
+        value={stat.value}
+        onChange={(value) => edit?.updateField(`stats.${index}.value`, value)}
+        className="text-white font-bold"
+      />
+    ),
+    label: (
+      <StaticEditableText
+        value={stat.label}
+        onChange={(value) => edit?.updateField(`stats.${index}.label`, value)}
+        className="text-white/55 text-[11px]"
+        multiline
+      />
+    ),
+  }));
+
+  return <PageStatsBar items={items} />;
 }
 
 function EcosystemSection() {
@@ -799,7 +837,10 @@ function EcosystemSection() {
   );
 }
 
-function StationTypesSection() {
+function StationTypesSection({ content }: { content: ChargingPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const stationTypes = content.stationTypes ?? STATION_TYPES;
+
   return (
     <section className="section-y bg-surface-muted border-y border-slate-200/60">
       <div className="container-vf">
@@ -810,12 +851,13 @@ function StationTypesSection() {
         />
 
         <div className="grid gap-6 md:grid-cols-3">
-          {STATION_TYPES.map((station) => (
+          {stationTypes.map((station, index) => (
             <article
               key={station.id}
               className={`flex flex-col overflow-hidden ${vfCard} transition hover:-translate-y-1 hover:shadow-card group`}
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                <StaticEditImageButton imagePath={`stationTypes.${index}.image`} />
                 <img
                   src={station.image}
                   alt={station.title}
@@ -825,29 +867,47 @@ function StationTypesSection() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
-                  {station.title}
+                  <StaticEditableText
+                    value={station.title}
+                    onChange={(value) => edit?.updateField(`stationTypes.${index}.title`, value)}
+                  />
                 </h3>
                 <div className="mt-2.5 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1 rounded-lg bg-brand/10 px-2.5 py-1 text-[10px] font-black text-brand">
                     <Gauge className="size-3 text-brand" />
-                    {station.power}
+                    <StaticEditableText
+                      value={station.power}
+                      onChange={(value) => edit?.updateField(`stationTypes.${index}.power`, value)}
+                    />
                   </span>
                   <span className="inline-flex items-center gap-1 rounded-lg bg-brand-dark/10 px-2.5 py-1 text-[10px] font-black text-brand-dark">
                     <Clock className="size-3 text-brand" />
-                    {station.time}
+                    <StaticEditableText
+                      value={station.time}
+                      onChange={(value) => edit?.updateField(`stationTypes.${index}.time`, value)}
+                    />
                   </span>
                 </div>
                 <p className="mt-3.5 flex-1 text-xs leading-relaxed text-slate-400 font-semibold">
-                  {station.desc}
+                  <StaticEditableText
+                    value={station.desc}
+                    onChange={(value) => edit?.updateField(`stationTypes.${index}.desc`, value)}
+                    multiline
+                  />
                 </p>
                 <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
-                  {station.features.map((f) => (
+                  {station.features.map((feature, featureIndex) => (
                     <li
-                      key={f}
+                      key={feature}
                       className="flex items-start gap-2 text-[11px] text-slate-500 font-bold"
                     >
                       <ChevronRight className="mt-0.5 size-3.5 shrink-0 text-brand" />
-                      {f}
+                      <StaticEditableText
+                        value={feature}
+                        onChange={(value) =>
+                          edit?.updateField(`stationTypes.${index}.features.${featureIndex}`, value)
+                        }
+                      />
                     </li>
                   ))}
                 </ul>
@@ -925,13 +985,16 @@ function ProductsSection({
   category,
   setCategory,
   products,
+  allProducts,
   onOrderProduct,
 }: {
   category: ChargingProductCategory | "all";
   setCategory: (v: ChargingProductCategory | "all") => void;
   products: typeof CHARGING_PRODUCTS;
+  allProducts: typeof CHARGING_PRODUCTS;
   onOrderProduct: (product: (typeof CHARGING_PRODUCTS)[0]) => void;
 }) {
+  const edit = useStaticPageAdminEdit();
   const tabs: { value: ChargingProductCategory | "all"; label: string }[] = [
     { value: "all", label: "Tất cả thiết bị" },
     ...CATEGORY_OPTIONS,
@@ -965,64 +1028,126 @@ function ProductsSection({
         </div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <article
-              key={product.id}
-              className="page-section-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-100">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                {product.badge && (
-                  <span className="absolute left-3.5 top-3.5 rounded-lg bg-brand px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
-                    {product.badge}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
-                  {product.name}
-                </h3>
-                <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3">
-                  {product.description}
-                </p>
-                <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
-                  {product.specs.map((spec) => (
-                    <li
-                      key={spec}
-                      className="flex items-center gap-2 text-[11px] text-slate-500 font-bold"
-                    >
-                      <span className="size-1.5 shrink-0 rounded-full bg-brand" />
-                      {spec}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
-                  <p className="text-sm font-black text-brand uppercase">
-                    {formatPrice(product.price)}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onOrderProduct(product)}
-                    className="home-cta-primary rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#0046cc] shadow-md"
-                  >
-                    Tư vấn & đặt mua
-                  </button>
+          {products.map((product) => {
+            const productIndex = allProducts.findIndex((item) => item.id === product.id);
+            return (
+              <article
+                key={product.id}
+                className="page-section-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-100">
+                  {productIndex >= 0 ? (
+                    <StaticEditImageButton imagePath={`products.${productIndex}.image`} />
+                  ) : null}
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {product.badge ? (
+                    <span className="absolute left-3.5 top-3.5 rounded-lg bg-brand px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
+                      {productIndex >= 0 ? (
+                        <StaticEditableText
+                          value={product.badge}
+                          onChange={(value) =>
+                            edit?.updateField(`products.${productIndex}.badge`, value)
+                          }
+                        />
+                      ) : (
+                        product.badge
+                      )}
+                    </span>
+                  ) : null}
                 </div>
-              </div>
-            </article>
-          ))}
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
+                    {productIndex >= 0 ? (
+                      <StaticEditableText
+                        value={product.name}
+                        onChange={(value) =>
+                          edit?.updateField(`products.${productIndex}.name`, value)
+                        }
+                      />
+                    ) : (
+                      product.name
+                    )}
+                  </h3>
+                  <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3">
+                    {productIndex >= 0 ? (
+                      <StaticEditableText
+                        value={product.description}
+                        onChange={(value) =>
+                          edit?.updateField(`products.${productIndex}.description`, value)
+                        }
+                        multiline
+                      />
+                    ) : (
+                      product.description
+                    )}
+                  </p>
+                  <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
+                    {product.specs.map((spec, specIndex) => (
+                      <li
+                        key={spec}
+                        className="flex items-center gap-2 text-[11px] text-slate-500 font-bold"
+                      >
+                        <span className="size-1.5 shrink-0 rounded-full bg-brand" />
+                        {productIndex >= 0 ? (
+                          <StaticEditableText
+                            value={spec}
+                            onChange={(value) =>
+                              edit?.updateField(
+                                `products.${productIndex}.specs.${specIndex}`,
+                                value,
+                              )
+                            }
+                          />
+                        ) : (
+                          spec
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
+                    <p className="text-sm font-black text-brand uppercase">
+                      {productIndex >= 0 ? (
+                        <StaticEditableText
+                          value={formatPrice(product.price)}
+                          onChange={(value) => {
+                            const digits = value.replace(/\D/g, "");
+                            edit?.updateField(
+                              `products.${productIndex}.price`,
+                              digits ? Number(digits) : 0,
+                            );
+                          }}
+                        />
+                      ) : (
+                        formatPrice(product.price)
+                      )}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => onOrderProduct(product)}
+                      className="home-cta-primary rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#0046cc] shadow-md"
+                    >
+                      Tư vấn & đặt mua
+                    </button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function GuideSection() {
+function GuideSection({ content }: { content: ChargingPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const steps = content.steps ?? CHARGING_STEPS;
+
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
@@ -1034,17 +1159,29 @@ function GuideSection() {
         />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {CHARGING_STEPS.map(({ step, title, desc }) => (
+          {steps.map(({ step, title, desc }, index) => (
             <div
               key={step}
               className="relative rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md"
             >
-              <span className="text-3xl font-black text-brand/20 tracking-wider">{step}</span>
+              <span className="text-3xl font-black text-brand/20 tracking-wider">
+                <StaticEditableText
+                  value={step}
+                  onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
+                />
+              </span>
               <h3 className="mt-3 text-xs font-black text-brand-dark uppercase tracking-wider">
-                {title}
+                <StaticEditableText
+                  value={title}
+                  onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
+                />
               </h3>
               <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                {desc}
+                <StaticEditableText
+                  value={desc}
+                  onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
+                  multiline
+                />
               </p>
             </div>
           ))}
@@ -1099,7 +1236,9 @@ function AppSection() {
   );
 }
 
-function WhySection() {
+function WhySection({ content }: { content: ChargingPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const whyCharging = content.whyCharging ?? WHY_CHARGING;
   const icons = [MapPin, Zap, Leaf, Headphones] as const;
 
   return (
@@ -1112,7 +1251,7 @@ function WhySection() {
         />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {WHY_CHARGING.map(({ title, desc }, i) => {
+          {whyCharging.map(({ title, desc }, i) => {
             const Icon = icons[i] ?? Zap;
             return (
               <div
@@ -1123,10 +1262,17 @@ function WhySection() {
                   <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                  {title}
+                  <StaticEditableText
+                    value={title}
+                    onChange={(value) => edit?.updateField(`whyCharging.${i}.title`, value)}
+                  />
                 </h3>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                  {desc}
+                  <StaticEditableText
+                    value={desc}
+                    onChange={(value) => edit?.updateField(`whyCharging.${i}.desc`, value)}
+                    multiline
+                  />
                 </p>
               </div>
             );
@@ -1137,10 +1283,23 @@ function WhySection() {
   );
 }
 
-function FaqSection() {
+function FaqSection({ faq }: { faq: { q: string; a: string }[] }) {
+  const edit = useStaticPageAdminEdit();
+
+  if (edit?.editMode) {
+    return (
+      <StaticEditableFaqBlock
+        items={faq}
+        eyebrow="Cố vấn giải đáp"
+        title="Câu hỏi thường gặp"
+        className="section-y border-b border-border/60 bg-background"
+      />
+    );
+  }
+
   return (
     <FaqBlock
-      items={CHARGING_FAQ.map(({ q, a }) => ({ question: q, answer: a }))}
+      items={faq.map(({ q, a }) => ({ question: q, answer: a }))}
       eyebrow="Cố vấn giải đáp"
       title="Câu hỏi thường gặp"
       className="section-y border-b border-border/60 bg-background"

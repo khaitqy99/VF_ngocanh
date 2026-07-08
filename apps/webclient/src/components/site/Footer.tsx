@@ -1,37 +1,23 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import Image from "next/image";
-import { Facebook, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Building2, Clock, Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { resolveDealershipContact, type DealershipContact } from "@/lib/dealership";
+import {
+  defaultFooterSettings,
+  mergeFooterSettings,
+  type FooterLink,
+  type FooterSettings,
+} from "@/lib/cms/footer";
 import { IMAGES } from "@/lib/images";
 import { FadeIn } from "@/components/motion";
 import { ResilientLink } from "@/components/site/ResilientLink";
 
-const PRODUCT_LINKS = [
-  { label: "VF 3", href: "/oto/vf3" },
-  { label: "VF 5", href: "/oto/vf5" },
-  { label: "VF 6", href: "/oto/vf6" },
-  { label: "VF 7", href: "/oto/vf7" },
-  { label: "VF 8", href: "/oto/vf8" },
-  { label: "VF 9", href: "/oto/vf9" },
-  { label: "Xe máy điện", href: "/xe-may-dien" },
-] as const;
-
-const SERVICE_LINKS = [
-  { label: "Đăng ký lái thử", href: "/oto" },
-  { label: "Bảo dưỡng — Sửa chữa", href: "/dich-vu-hau-mai" },
-  { label: "Bảo hành", href: "/dich-vu-hau-mai" },
-  { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
-  { label: "Phụ kiện xe", href: "/phu-kien" },
-] as const;
-
-const ABOUT_LINKS = [
-  { label: "Giới thiệu", href: "/gioi-thieu" },
-  { label: "Tin tức", href: "/gioi-thieu" },
-  { label: "Tuyển dụng", href: "/gioi-thieu" },
-  { label: "Liên hệ", href: "/gioi-thieu" },
-] as const;
+function phoneTelFromDisplay(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  return digits ? `tel:${digits}` : "tel:";
+}
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
@@ -41,11 +27,11 @@ function FooterHeading({ children }: { children: ReactNode }) {
   );
 }
 
-function FooterLinkList({ items }: { items: readonly { label: string; href: string }[] }) {
+function FooterLinkList({ items }: { items: readonly FooterLink[] }) {
   return (
     <ul className="space-y-2">
       {items.map(({ label, href }) => (
-        <li key={label}>
+        <li key={`${label}-${href}`}>
           <ResilientLink
             href={href}
             className="text-[13px] leading-snug text-foreground/75 transition-colors hover:text-brand"
@@ -58,11 +44,11 @@ function FooterLinkList({ items }: { items: readonly { label: string; href: stri
   );
 }
 
-function ContactItem({ icon: Icon, children }: { icon: typeof MapPin; children: ReactNode }) {
+function ContactRow({ icon: Icon, children }: { icon: ElementType; children: ReactNode }) {
   return (
     <li className="flex gap-2.5">
       <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-brand/8 text-brand">
-        <Icon size={14} strokeWidth={2} />
+        <Icon size={14} strokeWidth={2} aria-hidden />
       </span>
       <span className="min-w-0 pt-0.5 text-[13px] leading-relaxed text-foreground/80">
         {children}
@@ -81,14 +67,20 @@ function SocialIcon({ kind }: { kind: DealershipContact["socialLinks"][number]["
 
 export default function Footer({
   contact = resolveDealershipContact(),
+  settings: settingsInput,
 }: {
   contact?: DealershipContact;
+  settings?: FooterSettings;
 }) {
+  const settings = mergeFooterSettings(settingsInput ?? defaultFooterSettings());
+  const rescueHotlineTel = phoneTelFromDisplay(settings.rescueHotline);
+  const mapEmbed = settings.mapEmbed || contact.mapEmbed;
+
   return (
     <footer className="border-t border-border/60 bg-surface-muted">
-      <div className="container-vf space-y-8 py-8 sm:space-y-10 sm:py-10 lg:py-12">
-        <FadeIn className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-          <div className="min-w-0">
+      <div className="container-vf py-8 sm:py-10 lg:py-12">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
+          <FadeIn className="col-span-2 sm:col-span-3 lg:col-span-1">
             <ResilientLink href="/" className="inline-flex items-center">
               <Image
                 src={IMAGES.vinfastLogo}
@@ -98,52 +90,69 @@ export default function Footer({
                 className="h-7 w-auto sm:h-8"
               />
             </ResilientLink>
-            <p className="mt-1 text-xs font-bold tracking-wide text-brand">
-              VINFAST NGỌC ANH CÀ MAU
+            <p className="mt-1 text-xs font-bold tracking-wide text-brand">{settings.brandTitle}</p>
+            <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              {settings.brandDescription}
             </p>
-            <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-muted-foreground sm:mt-2.5">
-              {contact.businessName}. Trải nghiệm xe điện thông minh cùng dịch vụ 3S tận tâm tại Cà
-              Mau.
-            </p>
-          </div>
-          {contact.socialLinks.length > 0 ? (
-            <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
-              {contact.socialLinks.map(({ label, href, kind }) => (
-                <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
-                >
-                  <SocialIcon kind={kind} />
-                </a>
-              ))}
-            </div>
-          ) : null}
-        </FadeIn>
+          </FadeIn>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-border/40 pt-8 sm:grid-cols-4 sm:gap-x-8 lg:gap-x-10">
           <FadeIn delay={0.05}>
-            <FooterHeading>Sản phẩm</FooterHeading>
-            <FooterLinkList items={PRODUCT_LINKS} />
+            <FooterHeading>{settings.columns.products.title}</FooterHeading>
+            <FooterLinkList items={settings.columns.products.links} />
           </FadeIn>
 
           <FadeIn delay={0.08}>
-            <FooterHeading>Dịch vụ</FooterHeading>
-            <FooterLinkList items={SERVICE_LINKS} />
+            <FooterHeading>{settings.columns.services.title}</FooterHeading>
+            <FooterLinkList items={settings.columns.services.links} />
           </FadeIn>
 
           <FadeIn delay={0.11}>
-            <FooterHeading>Về chúng tôi</FooterHeading>
-            <FooterLinkList items={ABOUT_LINKS} />
+            <FooterHeading>{settings.columns.about.title}</FooterHeading>
+            <FooterLinkList items={settings.columns.about.links} />
           </FadeIn>
 
-          <FadeIn delay={0.14}>
+          <FadeIn delay={0.14} className="col-span-2 sm:col-span-1">
+            <FooterHeading>{settings.columns.policies.title}</FooterHeading>
+            <FooterLinkList items={settings.columns.policies.links} />
+          </FadeIn>
+        </div>
+
+        <div className="my-8 border-t border-border/40 sm:my-10" />
+
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)] lg:items-stretch lg:gap-10">
+          <FadeIn delay={0.16}>
             <FooterHeading>Liên hệ</FooterHeading>
             <ul className="space-y-2.5">
-              <ContactItem icon={MapPin}>
+              <ContactRow icon={Building2}>{contact.businessName}</ContactRow>
+              <ContactRow icon={Phone}>
+                <span className="block">
+                  Hotline tư vấn:{" "}
+                  <a
+                    href={contact.phoneTel}
+                    className="font-semibold transition-colors hover:text-brand"
+                  >
+                    {contact.phone}
+                  </a>
+                </span>
+                <span className="mt-1 block text-foreground/65">
+                  Cứu hộ 24/7:{" "}
+                  <a
+                    href={rescueHotlineTel}
+                    className="font-semibold transition-colors hover:text-brand"
+                  >
+                    {settings.rescueHotline}
+                  </a>
+                </span>
+              </ContactRow>
+              <ContactRow icon={Mail}>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="break-all transition-colors hover:text-brand"
+                >
+                  {contact.email}
+                </a>
+              </ContactRow>
+              <ContactRow icon={MapPin}>
                 <a
                   href={contact.mapUrl}
                   target="_blank"
@@ -152,38 +161,58 @@ export default function Footer({
                 >
                   {contact.address}
                 </a>
-              </ContactItem>
-              <ContactItem icon={Phone}>
-                <a
-                  href={contact.phoneTel}
-                  className="font-semibold transition-colors hover:text-brand"
-                >
-                  {contact.phone}
-                </a>
-              </ContactItem>
-              <ContactItem icon={Mail}>
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="break-all transition-colors hover:text-brand"
-                >
-                  {contact.email}
-                </a>
-              </ContactItem>
+              </ContactRow>
+              <ContactRow icon={Clock}>
+                Hàng ngày · {contact.opening.opens} – {contact.opening.closes}
+              </ContactRow>
             </ul>
+
+            {contact.socialLinks.length > 0 ? (
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                {contact.socialLinks.map(({ label, href, kind }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
+                  >
+                    <SocialIcon kind={kind} />
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <div className="relative min-h-[260px] overflow-hidden rounded-xl border border-border/50 sm:min-h-[300px] lg:min-h-[320px]">
+              <iframe
+                title={`Bản đồ ${contact.businessName}`}
+                src={mapEmbed}
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
           </FadeIn>
         </div>
       </div>
 
       <div className="border-t border-border/50 bg-white/60">
         <div className="container-vf flex flex-col items-center justify-between gap-3 py-4 text-[11px] text-muted-foreground sm:flex-row sm:py-5">
-          <p>© 2026 VinFast Ngọc Anh Cà Mau. All rights reserved.</p>
-          <div className="flex gap-5">
-            <ResilientLink href="/gioi-thieu" className="transition-colors hover:text-brand">
-              Chính sách bảo mật
-            </ResilientLink>
-            <ResilientLink href="/gioi-thieu" className="transition-colors hover:text-brand">
-              Điều khoản sử dụng
-            </ResilientLink>
+          <p>{settings.copyright}</p>
+          <div className="flex flex-wrap justify-center gap-5">
+            {settings.bottomLinks.map(({ label, href }) => (
+              <ResilientLink
+                key={`${label}-${href}`}
+                href={href}
+                className="transition-colors hover:text-brand"
+              >
+                {label}
+              </ResilientLink>
+            ))}
           </div>
         </div>
       </div>

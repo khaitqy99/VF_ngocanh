@@ -43,17 +43,32 @@ import {
   type HomeSectionsContent,
 } from "./home-content";
 import { resolveProductSlug } from "@/lib/seo/slugs";
-import { CMS_TAGS, vehicleTag } from "./cache-tags";
+import { CMS_TAGS, vehicleTag, staticPageTag } from "./cache-tags";
+import { getCmsCacheRevalidate, getCmsCacheTtlSeconds } from "./cache-config";
+import {
+  getDefaultStaticPageContent,
+  isStaticPageSlug,
+  mergeStaticPageContent,
+  type StaticPageSlug,
+  type StaticPageContentMap,
+} from "./static-pages";
 
 type BannerPlacement = Database["public"]["Enums"]["banner_placement"];
-const CMS_REDIS_TTL_SECONDS = 120;
+
+function cmsRedisTtl() {
+  return getCmsCacheTtlSeconds();
+}
+
+function cmsRevalidate() {
+  return getCmsCacheRevalidate();
+}
 
 function getClient() {
   return createAnonClient();
 }
 
 async function fetchVehiclesByType(type: "car" | "scooter") {
-  return getOrSetCache(`cms:vehicles:${type}`, CMS_REDIS_TTL_SECONDS, async () => {
+  return getOrSetCache(`cms:vehicles:${type}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
       .from("vehicles")
@@ -68,7 +83,7 @@ async function fetchVehiclesByType(type: "car" | "scooter") {
 }
 
 async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> | null> {
-  return getOrSetCache(`cms:vehicle:${id}`, CMS_REDIS_TTL_SECONDS, async () => {
+  return getOrSetCache(`cms:vehicle:${id}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
       .from("vehicles")
@@ -83,7 +98,7 @@ async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> | null> 
 }
 
 async function fetchAccessoriesRows() {
-  return getOrSetCache(`cms:accessories`, CMS_REDIS_TTL_SECONDS, async () => {
+  return getOrSetCache(`cms:accessories`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
       .from("accessories")
@@ -97,7 +112,7 @@ async function fetchAccessoriesRows() {
 }
 
 async function fetchBannersByPlacement(placement: BannerPlacement) {
-  return getOrSetCache(`cms:banners:${placement}`, CMS_REDIS_TTL_SECONDS, async () => {
+  return getOrSetCache(`cms:banners:${placement}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
       .from("banners")
@@ -112,7 +127,7 @@ async function fetchBannersByPlacement(placement: BannerPlacement) {
 }
 
 async function fetchHomePage(): Promise<Json | null> {
-  return getOrSetCache(`cms:page:home`, CMS_REDIS_TTL_SECONDS, async () => {
+  return getOrSetCache(`cms:page:home`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
       .from("cms_pages")
@@ -139,7 +154,7 @@ export const getCars = unstable_cache(
     }
   },
   ["cms-cars"],
-  { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.cars] },
+  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.cars] },
 );
 
 export const getScooters = unstable_cache(
@@ -154,7 +169,7 @@ export const getScooters = unstable_cache(
     }
   },
   ["cms-scooters"],
-  { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.scooters] },
+  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.scooters] },
 );
 
 export const getAccessories = unstable_cache(
@@ -169,7 +184,7 @@ export const getAccessories = unstable_cache(
     }
   },
   ["cms-accessories"],
-  { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.accessories] },
+  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.accessories] },
 );
 
 export async function getCarDetailById(id: string) {
@@ -189,7 +204,7 @@ export async function getCarDetailById(id: string) {
       }
     },
     ["cms-car-detail", id],
-    { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.cars, vehicleTag(id)] },
+    { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.cars, vehicleTag(id)] },
   )();
 }
 
@@ -210,7 +225,7 @@ export async function getScooterDetailById(id: string) {
       }
     },
     ["cms-scooter-detail", id],
-    { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.scooters, vehicleTag(id)] },
+    { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.scooters, vehicleTag(id)] },
   )();
 }
 
@@ -242,7 +257,10 @@ export async function getBanners(placement: BannerPlacement): Promise<HeroBanner
       }
     },
     ["cms-banners", placement],
-    { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.banners, `cms-banners-${placement}`] },
+    {
+      revalidate: cmsRevalidate(),
+      tags: [CMS_TAGS.all, CMS_TAGS.banners, `cms-banners-${placement}`],
+    },
   )();
 }
 
@@ -318,7 +336,7 @@ export const getHomeData = unstable_cache(
     };
   },
   ["cms-home"],
-  { revalidate: 120, tags: [CMS_TAGS.all, CMS_TAGS.home] },
+  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.home] },
 );
 
 export async function getCarDetailAccessories(carId: string): Promise<AccessoryProduct[]> {
@@ -348,6 +366,40 @@ export async function getScooterDetailAccessories(): Promise<AccessoryProduct[]>
         ),
     )
     .slice(0, 4);
+}
+
+async function fetchCmsPageContent(slug: StaticPageSlug): Promise<Json | null> {
+  return getOrSetCache(`cms:page:${slug}`, cmsRedisTtl(), async () => {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from("cms_pages")
+      .select("content")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+
+    if (error) throw new Error(error.message);
+    const row = data as Pick<Tables<"cms_pages">, "content"> | null;
+    return row?.content ?? null;
+  });
+}
+
+export async function getStaticPageContent<S extends StaticPageSlug>(
+  slug: S,
+): Promise<StaticPageContentMap[S]> {
+  return unstable_cache(
+    async () => {
+      if (!isSupabaseConfigured()) return getDefaultStaticPageContent(slug);
+      try {
+        const raw = await fetchCmsPageContent(slug);
+        return mergeStaticPageContent(slug, raw);
+      } catch {
+        return getDefaultStaticPageContent(slug);
+      }
+    },
+    ["cms-static-page", slug],
+    { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, staticPageTag(slug)] },
+  )();
 }
 
 export { getSiteSeo, getPageSeo, CMS_SEO_TAG } from "./seo";

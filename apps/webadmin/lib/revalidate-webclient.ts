@@ -72,3 +72,18 @@ export function homePageRevalidatePayload(): RevalidatePayload {
     paths: ["/"],
   };
 }
+
+const STATIC_PAGE_PATHS: Record<string, string> = {
+  about: "/gioi-thieu",
+  "after-sales": "/dich-vu-hau-mai",
+  charging: "/pin-va-tram-sac",
+  energy: "/luu-tru-nang-luong",
+};
+
+export function staticPageRevalidatePayload(slug: string): RevalidatePayload {
+  const path = STATIC_PAGE_PATHS[slug];
+  return {
+    tags: ["cms", `cms-page-${slug}`],
+    paths: path ? [path] : [],
+  };
+}

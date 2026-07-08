@@ -20,12 +20,12 @@ export function PageEditorialHero({
 }: {
   imageSrc: string;
   imageAlt: string;
-  eyebrow: string;
+  eyebrow: ReactNode;
   title: ReactNode;
   titleAccent?: ReactNode;
-  description: string;
+  description: ReactNode;
   actions: ReactNode;
-  stats?: readonly { icon: LucideIcon; value: string; label: string }[];
+  stats?: readonly { icon: LucideIcon; value: ReactNode; label: ReactNode }[];
 }) {
   const reduced = useReducedMotion();
 
@@ -78,8 +78,8 @@ export function PageEditorialHero({
               className="w-full lg:ml-auto lg:max-w-md"
             >
               <div className="home-hero-stat-grid">
-                {stats.map(({ icon: Icon, value, label }) => (
-                  <div key={label} className="home-hero-stat-chip rounded-2xl p-4">
+                {stats.map(({ icon: Icon, value, label }, index) => (
+                  <div key={index} className="home-hero-stat-chip rounded-2xl p-4">
                     <Icon size={16} className="text-accent-yellow" strokeWidth={1.75} />
                     <p className="mt-2 font-mono text-lg font-bold tabular-nums tracking-tight text-white">
                       {value}

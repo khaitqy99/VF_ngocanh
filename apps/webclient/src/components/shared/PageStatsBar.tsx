@@ -2,6 +2,7 @@
 
 import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { homeViewport } from "@/lib/home-motion";
@@ -11,7 +12,7 @@ export function PageStatsBar({
   items,
   columns = 4,
 }: {
-  items: readonly { value: string; label: string; icon?: LucideIcon }[];
+  items: readonly { value: ReactNode; label: ReactNode; icon?: LucideIcon }[];
   columns?: 2 | 3 | 4;
 }) {
   const { ref, reduced, show } = useSectionReveal<HTMLUListElement>(homeViewport);
@@ -35,8 +36,8 @@ export function PageStatsBar({
           transition={safeRevealTransition(reduced, { duration: 0.65, ease: [0.16, 1, 0.3, 1] })}
           className={`grid divide-x divide-white/10 ${colClass}`}
         >
-          {items.map(({ icon: Icon, value, label }) => (
-            <li key={label} className="min-w-0 px-3 py-5 sm:px-5 sm:py-6 lg:px-6">
+          {items.map(({ icon: Icon, value, label }, index) => (
+            <li key={index} className="min-w-0 px-3 py-5 sm:px-5 sm:py-6 lg:px-6">
               <div className="flex h-full flex-col gap-2">
                 {Icon ? <Icon size={18} strokeWidth={1.75} className="text-accent-yellow" /> : null}
                 <p className="font-mono text-lg font-bold tabular-nums tracking-tight text-white sm:text-xl">

@@ -2,16 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home } from "lucide-react";
+import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home, FileText, PanelBottom } from "lucide-react";
 import { cn, Button } from "@/components/ui/core";
 import { useLeadsCounts } from "@/lib/use-leads-count";
 
 const MENU_ITEMS = [
   { href: "/admin/homepage", label: "Trang chủ", icon: Home },
+  { href: "/admin/pages", label: "Nội dung trang", icon: FileText },
   { href: "/admin/cars", label: "Ô tô", icon: Car },
   { href: "/admin/scooters", label: "Xe máy", icon: Bike },
   { href: "/admin/accessories", label: "Phụ kiện", icon: Wrench },
   { href: "/admin/seo", label: "SEO", icon: Search },
+  { href: "/admin/footer", label: "Footer", icon: PanelBottom },
   { href: "/admin/media", label: "Thư viện ảnh", icon: Images },
   { href: "/admin/leads", label: "Lead khách", icon: Users, badge: true },
   { href: "/admin/users", label: "Tài khoản admin", icon: UserCog },

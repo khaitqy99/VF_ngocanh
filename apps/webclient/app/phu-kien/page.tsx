@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema, buildItemListSchema } from "@/lib/seo/local-busi
 import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
 import { accessoryDetailPath } from "@/lib/seo/slugs";
 
-export const revalidate = 120;
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildStaticPageMetadata("accessories");

@@ -42,6 +42,9 @@ export async function generateMetadata(): Promise<Metadata> {
   );
   const meta = seoToNextMetadata(resolved, site);
 
+  const lat = site.organization?.geo?.latitude ?? 9.173417;
+  const lng = site.organization?.geo?.longitude ?? 105.19138;
+
   return {
     ...meta,
     metadataBase: new URL(PRODUCTION_SITE_URL),
@@ -69,6 +72,12 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
     verification: { google: GOOGLE_SITE_VERIFICATION },
+    other: {
+      "geo.region": "VN-59",
+      "geo.placename": "Cà Mau",
+      "geo.position": `${lat};${lng}`,
+      ICBM: `${lat}, ${lng}`,
+    },
   };
 }
 

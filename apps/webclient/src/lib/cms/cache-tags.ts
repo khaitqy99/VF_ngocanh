@@ -7,6 +7,10 @@ export const CMS_TAGS = {
   banners: "cms-banners",
 } as const;
 
+export function staticPageTag(slug: string) {
+  return `cms-page-${slug}`;
+}
+
 export function vehicleTag(id: string) {
   return `vehicle-${id}`;
 }

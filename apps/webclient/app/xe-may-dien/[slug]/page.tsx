@@ -9,7 +9,7 @@ import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { buildMotorcycleSchema } from "@/lib/seo/product-schema";
 import { resolveProductSlug, scooterDetailPath, isReservedProductSlug } from "@/lib/seo/slugs";
 
-export const revalidate = 120;
+export const revalidate = 86400;
 
 type Props = { params: Promise<{ slug: string }> };
 
