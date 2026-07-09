@@ -278,7 +278,7 @@ export default function AccessoriesPage({
     if (sort === "price-desc") result = [...result].sort((a, b) => b.price - a.price);
     if (sort === "name") result = [...result].sort((a, b) => a.name.localeCompare(b.name, "vi"));
     return result;
-  }, [filters, sort, activeCategoryTab, searchQuery]);
+  }, [filters, sort, activeCategoryTab, searchQuery, ACCESSORIES]);
 
   const clearFilters = () => {
     setFilters(defaultFilters());

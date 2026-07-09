@@ -218,7 +218,7 @@ export default function ChargingPage({
       kwh: parseFloat(totalKwhNeeded.toFixed(2)),
       rangeGained,
     };
-  }, [simCarId, simChargerId, simCurrentPct, simTargetPct, activeCar, activeCharger]);
+  }, [simCurrentPct, simTargetPct, activeCar, activeCharger]);
 
   const handleInquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -45,14 +45,13 @@ function StaticPagePreviewBody({
   }) => ReactNode;
 }) {
   const edit = useStaticPageAdminEdit();
-  const draftBanners = edit?.draft.banners ?? [];
-
   const heroBanners = useMemo(() => {
+    const draftBanners = edit?.draft.banners ?? [];
     if (draftBanners.length > 0) {
       return draftBanners.filter((banner) => banner.desktop).map(mapBannerToSlide);
     }
     return fallbackHeroBanners;
-  }, [draftBanners, fallbackHeroBanners]);
+  }, [edit?.draft.banners, fallbackHeroBanners]);
 
   if (!edit) return null;
 

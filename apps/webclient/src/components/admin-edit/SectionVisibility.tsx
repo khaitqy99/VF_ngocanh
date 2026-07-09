@@ -106,7 +106,10 @@ export function EditableSectionWrap({
         </div>
       ) : null}
 
-      <div className={isHidden ? "opacity-40 grayscale transition" : "transition"} aria-hidden={isHidden}>
+      <div
+        className={isHidden ? "opacity-40 grayscale transition" : "transition"}
+        aria-hidden={isHidden}
+      >
         <PdpSection id={id} variant={variant}>
           {children}
         </PdpSection>

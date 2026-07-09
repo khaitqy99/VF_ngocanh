@@ -248,7 +248,7 @@ export default function CarsPage({
 
   const selectedEstimatorCar = useMemo(() => {
     return CARS.find((c) => c.id === estimatorCarId) || CARS[0];
-  }, [estimatorCarId]);
+  }, [estimatorCarId, CARS]);
 
   // Rolling Cost Calculation
   const rollingCostResult = useMemo(() => {

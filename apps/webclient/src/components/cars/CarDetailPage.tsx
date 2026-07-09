@@ -258,7 +258,7 @@ export default function CarDetailPage({
   }, [detail.privileges, detail.charging]);
 
   const hiddenSections = useMemo(
-    () => (adminEdit ? edit?.hiddenSections ?? [] : readHiddenSections(detail)),
+    () => (adminEdit ? (edit?.hiddenSections ?? []) : readHiddenSections(detail)),
     [adminEdit, edit?.hiddenSections, detail],
   );
   const sectionLabels = useMemo(
@@ -736,84 +736,84 @@ export default function CarDetailPage({
 
           {/* All content sections */}
           <div className="bg-white">
-          <SectionWrap id="tong-quan">
-            <OverviewSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          <SectionWrap id="ngoai-that" alt>
-            <ExteriorSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          <SectionWrap id="noi-that">
-            <InteriorSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          <SectionWrap id="cong-nghe" alt>
-            <TechnologySection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          <SectionWrap id="van-hanh" alt>
-            <PerformanceSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          {detail.privileges && (
-            <SectionWrap id="dac-quyen" alt>
-              <PrivilegesSection privileges={detail.privileges} adminEditable={adminEdit} />
+            <SectionWrap id="tong-quan">
+              <OverviewSection detail={detail} adminEditable={adminEdit} />
             </SectionWrap>
-          )}
 
-          <SectionWrap id="an-toan" alt={!detail.privileges}>
-            <SafetySection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
-
-          {detail.charging && (
-            <SectionWrap id="pin-sac">
-              <ChargingSection charging={detail.charging} adminEditable={adminEdit} />
+            <SectionWrap id="ngoai-that" alt>
+              <ExteriorSection detail={detail} adminEditable={adminEdit} />
             </SectionWrap>
-          )}
 
-          <SectionWrap id="thong-so" alt={!!detail.charging}>
-            <SpecsSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="noi-that">
+              <InteriorSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="phu-kien" alt>
-            <AccessoriesSection
-              detail={detail}
-              products={detailAccessories}
-              adminEditable={adminEdit}
-            />
-          </SectionWrap>
+            <SectionWrap id="cong-nghe" alt>
+              <TechnologySection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="tai-chinh">
-            <FinanceSection
-              detail={detail}
-              variant={variant}
-              adminEditable={adminEdit}
-              basePrice={basePrice}
-              fixedRollingCost={fixedRollingCost}
-              estimatorLocation={estimatorLocation}
-              setEstimatorLocation={setEstimatorLocation}
-              includeInsurance={includeInsurance}
-              setIncludeInsurance={setIncludeInsurance}
-              estimatorTab={estimatorTab}
-              setEstimatorTab={setEstimatorTab}
-              downPaymentPct={downPaymentPct}
-              setDownPaymentPct={setDownPaymentPct}
-              loanTermYears={loanTermYears}
-              setLoanTermYears={setLoanTermYears}
-              interestRate={interestRate}
-              setInterestRate={setInterestRate}
-              rollingCost={rollingCost}
-              installment={installment}
-              provinces={pricing.provinces}
-              physicalInsuranceLabel={`~${physicalInsurancePercent}%`}
-              onBook={() => openBooking("Nhận báo giá")}
-            />
-          </SectionWrap>
+            <SectionWrap id="van-hanh" alt>
+              <PerformanceSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="danh-gia" alt>
-            <ReviewsSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            {detail.privileges && (
+              <SectionWrap id="dac-quyen" alt>
+                <PrivilegesSection privileges={detail.privileges} adminEditable={adminEdit} />
+              </SectionWrap>
+            )}
+
+            <SectionWrap id="an-toan" alt={!detail.privileges}>
+              <SafetySection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
+
+            {detail.charging && (
+              <SectionWrap id="pin-sac">
+                <ChargingSection charging={detail.charging} adminEditable={adminEdit} />
+              </SectionWrap>
+            )}
+
+            <SectionWrap id="thong-so" alt={!!detail.charging}>
+              <SpecsSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
+
+            <SectionWrap id="phu-kien" alt>
+              <AccessoriesSection
+                detail={detail}
+                products={detailAccessories}
+                adminEditable={adminEdit}
+              />
+            </SectionWrap>
+
+            <SectionWrap id="tai-chinh">
+              <FinanceSection
+                detail={detail}
+                variant={variant}
+                adminEditable={adminEdit}
+                basePrice={basePrice}
+                fixedRollingCost={fixedRollingCost}
+                estimatorLocation={estimatorLocation}
+                setEstimatorLocation={setEstimatorLocation}
+                includeInsurance={includeInsurance}
+                setIncludeInsurance={setIncludeInsurance}
+                estimatorTab={estimatorTab}
+                setEstimatorTab={setEstimatorTab}
+                downPaymentPct={downPaymentPct}
+                setDownPaymentPct={setDownPaymentPct}
+                loanTermYears={loanTermYears}
+                setLoanTermYears={setLoanTermYears}
+                interestRate={interestRate}
+                setInterestRate={setInterestRate}
+                rollingCost={rollingCost}
+                installment={installment}
+                provinces={pricing.provinces}
+                physicalInsuranceLabel={`~${physicalInsurancePercent}%`}
+                onBook={() => openBooking("Nhận báo giá")}
+              />
+            </SectionWrap>
+
+            <SectionWrap id="danh-gia" alt>
+              <ReviewsSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
           </div>
         </SectionVisibilityProvider>
 

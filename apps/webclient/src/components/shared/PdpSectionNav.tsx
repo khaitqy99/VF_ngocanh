@@ -7,13 +7,7 @@ import { useMountReveal } from "@/hooks/use-scroll-reveal";
 
 export type PdpNavItem = { id: string; label: string };
 
-export function PdpSectionNav({
-  items,
-  hiddenIds,
-}: {
-  items: PdpNavItem[];
-  hiddenIds?: string[];
-}) {
+export function PdpSectionNav({ items, hiddenIds }: { items: PdpNavItem[]; hiddenIds?: string[] }) {
   const [active, setActive] = useState(items[0]?.id ?? "");
   const mount = useMountReveal(0.05);
 

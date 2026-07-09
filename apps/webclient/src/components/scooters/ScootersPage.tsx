@@ -212,7 +212,7 @@ export default function ScootersPage({
     if (sort === "range-desc") result = [...result].sort((a, b) => b.range - a.range);
     if (sort === "speed-desc") result = [...result].sort((a, b) => b.topSpeed - a.topSpeed);
     return result;
-  }, [filters, sort, segmentTab, searchQuery]);
+  }, [filters, sort, segmentTab, searchQuery, SCOOTERS]);
 
   const clearFilters = () => {
     setFilters(defaultFilters());
@@ -246,7 +246,7 @@ export default function ScootersPage({
 
   const selectedEstimatorScooter = useMemo(() => {
     return SCOOTERS.find((s) => s.id === estimatorScooterId) || SCOOTERS[0];
-  }, [estimatorScooterId]);
+  }, [estimatorScooterId, SCOOTERS]);
 
   // Rolling Cost Calculation for Scooter
   const rollingCostResult = useMemo(() => {

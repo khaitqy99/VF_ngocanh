@@ -399,7 +399,9 @@ export function mapAccessoryRow(row: AccessoryRow): AccessoryProduct {
       description: content.description ?? row.description ?? "",
       price: Number(content.price ?? row.price ?? 0),
       image: content.image ?? row.image_url ?? "",
-      category: (content.category ?? row.category ?? "phu-kien-chung") as AccessoryProduct["category"],
+      category: (content.category ??
+        row.category ??
+        "phu-kien-chung") as AccessoryProduct["category"],
       vehicles: content.vehicles ?? [],
       inStock: content.inStock ?? row.in_stock ?? true,
     };

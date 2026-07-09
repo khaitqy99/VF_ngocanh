@@ -262,7 +262,7 @@ export default function ScooterDetailPage({
   );
 
   const hiddenSections = useMemo(
-    () => (adminEdit ? edit?.hiddenSections ?? [] : readHiddenSections(detail)),
+    () => (adminEdit ? (edit?.hiddenSections ?? []) : readHiddenSections(detail)),
     [adminEdit, edit?.hiddenSections, detail],
   );
   const sectionLabels = useMemo(
@@ -691,68 +691,68 @@ export default function ScooterDetailPage({
           <div className="bg-white">
             <SectionWrap id="tong-quan">
               <OverviewSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            </SectionWrap>
 
-          <SectionWrap id="ngoai-that" alt>
-            <ExteriorSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="ngoai-that" alt>
+              <ExteriorSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="thiet-ke">
-            <DesignSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="thiet-ke">
+              <DesignSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="cong-nghe" alt>
-            <TechnologySection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="cong-nghe" alt>
+              <TechnologySection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="van-hanh" alt>
-            <PerformanceSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="van-hanh" alt>
+              <PerformanceSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="an-toan">
-            <SafetySection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="an-toan">
+              <SafetySection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="pin-sac" alt>
-            <ChargingSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="pin-sac" alt>
+              <ChargingSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="thong-so">
-            <SpecsSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="thong-so">
+              <SpecsSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
 
-          <SectionWrap id="phu-kien" alt>
-            <AccessoriesSection
-              detail={detail}
-              products={detailAccessories}
-              adminEditable={adminEdit}
-            />
-          </SectionWrap>
+            <SectionWrap id="phu-kien" alt>
+              <AccessoriesSection
+                detail={detail}
+                products={detailAccessories}
+                adminEditable={adminEdit}
+              />
+            </SectionWrap>
 
-          <SectionWrap id="tai-chinh">
-            <FinanceSection
-              detail={detail}
-              variant={variant}
-              adminEditable={adminEdit}
-              estimatorLocation={estimatorLocation}
-              setEstimatorLocation={setEstimatorLocation}
-              estimatorTab={estimatorTab}
-              setEstimatorTab={setEstimatorTab}
-              downPaymentPct={downPaymentPct}
-              setDownPaymentPct={setDownPaymentPct}
-              loanTermYears={loanTermYears}
-              setLoanTermYears={setLoanTermYears}
-              interestRate={interestRate}
-              setInterestRate={setInterestRate}
-              rollingCost={rollingCost}
-              installment={installment}
-              onBook={() => openBooking("Nhận báo giá")}
-            />
-          </SectionWrap>
+            <SectionWrap id="tai-chinh">
+              <FinanceSection
+                detail={detail}
+                variant={variant}
+                adminEditable={adminEdit}
+                estimatorLocation={estimatorLocation}
+                setEstimatorLocation={setEstimatorLocation}
+                estimatorTab={estimatorTab}
+                setEstimatorTab={setEstimatorTab}
+                downPaymentPct={downPaymentPct}
+                setDownPaymentPct={setDownPaymentPct}
+                loanTermYears={loanTermYears}
+                setLoanTermYears={setLoanTermYears}
+                interestRate={interestRate}
+                setInterestRate={setInterestRate}
+                rollingCost={rollingCost}
+                installment={installment}
+                onBook={() => openBooking("Nhận báo giá")}
+              />
+            </SectionWrap>
 
-          <SectionWrap id="danh-gia" alt>
-            <ReviewsSection detail={detail} adminEditable={adminEdit} />
-          </SectionWrap>
+            <SectionWrap id="danh-gia" alt>
+              <ReviewsSection detail={detail} adminEditable={adminEdit} />
+            </SectionWrap>
           </div>
         </SectionVisibilityProvider>
 

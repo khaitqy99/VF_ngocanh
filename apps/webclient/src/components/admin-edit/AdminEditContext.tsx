@@ -165,9 +165,7 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
         const current = Array.isArray(raw)
           ? (raw.filter((x) => typeof x === "string") as string[])
           : [];
-        const next = current.includes(id)
-          ? current.filter((x) => x !== id)
-          : [...current, id];
+        const next = current.includes(id) ? current.filter((x) => x !== id) : [...current, id];
         return {
           ...prev,
           patches: { ...(prev.patches ?? {}), _hiddenSections: next as PatchValue },
