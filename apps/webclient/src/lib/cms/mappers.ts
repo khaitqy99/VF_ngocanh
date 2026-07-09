@@ -273,10 +273,6 @@ export function mapVehicleToCar(row: VehicleRow): CarModel {
       ...patched,
       id: row.id,
       slug: resolveProductSlug({ id: row.id, slug: row.slug }, "car"),
-      name: row.name,
-      subtitle: row.tagline ?? patched.subtitle ?? fallback?.subtitle ?? "",
-      image: row.hero_image_url ?? patched.image ?? fallback?.image ?? "",
-      price: Number(row.starting_price ?? patched.price ?? fallback?.price ?? 0),
     },
     fallback,
   ) as CarModel;
@@ -301,10 +297,6 @@ export function mapVehicleToScooter(row: VehicleRow): ScooterModel {
       ...patched,
       id: row.id,
       slug: resolveProductSlug({ id: row.id, slug: row.slug }, "scooter"),
-      name: row.name,
-      subtitle: row.tagline ?? patched.subtitle ?? fallback?.subtitle ?? "",
-      image: row.hero_image_url ?? patched.image ?? fallback?.image ?? "",
-      price: Number(row.starting_price ?? patched.price ?? fallback?.price ?? 0),
     },
     fallback,
   ) as ScooterModel;
@@ -403,13 +395,13 @@ export function mapAccessoryRow(row: AccessoryRow): AccessoryProduct {
       ...content,
       id: row.id,
       slug,
-      name: row.name,
-      description: row.description ?? content.description,
-      price: Number(row.price ?? content.price ?? 0),
-      image: row.image_url ?? content.image ?? "",
-      category: (row.category ?? content.category) as AccessoryProduct["category"],
+      name: content.name ?? row.name,
+      description: content.description ?? row.description ?? "",
+      price: Number(content.price ?? row.price ?? 0),
+      image: content.image ?? row.image_url ?? "",
+      category: (content.category ?? row.category ?? "phu-kien-chung") as AccessoryProduct["category"],
       vehicles: content.vehicles ?? [],
-      inStock: row.in_stock ?? content.inStock ?? true,
+      inStock: content.inStock ?? row.in_stock ?? true,
     };
   }
   return {

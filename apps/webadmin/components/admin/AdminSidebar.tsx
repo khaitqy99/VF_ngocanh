@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home, FileText, PanelBottom } from "lucide-react";
+import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home, FileText, PanelBottom, Calculator } from "lucide-react";
 import { cn, Button } from "@/components/ui/core";
 import { useLeadsCounts } from "@/lib/use-leads-count";
+import { IMAGES } from "@webclient/lib/images";
+import { clientAssetUrl } from "@/lib/product-utils";
 
 const MENU_ITEMS = [
   { href: "/admin/homepage", label: "Trang chủ", icon: Home },
@@ -12,6 +15,7 @@ const MENU_ITEMS = [
   { href: "/admin/cars", label: "Ô tô", icon: Car },
   { href: "/admin/scooters", label: "Xe máy", icon: Bike },
   { href: "/admin/accessories", label: "Phụ kiện", icon: Wrench },
+  { href: "/admin/car-pricing", label: "Giá lăn bánh", icon: Calculator },
   { href: "/admin/seo", label: "SEO", icon: Search },
   { href: "/admin/footer", label: "Footer", icon: PanelBottom },
   { href: "/admin/media", label: "Thư viện ảnh", icon: Images },
@@ -39,13 +43,27 @@ export function AdminSidebar({
         isOpen ? "w-64" : "w-0 overflow-hidden md:w-20",
       )}
     >
-      <div className="flex h-16 items-center border-b border-zinc-200 px-6 py-4">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-red-600 font-bold text-white">
-          V
-        </div>
-        <span className={cn("ml-3 font-semibold text-zinc-900", !isOpen && "hidden")}>
-          VinFast Ngọc Anh Cà Mau
-        </span>
+      <div
+        className={cn(
+          "flex h-16 items-center border-b border-zinc-200 px-4 py-4",
+          !isOpen && "md:justify-center md:px-2",
+        )}
+      >
+        <Link
+          href="/admin"
+          className={cn("flex min-w-0 items-center", !isOpen && "md:justify-center")}
+          title="VinFast Ngọc Anh Cà Mau"
+        >
+          <Image
+            src={clientAssetUrl(IMAGES.vinfastLogo)}
+            alt="VinFast — Đại lý VinFast Ngọc Anh Cà Mau"
+            width={140}
+            height={32}
+            priority
+            unoptimized
+            className={cn("h-7 w-auto sm:h-8", !isOpen && "md:h-7")}
+          />
+        </Link>
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">

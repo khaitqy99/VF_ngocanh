@@ -96,7 +96,12 @@ import {
 } from "@/components/admin-edit/list-defaults";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
 import { PdpHeroHeader } from "@/components/shared/PdpHeroHeader";
-import { PdpSection } from "@/components/shared/PdpSectionShell";
+import {
+  EditableSectionWrap,
+  SectionVisibilityProvider,
+  filterVisibleNavItems,
+  readHiddenSections,
+} from "@/components/admin-edit/SectionVisibility";
 import {
   PdpQuickSpecBar,
   PdpSectionTitle,
@@ -144,6 +149,11 @@ import {
   type TechFeature,
   type ChargingHighlight,
 } from "@/lib/car-details";
+import {
+  defaultCarPricingSettings,
+  type CarPricingSettings,
+  type ProvincePlateFee,
+} from "@/lib/cms/car-pricing";
 
 type SectionId =
   | "tong-quan"
@@ -166,13 +176,6 @@ const SERVICE_BAR = [
   { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Vay 80%, trả góp lãi suất thấp" },
 ] as const;
 
-const PROVINCES = [
-  { id: "camau", name: "Cà Mau (Phí biển ~1 triệu)", plateFee: 1_000_000 },
-  { id: "hanoi", name: "Hà Nội (Phí biển 20 triệu)", plateFee: 20_000_000 },
-  { id: "hcm", name: "TP. Hồ Chí Minh (Phí biển 20 triệu)", plateFee: 20_000_000 },
-  { id: "other", name: "Tỉnh/Thành phố khác (Phí biển 1 triệu)", plateFee: 1_000_000 },
-] as const;
-
 const TECH_ICONS: Record<TechFeature["icon"], React.ElementType> = {
   voice: Mic,
   fota: Download,
@@ -190,6 +193,7 @@ type Props = {
   embedded?: boolean;
   adminEdit?: boolean;
   detailAccessories?: AccessoryProduct[];
+  pricing?: CarPricingSettings;
 };
 
 export default function CarDetailPage({
@@ -197,6 +201,7 @@ export default function CarDetailPage({
   embedded = false,
   adminEdit = false,
   detailAccessories = [],
+  pricing = defaultCarPricingSettings(),
 }: Props) {
   const edit = useAdminEdit();
   const detail = (edit?.values as CarDetail | undefined) ?? initialDetail;
@@ -251,6 +256,19 @@ export default function CarDetailPage({
     );
     return items;
   }, [detail.privileges, detail.charging]);
+
+  const hiddenSections = useMemo(
+    () => (adminEdit ? edit?.hiddenSections ?? [] : readHiddenSections(detail)),
+    [adminEdit, edit?.hiddenSections, detail],
+  );
+  const sectionLabels = useMemo(
+    () => Object.fromEntries(sectionNavItems.map((item) => [item.id, item.label])),
+    [sectionNavItems],
+  );
+  const visibleNavItems = useMemo(
+    () => (adminEdit ? sectionNavItems : filterVisibleNavItems(sectionNavItems, hiddenSections)),
+    [adminEdit, sectionNavItems, hiddenSections],
+  );
 
   const quickSpecItems = useMemo(
     () =>
@@ -329,6 +347,9 @@ export default function CarDetailPage({
   }, [detail.colors, selectedColor]);
 
   const basePrice = variant.price;
+  const physicalInsurancePercent = Number((pricing.physicalInsuranceRate * 100).toFixed(2))
+    .toString()
+    .replace(".", ",");
 
   const rollingCost = useMemo(() => {
     if (fixedRollingCost != null) {
@@ -341,27 +362,28 @@ export default function CarDetailPage({
         totalRolling: fixedRollingCost,
       };
     }
-    const province = PROVINCES.find((p) => p.id === estimatorLocation) ?? PROVINCES[0];
-    const roadMaintenanceFee = 1_560_000;
-    const inspectionFee = 340_000;
-    const civilInsurance = 480_000;
-    const physicalInsurance = Math.round(basePrice * 0.011);
+    const province =
+      pricing.provinces.find((p) => p.id === estimatorLocation) ?? pricing.provinces[0];
+    const roadMaintenanceFee = pricing.roadMaintenanceFee;
+    const inspectionFee = pricing.inspectionFee;
+    const civilInsurance = pricing.civilInsurance;
+    const physicalInsurance = Math.round(basePrice * pricing.physicalInsuranceRate);
     const totalRolling =
       basePrice +
-      province.plateFee +
+      (province?.plateFee ?? 0) +
       roadMaintenanceFee +
       inspectionFee +
       civilInsurance +
       (includeInsurance ? physicalInsurance : 0);
     return {
-      plateFee: province.plateFee,
+      plateFee: province?.plateFee ?? 0,
       roadMaintenanceFee,
       inspectionFee,
       civilInsurance,
       physicalInsurance,
       totalRolling,
     };
-  }, [basePrice, estimatorLocation, includeInsurance, fixedRollingCost]);
+  }, [basePrice, estimatorLocation, includeInsurance, fixedRollingCost, pricing]);
 
   const installment = useMemo(() => {
     const upfrontAmount = Math.round(rollingCost.totalRolling * (downPaymentPct / 100));
@@ -701,10 +723,19 @@ export default function CarDetailPage({
           </div>
         </section>
 
-        <PdpSectionNav items={sectionNavItems} />
+        <SectionVisibilityProvider
+          hidden={hiddenSections}
+          editMode={adminEdit}
+          labels={sectionLabels}
+          toggle={edit?.toggleSectionHidden}
+        >
+          <PdpSectionNav
+            items={visibleNavItems}
+            hiddenIds={adminEdit ? hiddenSections : undefined}
+          />
 
-        {/* All content sections */}
-        <div className="bg-white">
+          {/* All content sections */}
+          <div className="bg-white">
           <SectionWrap id="tong-quan">
             <OverviewSection detail={detail} adminEditable={adminEdit} />
           </SectionWrap>
@@ -774,6 +805,8 @@ export default function CarDetailPage({
               setInterestRate={setInterestRate}
               rollingCost={rollingCost}
               installment={installment}
+              provinces={pricing.provinces}
+              physicalInsuranceLabel={`~${physicalInsurancePercent}%`}
               onBook={() => openBooking("Nhận báo giá")}
             />
           </SectionWrap>
@@ -781,7 +814,8 @@ export default function CarDetailPage({
           <SectionWrap id="danh-gia" alt>
             <ReviewsSection detail={detail} adminEditable={adminEdit} />
           </SectionWrap>
-        </div>
+          </div>
+        </SectionVisibilityProvider>
 
         {/* Related products */}
         <section className="section-y border-t border-border/40 bg-surface">
@@ -1118,9 +1152,9 @@ function SectionWrap({
 }) {
   const variant = dark ? "dark" : alt ? "muted" : "default";
   return (
-    <PdpSection id={id} variant={variant}>
+    <EditableSectionWrap id={id} variant={variant}>
       {children}
-    </PdpSection>
+    </EditableSectionWrap>
   );
 }
 
@@ -1855,6 +1889,8 @@ type FinanceProps = {
     firstMonthTotal: number;
     avgMonthlyPayment: number;
   };
+  provinces: ProvincePlateFee[];
+  physicalInsuranceLabel: string;
   onBook: () => void;
 };
 
@@ -1878,6 +1914,8 @@ function FinanceSection({
   setInterestRate,
   rollingCost,
   installment,
+  provinces,
+  physicalInsuranceLabel,
   onBook,
 }: FinanceProps) {
   return (
@@ -1933,7 +1971,7 @@ function FinanceSection({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {PROVINCES.map((p) => (
+                        {provinces.map((p) => (
                           <SelectItem key={p.id} value={p.id} className="text-xs">
                             {p.name}
                           </SelectItem>
@@ -1948,7 +1986,7 @@ function FinanceSection({
                       onCheckedChange={(v) => setIncludeInsurance(!!v)}
                     />
                     <span className="text-xs text-muted-foreground">
-                      Bao gồm bảo hiểm vật chất (~1.1%)
+                      Bao gồm bảo hiểm vật chất ({physicalInsuranceLabel})
                     </span>
                   </label>
                 </>
@@ -2039,7 +2077,7 @@ function FinanceSection({
                     />
                     {includeInsurance && (
                       <CostRow
-                        label="Bảo hiểm vật chất (~1.1%)"
+                        label={`Bảo hiểm vật chất (${physicalInsuranceLabel})`}
                         value={formatPrice(rollingCost.physicalInsurance)}
                       />
                     )}

@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import SiteFooter from "@/components/site/SiteFooter";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
+import { SiteNavigationJsonLd } from "@/components/seo/SiteNavigationJsonLd";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { seoToNextMetadata, resolveSeoContent } from "@/lib/seo";
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           className="home-grain pointer-events-none fixed inset-0 z-[60] opacity-[0.028]"
         />
         <GoogleAnalytics />
+        <SiteNavigationJsonLd />
         <div className="relative">{children}</div>
         <SiteFooter />
       </body>

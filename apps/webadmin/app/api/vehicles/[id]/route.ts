@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import type { Json, TablesInsert, TablesUpdate } from "@vinfast3s/supabase";
 import { revalidateWebclient, vehicleRevalidatePayload } from "@/lib/revalidate-webclient";
+import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
+
+function revalidateAdminVehicleCaches(type: "car" | "scooter") {
+  revalidateTag(type === "car" ? "admin-cms-cars" : "admin-cms-scooters");
+  revalidateTag(ADMIN_MEDIA_CACHE_TAG);
+}
 
 type VehiclePatchBody = {
   patches?: Record<string, unknown>;
@@ -193,7 +200,16 @@ export async function PATCH(
         : undefined;
 
     if (hasPatches) {
-      const columnError = syncVehicleColumnsFromPatches(updatePayload, patches, currentDetail);
+      const mergedPatches = {
+        ...adminPatches,
+        ...patches,
+      } as Record<string, unknown>;
+      delete mergedPatches._updatedAt;
+      const columnError = syncVehicleColumnsFromPatches(
+        updatePayload,
+        mergedPatches,
+        currentDetail,
+      );
       if (columnError) {
         return NextResponse.json({ error: columnError }, { status: 400 });
       }
@@ -205,6 +221,7 @@ export async function PATCH(
     }
 
     await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, existing.slug ?? id));
+    revalidateAdminVehicleCaches(vehicleType);
 
     return NextResponse.json({ ok: true, mode: "update" });
   }
@@ -229,6 +246,7 @@ export async function PATCH(
   }
 
   await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, insertPayload.slug ?? id));
+  revalidateAdminVehicleCaches(vehicleType);
 
   return NextResponse.json({ ok: true, mode: "insert" });
 }

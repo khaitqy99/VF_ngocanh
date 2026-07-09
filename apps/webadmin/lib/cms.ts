@@ -18,6 +18,8 @@ import { SCOOTERS } from "@webclient/lib/scooters";
 import { VINFAST_ACCESSORIES } from "@webclient/lib/vinfast-accessories";
 import { getCarDetail } from "@webclient/lib/car-details";
 import { getScooterDetail } from "@webclient/lib/scooter-details";
+import type { MediaImage } from "@/lib/media-library";
+import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
 
 async function fetchVehicles(type: "car" | "scooter") {
   const admin = createAdminClient();
@@ -58,7 +60,7 @@ export const getAdminCars = unstable_cache(
     }
   },
   ["admin-cms-cars"],
-  { revalidate: 60 },
+  { revalidate: 60, tags: ["admin-cms-cars"] },
 );
 
 export const getAdminScooters = unstable_cache(
@@ -72,7 +74,7 @@ export const getAdminScooters = unstable_cache(
     }
   },
   ["admin-cms-scooters"],
-  { revalidate: 60 },
+  { revalidate: 60, tags: ["admin-cms-scooters"] },
 );
 
 export const getAdminAccessories = unstable_cache(
@@ -88,7 +90,7 @@ export const getAdminAccessories = unstable_cache(
     }
   },
   ["admin-cms-accessories"],
-  { revalidate: 60 },
+  { revalidate: 60, tags: ["admin-cms-accessories"] },
 );
 
 export async function getAdminCarDetail(id: string): Promise<CarDetail | undefined> {
@@ -142,6 +144,36 @@ export async function getAdminVehicleGalleries(): Promise<Map<string, string[]>>
   return map;
 }
 
+export async function getAdminMediaAssetsByFolder(): Promise<Map<string, MediaImage[]>> {
+  const map = new Map<string, MediaImage[]>();
+  if (!isSupabaseConfigured()) return map;
+
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("media_assets")
+      .select("id, filename, url, folder")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+
+    for (const row of data ?? []) {
+      if (!row.folder) continue;
+      const list = map.get(row.folder) ?? [];
+      list.push({
+        id: row.id,
+        name: row.filename,
+        path: row.url,
+        assetId: row.id,
+      });
+      map.set(row.folder, list);
+    }
+  } catch {
+    return map;
+  }
+
+  return map;
+}
+
 export type AdminDashboardStats = {
   carCount: number;
   scooterCount: number;
@@ -169,14 +201,15 @@ export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
 export const getAdminMediaFolders = unstable_cache(
   async () => {
     const { buildMediaFolders } = await import("@/lib/media-library");
-    const [cars, scooters, accessories, galleries] = await Promise.all([
+    const [cars, scooters, accessories, galleries, mediaAssets] = await Promise.all([
       getAdminCars(),
       getAdminScooters(),
       getAdminAccessories(),
       getAdminVehicleGalleries(),
+      getAdminMediaAssetsByFolder(),
     ]);
-    return buildMediaFolders(cars, scooters, accessories, galleries);
+    return buildMediaFolders(cars, scooters, accessories, galleries, mediaAssets);
   },
   ["admin-cms-media-folders"],
-  { revalidate: 60 },
+  { revalidate: 60, tags: [ADMIN_MEDIA_CACHE_TAG] },
 );

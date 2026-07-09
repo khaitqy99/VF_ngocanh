@@ -116,6 +116,12 @@ import {
   EditableTechGridSection,
   expandFeatureItemsForGrid,
 } from "@/components/admin-edit/EditableSections";
+import {
+  EditableSectionWrap,
+  SectionVisibilityProvider,
+  filterVisibleNavItems,
+  readHiddenSections,
+} from "@/components/admin-edit/SectionVisibility";
 import { EditableColorPicker } from "@/components/admin-edit/EditableColorPicker";
 import { EditableHeroGallery } from "@/components/admin-edit/EditableHeroGallery";
 import { EditableImage } from "@/components/admin-edit/EditableImage";
@@ -126,7 +132,6 @@ import {
   DEFAULT_SPEC_ITEM,
 } from "@/components/admin-edit/list-defaults";
 import { PdpHeroHeader } from "@/components/shared/PdpHeroHeader";
-import { PdpSection } from "@/components/shared/PdpSectionShell";
 import {
   PdpQuickSpecBar,
   PdpSectionTitle,
@@ -254,6 +259,19 @@ export default function ScooterDetailPage({
       { id: "danh-gia" as const, label: "Đánh giá" },
     ],
     [],
+  );
+
+  const hiddenSections = useMemo(
+    () => (adminEdit ? edit?.hiddenSections ?? [] : readHiddenSections(detail)),
+    [adminEdit, edit?.hiddenSections, detail],
+  );
+  const sectionLabels = useMemo(
+    () => Object.fromEntries(sectionNavItems.map((item) => [item.id, item.label])),
+    [sectionNavItems],
+  );
+  const visibleNavItems = useMemo(
+    () => (adminEdit ? sectionNavItems : filterVisibleNavItems(sectionNavItems, hiddenSections)),
+    [adminEdit, sectionNavItems, hiddenSections],
   );
 
   const quickSpecItems = useMemo(
@@ -658,12 +676,21 @@ export default function ScooterDetailPage({
           </div>
         </section>
 
-        <PdpSectionNav items={sectionNavItems} />
+        <SectionVisibilityProvider
+          hidden={hiddenSections}
+          editMode={adminEdit}
+          labels={sectionLabels}
+          toggle={edit?.toggleSectionHidden}
+        >
+          <PdpSectionNav
+            items={visibleNavItems}
+            hiddenIds={adminEdit ? hiddenSections : undefined}
+          />
 
-        {/* All content sections */}
-        <div className="bg-white">
-          <SectionWrap id="tong-quan">
-            <OverviewSection detail={detail} adminEditable={adminEdit} />
+          {/* All content sections */}
+          <div className="bg-white">
+            <SectionWrap id="tong-quan">
+              <OverviewSection detail={detail} adminEditable={adminEdit} />
           </SectionWrap>
 
           <SectionWrap id="ngoai-that" alt>
@@ -726,7 +753,8 @@ export default function ScooterDetailPage({
           <SectionWrap id="danh-gia" alt>
             <ReviewsSection detail={detail} adminEditable={adminEdit} />
           </SectionWrap>
-        </div>
+          </div>
+        </SectionVisibilityProvider>
 
         {/* Related products */}
         <section className="section-y border-t border-border/40 bg-surface">
@@ -1063,9 +1091,9 @@ function SectionWrap({
 }) {
   const variant = dark ? "dark" : alt ? "muted" : "default";
   return (
-    <PdpSection id={id} variant={variant}>
+    <EditableSectionWrap id={id} variant={variant}>
       {children}
-    </PdpSection>
+    </EditableSectionWrap>
   );
 }
 

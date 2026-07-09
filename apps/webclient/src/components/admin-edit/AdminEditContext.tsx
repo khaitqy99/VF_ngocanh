@@ -36,6 +36,8 @@ type AdminEditContextValue = {
   updateField: (path: string, value: PatchValue) => void;
   addListItem: (path: string, item: unknown) => void;
   removeListItem: (path: string, index: number, minItems?: number) => void;
+  hiddenSections: string[];
+  toggleSectionHidden: (id: string) => void;
   requestImage: (path: string) => void;
   requestMedia: (path: string, kind?: "image" | "svg") => void;
   save: () => void;
@@ -150,6 +152,32 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
     [detail],
   );
 
+  const hiddenSections = useMemo(() => {
+    const raw = getAtPath(values, "_hiddenSections");
+    return Array.isArray(raw) ? raw.filter((x): x is string => typeof x === "string") : [];
+  }, [values]);
+
+  const toggleSectionHidden = useCallback(
+    (id: string) => {
+      setDraft((prev) => {
+        const merged = mergeVehicleDraft(detail, prev);
+        const raw = getAtPath(merged, "_hiddenSections");
+        const current = Array.isArray(raw)
+          ? (raw.filter((x) => typeof x === "string") as string[])
+          : [];
+        const next = current.includes(id)
+          ? current.filter((x) => x !== id)
+          : [...current, id];
+        return {
+          ...prev,
+          patches: { ...(prev.patches ?? {}), _hiddenSections: next as PatchValue },
+        };
+      });
+      toast.message("Đã cập nhật hiển thị mục nội dung");
+    },
+    [detail],
+  );
+
   const requestMedia = useCallback(
     (path: string, kind: "image" | "svg" = "image") => {
       if (typeof window === "undefined" || window.parent === window) {
@@ -238,6 +266,8 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
       updateField,
       addListItem,
       removeListItem,
+      hiddenSections,
+      toggleSectionHidden,
       requestImage,
       requestMedia,
       save,
@@ -252,6 +282,8 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
       updateField,
       addListItem,
       removeListItem,
+      hiddenSections,
+      toggleSectionHidden,
       requestImage,
       requestMedia,
       save,

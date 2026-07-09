@@ -7,7 +7,13 @@ import { useMountReveal } from "@/hooks/use-scroll-reveal";
 
 export type PdpNavItem = { id: string; label: string };
 
-export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
+export function PdpSectionNav({
+  items,
+  hiddenIds,
+}: {
+  items: PdpNavItem[];
+  hiddenIds?: string[];
+}) {
   const [active, setActive] = useState(items[0]?.id ?? "");
   const mount = useMountReveal(0.05);
 
@@ -41,6 +47,7 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
           <ul className="flex min-w-max items-center gap-1.5 sm:gap-2">
             {items.map((item) => {
               const isActive = active === item.id;
+              const isHidden = hiddenIds?.includes(item.id) ?? false;
               return (
                 <li key={item.id}>
                   <a
@@ -50,11 +57,12 @@ export function PdpSectionNav({ items }: { items: PdpNavItem[] }) {
                       document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                       setActive(item.id);
                     }}
-                    className={`inline-flex items-center rounded-full px-4 py-2 text-[11px] font-bold tracking-wide transition sm:px-5 sm:text-xs ${
+                    title={isHidden ? "Mục đang bị ẩn khỏi website" : undefined}
+                    className={`inline-flex items-center gap-1 rounded-full px-4 py-2 text-[11px] font-bold tracking-wide transition sm:px-5 sm:text-xs ${
                       isActive
                         ? "bg-brand text-white shadow-md shadow-brand/25"
                         : "bg-surface text-muted-foreground hover:bg-brand/5 hover:text-brand-dark"
-                    }`}
+                    } ${isHidden ? "opacity-50 line-through" : ""}`}
                   >
                     {item.label}
                   </a>

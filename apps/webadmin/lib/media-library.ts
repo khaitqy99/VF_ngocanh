@@ -3,6 +3,7 @@ import { resolveVehicleMediaPaths } from "@webclient/lib/cms/vehicle-images";
 import { getCarGallery } from "@webclient/lib/vinfast-galleries";
 import type { ScooterModel } from "@webclient/lib/scooters";
 import type { AccessoryProduct } from "@webclient/lib/accessories";
+import { mediaFolderStoragePrefix } from "@/lib/media-storage";
 
 export type MediaCategory = "cars" | "scooters" | "accessories";
 
@@ -10,6 +11,7 @@ export type MediaImage = {
   id: string;
   name: string;
   path: string;
+  assetId?: string;
 };
 
 export type MediaFolder = {
@@ -70,25 +72,52 @@ function uniquePaths(paths: string[]): string[] {
   return [...new Set(paths.filter(Boolean))];
 }
 
+function mergeFolderImages(
+  dbAssets: MediaImage[],
+  paths: string[],
+  prefix: string,
+): MediaImage[] {
+  const merged: MediaImage[] = [];
+  const seen = new Set<string>();
+
+  for (const asset of dbAssets) {
+    if (seen.has(asset.path)) continue;
+    seen.add(asset.path);
+    merged.push(asset);
+  }
+
+  for (let i = 0; i < paths.length; i++) {
+    const path = paths[i]!;
+    if (seen.has(path)) continue;
+    seen.add(path);
+    merged.push(toMediaImage(path, i, prefix));
+  }
+
+  return merged;
+}
+
 export function buildMediaFolders(
   cars: CarModel[],
   scooters: ScooterModel[],
   accessories: AccessoryProduct[],
   galleriesByVehicleId: Map<string, string[]> = new Map(),
+  mediaAssetsByFolder: Map<string, MediaImage[]> = new Map(),
 ): MediaFolder[] {
   const carFolders: MediaFolder[] = cars.map((car) => {
     const fromDb = galleriesByVehicleId.get(car.id);
     const paths = withSharedAssets(
       resolveVehicleMediaPaths(car.id, fromDb, getCarGallery(car)),
     );
+    const folderKey = mediaFolderStoragePrefix("cars", car.id);
+    const dbAssets = mediaAssetsByFolder.get(folderKey) ?? [];
     return {
       category: "cars",
       slug: car.id,
       name: car.name,
       subtitle: car.subtitle,
-      coverImage: car.image,
+      coverImage: dbAssets[0]?.path ?? car.image,
       storagePath: `/images/vinfast/gallery/${car.id}/`,
-      images: paths.map((p, i) => toMediaImage(p, i, car.id)),
+      images: mergeFolderImages(dbAssets, paths, car.id),
       productHref: `/admin/cars/${car.id}`,
     };
   });
@@ -98,14 +127,16 @@ export function buildMediaFolders(
     const paths = withSharedAssets(
       resolveVehicleMediaPaths(scooter.id, fromDb, [scooter.image]),
     );
+    const folderKey = mediaFolderStoragePrefix("scooters", scooter.id);
+    const dbAssets = mediaAssetsByFolder.get(folderKey) ?? [];
     return {
       category: "scooters",
       slug: scooter.id,
       name: scooter.name,
       subtitle: scooter.subtitle,
-      coverImage: scooter.image,
+      coverImage: dbAssets[0]?.path ?? scooter.image,
       storagePath: `/images/vinfast/scooters/${scooter.id}/`,
-      images: paths.map((p, i) => toMediaImage(p, i, scooter.id)),
+      images: mergeFolderImages(dbAssets, paths, scooter.id),
       productHref: `/admin/scooters/${scooter.id}`,
     };
   });
@@ -143,14 +174,17 @@ export function buildMediaFolders(
     })
     .map(([vehicleId, data]) => {
       const paths = uniquePaths(data.paths);
+      const folderKey = mediaFolderStoragePrefix("accessories", vehicleId);
+      const dbAssets = mediaAssetsByFolder.get(folderKey) ?? [];
+      const images = mergeFolderImages(dbAssets, paths, vehicleId);
       return {
         category: "accessories" as const,
         slug: vehicleId,
         name: data.name,
-        subtitle: `${paths.length} ảnh · ${data.accessoryIds.length} sản phẩm`,
-        coverImage: paths[0] ?? "/images/vinfast/accessories/",
+        subtitle: `${images.length} ảnh · ${data.accessoryIds.length} sản phẩm`,
+        coverImage: images[0]?.path ?? "/images/vinfast/accessories/",
         storagePath: `/images/vinfast/accessories/${vehicleId}/`,
-        images: paths.map((p, i) => toMediaImage(p, i, vehicleId)),
+        images,
       };
     });
 

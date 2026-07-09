@@ -23,6 +23,7 @@ import {
   getCategoryLabel,
   getRelatedAccessories,
   getVehicleLabels,
+  resolveAccessoryMediaSlug,
   type AccessoryProduct,
 } from "@/lib/accessories";
 import { HOTLINE_TEL } from "@/lib/contact";
@@ -115,7 +116,7 @@ export default function AccessoryDetailPage({
         path: "image",
         kind: "image",
         category: "accessories",
-        slug: draft.id,
+        slug: resolveAccessoryMediaSlug(draft.vehicles),
       },
       "*",
     );

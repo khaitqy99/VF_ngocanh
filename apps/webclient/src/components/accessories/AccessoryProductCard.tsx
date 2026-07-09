@@ -23,6 +23,7 @@ import {
   formatPrice,
   getCategoryLabel,
   getVehicleLabels,
+  resolveAccessoryMediaSlug,
   type AccessoryProduct,
 } from "@/lib/accessories";
 import { vfCatalogCardTitle } from "@/lib/typography";
@@ -78,7 +79,7 @@ export function AccessoryProductCard({
         path: "image",
         productId: product.id,
         category: "accessories",
-        slug: product.id,
+        slug: resolveAccessoryMediaSlug(draft.vehicles),
       },
       "*",
     );

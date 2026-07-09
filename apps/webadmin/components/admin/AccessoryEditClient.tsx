@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ProductDetailLiveEditor } from "@/components/admin/ProductDetailLiveEditor";
 import { ProductSeoClient } from "@/components/admin/seo/ProductSeoClient";
 import { accessoryDetailPath, resolveProductSlug } from "@/lib/seo/slugs";
+import { resolveAccessoryMediaSlug } from "@webclient/lib/accessories";
 
 type AccessoryItem = {
   id: string;
@@ -63,7 +64,7 @@ export function AccessoryEditClient({
           previewPath={`/phu-kien/${slug}/preview`}
           publicHref={`${siteUrl}${accessoryDetailPath({ id: product.id, slug, name: product.name })}`}
           mediaCategory="accessories"
-          mediaSlug={product.id}
+          mediaSlug={resolveAccessoryMediaSlug(product.vehicles)}
         />
       ) : (
         <ProductSeoClient

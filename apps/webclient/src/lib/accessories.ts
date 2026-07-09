@@ -130,6 +130,11 @@ export function getCategoryLabel(category: AccessoryCategory) {
   return CATEGORY_OPTIONS.find((c) => c.value === category)?.label ?? category;
 }
 
+/** Thư mục ảnh phụ kiện trong media library theo dòng xe (không phải product id). */
+export function resolveAccessoryMediaSlug(vehicles: string[]): string {
+  return vehicles.length > 0 ? vehicles[0]! : "chung";
+}
+
 export function getVehicleLabels(vehicles: VehicleModel[]) {
   if (vehicles.includes("all")) return "Tất cả dòng xe";
   return vehicles.map((v) => VEHICLE_OPTIONS.find((o) => o.value === v)?.label ?? v).join(", ");

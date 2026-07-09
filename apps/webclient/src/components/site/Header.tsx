@@ -13,16 +13,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IMAGES } from "@/lib/images";
 import { buttonHover, buttonTap, springSnappy } from "@/lib/motion";
 import { MOTION_INSTANT } from "@/lib/motion-safe";
-
-const NAV = [
-  { label: "Giới thiệu", href: "/gioi-thieu" },
-  { label: "Ô tô", href: "/oto" },
-  { label: "Xe máy điện", href: "/xe-may-dien" },
-  { label: "Phụ kiện xe", href: "/phu-kien" },
-  { label: "Dịch vụ hậu mãi", href: "/dich-vu-hau-mai" },
-  { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
-  { label: "Lưu trữ năng lượng", href: "/luu-tru-nang-luong" },
-] as const;
+import { MAIN_SITE_NAV } from "@/lib/site-navigation";
 
 function BrandLogo() {
   return (
@@ -83,7 +74,7 @@ export default function Header() {
           </motion.div>
 
           <nav className="hidden flex-1 items-center justify-center gap-6 xl:gap-8 lg:flex">
-            {NAV.map(({ label, href }, i) => {
+            {MAIN_SITE_NAV.map(({ label, href }, i) => {
               const active = pathname === href;
               return (
                 <motion.div
@@ -149,7 +140,7 @@ export default function Header() {
 
             <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Menu điều hướng">
               <ul className="space-y-1">
-                {NAV.map(({ label, href }, i) => {
+                {MAIN_SITE_NAV.map(({ label, href }, i) => {
                   const active = pathname === href;
                   return (
                     <motion.li

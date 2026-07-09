@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import type { Json, TablesInsert, TablesUpdate } from "@vinfast3s/supabase";
 import { accessoryRevalidatePayload, revalidateWebclient } from "@/lib/revalidate-webclient";
+import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
 
 type AccessoryPatchBody = {
   patches?: Record<string, unknown>;
@@ -103,12 +105,17 @@ export async function PATCH(
     updatePayload.status = body.status;
   }
 
-  const name = asString(patches.name);
-  const description = asString(patches.description);
-  const image = asString(patches.image);
-  const category = asString(patches.category);
-  const price = asNumber(patches.price);
-  const inStock = asBoolean(patches.inStock);
+  const mergedContent: AccessoryContent =
+    Object.keys(patches).length > 0
+      ? (updatePayload.content as AccessoryContent)
+      : currentContent;
+
+  const name = asString(mergedContent.name) ?? asString(patches.name);
+  const description = asString(mergedContent.description) ?? asString(patches.description);
+  const image = asString(mergedContent.image) ?? asString(patches.image);
+  const category = asString(mergedContent.category) ?? asString(patches.category);
+  const price = asNumber(mergedContent.price) ?? asNumber(patches.price);
+  const inStock = asBoolean(mergedContent.inStock) ?? asBoolean(patches.inStock);
 
   if (name !== undefined) {
     if (!name.trim()) {
@@ -127,8 +134,8 @@ export async function PATCH(
   }
   if (inStock !== undefined) updatePayload.in_stock = inStock;
 
-  const vehicles = asStringArray(patches.vehicles);
-  const badge = asString(patches.badge);
+  const vehicles = asStringArray(mergedContent.vehicles) ?? asStringArray(patches.vehicles);
+  const badge = asString(mergedContent.badge) ?? asString(patches.badge);
   if (vehicles !== undefined || badge !== undefined) {
     const nextContent: AccessoryContent =
       (updatePayload.content as AccessoryContent | undefined) ?? currentContent;
@@ -155,6 +162,8 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
     await revalidateWebclient(accessoryRevalidatePayload(id, id));
+    revalidateTag("admin-cms-accessories");
+    revalidateTag(ADMIN_MEDIA_CACHE_TAG);
     return NextResponse.json({ ok: true, mode: "insert" });
   }
 
@@ -172,6 +181,8 @@ export async function PATCH(
   }
 
   await revalidateWebclient(accessoryRevalidatePayload(id, existing.slug ?? id));
+  revalidateTag("admin-cms-accessories");
+  revalidateTag(ADMIN_MEDIA_CACHE_TAG);
 
   return NextResponse.json({ ok: true, mode: "update" });
 }

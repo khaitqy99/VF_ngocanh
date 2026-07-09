@@ -13,8 +13,26 @@ import {
   SHOWROOM_REGION,
   SHOWROOM_STREET,
 } from "@/lib/dealership";
+import { FEATURED_SITE_NAV, MAIN_SITE_NAV, type SiteNavItem } from "@/lib/site-navigation";
 import { mergeSiteSeoSettings } from "./resolve";
 import { PRODUCTION_SITE_URL, SITE_BRAND_NAME, type SiteSeoSettings } from "./types";
+
+const MAIN_NAV_ID = `${PRODUCTION_SITE_URL}/#main-nav`;
+const FEATURED_NAV_ID = `${PRODUCTION_SITE_URL}/#featured-nav`;
+
+function buildNavItemList(id: string, name: string, items: readonly SiteNavItem[]) {
+  return {
+    "@type": "ItemList",
+    "@id": id,
+    name,
+    itemListElement: items.map((item, index) => ({
+      "@type": "SiteNavigationElement",
+      position: index + 1,
+      name: item.label,
+      url: `${PRODUCTION_SITE_URL}${item.href}`,
+    })),
+  };
+}
 
 export function buildAutoDealerSchema(site?: SiteSeoSettings | null) {
   const merged = mergeSiteSeoSettings(site);
@@ -88,6 +106,17 @@ export function buildWebSiteSchema(site?: SiteSeoSettings | null) {
     url: PRODUCTION_SITE_URL,
     inLanguage: "vi-VN",
     publisher: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
+    hasPart: [{ "@id": MAIN_NAV_ID }, { "@id": FEATURED_NAV_ID }],
+  };
+}
+
+export function buildSiteNavigationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildNavItemList(MAIN_NAV_ID, "Menu chính", MAIN_SITE_NAV),
+      buildNavItemList(FEATURED_NAV_ID, "Trang nổi bật", FEATURED_SITE_NAV),
+    ],
   };
 }
 

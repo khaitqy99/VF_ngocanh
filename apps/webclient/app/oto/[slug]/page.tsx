@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import CarDetailPage from "@/components/cars/CarDetailPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getCarDetailAccessories, getCarDetailBySlug, getCars } from "@/lib/cms";
+import { getCarPricingSettings } from "@/lib/cms/car-pricing-fetch";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { carDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
@@ -31,7 +32,10 @@ export default async function CarDetailRoute({ params }: Props) {
   const detail = await getCarDetailBySlug(slug);
   if (!detail) notFound();
 
-  const [detailAccessories] = await Promise.all([getCarDetailAccessories(detail.id)]);
+  const [detailAccessories, pricing] = await Promise.all([
+    getCarDetailAccessories(detail.id),
+    getCarPricingSettings(),
+  ]);
   const canonicalPath = carDetailPath({ id: detail.id, slug });
 
   const carSchema = {
@@ -63,7 +67,7 @@ export default async function CarDetailRoute({ params }: Props) {
   return (
     <>
       <JsonLd data={[carSchema, breadcrumb]} />
-      <CarDetailPage detail={detail} detailAccessories={detailAccessories} />
+      <CarDetailPage detail={detail} detailAccessories={detailAccessories} pricing={pricing} />
     </>
   );
 }
