@@ -1338,7 +1338,6 @@ function FilterSidebar({
   );
 }
 
-
 function CatalogPagination({
   page,
   totalPages,

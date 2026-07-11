@@ -1372,4 +1372,3 @@ function FilterSidebar({
     </div>
   );
 }
-
