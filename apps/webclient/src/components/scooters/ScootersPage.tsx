@@ -40,9 +40,9 @@ import {
   ScootersSectionHeader,
   ScootersWhyVinFastSection,
 } from "@/components/scooters/ScootersAnimatedSections";
+import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
 import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
-import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/site/Header";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
 import FloatingButtons from "@/components/site/FloatingButtons";
@@ -329,7 +329,7 @@ export default function ScootersPage({
   }, [adminEdit, embedded]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
+    <div className="relative min-h-screen overflow-x-clip bg-background font-sans text-foreground">
       <Toaster position="top-right" richColors />
       {embedded ? (
         <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
@@ -383,7 +383,7 @@ export default function ScootersPage({
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
               {!adminEdit ? (
                 <aside
-                  className={`${mobileFilters ? "block" : "hidden"} w-full max-h-[min(70vh,640px)] shrink-0 overflow-y-auto overscroll-contain lg:block lg:max-h-[80vh] lg:w-[260px] lg:sticky lg:top-[150px] lg:z-10 lg:overflow-y-auto`}
+                  className={`${mobileFilters ? "block" : "hidden"} w-full max-h-[min(70vh,640px)] shrink-0 overflow-y-auto overscroll-contain lg:block lg:w-[260px] lg:max-h-none lg:overflow-visible lg:sticky lg:top-[140px] lg:z-10 lg:self-start`}
                 >
                   <FadeIn direction="left">
                     <FilterSidebar
@@ -1262,7 +1262,7 @@ function FilterSidebar({
   };
 
   return (
-    <div className="page-section-card p-5 lg:max-h-[80vh] lg:overflow-y-auto">
+    <div className="page-section-card max-h-[min(70vh,640px)] overflow-y-auto p-5 lg:max-h-[calc(100vh-10rem)] lg:overflow-y-auto">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
         <h3 className="text-xs font-black tracking-wider text-brand-dark flex items-center gap-2">
           <SlidersIcon className="size-4 text-brand" /> BỘ LỌC TÌM KIẾM
@@ -1302,7 +1302,7 @@ function FilterSidebar({
         </div>
       </FilterGroup>
 
-      <FilterGroup title="QUÃNG ĐƯỜNG / SẠC">
+      <FilterGroup title="QUÃNG ĐƯỜNG / SẠC" defaultOpen={false}>
         {RANGE_OPTIONS.map(({ value, label }) => (
           <FilterCheck
             key={value}
@@ -1314,7 +1314,7 @@ function FilterSidebar({
         ))}
       </FilterGroup>
 
-      <FilterGroup title="TỐC ĐỘ TỐI ĐA">
+      <FilterGroup title="TỐC ĐỘ TỐI ĐA" defaultOpen={false}>
         {SPEED_OPTIONS.map(({ value, label }) => (
           <FilterCheck
             key={value}
@@ -1338,43 +1338,6 @@ function FilterSidebar({
   );
 }
 
-function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="mt-4 border-t border-slate-100 pt-4 first:mt-0 first:border-t-0 first:pt-0">
-      <p className="mb-2.5 text-[10px] font-black tracking-wider text-slate-400 uppercase">
-        {title}
-      </p>
-      <div className="space-y-2">{children}</div>
-    </div>
-  );
-}
-
-function FilterCheck({
-  id,
-  label,
-  checked,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  checked: boolean;
-  onChange: () => void;
-}) {
-  return (
-    <label
-      htmlFor={id}
-      className="flex cursor-pointer items-center gap-2.5 text-slate-600 hover:text-slate-800 py-0.5 select-none font-semibold text-xs"
-    >
-      <Checkbox
-        id={id}
-        checked={checked}
-        onCheckedChange={onChange}
-        className="size-4 border-slate-300 text-brand"
-      />
-      <span>{label}</span>
-    </label>
-  );
-}
 
 function CatalogPagination({
   page,

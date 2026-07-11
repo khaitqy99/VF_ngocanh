@@ -184,13 +184,13 @@ export function ScootersPromoBanners() {
 
   return (
     <section className="section-y border-y border-slate-100 bg-white">
-      <div className="container-vf grid gap-6 sm:grid-cols-2">
+      <div className="container-vf grid gap-6 sm:grid-cols-2 sm:items-stretch">
         <StaggerItem variant="home" index={0}>
           <motion.div
             initial="rest"
             whileHover={reduced ? undefined : "hover"}
             variants={reduced ? undefined : carsPromoCard}
-            className="group relative flex min-h-[220px] overflow-hidden rounded-2xl border border-slate-100 shadow-md"
+            className="group relative flex h-full min-h-[220px] overflow-hidden rounded-2xl border border-slate-100 shadow-md"
           >
             <motion.img
               src={SCOOTER_IMAGES.promoTestDrive}
@@ -199,7 +199,7 @@ export function ScootersPromoBanners() {
               variants={reduced ? undefined : carsPromoImage}
             />
             <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/90 sm:via-brand-dark/65 sm:to-transparent" />
-            <div className="relative z-10 flex max-w-sm flex-col justify-center p-6 text-white md:p-8">
+            <div className="relative z-10 flex h-full max-w-sm flex-col justify-center p-6 text-white md:p-8">
               <span className="mb-3 self-start rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
                 Lái thử miễn phí
               </span>
@@ -223,7 +223,7 @@ export function ScootersPromoBanners() {
             initial="rest"
             whileHover={reduced ? undefined : "hover"}
             variants={reduced ? undefined : carsPromoCard}
-            className="relative flex min-h-[220px] flex-col justify-center overflow-hidden rounded-2xl border border-brand/10 bg-gradient-to-br from-blue-50/70 via-indigo-50/30 to-white p-6 shadow-soft md:p-8"
+            className="relative flex h-full min-h-[220px] flex-col justify-center overflow-hidden rounded-2xl border border-brand/10 bg-gradient-to-br from-blue-50/70 via-indigo-50/30 to-white p-6 shadow-soft md:p-8"
           >
             <div className="absolute top-4 right-4 opacity-15">
               <Wallet className="size-24 text-brand" strokeWidth={1} />
