@@ -9,46 +9,51 @@ export function slugify(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-const CAR_SLUG_MAP: Record<string, string> = {
-  vf3: "vinfast-vf3",
-  vf5: "vinfast-vf5",
-  vf6: "vinfast-vf6",
-  vf7: "vinfast-vf7",
-  vf8: "vinfast-vf8",
-  "vf8-all-new": "vinfast-vf8-all-new",
-  vf9: "vinfast-vf9",
-  "vf-mpv7": "vinfast-mpv7",
-  "ec-van": "vinfast-ec-van",
-  "minio-green": "vinfast-minio-green",
-  "herio-green": "vinfast-herio-green",
-  "nerio-green": "vinfast-nerio-green",
-  "limo-green": "vinfast-limo-green",
+/**
+ * Alias slug cũ (thời fallback map dài) → vehicle id.
+ * Slug canonical là slug trong DB — hiện trùng với id (vf3, evo, ...).
+ * Giữ map này để redirect 301 URL cũ và parse href legacy.
+ */
+export const LEGACY_CAR_SLUG_ALIASES: Record<string, string> = {
+  "vinfast-vf3": "vf3",
+  "vinfast-vf5": "vf5",
+  "vinfast-vf6": "vf6",
+  "vinfast-vf7": "vf7",
+  "vinfast-vf8": "vf8",
+  "vinfast-vf8-all-new": "vf8-all-new",
+  "vinfast-vf9": "vf9",
+  "vinfast-mpv7": "vf-mpv7",
+  "vinfast-ec-van": "ec-van",
+  "vinfast-minio-green": "minio-green",
+  "vinfast-herio-green": "herio-green",
+  "vinfast-nerio-green": "nerio-green",
+  "vinfast-limo-green": "limo-green",
 };
 
-const SCOOTER_SLUG_MAP: Record<string, string> = {
-  "flazz-max": "xe-may-flazz-max",
-  "amio-s": "xe-may-amio-s",
-  "evo-lite": "xe-may-evo-lite",
-  amio: "xe-may-amio",
-  viper: "xe-may-viper",
-  "feliz-ii": "xe-may-feliz-ii",
-  evo: "xe-may-evo",
-  zgoo: "xe-may-zgoo",
-  flazz: "xe-may-flazz",
-  "vero-x": "xe-may-vero-x",
-  "feliz-2025": "xe-may-feliz-2025",
-  "evo-grand": "xe-may-evo-grand",
-  "evo-grand-lite": "xe-may-evo-grand-lite",
-  drgnfly: "xe-may-drgnfly",
-  "evo-lite-neo": "xe-may-evo-lite-neo",
+export const LEGACY_SCOOTER_SLUG_ALIASES: Record<string, string> = {
+  "xe-may-flazz-max": "flazz-max",
+  "xe-may-amio-s": "amio-s",
+  "xe-may-evo-lite": "evo-lite",
+  "xe-may-amio": "amio",
+  "xe-may-viper": "viper",
+  "xe-may-feliz-ii": "feliz-ii",
+  "xe-may-evo": "evo",
+  "xe-may-zgoo": "zgoo",
+  "xe-may-flazz": "flazz",
+  "xe-may-vero-x": "vero-x",
+  "xe-may-feliz-2025": "feliz-2025",
+  "xe-may-evo-grand": "evo-grand",
+  "xe-may-evo-grand-lite": "evo-grand-lite",
+  "xe-may-drgnfly": "drgnfly",
+  "xe-may-evo-lite-neo": "evo-lite-neo",
 };
 
 export function defaultCarSlug(id: string): string {
-  return CAR_SLUG_MAP[id] ?? `vinfast-${slugify(id)}`;
+  return slugify(id);
 }
 
 export function defaultScooterSlug(id: string): string {
-  return SCOOTER_SLUG_MAP[id] ?? `xe-may-${slugify(id)}`;
+  return slugify(id);
 }
 
 export function defaultAccessorySlug(id: string, name?: string): string {
@@ -102,4 +107,24 @@ export function scooterDetailPathFromSlug(slug: string): string {
 
 export function accessoryDetailPathFromSlug(slug: string): string {
   return `/phu-kien/${slug}`;
+}
+
+/** Đổi segment URL (slug canonical hoặc alias cũ) về vehicle id nội bộ. */
+export function resolveVehicleIdFromHrefSegment(segment: string, type: "car" | "scooter"): string {
+  const aliases = type === "car" ? LEGACY_CAR_SLUG_ALIASES : LEGACY_SCOOTER_SLUG_ALIASES;
+  return aliases[segment] ?? segment;
+}
+
+/** Slug alias cũ → slug canonical (dùng cho redirect 301 trong route). */
+export function resolveLegacyVehicleSlug(
+  segment: string,
+  type: "car" | "scooter",
+): string | undefined {
+  const aliases = type === "car" ? LEGACY_CAR_SLUG_ALIASES : LEGACY_SCOOTER_SLUG_ALIASES;
+  return aliases[segment];
+}
+
+export function vehicleDetailPathFromId(id: string, type: "car" | "scooter"): string {
+  if (type === "car") return `/oto/${defaultCarSlug(id)}`;
+  return `/xe-may-dien/${defaultScooterSlug(id)}`;
 }

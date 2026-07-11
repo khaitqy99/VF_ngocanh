@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import CarDetailPage from "@/components/cars/CarDetailPage";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getCarDetailAccessories, getCarDetailBySlug, getCars } from "@/lib/cms";
+import { getCarDetailAccessories, getCarDetailBySlug, getCarBySlug, getCars } from "@/lib/cms";
 import { getCarPricingSettings } from "@/lib/cms/car-pricing-fetch";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
-import { carDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
+import {
+  carDetailPath,
+  resolveLegacyVehicleSlug,
+  resolveProductSlug,
+  isReservedProductSlug,
+} from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 86400;
@@ -30,7 +35,15 @@ export default async function CarDetailRoute({ params }: Props) {
   const { slug } = await params;
   if (isReservedProductSlug(slug)) notFound();
   const detail = await getCarDetailBySlug(slug);
-  if (!detail) notFound();
+  if (!detail) {
+    // 301 alias slug cũ (vd. vinfast-vf3) về slug canonical để tránh 404
+    const legacyId = resolveLegacyVehicleSlug(slug, "car");
+    if (legacyId) {
+      const car = await getCarBySlug(legacyId);
+      if (car) permanentRedirect(carDetailPath(car));
+    }
+    notFound();
+  }
 
   const [detailAccessories, pricing] = await Promise.all([
     getCarDetailAccessories(detail.id),

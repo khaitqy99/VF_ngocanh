@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import ScooterDetailPage from "@/components/scooters/ScooterDetailPage";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getScooterDetailAccessories, getScooterDetailBySlug, getScooters } from "@/lib/cms";
+import {
+  getScooterBySlug,
+  getScooterDetailAccessories,
+  getScooterDetailBySlug,
+  getScooters,
+} from "@/lib/cms";
 import { buildScooterMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { buildMotorcycleSchema } from "@/lib/seo/product-schema";
-import { resolveProductSlug, scooterDetailPath, isReservedProductSlug } from "@/lib/seo/slugs";
+import {
+  resolveLegacyVehicleSlug,
+  resolveProductSlug,
+  scooterDetailPath,
+  isReservedProductSlug,
+} from "@/lib/seo/slugs";
 
 export const revalidate = 86400;
 
@@ -32,7 +42,15 @@ export default async function ScooterDetailRoute({ params }: Props) {
     getScooterDetailBySlug(slug),
     getScooterDetailAccessories(),
   ]);
-  if (!detail) notFound();
+  if (!detail) {
+    // 301 alias slug cũ (vd. xe-may-evo) về slug canonical để tránh 404
+    const legacyId = resolveLegacyVehicleSlug(slug, "scooter");
+    if (legacyId) {
+      const scooter = await getScooterBySlug(legacyId);
+      if (scooter) permanentRedirect(scooterDetailPath(scooter));
+    }
+    notFound();
+  }
 
   const canonicalPath = scooterDetailPath({ id: detail.id, slug });
   const motorcycleSchema = buildMotorcycleSchema(detail, canonicalPath);

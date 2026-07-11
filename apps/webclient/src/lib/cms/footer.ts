@@ -55,13 +55,13 @@ const DEFAULT_ABOUT_LINKS: FooterLink[] = [
 ];
 
 const DEFAULT_POLICY_LINKS: FooterLink[] = [
-  { label: "Chính sách bảo mật", href: "/gioi-thieu" },
-  { label: "Điều khoản sử dụng", href: "/gioi-thieu" },
+  { label: "Chính sách bảo mật", href: "/chinh-sach-bao-mat" },
+  { label: "Điều khoản sử dụng", href: "/dieu-khoan-su-dung" },
 ];
 
 const DEFAULT_BOTTOM_LINKS: FooterLink[] = [
-  { label: "Chính sách bảo mật", href: "/gioi-thieu" },
-  { label: "Điều khoản sử dụng", href: "/gioi-thieu" },
+  { label: "Chính sách bảo mật", href: "/chinh-sach-bao-mat" },
+  { label: "Điều khoản sử dụng", href: "/dieu-khoan-su-dung" },
 ];
 
 function parseFooterLink(value: unknown): FooterLink | null {

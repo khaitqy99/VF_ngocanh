@@ -295,22 +295,26 @@ export const getHomeData = unstable_cache(
 
     const featuredCars = applyFeaturedSlideOverrides(
       applyFeaturedPriceOverrides(
-        hydrateFeaturedVehicleSlides(featuredCarsBase, cars),
+        hydrateFeaturedVehicleSlides(featuredCarsBase, cars, "car"),
         parsed?.featuredCarIds ?? [],
         parsed?.featuredCarPrices ?? {},
+        "car",
       ),
       parsed?.featuredCarIds ?? [],
       parsed?.featuredCarSlideOverrides ?? {},
+      "car",
     );
 
     const featuredScooters = applyFeaturedSlideOverrides(
       applyFeaturedPriceOverrides(
-        hydrateFeaturedVehicleSlides(featuredScootersBase, scooters),
+        hydrateFeaturedVehicleSlides(featuredScootersBase, scooters, "scooter"),
         parsed?.featuredScooterIds ?? [],
         parsed?.featuredScooterPrices ?? {},
+        "scooter",
       ),
       parsed?.featuredScooterIds ?? [],
       parsed?.featuredScooterSlideOverrides ?? {},
+      "scooter",
     );
 
     const sections: HomeSectionsContent = mergeHomeSections(parsed?.sections);

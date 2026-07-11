@@ -1,6 +1,7 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
@@ -38,7 +39,14 @@ export function PageEditorialHero({
           animate={reduced ? MOTION_VISIBLE : { scale: 1 }}
           transition={safeRevealTransition(reduced, { duration: 9, ease: [0.16, 1, 0.3, 1] })}
         >
-          <img src={imageSrc} alt={imageAlt} className="h-full w-full object-cover object-center" />
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
         </motion.div>
         <div aria-hidden className="page-editorial-hero-overlay" />
       </div>

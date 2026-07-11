@@ -93,9 +93,10 @@ function HomePreviewDraftBody({
       "car",
     );
     return applyFeaturedSlideOverrides(
-      applyFeaturedPriceOverrides(slides, draft.featuredCarIds, draft.featuredCarPrices),
+      applyFeaturedPriceOverrides(slides, draft.featuredCarIds, draft.featuredCarPrices, "car"),
       draft.featuredCarIds,
       draft.featuredCarSlideOverrides,
+      "car",
     );
   }, [draft, catalogCars, fallbackFeaturedCars]);
 
@@ -108,9 +109,15 @@ function HomePreviewDraftBody({
       "scooter",
     );
     return applyFeaturedSlideOverrides(
-      applyFeaturedPriceOverrides(slides, draft.featuredScooterIds, draft.featuredScooterPrices),
+      applyFeaturedPriceOverrides(
+        slides,
+        draft.featuredScooterIds,
+        draft.featuredScooterPrices,
+        "scooter",
+      ),
       draft.featuredScooterIds,
       draft.featuredScooterSlideOverrides,
+      "scooter",
     );
   }, [draft, catalogScooters, fallbackFeaturedScooters]);
 

@@ -19,7 +19,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 const SITE_KEYWORDS = [
   "VinFast Ngọc Anh Cà Mau",
-  "VinFast Ngọc Anh Cà Mau",
   "Vinfast 3S Cà Mau",
   "đại lý VinFast Ngọc Anh Cà Mau",
   "ô tô điện Cà Mau",

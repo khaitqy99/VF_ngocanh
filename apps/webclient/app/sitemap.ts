@@ -12,14 +12,23 @@ const STATIC_ROUTES = [
   "/luu-tru-nang-luong",
   "/phu-kien",
   "/dich-vu-hau-mai",
+  "/chinh-sach-bao-mat",
+  "/dieu-khoan-su-dung",
 ] as const;
+
+const LEGAL_ROUTES = new Set(["/chinh-sach-bao-mat", "/dieu-khoan-su-dung"]);
 
 function buildStaticEntries(): MetadataRoute.Sitemap {
   return STATIC_ROUTES.map((route) => ({
     url: `${PRODUCTION_SITE_URL}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === "" ? ("daily" as const) : ("weekly" as const),
-    priority: route === "" ? 1.0 : 0.8,
+    changeFrequency:
+      route === ""
+        ? ("daily" as const)
+        : LEGAL_ROUTES.has(route)
+          ? ("yearly" as const)
+          : ("weekly" as const),
+    priority: route === "" ? 1.0 : LEGAL_ROUTES.has(route) ? 0.3 : 0.8,
   }));
 }
 

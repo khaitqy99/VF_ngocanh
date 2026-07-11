@@ -104,9 +104,9 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     label: "Xe máy điện",
     path: "/xe-may-dien",
     group: "catalog",
-    defaultTitle: "Xe máy điện VinFast chính hãng",
+    defaultTitle: "Xe máy điện VinFast chính hãng tại Cà Mau",
     defaultDescription:
-      "Mua xe máy điện VinFast tại Cà Mau — Klara, Evo, Feliz và nhiều mẫu hot. Trả góp 0%, bảo hành chính hãng.",
+      "Mua xe máy điện VinFast tại Cà Mau — Evo, Feliz, Klara, Flazz và nhiều mẫu hot. Trả góp 0%, bảo hành chính hãng, giao xe nhanh tại Vinfast 3S Cà Mau.",
     defaultOgImage: "/images/scooters/xe-may-hero.webp",
   },
   {
@@ -124,9 +124,9 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     label: "Dịch vụ hậu mãi",
     path: "/dich-vu-hau-mai",
     group: "service",
-    defaultTitle: "Dịch vụ hậu mãi VinFast",
+    defaultTitle: "Dịch vụ hậu mãi VinFast Cà Mau",
     defaultDescription:
-      "Dịch vụ bảo dưỡng, sửa chữa và chăm sóc xe VinFast tại Vinfast 3S Cà Mau — đội ngũ kỹ thuật chính hãng.",
+      "Bảo dưỡng, sửa chữa và chăm sóc xe VinFast tại Vinfast 3S Cà Mau — đội ngũ kỹ thuật chính hãng, phụ tùng zin, cứu hộ 24/7 và chính sách bảo hành minh bạch.",
     defaultOgImage: "/images/after-sales/hero.webp",
   },
   {
@@ -134,9 +134,9 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     label: "Pin & Trạm sạc",
     path: "/pin-va-tram-sac",
     group: "service",
-    defaultTitle: "Pin & Trạm sạc VinFast",
+    defaultTitle: "Pin & Trạm sạc VinFast Cà Mau",
     defaultDescription:
-      "Giải pháp pin và trạm sạc VinFast — thuê pin, mua pin, mạng lưới sạc toàn quốc. Tư vấn tại Vinfast 3S Cà Mau.",
+      "Giải pháp pin và trạm sạc VinFast tại Cà Mau — thuê pin, mua pin, mạng lưới sạc toàn quốc. Tư vấn chi phí, chính sách và lắp đặt trạm sạc tại nhà.",
     defaultOgImage: "/images/charging/hero.webp",
   },
   {
@@ -144,9 +144,9 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     label: "Lưu trữ năng lượng",
     path: "/luu-tru-nang-luong",
     group: "service",
-    defaultTitle: "Lưu trữ năng lượng VinFast",
+    defaultTitle: "Lưu trữ năng lượng VinFast Cà Mau",
     defaultDescription:
-      "Giải pháp lưu trữ năng lượng VinFast cho gia đình và doanh nghiệp tại Cà Mau.",
+      "Giải pháp pin lưu trữ năng lượng VinFast cho gia đình và doanh nghiệp tại Cà Mau — tiết kiệm điện, an toàn, tư vấn lắp đặt và bảo hành chính hãng.",
     defaultOgImage: "/images/energy/hero.webp",
   },
 ];

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -566,11 +567,13 @@ export default function ChargingPage({
                     <form onSubmit={handleInquirySubmit} className="space-y-4">
                       {/* Product Overview Summary */}
                       <div className="flex items-center gap-3 bg-surface-muted border border-slate-200 rounded-xl p-3.5">
-                        <div className="size-14 bg-white rounded-lg overflow-hidden shrink-0 border border-slate-200">
-                          <img
+                        <div className="relative size-14 bg-white rounded-lg overflow-hidden shrink-0 border border-slate-200">
+                          <Image
                             src={selectedProduct.image}
                             alt={selectedProduct.name}
-                            className="size-full object-cover"
+                            fill
+                            sizes="56px"
+                            className="object-cover"
                           />
                         </div>
                         <div>
@@ -813,11 +816,12 @@ function EcosystemSection() {
               className="group relative overflow-hidden rounded-2xl shadow-soft border border-slate-200"
             >
               <div className="relative aspect-[21/9] w-full bg-[#e8ecf2] sm:aspect-[2.2/1]">
-                <img
+                <Image
                   src={item.img}
                   alt={item.title}
-                  className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-                  loading="lazy"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover object-center transition duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
@@ -858,11 +862,12 @@ function StationTypesSection({ content }: { content: ChargingPageContent }) {
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                 <StaticEditImageButton imagePath={`stationTypes.${index}.image`} />
-                <img
+                <Image
                   src={station.image}
                   alt={station.title}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  loading="lazy"
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5">
@@ -953,11 +958,12 @@ function BatterySection() {
             </div>
           </div>
           <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100">
-            <img
+            <Image
               src={CHARGING_IMAGES.stations}
               alt="Công nghệ pin VinFast"
-              className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/40 to-transparent p-6 text-white">
               <div className="flex items-center gap-3">
@@ -1039,11 +1045,12 @@ function ProductsSection({
                   {productIndex >= 0 ? (
                     <StaticEditImageButton imagePath={`products.${productIndex}.image`} />
                   ) : null}
-                  <img
+                  <Image
                     src={product.image}
                     alt={product.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {product.badge ? (
                     <span className="absolute left-3.5 top-3.5 rounded-lg bg-brand px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
@@ -1223,11 +1230,12 @@ function AppSection() {
             </ul>
           </div>
           <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 bg-surface-muted">
-            <img
+            <Image
               src={CHARGING_IMAGES.promoApp}
               alt="App VinFast quản lý sạc"
-              className="w-full h-full object-cover"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
             />
           </div>
         </div>

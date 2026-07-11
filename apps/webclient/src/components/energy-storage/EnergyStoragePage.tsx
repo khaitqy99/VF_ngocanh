@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -721,12 +722,13 @@ function IntroSection() {
     <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200">
-            <img
+          <div className="relative overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200">
+            <Image
               src={IMAGES.herioGreen}
               alt="Năng lượng xanh VinFast"
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 hover:scale-105"
             />
           </div>
           <div className="order-1 lg:order-2">
@@ -1008,11 +1010,12 @@ function SpecsSection({ content }: { content: EnergyPageContent }) {
           </div>
 
           <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100">
-            <img
+            <Image
               src={IMAGES.community}
               alt="Hệ sinh thái năng lượng VinFast"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </div>
@@ -1127,11 +1130,12 @@ function WhyChooseSection() {
           </ul>
           <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group">
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
-            <img
+            <Image
               src={IMAGES.showroom}
               alt="VinFast Ngọc Anh Cà Mau — Đại lý VinFast"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </div>

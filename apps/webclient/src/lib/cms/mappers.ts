@@ -9,7 +9,13 @@ import type { HeroBannerSlide } from "@/lib/images";
 import type { HomeFeaturedPrices, HomeFeaturedSlideOverrides } from "./home-content";
 import type { VinFastHeroBanner, VinFastHomeSlide, VinFastHomeSpec } from "@/lib/vinfast-home";
 import { formatPrice } from "@/lib/cars";
-import { resolveProductSlug } from "@/lib/seo/slugs";
+import {
+  carDetailPath,
+  resolveProductSlug,
+  resolveVehicleIdFromHrefSegment,
+  scooterDetailPath,
+  vehicleDetailPathFromId,
+} from "@/lib/seo/slugs";
 import { localizeVinfastHotlink, parseDbColors, resolveVehicleGallery } from "./vehicle-images";
 
 type VehicleRow = Tables<"vehicles">;
@@ -302,25 +308,58 @@ export function mapVehicleToScooter(row: VehicleRow): ScooterModel {
   ) as ScooterModel;
 }
 
-function vehicleIdFromSlideHref(href?: string): string | undefined {
+function vehicleHrefSegment(href?: string): string | undefined {
   if (!href) return undefined;
   const match = href.match(/^\/(oto|xe-may-dien)\/([^/?#]+)/);
   return match?.[2];
 }
 
+function vehicleIdFromSlideHref(
+  href: string | undefined,
+  vehicleType: "car" | "scooter",
+): string | undefined {
+  const segment = vehicleHrefSegment(href);
+  if (!segment) return undefined;
+  return resolveVehicleIdFromHrefSegment(segment, vehicleType);
+}
+
+function findVehicleBySlideHref<T extends { id: string; slug?: string }>(
+  href: string | undefined,
+  vehicles: T[],
+  vehicleType: "car" | "scooter",
+): T | undefined {
+  const segment = vehicleHrefSegment(href);
+  if (!segment) return undefined;
+
+  const resolvedId = resolveVehicleIdFromHrefSegment(segment, vehicleType);
+  return (
+    vehicles.find((vehicle) => vehicle.id === resolvedId) ??
+    vehicles.find((vehicle) => resolveProductSlug(vehicle, vehicleType) === segment)
+  );
+}
+
 /** Đồng bộ tên/giá/ảnh carousel trang chủ từ catalog CMS (sau khi admin đổi tên). */
 export function hydrateFeaturedVehicleSlides(
   slides: VinFastHomeSlide[],
-  vehicles: { id: string; name: string; subtitle: string; image: string; price: number }[],
+  vehicles: {
+    id: string;
+    slug?: string;
+    name: string;
+    subtitle: string;
+    image: string;
+    price: number;
+  }[],
+  vehicleType: "car" | "scooter",
 ): VinFastHomeSlide[] {
   return slides.map((slide) => {
-    const id = vehicleIdFromSlideHref(slide.href);
-    const vehicle = id ? vehicles.find((v) => v.id === id) : undefined;
+    const vehicle = findVehicleBySlideHref(slide.href, vehicles, vehicleType);
     if (!vehicle) return slide;
 
     const specs = slide.specs.map((spec) =>
       spec.highlight ? { ...spec, value: `${formatPrice(vehicle.price)} VNĐ` } : spec,
     );
+
+    const href = vehicleType === "car" ? carDetailPath(vehicle) : scooterDetailPath(vehicle);
 
     return {
       ...slide,
@@ -329,6 +368,7 @@ export function hydrateFeaturedVehicleSlides(
       image: vehicle.image || slide.image,
       imageAlt: vehicle.name,
       specs,
+      href,
     };
   });
 }
@@ -460,11 +500,12 @@ export function applyFeaturedPriceOverrides(
   slides: VinFastHomeSlide[],
   ids: string[],
   overrides: HomeFeaturedPrices,
+  vehicleType: "car" | "scooter",
 ): VinFastHomeSlide[] {
   if (!Object.keys(overrides).length) return slides;
 
   return slides.map((slide, index) => {
-    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href);
+    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href, vehicleType);
     if (!id) return slide;
     const listPrice = overrides[id]?.listPrice;
     if (listPrice == null) return slide;
@@ -493,11 +534,12 @@ export function applyFeaturedSlideOverrides(
   slides: VinFastHomeSlide[],
   ids: string[],
   overrides: HomeFeaturedSlideOverrides,
+  vehicleType: "car" | "scooter",
 ): VinFastHomeSlide[] {
   if (!Object.keys(overrides).length) return slides;
 
   return slides.map((slide, index) => {
-    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href);
+    const id = ids[index] ?? vehicleIdFromSlideHref(slide.href, vehicleType);
     if (!id) return slide;
     const patch = overrides[id];
     if (!patch) return slide;
@@ -602,13 +644,12 @@ export function buildFeaturedSlidesFromIds(
   const defaultById = new Map(
     defaults
       .map((slide) => {
-        const id = vehicleIdFromSlideHref(slide.href);
-        return id ? ([id, slide] as const) : null;
+        const vehicle = findVehicleBySlideHref(slide.href, vehicles, vehicleType);
+        return vehicle ? ([vehicle.id, slide] as const) : null;
       })
       .filter((entry): entry is [string, VinFastHomeSlide] => entry !== null),
   );
 
-  const prefix = vehicleType === "car" ? "/oto" : "/xe-may-dien";
   const slides = ids
     .map((id) => {
       const fallback = defaultById.get(id);
@@ -632,10 +673,10 @@ export function buildFeaturedSlidesFromIds(
         ],
         primaryCta: vehicleType === "car" ? "ĐẶT CỌC" : "ĐẶT MUA",
         secondaryCta: "KHÁM PHÁ NGAY",
-        href: `${prefix}/${id}`,
+        href: vehicleDetailPathFromId(vehicle.id, vehicleType),
       } satisfies VinFastHomeSlide;
     })
     .filter((slide): slide is VinFastHomeSlide => slide !== null);
 
-  return hydrateFeaturedVehicleSlides(slides, vehicles);
+  return hydrateFeaturedVehicleSlides(slides, vehicles, vehicleType);
 }

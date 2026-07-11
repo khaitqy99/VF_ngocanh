@@ -18,7 +18,6 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
       "@/lib/cms-data": ["./lib/cms-data.ts"],
       "@/lib/cms": ["./lib/cms.ts"],
