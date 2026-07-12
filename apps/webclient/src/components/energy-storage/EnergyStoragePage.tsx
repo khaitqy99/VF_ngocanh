@@ -37,7 +37,6 @@ import {
   ZapOff,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageEditorialHero } from "@/components/shared/PageEditorialHero";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
@@ -70,6 +69,7 @@ import {
   StaticEditableText,
   StaticEditImageButton,
 } from "@/components/admin-edit/static-page/StaticEditableText";
+import { FadeIn, StaggerGrid, StaggerItem } from "@/components/motion";
 
 const SOLUTION_ICONS = {
   residential: Home,
@@ -148,8 +148,6 @@ export default function EnergyStoragePage({
   return (
     <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
-      <Header />
-
       <main>
         {/* Navigation Breadcrumb */}
         <BreadcrumbBar />
@@ -722,7 +720,10 @@ function IntroSection() {
     <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="relative overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200">
+          <FadeIn
+            direction="left"
+            className="relative overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200"
+          >
             <Image
               src={IMAGES.herioGreen}
               alt="Năng lượng xanh VinFast"
@@ -730,8 +731,8 @@ function IntroSection() {
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 hover:scale-105"
             />
-          </div>
-          <div className="order-1 lg:order-2">
+          </FadeIn>
+          <FadeIn direction="right" delay={0.08} className="order-1 lg:order-2">
             <SectionHeader
               align="editorial"
               eyebrow="Công nghệ tiên phong"
@@ -760,7 +761,7 @@ function IntroSection() {
                 </li>
               ))}
             </ul>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
@@ -781,76 +782,79 @@ function SolutionsSection({ content }: { content: EnergyPageContent }) {
           description="Từ tháp pin lưu trữ dân dụng tinh gọn cho biệt thự hộ gia đình, đến các container pin MWh phục vụ nhà máy và lưới điện khu công nghiệp."
         />
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <StaggerGrid className="grid gap-6 md:grid-cols-3">
           {solutions.map(({ id, title, subtitle, capacity, desc, features, idealFor }, index) => {
             const Icon = SOLUTION_ICONS[id as keyof typeof SOLUTION_ICONS];
             return (
-              <div
-                key={id}
-                className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                    <Icon className="size-6" strokeWidth={1.5} />
-                  </div>
-                  <span className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand">
-                    <StaticEditableText
-                      value={capacity}
-                      onChange={(value) => edit?.updateField(`solutions.${index}.capacity`, value)}
-                    />
-                  </span>
-                </div>
-                <p className="mt-5 text-[10px] font-black tracking-wider text-brand uppercase">
-                  <StaticEditableText
-                    value={subtitle}
-                    onChange={(value) => edit?.updateField(`solutions.${index}.subtitle`, value)}
-                  />
-                </p>
-                <h3 className="mt-1 text-sm font-black tracking-wide text-brand-dark uppercase">
-                  <StaticEditableText
-                    value={title}
-                    onChange={(value) => edit?.updateField(`solutions.${index}.title`, value)}
-                  />
-                </h3>
-                <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold">
-                  <StaticEditableText
-                    value={desc}
-                    onChange={(value) => edit?.updateField(`solutions.${index}.desc`, value)}
-                    multiline
-                  />
-                </p>
-                <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
-                  {features.map((item, featureIndex) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
-                    >
-                      <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
+              <StaggerItem key={id} index={index}>
+                <div className="page-section-card flex h-full flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                  <div className="flex items-center justify-between">
+                    <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
+                      <Icon className="size-6" strokeWidth={1.5} />
+                    </div>
+                    <span className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand">
                       <StaticEditableText
-                        value={item}
+                        value={capacity}
                         onChange={(value) =>
-                          edit?.updateField(`solutions.${index}.features.${featureIndex}`, value)
+                          edit?.updateField(`solutions.${index}.capacity`, value)
                         }
                       />
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-5 rounded-xl bg-surface-muted border border-slate-100 px-4 py-3">
-                  <p className="text-[10px] font-black text-brand-dark uppercase tracking-wide">
-                    Đặc thù phù hợp:
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-slate-400 font-bold">
+                    </span>
+                  </div>
+                  <p className="mt-5 text-[10px] font-black tracking-wider text-brand uppercase">
                     <StaticEditableText
-                      value={idealFor}
-                      onChange={(value) => edit?.updateField(`solutions.${index}.idealFor`, value)}
+                      value={subtitle}
+                      onChange={(value) => edit?.updateField(`solutions.${index}.subtitle`, value)}
+                    />
+                  </p>
+                  <h3 className="mt-1 text-sm font-black tracking-wide text-brand-dark uppercase">
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`solutions.${index}.title`, value)}
+                    />
+                  </h3>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold">
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`solutions.${index}.desc`, value)}
                       multiline
                     />
                   </p>
+                  <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
+                    {features.map((item, featureIndex) => (
+                      <li
+                        key={item}
+                        className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
+                      >
+                        <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
+                        <StaticEditableText
+                          value={item}
+                          onChange={(value) =>
+                            edit?.updateField(`solutions.${index}.features.${featureIndex}`, value)
+                          }
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 rounded-xl bg-surface-muted border border-slate-100 px-4 py-3">
+                    <p className="text-[10px] font-black text-brand-dark uppercase tracking-wide">
+                      Đặc thù phù hợp:
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-slate-400 font-bold">
+                      <StaticEditableText
+                        value={idealFor}
+                        onChange={(value) =>
+                          edit?.updateField(`solutions.${index}.idealFor`, value)
+                        }
+                        multiline
+                      />
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -869,36 +873,35 @@ function BenefitsSection({ content }: { content: EnergyPageContent }) {
           title="Lợi ích kinh tế & vận hành vượt trội"
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerGrid className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map(({ title, desc }, index) => {
             const Icon = BENEFIT_ICONS[index] ?? BarChart3;
             return (
-              <div
-                key={title}
-                className="flex gap-4 rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
-              >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+              <StaggerItem key={title} index={index}>
+                <div className="flex h-full gap-4 rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft hover:-translate-y-1 transition-all duration-300 hover:shadow-md">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                      <StaticEditableText
+                        value={title}
+                        onChange={(value) => edit?.updateField(`benefits.${index}.title`, value)}
+                      />
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-400 font-semibold">
+                      <StaticEditableText
+                        value={desc}
+                        onChange={(value) => edit?.updateField(`benefits.${index}.desc`, value)}
+                        multiline
+                      />
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    <StaticEditableText
-                      value={title}
-                      onChange={(value) => edit?.updateField(`benefits.${index}.title`, value)}
-                    />
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-400 font-semibold">
-                    <StaticEditableText
-                      value={desc}
-                      onChange={(value) => edit?.updateField(`benefits.${index}.desc`, value)}
-                      multiline
-                    />
-                  </p>
-                </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -917,51 +920,55 @@ function ApplicationsSection({ content }: { content: EnergyPageContent }) {
           title="Ứng dụng hệ thống pin ESS"
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <StaggerGrid className="grid gap-6 md:grid-cols-2">
           {applications.map(({ title, desc, benefits }, index) => {
             const Icon = APPLICATION_ICONS[index] ?? Sun;
             return (
-              <div
-                key={title}
-                className="page-section-card flex flex-col p-7 hover:shadow-card transition-all duration-300"
-              >
-                <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                    <Icon className="size-6 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    <StaticEditableText
-                      value={title}
-                      onChange={(value) => edit?.updateField(`applications.${index}.title`, value)}
-                    />
-                  </h3>
-                </div>
-                <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold flex-1">
-                  <StaticEditableText
-                    value={desc}
-                    onChange={(value) => edit?.updateField(`applications.${index}.desc`, value)}
-                    multiline
-                  />
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2 pt-4 border-t border-slate-100">
-                  {benefits.map((benefit, benefitIndex) => (
-                    <span
-                      key={benefit}
-                      className="rounded-lg border border-brand/25 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand uppercase tracking-wide"
-                    >
+              <StaggerItem key={title} index={index}>
+                <div className="page-section-card flex h-full flex-col p-7 hover:shadow-card transition-all duration-300">
+                  <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                      <Icon className="size-6 text-brand" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
                       <StaticEditableText
-                        value={benefit}
+                        value={title}
                         onChange={(value) =>
-                          edit?.updateField(`applications.${index}.benefits.${benefitIndex}`, value)
+                          edit?.updateField(`applications.${index}.title`, value)
                         }
                       />
-                    </span>
-                  ))}
+                    </h3>
+                  </div>
+                  <p className="mt-4 text-xs leading-relaxed text-slate-400 font-semibold flex-1">
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`applications.${index}.desc`, value)}
+                      multiline
+                    />
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+                    {benefits.map((benefit, benefitIndex) => (
+                      <span
+                        key={benefit}
+                        className="rounded-lg border border-brand/25 bg-brand/5 px-3 py-1 text-[10px] font-black text-brand uppercase tracking-wide"
+                      >
+                        <StaticEditableText
+                          value={benefit}
+                          onChange={(value) =>
+                            edit?.updateField(
+                              `applications.${index}.benefits.${benefitIndex}`,
+                              value,
+                            )
+                          }
+                        />
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -975,7 +982,7 @@ function SpecsSection({ content }: { content: EnergyPageContent }) {
     <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
+          <FadeIn direction="left">
             <SectionHeader
               align="editorial"
               eyebrow="Đặc tính thiết bị"
@@ -1007,9 +1014,13 @@ function SpecsSection({ content }: { content: EnergyPageContent }) {
                 </tbody>
               </table>
             </div>
-          </div>
+          </FadeIn>
 
-          <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100">
+          <FadeIn
+            direction="right"
+            delay={0.1}
+            className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100"
+          >
             <Image
               src={IMAGES.community}
               alt="Hệ sinh thái năng lượng VinFast"
@@ -1017,7 +1028,7 @@ function SpecsSection({ content }: { content: EnergyPageContent }) {
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
@@ -1039,35 +1050,37 @@ function ProcessSection({ content }: { content: EnergyPageContent }) {
 
         <div className="relative">
           <div className="absolute top-[22px] right-12 left-12 hidden h-[2px] bg-slate-200 lg:block" />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerGrid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map(({ step, title, desc }, index) => (
-              <div key={step} className="relative flex flex-col items-center text-center">
-                <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
-                  <span className="text-xs font-black text-brand">
-                    <StaticEditableText
-                      value={step}
-                      onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
-                    />
-                  </span>
+              <StaggerItem key={step} index={index}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
+                    <span className="text-xs font-black text-brand">
+                      <StaticEditableText
+                        value={step}
+                        onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
+                      />
+                    </span>
+                  </div>
+                  <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
+                    <h3 className="text-xs font-black text-brand-dark uppercase">
+                      <StaticEditableText
+                        value={title}
+                        onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
+                      />
+                    </h3>
+                    <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                      <StaticEditableText
+                        value={desc}
+                        onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
+                        multiline
+                      />
+                    </p>
+                  </div>
                 </div>
-                <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
-                  <h3 className="text-xs font-black text-brand-dark uppercase">
-                    <StaticEditableText
-                      value={title}
-                      onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
-                    />
-                  </h3>
-                  <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                    <StaticEditableText
-                      value={desc}
-                      onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
-                      multiline
-                    />
-                  </p>
-                </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </div>
     </section>
@@ -1108,27 +1121,30 @@ function WhyChooseSection() {
         />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <ul className="space-y-6 order-2 lg:order-1">
-            {items.map(({ icon: Icon, title, desc }) => (
-              <li
-                key={title}
-                className="flex gap-4 items-start bg-surface-muted border border-slate-200 p-5 rounded-2xl shadow-soft"
-              >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+          <StaggerGrid className="space-y-6 order-2 lg:order-1">
+            {items.map(({ icon: Icon, title, desc }, index) => (
+              <StaggerItem key={title} index={index}>
+                <div className="flex gap-4 items-start bg-surface-muted border border-slate-200 p-5 rounded-2xl shadow-soft">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                      {title}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
+                      {desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
-                    {desc}
-                  </p>
-                </div>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
-          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group">
+          </StaggerGrid>
+          <FadeIn
+            direction="right"
+            delay={0.1}
+            className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group"
+          >
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
             <Image
               src={IMAGES.showroom}
@@ -1137,7 +1153,7 @@ function WhyChooseSection() {
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>

@@ -18,7 +18,6 @@ import {
   Phone,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
 import { type DealershipContact } from "@/lib/dealership";
@@ -111,8 +110,6 @@ export default function AboutPage({
 }) {
   return (
     <div className="relative min-h-screen bg-background font-sans text-foreground antialiased">
-      <Header />
-
       <main>
         <BreadcrumbBar />
         <HeroSection content={content} />
@@ -358,12 +355,12 @@ function TimelineSection({ content }: { content: AboutPageContent }) {
   const { ref, reduced, initial, animate } = useSectionReveal(aboutViewport);
 
   return (
-    <section className="section-y overflow-hidden border-b border-slate-200/60 bg-white">
+    <section ref={ref} className="section-y overflow-hidden border-b border-slate-200/60 bg-white">
       <div className="container-vf">
         <AboutSectionHeader eyebrow="Lịch sử vàng son" title="Hành trình phát triển chói sáng" />
 
         {/* Mobile / tablet: timeline dọc — không cần cuộn ngang */}
-        <div className="relative mt-8 md:mt-10 lg:hidden" ref={ref}>
+        <div className="relative mt-8 md:mt-10 lg:hidden">
           <div
             className="absolute top-3 bottom-3 left-4 w-px bg-gradient-to-b from-brand/20 via-brand/50 to-brand/20"
             aria-hidden

@@ -43,7 +43,6 @@ import {
 import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
 import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
-import Header from "@/components/site/Header";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { Slider } from "@/components/ui/slider";
@@ -345,8 +344,6 @@ export default function ScootersPage({
           </p>
         </div>
       ) : null}
-      {!embedded && <Header />}
-
       <main>
         {!embedded && <ScootersBreadcrumbBar />}
 

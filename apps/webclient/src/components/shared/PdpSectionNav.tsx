@@ -34,7 +34,7 @@ export function PdpSectionNav({ items, hiddenIds }: { items: PdpNavItem[]; hidde
       initial={mount.initial}
       animate={mount.animate}
       transition={mount.transition}
-      className="sticky top-14 z-30 border-b border-border/40 bg-white/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80"
+      className="sticky top-14 z-30 border-b border-border/40 bg-white lg:bg-white/90 lg:backdrop-blur-xl"
     >
       <div className="container-vf py-2.5 sm:py-3">
         <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

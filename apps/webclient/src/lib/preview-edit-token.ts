@@ -25,6 +25,12 @@ export function canEnablePreviewEdit(options: { referer?: string | null }): bool
 export type PreviewEditScope =
   "oto" | "xe-may-dien" | "phu-kien" | "home" | "about" | "after-sales" | "charging" | "energy";
 
+/** Routes loaded in admin iframe — hide site chrome (header/footer optional). */
+export function isPreviewPath(pathname: string): boolean {
+  const path = pathname.split("?")[0];
+  return path === "/preview" || path.endsWith("/preview");
+}
+
 export function previewScopeFromRequestPath(pathname: string): PreviewEditScope | null {
   const path = pathname.split("?")[0];
   if (path === "/preview") return "home";

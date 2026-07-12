@@ -33,7 +33,6 @@ import {
   Search,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageStatsBar } from "@/components/shared/PageStatsBar";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
@@ -72,6 +71,7 @@ import {
   StaticEditImageButton,
 } from "@/components/admin-edit/static-page/StaticEditableText";
 import { StaticEditablePageMarketingHero } from "@/components/admin-edit/static-page/StaticEditablePageMarketingHero";
+import { FadeIn, StaggerGrid, StaggerItem } from "@/components/motion";
 
 const HERO_FEATURES = [
   { icon: MapPin, text: "150.000+ cổng sạc", sub: "Phủ sóng khắp 63 tỉnh thành" },
@@ -234,8 +234,6 @@ export default function ChargingPage({
   return (
     <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
-      <Header />
-
       <main>
         {/* Navigation bar */}
         <BreadcrumbBar />
@@ -809,33 +807,32 @@ function EcosystemSection() {
           description="Từ trạm sạc công cộng công suất cực lớn dọc dải đất hình chữ S, đến các bộ sạc treo tường tiện ích lắp đặt tại tư gia riêng của quý khách."
         />
 
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-          {tiles.map((item) => (
-            <div
-              key={item.title}
-              className="group relative overflow-hidden rounded-2xl shadow-soft border border-slate-200"
-            >
-              <div className="relative aspect-[21/9] w-full bg-[#e8ecf2] sm:aspect-[2.2/1]">
-                <Image
-                  src={item.img}
-                  alt={item.title}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover object-center transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
-                  <h3 className="text-sm md:text-base font-black uppercase text-white tracking-wide">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-[11px] md:text-xs text-slate-300 font-medium leading-relaxed max-w-lg">
-                    {item.sub}
-                  </p>
+        <StaggerGrid className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          {tiles.map((item, index) => (
+            <StaggerItem key={item.title} index={index}>
+              <div className="group relative overflow-hidden rounded-2xl shadow-soft border border-slate-200">
+                <div className="relative aspect-[21/9] w-full bg-[#e8ecf2] sm:aspect-[2.2/1]">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-center transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
+                    <h3 className="text-sm md:text-base font-black uppercase text-white tracking-wide">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-[11px] md:text-xs text-slate-300 font-medium leading-relaxed max-w-lg">
+                      {item.sub}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -854,72 +851,78 @@ function StationTypesSection({ content }: { content: ChargingPageContent }) {
           title="Các loại trụ sạc tiêu chuẩn"
         />
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <StaggerGrid className="grid gap-6 md:grid-cols-3">
           {stationTypes.map((station, index) => (
-            <article
-              key={station.id}
-              className={`flex flex-col overflow-hidden ${vfCard} transition hover:-translate-y-1 hover:shadow-card group`}
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
-                <StaticEditImageButton imagePath={`stationTypes.${index}.image`} />
-                <Image
-                  src={station.image}
-                  alt={station.title}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
-                  <StaticEditableText
-                    value={station.title}
-                    onChange={(value) => edit?.updateField(`stationTypes.${index}.title`, value)}
+            <StaggerItem key={station.id} index={index}>
+              <article
+                className={`flex h-full flex-col overflow-hidden ${vfCard} transition hover:-translate-y-1 hover:shadow-card group`}
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                  <StaticEditImageButton imagePath={`stationTypes.${index}.image`} />
+                  <Image
+                    src={station.image}
+                    alt={station.title}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
                   />
-                </h3>
-                <div className="mt-2.5 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-brand/10 px-2.5 py-1 text-[10px] font-black text-brand">
-                    <Gauge className="size-3 text-brand" />
-                    <StaticEditableText
-                      value={station.power}
-                      onChange={(value) => edit?.updateField(`stationTypes.${index}.power`, value)}
-                    />
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-brand-dark/10 px-2.5 py-1 text-[10px] font-black text-brand-dark">
-                    <Clock className="size-3 text-brand" />
-                    <StaticEditableText
-                      value={station.time}
-                      onChange={(value) => edit?.updateField(`stationTypes.${index}.time`, value)}
-                    />
-                  </span>
                 </div>
-                <p className="mt-3.5 flex-1 text-xs leading-relaxed text-slate-400 font-semibold">
-                  <StaticEditableText
-                    value={station.desc}
-                    onChange={(value) => edit?.updateField(`stationTypes.${index}.desc`, value)}
-                    multiline
-                  />
-                </p>
-                <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
-                  {station.features.map((feature, featureIndex) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2 text-[11px] text-slate-500 font-bold"
-                    >
-                      <ChevronRight className="mt-0.5 size-3.5 shrink-0 text-brand" />
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
+                    <StaticEditableText
+                      value={station.title}
+                      onChange={(value) => edit?.updateField(`stationTypes.${index}.title`, value)}
+                    />
+                  </h3>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-brand/10 px-2.5 py-1 text-[10px] font-black text-brand">
+                      <Gauge className="size-3 text-brand" />
                       <StaticEditableText
-                        value={feature}
+                        value={station.power}
                         onChange={(value) =>
-                          edit?.updateField(`stationTypes.${index}.features.${featureIndex}`, value)
+                          edit?.updateField(`stationTypes.${index}.power`, value)
                         }
                       />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-brand-dark/10 px-2.5 py-1 text-[10px] font-black text-brand-dark">
+                      <Clock className="size-3 text-brand" />
+                      <StaticEditableText
+                        value={station.time}
+                        onChange={(value) => edit?.updateField(`stationTypes.${index}.time`, value)}
+                      />
+                    </span>
+                  </div>
+                  <p className="mt-3.5 flex-1 text-xs leading-relaxed text-slate-400 font-semibold">
+                    <StaticEditableText
+                      value={station.desc}
+                      onChange={(value) => edit?.updateField(`stationTypes.${index}.desc`, value)}
+                      multiline
+                    />
+                  </p>
+                  <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
+                    {station.features.map((feature, featureIndex) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-2 text-[11px] text-slate-500 font-bold"
+                      >
+                        <ChevronRight className="mt-0.5 size-3.5 shrink-0 text-brand" />
+                        <StaticEditableText
+                          value={feature}
+                          onChange={(value) =>
+                            edit?.updateField(
+                              `stationTypes.${index}.features.${featureIndex}`,
+                              value,
+                            )
+                          }
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -930,7 +933,7 @@ function BatterySection() {
     <section className="section-y bg-white">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
+          <FadeIn direction="left">
             <SectionHeader
               align="editorial"
               eyebrow="Công nghệ lõi"
@@ -938,26 +941,29 @@ function BatterySection() {
               description="VinFast trang bị pin Lithium Iron Phosphate (LFP) thế hệ mới trên các phân khúc xe điện. Đây là công nghệ pin được đánh giá cao bậc nhất thế giới nhờ đặc tính hóa học cực kỳ ổn định nhiệt, loại bỏ triệt để rủi ro cháy nổ và chịu đựng tốt khí hậu nhiệt đới gió mùa tại Việt Nam."
               className="mb-6 lg:mb-8"
             />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {BATTERY_HIGHLIGHTS.map(({ title, desc }) => (
-                <div
-                  key={title}
-                  className="rounded-xl border border-slate-200 bg-surface-muted p-4 shadow-sm"
-                >
-                  <div className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-brand/10">
-                    <Battery className="size-4.5 text-brand" />
+            <StaggerGrid className="mt-6 grid gap-4 sm:grid-cols-2">
+              {BATTERY_HIGHLIGHTS.map(({ title, desc }, index) => (
+                <StaggerItem key={title} index={index}>
+                  <div className="rounded-xl border border-slate-200 bg-surface-muted p-4 shadow-sm">
+                    <div className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-brand/10">
+                      <Battery className="size-4.5 text-brand" />
+                    </div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                      {title}
+                    </h3>
+                    <p className="mt-1 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                      {desc}
+                    </p>
                   </div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
-                  </h3>
-                  <p className="mt-1 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                    {desc}
-                  </p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100">
+            </StaggerGrid>
+          </FadeIn>
+          <FadeIn
+            direction="right"
+            delay={0.1}
+            className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100"
+          >
             <Image
               src={CHARGING_IMAGES.stations}
               alt="Công nghệ pin VinFast"
@@ -980,7 +986,7 @@ function BatterySection() {
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
@@ -1033,119 +1039,118 @@ function ProductsSection({
           ))}
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => {
+        <StaggerGrid className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {products.map((product, index) => {
             const productIndex = allProducts.findIndex((item) => item.id === product.id);
             return (
-              <article
-                key={product.id}
-                className="page-section-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-100">
-                  {productIndex >= 0 ? (
-                    <StaticEditImageButton imagePath={`products.${productIndex}.image`} />
-                  ) : null}
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {product.badge ? (
-                    <span className="absolute left-3.5 top-3.5 rounded-lg bg-brand px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
-                      {productIndex >= 0 ? (
-                        <StaticEditableText
-                          value={product.badge}
-                          onChange={(value) =>
-                            edit?.updateField(`products.${productIndex}.badge`, value)
-                          }
-                        />
-                      ) : (
-                        product.badge
-                      )}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
+              <StaggerItem key={product.id} index={index}>
+                <article className="page-section-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 border-b border-slate-100">
                     {productIndex >= 0 ? (
-                      <StaticEditableText
-                        value={product.name}
-                        onChange={(value) =>
-                          edit?.updateField(`products.${productIndex}.name`, value)
-                        }
-                      />
-                    ) : (
-                      product.name
-                    )}
-                  </h3>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3">
-                    {productIndex >= 0 ? (
-                      <StaticEditableText
-                        value={product.description}
-                        onChange={(value) =>
-                          edit?.updateField(`products.${productIndex}.description`, value)
-                        }
-                        multiline
-                      />
-                    ) : (
-                      product.description
-                    )}
-                  </p>
-                  <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
-                    {product.specs.map((spec, specIndex) => (
-                      <li
-                        key={spec}
-                        className="flex items-center gap-2 text-[11px] text-slate-500 font-bold"
-                      >
-                        <span className="size-1.5 shrink-0 rounded-full bg-brand" />
+                      <StaticEditImageButton imagePath={`products.${productIndex}.image`} />
+                    ) : null}
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    {product.badge ? (
+                      <span className="absolute left-3.5 top-3.5 rounded-lg bg-brand px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
                         {productIndex >= 0 ? (
                           <StaticEditableText
-                            value={spec}
+                            value={product.badge}
                             onChange={(value) =>
-                              edit?.updateField(
-                                `products.${productIndex}.specs.${specIndex}`,
-                                value,
-                              )
+                              edit?.updateField(`products.${productIndex}.badge`, value)
                             }
                           />
                         ) : (
-                          spec
+                          product.badge
                         )}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
-                    <p className="text-sm font-black text-brand uppercase">
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="text-sm font-black text-brand-dark uppercase tracking-wider">
                       {productIndex >= 0 ? (
                         <StaticEditableText
-                          value={formatPrice(product.price)}
-                          onChange={(value) => {
-                            const digits = value.replace(/\D/g, "");
-                            edit?.updateField(
-                              `products.${productIndex}.price`,
-                              digits ? Number(digits) : 0,
-                            );
-                          }}
+                          value={product.name}
+                          onChange={(value) =>
+                            edit?.updateField(`products.${productIndex}.name`, value)
+                          }
                         />
                       ) : (
-                        formatPrice(product.price)
+                        product.name
+                      )}
+                    </h3>
+                    <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3">
+                      {productIndex >= 0 ? (
+                        <StaticEditableText
+                          value={product.description}
+                          onChange={(value) =>
+                            edit?.updateField(`products.${productIndex}.description`, value)
+                          }
+                          multiline
+                        />
+                      ) : (
+                        product.description
                       )}
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => onOrderProduct(product)}
-                      className="home-cta-primary rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#0046cc] shadow-md"
-                    >
-                      Tư vấn & đặt mua
-                    </button>
+                    <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
+                      {product.specs.map((spec, specIndex) => (
+                        <li
+                          key={spec}
+                          className="flex items-center gap-2 text-[11px] text-slate-500 font-bold"
+                        >
+                          <span className="size-1.5 shrink-0 rounded-full bg-brand" />
+                          {productIndex >= 0 ? (
+                            <StaticEditableText
+                              value={spec}
+                              onChange={(value) =>
+                                edit?.updateField(
+                                  `products.${productIndex}.specs.${specIndex}`,
+                                  value,
+                                )
+                              }
+                            />
+                          ) : (
+                            spec
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
+                      <p className="text-sm font-black text-brand uppercase">
+                        {productIndex >= 0 ? (
+                          <StaticEditableText
+                            value={formatPrice(product.price)}
+                            onChange={(value) => {
+                              const digits = value.replace(/\D/g, "");
+                              edit?.updateField(
+                                `products.${productIndex}.price`,
+                                digits ? Number(digits) : 0,
+                              );
+                            }}
+                          />
+                        ) : (
+                          formatPrice(product.price)
+                        )}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onOrderProduct(product)}
+                        className="home-cta-primary rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#0046cc] shadow-md"
+                      >
+                        Tư vấn & đặt mua
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -1165,34 +1170,33 @@ function GuideSection({ content }: { content: ChargingPageContent }) {
           description="Quy trình 4 bước đơn giản, thuận tiện bậc nhất thế giới để sạc nhanh ô tô/xe máy điện VinFast tại bất kỳ trạm sạc nào trên lãnh thổ Việt Nam."
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGrid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(({ step, title, desc }, index) => (
-            <div
-              key={step}
-              className="relative rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md"
-            >
-              <span className="text-3xl font-black text-brand/20 tracking-wider">
-                <StaticEditableText
-                  value={step}
-                  onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
-                />
-              </span>
-              <h3 className="mt-3 text-xs font-black text-brand-dark uppercase tracking-wider">
-                <StaticEditableText
-                  value={title}
-                  onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
-                />
-              </h3>
-              <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                <StaticEditableText
-                  value={desc}
-                  onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
-                  multiline
-                />
-              </p>
-            </div>
+            <StaggerItem key={step} index={index}>
+              <div className="relative rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md">
+                <span className="text-3xl font-black text-brand/20 tracking-wider">
+                  <StaticEditableText
+                    value={step}
+                    onChange={(value) => edit?.updateField(`steps.${index}.step`, value)}
+                  />
+                </span>
+                <h3 className="mt-3 text-xs font-black text-brand-dark uppercase tracking-wider">
+                  <StaticEditableText
+                    value={title}
+                    onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
+                  />
+                </h3>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                  <StaticEditableText
+                    value={desc}
+                    onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}
+                    multiline
+                  />
+                </p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -1204,7 +1208,7 @@ function AppSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
       <div className="container-vf relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
+          <FadeIn direction="left">
             <SectionHeader
               align="editorial"
               eyebrow="App VinFast Club thông minh"
@@ -1228,8 +1232,12 @@ function AppSection() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 bg-surface-muted">
+          </FadeIn>
+          <FadeIn
+            direction="right"
+            delay={0.1}
+            className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 bg-surface-muted"
+          >
             <Image
               src={CHARGING_IMAGES.promoApp}
               alt="App VinFast quản lý sạc"
@@ -1237,7 +1245,7 @@ function AppSection() {
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
@@ -1258,34 +1266,33 @@ function WhySection({ content }: { content: ChargingPageContent }) {
           title="Ưu thế hệ sinh thái sạc VinFast"
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGrid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {whyCharging.map(({ title, desc }, i) => {
             const Icon = icons[i] ?? Zap;
             return (
-              <div
-                key={title}
-                className="page-section-card p-6 text-center hover:-translate-y-1 transition-all duration-300 hover:shadow-md"
-              >
-                <div className="mx-auto mb-3.5 flex size-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+              <StaggerItem key={title} index={i}>
+                <div className="page-section-card p-6 text-center hover:-translate-y-1 transition-all duration-300 hover:shadow-md">
+                  <div className="mx-auto mb-3.5 flex size-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`whyCharging.${i}.title`, value)}
+                    />
+                  </h3>
+                  <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`whyCharging.${i}.desc`, value)}
+                      multiline
+                    />
+                  </p>
                 </div>
-                <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                  <StaticEditableText
-                    value={title}
-                    onChange={(value) => edit?.updateField(`whyCharging.${i}.title`, value)}
-                  />
-                </h3>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
-                  <StaticEditableText
-                    value={desc}
-                    onChange={(value) => edit?.updateField(`whyCharging.${i}.desc`, value)}
-                    multiline
-                  />
-                </p>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );

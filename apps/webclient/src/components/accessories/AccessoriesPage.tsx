@@ -29,11 +29,16 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
-import { CatalogGrid, CatalogGridItem } from "@/components/motion";
+import {
+  CatalogGrid,
+  CatalogGridItem,
+  FadeIn,
+  StaggerGrid,
+  StaggerItem,
+} from "@/components/motion";
 import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { FaqBlock } from "@/components/shared/FaqBlock";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -319,8 +324,6 @@ export default function AccessoriesPage({
           </p>
         </div>
       ) : null}
-      {!embedded && <Header />}
-
       <main>
         {!embedded && <BreadcrumbBar />}
 
@@ -888,20 +891,19 @@ function InstallProcessSection() {
           title="Quy trình tư vấn & lắp đặt phụ kiện"
         />
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {INSTALL_STEPS.map(({ step, title, desc }) => (
-            <div
-              key={step}
-              className="page-section-card relative p-6 transition-all group hover:shadow-md"
-            >
-              <span className="text-3xl font-black text-brand/20 group-hover:text-brand transition-colors">
-                {step}
-              </span>
-              <h3 className="mt-3 text-sm font-black text-brand-dark uppercase">{title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
-            </div>
+        <StaggerGrid className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {INSTALL_STEPS.map(({ step, title, desc }, index) => (
+            <StaggerItem key={step} index={index}>
+              <div className="page-section-card relative h-full p-6 transition-all group hover:shadow-md">
+                <span className="text-3xl font-black text-brand/20 group-hover:text-brand transition-colors">
+                  {step}
+                </span>
+                <h3 className="mt-3 text-sm font-black text-brand-dark uppercase">{title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -911,7 +913,10 @@ function PromoBanners() {
   return (
     <section className="bg-surface-muted section-y">
       <div className="container-vf grid gap-6 sm:grid-cols-2">
-        <div className="relative overflow-hidden rounded-[1.75rem] shadow-md flex min-h-[220px]">
+        <FadeIn
+          direction="left"
+          className="relative overflow-hidden rounded-[1.75rem] shadow-md flex min-h-[220px]"
+        >
           <img
             src={ACCESSORY_IMAGES.promoInstall}
             alt="Lắp đặt phụ kiện tại showroom"
@@ -934,9 +939,13 @@ function PromoBanners() {
               GỌI ĐẶT LỊCH HẸN NGAY
             </a>
           </div>
-        </div>
+        </FadeIn>
 
-        <div className="page-section-card relative flex min-h-[220px] flex-col justify-center overflow-hidden p-6 md:p-8">
+        <FadeIn
+          direction="right"
+          delay={0.1}
+          className="page-section-card relative flex min-h-[220px] flex-col justify-center overflow-hidden p-6 md:p-8"
+        >
           <div className="absolute top-4 right-4 opacity-15">
             <Shield className="size-24 text-brand" strokeWidth={1} />
           </div>
@@ -966,7 +975,7 @@ function PromoBanners() {
               TRA CỨU Hạn BẢO HÀNH
             </a>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -982,20 +991,19 @@ function WhyOfficialSection() {
           title="Vì sao nên chọn phụ kiện chính hãng VinFast?"
         />
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {WHY_OFFICIAL.map(({ icon: Icon, title, desc }) => (
-            <div
-              key={title}
-              className="page-section-card p-6 text-center transition-all hover:shadow-md"
-            >
-              <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-brand/10 border border-brand/20 text-brand">
-                <Icon className="size-6 text-brand" strokeWidth={1.5} />
+        <StaggerGrid className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {WHY_OFFICIAL.map(({ icon: Icon, title, desc }, index) => (
+            <StaggerItem key={title} index={index}>
+              <div className="page-section-card h-full p-6 text-center transition-all hover:shadow-md">
+                <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-brand/10 border border-brand/20 text-brand">
+                  <Icon className="size-6 text-brand" strokeWidth={1.5} />
+                </div>
+                <h3 className="mt-4 text-sm font-black text-brand-dark uppercase">{title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
               </div>
-              <h3 className="mt-4 text-sm font-black text-brand-dark uppercase">{title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );

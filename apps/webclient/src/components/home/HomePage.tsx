@@ -4,7 +4,6 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import Header from "@/components/site/Header";
 import FaqSection from "@/components/site/FaqSection";
 import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
 import FloatingButtons from "@/components/site/FloatingButtons";
@@ -102,7 +101,6 @@ export default function HomePage({
   return (
     <div className={`relative min-h-screen bg-background ${edit?.editMode ? "pb-24" : ""}`}>
       <Toaster position="top-center" richColors />
-      <Header />
       <main>
         <h1 className="sr-only">VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast</h1>
         <HomeHero banners={heroBanners} />

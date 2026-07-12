@@ -37,7 +37,6 @@ import {
 import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
 import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
-import Header from "@/components/site/Header";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -353,8 +352,6 @@ export default function CarsPage({
           </p>
         </div>
       ) : null}
-      {!embedded && <Header />}
-
       <main>
         {!embedded && <CarsBreadcrumbBar />}
 

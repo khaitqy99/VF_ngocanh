@@ -41,7 +41,6 @@ import {
   Share2,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
 import {
@@ -451,7 +450,6 @@ export default function CarDetailPage({
     <div
       className={`relative min-h-screen overflow-x-hidden bg-background ${embedded ? "pb-8" : "pb-28 lg:pb-0"}`}
     >
-      {!embedded && <Header />}
       <Toaster position="top-center" richColors />
       <main>
         {embedded && !adminEdit ? (

@@ -14,11 +14,10 @@ export const detailHeroStagger: Variants = {
 };
 
 export const detailHeroCol: Variants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { duration: DURATION.normal, ease: EASE_OUT_EXPO },
   },
 };

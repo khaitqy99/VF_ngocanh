@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { SiteNavigationJsonLd } from "@/components/seo/SiteNavigationJsonLd";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
@@ -87,11 +88,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${plusJakartaSans.variable} relative font-sans antialiased`}>
         <div
           aria-hidden
-          className="home-grain pointer-events-none fixed inset-0 z-[60] opacity-[0.028]"
+          className="home-grain pointer-events-none fixed inset-0 z-0 opacity-[0.028] max-lg:hidden"
         />
         <GoogleAnalytics />
         <SiteNavigationJsonLd />
-        <div className="relative">{children}</div>
+        <SiteHeader />
+        <div className="relative z-10">{children}</div>
         <SiteFooter />
       </body>
     </html>

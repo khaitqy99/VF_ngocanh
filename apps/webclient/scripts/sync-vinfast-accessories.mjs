@@ -236,7 +236,8 @@ for (let i = 0; i < products.length; i += CONCURRENCY) {
 
       const desc = await fetchDescription(p.href);
       p.description =
-        desc || `${p.name} — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.`;
+        desc ||
+        `${p.name} — phụ kiện chính hãng VinFast, phân phối tại đại lý VinFast Ngọc Anh Cà Mau.`;
 
       if (/mô hình|bán chạy/i.test(p.name) && p.name.toLowerCase().includes("vf 3")) {
         p.badge = "Bán chạy";

@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "sonner";
 import { ArrowLeft, Check, Phone, Plus, Save, Shield, Undo2, Wrench } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
@@ -167,8 +166,6 @@ export default function AccessoryDetailPage({
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <Toaster position="top-center" richColors />
-      {!embedded && <Header />}
-
       <main>
         {embedded ? (
           <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">

@@ -34,7 +34,6 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import Header from "@/components/site/Header";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { FaqBlock } from "@/components/shared/FaqBlock";
@@ -55,6 +54,7 @@ import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/Stat
 import { StaticEditableFaqBlock } from "@/components/admin-edit/static-page/StaticEditableFaqBlock";
 import { StaticEditableText } from "@/components/admin-edit/static-page/StaticEditableText";
 import { StaticEditablePageMarketingHero } from "@/components/admin-edit/static-page/StaticEditablePageMarketingHero";
+import { FadeIn, StaggerGrid, StaggerItem } from "@/components/motion";
 
 const SERVICE_ICONS = [Wrench, Stethoscope, Shield, Truck, Package, Cpu] as const;
 const WARRANTY_ICONS = [Car, Bike, Battery] as const;
@@ -169,8 +169,6 @@ export default function AfterSalesPage({
   return (
     <div className="relative min-h-screen bg-background text-foreground antialiased font-sans">
       <Toaster position="top-right" richColors />
-      <Header />
-
       <main>
         {/* Path navigation */}
         <BreadcrumbBar />
@@ -211,270 +209,278 @@ export default function AfterSalesPage({
               description="Tiết kiệm 100% thời gian chờ đợi tại xưởng. Đăng ký trước lịch hẹn dịch vụ bảo dưỡng định kỳ, sửa chữa hệ thống pin hoặc cập nhật phần mềm xe để được cố vấn đón tiếp chu đáo nhất."
             />
 
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-4xl mx-auto grid md:grid-cols-12">
-              {/* Form Guidance Side */}
-              <div className="md:col-span-5 p-6 md:p-8 bg-surface-muted border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2">
-                    <ShieldAlert className="size-4 text-brand" /> Cam kết dịch vụ 3S
-                  </h3>
-                  <ul className="mt-6 space-y-4 text-xs font-bold text-slate-600">
-                    <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                      Cố vấn tiếp đón ngay tại phòng chờ VIP khi đến đúng giờ hẹn.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                      Rửa xe, hút bụi làm sạch nội thất hoàn toàn miễn phí trước khi giao trả.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                      Sử dụng máy quét lỗi chuyên dụng kiểm tra hệ thống pin miễn phí.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                      Lưu trữ thông tin lịch sử sửa chữa bảo trì điện tử suốt trọn đời xe.
-                    </li>
-                  </ul>
+            <FadeIn delay={0.12}>
+              <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-4xl mx-auto grid md:grid-cols-12">
+                {/* Form Guidance Side */}
+                <div className="md:col-span-5 p-6 md:p-8 bg-surface-muted border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-sm font-black tracking-wide border-b border-slate-200 pb-4 text-brand-dark uppercase flex items-center gap-2">
+                      <ShieldAlert className="size-4 text-brand" /> Cam kết dịch vụ 3S
+                    </h3>
+                    <ul className="mt-6 space-y-4 text-xs font-bold text-slate-600">
+                      <li className="flex items-start gap-2.5">
+                        <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
+                        Cố vấn tiếp đón ngay tại phòng chờ VIP khi đến đúng giờ hẹn.
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
+                        Rửa xe, hút bụi làm sạch nội thất hoàn toàn miễn phí trước khi giao trả.
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
+                        Sử dụng máy quét lỗi chuyên dụng kiểm tra hệ thống pin miễn phí.
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
+                        Lưu trữ thông tin lịch sử sửa chữa bảo trì điện tử suốt trọn đời xe.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-slate-200 text-xs text-slate-500 font-semibold space-y-2">
+                    <p className="flex items-center gap-2">
+                      <MapPin className="size-4 text-brand" /> Showroom VinFast Ngọc Anh Cà Mau
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <Clock className="size-4 text-brand" /> Giờ làm việc: Sáng 8:00 - 12:00 |
+                      Chiều 13:00 - 17:00
+                    </p>
+                  </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-slate-200 text-xs text-slate-500 font-semibold space-y-2">
-                  <p className="flex items-center gap-2">
-                    <MapPin className="size-4 text-brand" /> Showroom VinFast Ngọc Anh Cà Mau
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <Clock className="size-4 text-brand" /> Giờ làm việc: Sáng 8:00 - 12:00 | Chiều
-                    13:00 - 17:00
-                  </p>
-                </div>
-              </div>
-
-              {/* Form Inputs Side */}
-              <div className="md:col-span-7 p-6 md:p-8 bg-white">
-                <AnimatePresence mode="wait">
-                  {isSubmitSuccess ? (
-                    <motion.div {...modalMotion.step} className="py-10 text-center space-y-5">
-                      <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
-                        <Check className="size-8" strokeWidth={2.5} />
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-black text-brand-dark uppercase">
-                          Đặt lịch hẹn thành công!
-                        </h4>
-                        <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                          Cảm ơn quý khách{" "}
-                          <strong className="text-slate-700">{bookingForm.name}</strong> đã đăng ký
-                          lịch hẹn dịch vụ tại VinFast Ngọc Anh Cà Mau. Cố vấn kỹ thuật của chúng
-                          tôi sẽ gọi điện xác nhận chính xác ngày giờ hẹn và chuẩn bị linh kiện thay
-                          thế phục vụ quý khách trong 10 phút.
-                        </p>
-                      </div>
-
-                      <div className="border border-slate-200 rounded-xl p-4 bg-surface-muted text-left text-xs font-semibold space-y-2.5 max-w-sm mx-auto">
-                        <div className="flex justify-between border-b border-slate-100 pb-2">
-                          <span className="text-slate-400">Khách hàng:</span>
-                          <span className="text-slate-800">
-                            {bookingForm.name} - {bookingForm.phone}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-100 pb-2">
-                          <span className="text-slate-400">Biển số / Mẫu xe:</span>
-                          <span className="text-slate-800 uppercase">
-                            {bookingForm.licensePlate
-                              ? `${bookingForm.licensePlate} (${bookingForm.vehicleModel})`
-                              : `${bookingForm.vehicleModel}`}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-100 pb-2">
-                          <span className="text-slate-400">Loại dịch vụ:</span>
-                          <span className="text-brand font-bold">{bookingForm.serviceType}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-400">Thời gian hẹn:</span>
-                          <span className="text-slate-800">
-                            {bookingForm.time} ngày {bookingForm.date}
-                          </span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsSubmitSuccess(false);
-                          setBookingForm({
-                            name: "",
-                            phone: "",
-                            licensePlate: "",
-                            vehicleModel: "vf3",
-                            serviceType: "Bảo dưỡng định kỳ",
-                            date: "",
-                            time: "08:30",
-                            note: "",
-                          });
-                        }}
-                        className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-6 py-2.5 rounded-lg transition-all"
-                      >
-                        ĐẶT LỊCH XE KHÁC
-                      </button>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleBookingSubmit} className="space-y-4">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <div>
-                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Họ và tên khách hàng *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={bookingForm.name}
-                            onChange={(e) =>
-                              setBookingForm({ ...bookingForm, name: e.target.value })
-                            }
-                            placeholder="Nguyễn Văn A"
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
-                          />
+                {/* Form Inputs Side */}
+                <div className="md:col-span-7 p-6 md:p-8 bg-white">
+                  <AnimatePresence mode="wait">
+                    {isSubmitSuccess ? (
+                      <motion.div {...modalMotion.step} className="py-10 text-center space-y-5">
+                        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
+                          <Check className="size-8" strokeWidth={2.5} />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Số điện thoại liên hệ *
-                          </label>
-                          <input
-                            type="tel"
-                            required
-                            value={bookingForm.phone}
-                            onChange={(e) =>
-                              setBookingForm({ ...bookingForm, phone: e.target.value })
-                            }
-                            placeholder="09xx xxx xxx"
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
-                          />
+                          <h4 className="text-lg font-black text-brand-dark uppercase">
+                            Đặt lịch hẹn thành công!
+                          </h4>
+                          <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                            Cảm ơn quý khách{" "}
+                            <strong className="text-slate-700">{bookingForm.name}</strong> đã đăng
+                            ký lịch hẹn dịch vụ tại VinFast Ngọc Anh Cà Mau. Cố vấn kỹ thuật của
+                            chúng tôi sẽ gọi điện xác nhận chính xác ngày giờ hẹn và chuẩn bị linh
+                            kiện thay thế phục vụ quý khách trong 10 phút.
+                          </p>
                         </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <div>
-                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Dòng xe sở hữu
-                          </label>
-                          <select
-                            value={bookingForm.vehicleModel}
-                            onChange={(e) =>
-                              setBookingForm({ ...bookingForm, vehicleModel: e.target.value })
-                            }
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
-                          >
-                            <option value="vf3">VinFast VF 3</option>
-                            <option value="vf5">VinFast VF 5</option>
-                            <option value="vf6">VinFast VF 6</option>
-                            <option value="vf7">VinFast VF 7</option>
-                            <option value="vf8">VinFast VF 8</option>
-                            <option value="vf9">VinFast VF 9</option>
-                            <option value="vfe34">VinFast VF e34</option>
-                            <option value="scooter">Xe máy điện VinFast</option>
-                          </select>
+                        <div className="border border-slate-200 rounded-xl p-4 bg-surface-muted text-left text-xs font-semibold space-y-2.5 max-w-sm mx-auto">
+                          <div className="flex justify-between border-b border-slate-100 pb-2">
+                            <span className="text-slate-400">Khách hàng:</span>
+                            <span className="text-slate-800">
+                              {bookingForm.name} - {bookingForm.phone}
+                            </span>
+                          </div>
+                          <div className="flex justify-between border-b border-slate-100 pb-2">
+                            <span className="text-slate-400">Biển số / Mẫu xe:</span>
+                            <span className="text-slate-800 uppercase">
+                              {bookingForm.licensePlate
+                                ? `${bookingForm.licensePlate} (${bookingForm.vehicleModel})`
+                                : `${bookingForm.vehicleModel}`}
+                            </span>
+                          </div>
+                          <div className="flex justify-between border-b border-slate-100 pb-2">
+                            <span className="text-slate-400">Loại dịch vụ:</span>
+                            <span className="text-brand font-bold">{bookingForm.serviceType}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-400">Thời gian hẹn:</span>
+                            <span className="text-slate-800">
+                              {bookingForm.time} ngày {bookingForm.date}
+                            </span>
+                          </div>
                         </div>
-                        <div>
-                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Biển kiểm soát xe (Tùy chọn)
-                          </label>
-                          <input
-                            type="text"
-                            value={bookingForm.licensePlate}
-                            onChange={(e) =>
-                              setBookingForm({ ...bookingForm, licensePlate: e.target.value })
-                            }
-                            placeholder="vd: 29A-123.45"
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
-                          />
-                        </div>
-                      </div>
 
-                      <div>
-                        <span className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
-                          Loại yêu cầu dịch vụ
-                        </span>
-                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                          {["Bảo dưỡng định kỳ", "Sửa chữa điện tử", "Sơn sấy vỏ xe"].map((svc) => (
-                            <button
-                              key={svc}
-                              type="button"
-                              onClick={() => setBookingForm({ ...bookingForm, serviceType: svc })}
-                              className={`py-2.5 px-2 text-center rounded-lg border text-[11px] font-extrabold transition-all uppercase sm:px-1 sm:py-2 sm:text-[10px] ${
-                                bookingForm.serviceType === svc
-                                  ? "border-brand bg-brand/10 text-brand shadow-md"
-                                  : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                              }`}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsSubmitSuccess(false);
+                            setBookingForm({
+                              name: "",
+                              phone: "",
+                              licensePlate: "",
+                              vehicleModel: "vf3",
+                              serviceType: "Bảo dưỡng định kỳ",
+                              date: "",
+                              time: "08:30",
+                              note: "",
+                            });
+                          }}
+                          className="bg-brand hover:bg-blue-600 text-white font-bold text-xs tracking-wider px-6 py-2.5 rounded-lg transition-all"
+                        >
+                          ĐẶT LỊCH XE KHÁC
+                        </button>
+                      </motion.div>
+                    ) : (
+                      <form onSubmit={handleBookingSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Họ và tên khách hàng *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={bookingForm.name}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, name: e.target.value })
+                              }
+                              placeholder="Nguyễn Văn A"
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Số điện thoại liên hệ *
+                            </label>
+                            <input
+                              type="tel"
+                              required
+                              value={bookingForm.phone}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, phone: e.target.value })
+                              }
+                              placeholder="09xx xxx xxx"
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Dòng xe sở hữu
+                            </label>
+                            <select
+                              value={bookingForm.vehicleModel}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, vehicleModel: e.target.value })
+                              }
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
                             >
-                              {svc}
-                            </button>
-                          ))}
+                              <option value="vf3">VinFast VF 3</option>
+                              <option value="vf5">VinFast VF 5</option>
+                              <option value="vf6">VinFast VF 6</option>
+                              <option value="vf7">VinFast VF 7</option>
+                              <option value="vf8">VinFast VF 8</option>
+                              <option value="vf9">VinFast VF 9</option>
+                              <option value="vfe34">VinFast VF e34</option>
+                              <option value="scooter">Xe máy điện VinFast</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Biển kiểm soát xe (Tùy chọn)
+                            </label>
+                            <input
+                              type="text"
+                              value={bookingForm.licensePlate}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, licensePlate: e.target.value })
+                              }
+                              placeholder="vd: 29A-123.45"
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 focus:bg-white"
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <div>
+                          <span className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
+                            Loại yêu cầu dịch vụ
+                          </span>
+                          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                            {["Bảo dưỡng định kỳ", "Sửa chữa điện tử", "Sơn sấy vỏ xe"].map(
+                              (svc) => (
+                                <button
+                                  key={svc}
+                                  type="button"
+                                  onClick={() =>
+                                    setBookingForm({ ...bookingForm, serviceType: svc })
+                                  }
+                                  className={`py-2.5 px-2 text-center rounded-lg border text-[11px] font-extrabold transition-all uppercase sm:px-1 sm:py-2 sm:text-[10px] ${
+                                    bookingForm.serviceType === svc
+                                      ? "border-brand bg-brand/10 text-brand shadow-md"
+                                      : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                                  }`}
+                                >
+                                  {svc}
+                                </button>
+                              ),
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Ngày hẹn bảo dưỡng *
+                            </label>
+                            <input
+                              type="date"
+                              required
+                              value={bookingForm.date}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, date: e.target.value })
+                              }
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                              Giờ đến xưởng mong muốn
+                            </label>
+                            <select
+                              value={bookingForm.time}
+                              onChange={(e) =>
+                                setBookingForm({ ...bookingForm, time: e.target.value })
+                              }
+                              className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
+                            >
+                              <option value="08:00">08:00 (Sáng)</option>
+                              <option value="08:30">08:30 (Sáng)</option>
+                              <option value="09:00">09:00 (Sáng)</option>
+                              <option value="10:00">10:00 (Sáng)</option>
+                              <option value="11:00">11:00 (Sáng)</option>
+                              <option value="13:30">13:30 (Chiều)</option>
+                              <option value="14:00">14:00 (Chiều)</option>
+                              <option value="15:00">15:00 (Chiều)</option>
+                              <option value="16:00">16:00 (Chiều)</option>
+                            </select>
+                          </div>
+                        </div>
+
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Ngày hẹn bảo dưỡng *
+                            Mô tả hiện trạng xe hoặc yêu cầu khác
                           </label>
-                          <input
-                            type="date"
-                            required
-                            value={bookingForm.date}
+                          <textarea
+                            value={bookingForm.note}
                             onChange={(e) =>
-                              setBookingForm({ ...bookingForm, date: e.target.value })
+                              setBookingForm({ ...bookingForm, note: e.target.value })
                             }
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800"
+                            placeholder="Mô tả hiện trạng xe (ví dụ: Xe bị xước cản trước cần sơn dặm, sạc pin không vào điện, cần dán thêm thảm lót sàn...)"
+                            rows={2}
+                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
                           />
                         </div>
-                        <div>
-                          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                            Giờ đến xưởng mong muốn
-                          </label>
-                          <select
-                            value={bookingForm.time}
-                            onChange={(e) =>
-                              setBookingForm({ ...bookingForm, time: e.target.value })
-                            }
-                            className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand focus:bg-white"
-                          >
-                            <option value="08:00">08:00 (Sáng)</option>
-                            <option value="08:30">08:30 (Sáng)</option>
-                            <option value="09:00">09:00 (Sáng)</option>
-                            <option value="10:00">10:00 (Sáng)</option>
-                            <option value="11:00">11:00 (Sáng)</option>
-                            <option value="13:30">13:30 (Chiều)</option>
-                            <option value="14:00">14:00 (Chiều)</option>
-                            <option value="15:00">15:00 (Chiều)</option>
-                            <option value="16:00">16:00 (Chiều)</option>
-                          </select>
-                        </div>
-                      </div>
 
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">
-                          Mô tả hiện trạng xe hoặc yêu cầu khác
-                        </label>
-                        <textarea
-                          value={bookingForm.note}
-                          onChange={(e) => setBookingForm({ ...bookingForm, note: e.target.value })}
-                          placeholder="Mô tả hiện trạng xe (ví dụ: Xe bị xước cản trước cần sơn dặm, sạc pin không vào điện, cần dán thêm thảm lót sàn...)"
-                          rows={2}
-                          className="w-full bg-surface-muted border border-slate-200 px-3.5 py-2 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand text-slate-800 resize-none focus:bg-white"
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
-                      >
-                        <Calendar className="size-4" /> GỬI YÊU CẦU ĐẶT HẸN DỊCH VỤ
-                      </button>
-                    </form>
-                  )}
-                </AnimatePresence>
+                        <button
+                          type="submit"
+                          className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
+                        >
+                          <Calendar className="size-4" /> GỬI YÊU CẦU ĐẶT HẸN DỊCH VỤ
+                        </button>
+                      </form>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
@@ -557,50 +563,49 @@ function ServicesSection({ content }: { content: AfterSalesPageContent }) {
           title="Hệ thống dịch vụ hậu mãi toàn diện"
         />
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <StaggerGrid className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map(({ title, desc, items }, index) => {
             const Icon = SERVICE_ICONS[index] ?? Wrench;
             return (
-              <div
-                key={title}
-                className="page-section-card flex flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group"
-              >
-                <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
-                  <Icon className="size-6" strokeWidth={1.5} />
+              <StaggerItem key={title} index={index}>
+                <div className="page-section-card flex h-full flex-col p-7 transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                  <div className="flex size-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand group-hover:bg-brand group-hover:text-white transition-all duration-300">
+                    <Icon className="size-6" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="mt-5 text-sm font-black tracking-wide text-brand-dark uppercase">
+                    <StaticEditableText
+                      value={title}
+                      onChange={(value) => edit?.updateField(`services.${index}.title`, value)}
+                    />
+                  </h3>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3 min-h-[50px]">
+                    <StaticEditableText
+                      value={desc}
+                      onChange={(value) => edit?.updateField(`services.${index}.desc`, value)}
+                      multiline
+                    />
+                  </p>
+                  <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
+                    {items.map((item, itemIndex) => (
+                      <li
+                        key={item}
+                        className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
+                      >
+                        <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
+                        <StaticEditableText
+                          value={item}
+                          onChange={(value) =>
+                            edit?.updateField(`services.${index}.items.${itemIndex}`, value)
+                          }
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="mt-5 text-sm font-black tracking-wide text-brand-dark uppercase">
-                  <StaticEditableText
-                    value={title}
-                    onChange={(value) => edit?.updateField(`services.${index}.title`, value)}
-                  />
-                </h3>
-                <p className="mt-3 text-xs leading-relaxed text-slate-400 font-semibold line-clamp-3 min-h-[50px]">
-                  <StaticEditableText
-                    value={desc}
-                    onChange={(value) => edit?.updateField(`services.${index}.desc`, value)}
-                    multiline
-                  />
-                </p>
-                <ul className="mt-5 space-y-2 flex-1 border-t border-slate-100 pt-4">
-                  {items.map((item, itemIndex) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-[11px] text-slate-600 font-bold"
-                    >
-                      <Check size={13} className="shrink-0 text-brand" strokeWidth={3} />
-                      <StaticEditableText
-                        value={item}
-                        onChange={(value) =>
-                          edit?.updateField(`services.${index}.items.${itemIndex}`, value)
-                        }
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   );
@@ -619,56 +624,55 @@ function WarrantySection({ content }: { content: AfterSalesPageContent }) {
           title="Chính sách bảo hành chính hãng"
         />
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <StaggerGrid className="grid gap-6 md:grid-cols-3">
           {warranty.map(({ title, highlight, items }, index) => {
             const Icon = WARRANTY_ICONS[index] ?? Car;
             return (
-              <div
-                key={title}
-                className="flex flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-white text-brand shadow-sm">
-                    <Icon className="size-6" strokeWidth={1.5} />
+              <StaggerItem key={title} index={index}>
+                <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 md:p-8 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1">
+                  <div className="flex items-center gap-4">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-white text-brand shadow-sm">
+                      <Icon className="size-6" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-black text-brand-dark uppercase">
+                        <StaticEditableText
+                          value={title}
+                          onChange={(value) => edit?.updateField(`warranty.${index}.title`, value)}
+                        />
+                      </h3>
+                      <p className="text-xs font-black text-brand mt-0.5 uppercase tracking-wide">
+                        <StaticEditableText
+                          value={highlight}
+                          onChange={(value) =>
+                            edit?.updateField(`warranty.${index}.highlight`, value)
+                          }
+                        />
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-sm font-black text-brand-dark uppercase">
-                      <StaticEditableText
-                        value={title}
-                        onChange={(value) => edit?.updateField(`warranty.${index}.title`, value)}
-                      />
-                    </h3>
-                    <p className="text-xs font-black text-brand mt-0.5 uppercase tracking-wide">
-                      <StaticEditableText
-                        value={highlight}
-                        onChange={(value) =>
-                          edit?.updateField(`warranty.${index}.highlight`, value)
-                        }
-                      />
-                    </p>
-                  </div>
+                  <ul className="mt-6 space-y-3 border-t border-slate-200/60 pt-5">
+                    {items.map((item, itemIndex) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2.5 text-xs leading-relaxed text-slate-500 font-semibold"
+                      >
+                        <Check size={14} className="shrink-0 mt-0.5 text-brand" strokeWidth={3} />
+                        <StaticEditableText
+                          value={item}
+                          onChange={(value) =>
+                            edit?.updateField(`warranty.${index}.items.${itemIndex}`, value)
+                          }
+                          multiline
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="mt-6 space-y-3 border-t border-slate-200/60 pt-5">
-                  {items.map((item, itemIndex) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2.5 text-xs leading-relaxed text-slate-500 font-semibold"
-                    >
-                      <Check size={14} className="shrink-0 mt-0.5 text-brand" strokeWidth={3} />
-                      <StaticEditableText
-                        value={item}
-                        onChange={(value) =>
-                          edit?.updateField(`warranty.${index}.items.${itemIndex}`, value)
-                        }
-                        multiline
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGrid>
 
         <p className="mt-8 text-center text-[10px] text-slate-400 font-extrabold uppercase">
           * Chi tiết thời hạn bảo hành thực tế áp dụng dựa trên sổ bảo hành số hóa đi kèm xe của
@@ -691,21 +695,23 @@ function ProcessSection() {
 
         <div className="relative">
           <div className="absolute top-[22px] right-12 left-12 hidden h-[2px] bg-slate-200 lg:block" />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {PROCESS_STEPS.map(({ step, title, desc }) => (
-              <div key={step} className="relative flex flex-col items-center text-center">
-                <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
-                  <span className="text-xs font-black text-brand">{step}</span>
+          <StaggerGrid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {PROCESS_STEPS.map(({ step, title, desc }, index) => (
+              <StaggerItem key={step} index={index}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="relative z-10 mb-4 flex size-11 items-center justify-center rounded-full border-2 border-brand bg-white">
+                    <span className="text-xs font-black text-brand">{step}</span>
+                  </div>
+                  <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
+                    <h3 className="text-xs font-black text-brand-dark uppercase">{title}</h3>
+                    <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold mt-2.5">
+                      {desc}
+                    </p>
+                  </div>
                 </div>
-                <div className="page-section-card w-full p-5 h-full transition-shadow duration-300 hover:shadow-md">
-                  <h3 className="text-xs font-black text-brand-dark uppercase">{title}</h3>
-                  <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold mt-2.5">
-                    {desc}
-                  </p>
-                </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </div>
     </section>
@@ -717,15 +723,18 @@ function MaintenanceSection() {
     <section className="bg-white section-y">
       <div className="container-vf">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="overflow-hidden rounded-2xl shadow-card relative group aspect-[4/3] w-full border border-slate-200 bg-slate-100">
+          <FadeIn
+            direction="left"
+            className="overflow-hidden rounded-2xl shadow-card relative group aspect-[4/3] w-full border border-slate-200 bg-slate-100"
+          >
             <img
               src={IMAGES.community}
               alt="Bảo dưỡng xe VinFast"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-          </div>
-          <div>
+          </FadeIn>
+          <FadeIn direction="right" delay={0.08}>
             <SectionHeader
               align="editorial"
               eyebrow="Mốc thời gian quy định"
@@ -768,7 +777,7 @@ function MaintenanceSection() {
                 định hoặc mốc thời gian (Tùy điều kiện nào đến trước).
               </p>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
@@ -786,27 +795,30 @@ function WhyChooseSection() {
         />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <ul className="space-y-6 order-2 lg:order-1">
-            {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
-              <li
-                key={title}
-                className="flex gap-4 items-start bg-white border border-slate-200 p-5 rounded-2xl shadow-soft"
-              >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <Icon className="size-5.5 text-brand" strokeWidth={2} />
+          <StaggerGrid className="space-y-6 order-2 lg:order-1">
+            {WHY_CHOOSE.map(({ icon: Icon, title, desc }, index) => (
+              <StaggerItem key={title} index={index}>
+                <div className="flex gap-4 items-start bg-white border border-slate-200 p-5 rounded-2xl shadow-soft">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="size-5.5 text-brand" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                      {title}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
+                      {desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
-                    {desc}
-                  </p>
-                </div>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
-          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group">
+          </StaggerGrid>
+          <FadeIn
+            direction="right"
+            delay={0.1}
+            className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group"
+          >
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
             <img
               src={IMAGES.chargingStations}
@@ -814,7 +826,7 @@ function WhyChooseSection() {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>
