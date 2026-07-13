@@ -6,12 +6,22 @@ export function normalizeSlug(value: string): string {
   return slugify(value.trim()) || "bai-viet";
 }
 
+export function normalizeProductId(value: string): string {
+  return slugify(value.trim()) || "san-pham";
+}
+
 export function isValidSlug(slug: string): boolean {
   return SLUG_RE.test(slug);
 }
 
+export function isValidProductId(id: string): boolean {
+  return SLUG_RE.test(id);
+}
+
+type SlugTable = "news_articles" | "vehicles" | "accessories";
+
 export async function ensureUniqueSlug(
-  table: "news_articles",
+  table: SlugTable,
   baseSlug: string,
   excludeId?: string,
 ): Promise<string> {
@@ -21,7 +31,7 @@ export async function ensureUniqueSlug(
   let suffix = 2;
 
   while (true) {
-    let query = admin.from(table).select("id").eq("slug", candidate).limit(1);
+    const query = admin.from(table).select("id").eq("slug", candidate).limit(1);
     const { data, error } = await query;
     if (error) throw new Error(error.message);
     const existing = data?.[0];
@@ -29,6 +39,24 @@ export async function ensureUniqueSlug(
       return candidate;
     }
     candidate = `${baseSlug}-${suffix}`;
+    suffix += 1;
+  }
+}
+
+export async function ensureUniqueProductId(
+  table: "vehicles" | "accessories",
+  baseId: string,
+): Promise<string> {
+  const { createAdminClient } = await import("@vinfast3s/supabase/admin");
+  const admin = createAdminClient();
+  let candidate = baseId;
+  let suffix = 2;
+
+  while (true) {
+    const { data, error } = await admin.from(table).select("id").eq("id", candidate).limit(1);
+    if (error) throw new Error(error.message);
+    if (!data?.[0]) return candidate;
+    candidate = `${baseId}-${suffix}`;
     suffix += 1;
   }
 }

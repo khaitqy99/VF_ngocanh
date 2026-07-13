@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { getBanners, getCars } from "@/lib/cms";
+import { getBanners } from "@/lib/cms";
+import { getCarsForAdminPreview } from "@/lib/cms/preview-catalog";
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewCarsPage } from "@/components/admin-edit/PreviewEditViews";
 import { previewNoindexMetadata } from "@/lib/seo";
@@ -13,7 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function OtoCatalogPreviewRoute() {
   const referer = (await headers()).get("referer");
   const serverAllowed = canEnablePreviewEdit({ referer });
-  const [cars, heroBanners] = await Promise.all([getCars(), getBanners("cars")]);
+  const [cars, heroBanners] = await Promise.all([
+    getCarsForAdminPreview(serverAllowed),
+    getBanners("cars"),
+  ]);
 
   return (
     <PreviewEditScopeProvider scope="oto" serverAllowed={serverAllowed}>

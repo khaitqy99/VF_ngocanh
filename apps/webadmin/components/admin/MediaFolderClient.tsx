@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { Button, Card, CardContent } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { MediaFolderDeleteButton } from "@/components/admin/MediaFolderDeleteButton";
 import { useToast } from "@/components/admin/ToastProvider";
 import {
   getMediaCategoryLabel,
@@ -32,6 +34,7 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
   const [uploadCount, setUploadCount] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [imageDeleteTarget, setImageDeleteTarget] = useState<MediaImage | null>(null);
   const dragDepth = useRef(0);
 
   const uploadFiles = useCallback(
@@ -118,19 +121,23 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
     await uploadFiles(e.dataTransfer.files);
   };
 
-  const onDelete = async (image: MediaImage) => {
+  const onDelete = (image: MediaImage) => {
     if (!image.assetId || deletingId) return;
-    if (!window.confirm(`Xóa ảnh "${image.name}" khỏi thư viện?`)) return;
+    setImageDeleteTarget(image);
+  };
 
-    setDeletingId(image.assetId);
+  const confirmDeleteImage = async () => {
+    if (!imageDeleteTarget?.assetId) return;
+    setDeletingId(imageDeleteTarget.assetId);
     try {
-      const res = await fetch(`/api/cms/media-asset/${image.assetId}`, { method: "DELETE" });
+      const res = await fetch(`/api/cms/media-asset/${imageDeleteTarget.assetId}`, { method: "DELETE" });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         toast(data.error ?? "Không xóa được ảnh");
         return;
       }
       toast("Đã xóa ảnh");
+      setImageDeleteTarget(null);
       router.refresh();
     } catch {
       toast("Không xóa được ảnh");
@@ -163,6 +170,12 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
                 </Button>
               </Link>
             ) : null}
+            <MediaFolderDeleteButton
+              category={folder.category}
+              slug={folder.slug}
+              folderName={folder.name}
+              redirectTo="/admin/media"
+            />
             <Button size="sm" disabled={uploading} onClick={() => inputRef.current?.click()}>
               {uploading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -264,6 +277,18 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={Boolean(imageDeleteTarget)}
+        title={imageDeleteTarget ? `Xóa ảnh "${imageDeleteTarget.name}"?` : "Xóa ảnh?"}
+        description="Ảnh sẽ bị xóa khỏi Storage và database."
+        bullets={["Hành động này không thể hoàn tác."]}
+        confirmLabel="Xóa ảnh"
+        destructive
+        loading={Boolean(deletingId)}
+        onClose={() => setImageDeleteTarget(null)}
+        onConfirm={() => void confirmDeleteImage()}
+      />
     </div>
   );
 }

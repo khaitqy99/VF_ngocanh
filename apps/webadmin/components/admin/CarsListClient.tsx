@@ -13,6 +13,9 @@ export function CarsListClient() {
       previewPath="/oto/preview"
       publicHref={`${siteUrl}/oto`}
       mediaCategory="cars"
+      productKind="car"
+      newHref="/admin/cars/new"
+      newLabel="Thêm ô tô"
     />
   );
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewScooterDetail } from "@/components/admin-edit/PreviewEditViews";
-import { getScooterDetailBySlug } from "@/lib/cms";
+import { getScooterDetailBySlugForAdminPreview } from "@/lib/cms/preview-catalog";
 import { previewNoindexMetadata } from "@/lib/seo";
 import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
 
@@ -21,7 +21,7 @@ export default async function ScooterPreviewRoute({ params }: Props) {
   const { slug } = await params;
   const referer = (await headers()).get("referer");
   const serverAllowed = canEnablePreviewEdit({ referer });
-  const detail = await getScooterDetailBySlug(slug);
+  const detail = await getScooterDetailBySlugForAdminPreview(slug, serverAllowed);
   if (!detail) notFound();
 
   return (

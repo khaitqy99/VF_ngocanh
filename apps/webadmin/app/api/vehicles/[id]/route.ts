@@ -5,6 +5,12 @@ import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import type { Json, TablesInsert, TablesUpdate } from "@vinfast3s/supabase";
 import { revalidateWebclient, vehicleRevalidatePayload } from "@/lib/revalidate-webclient";
 import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
+import { getSessionAdmin } from "@/lib/auth";
+import { deleteVehicleProduct, findProductReferences } from "@/lib/product-api";
+import {
+  buildVehiclePublishCheck,
+  type PublishCheckItem,
+} from "@/lib/product-publish-check";
 
 function revalidateAdminVehicleCaches(type: "car" | "scooter") {
   revalidateTag(type === "car" ? "admin-cms-cars" : "admin-cms-scooters");
@@ -102,6 +108,80 @@ function syncVehicleColumnsFromPatches(
   if (nextVariants) target.variants = nextVariants;
 
   return null;
+}
+
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
+  }
+
+  const session = await getSessionAdmin();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await context.params;
+  const { searchParams } = new URL(request.url);
+  const vehicleType = searchParams.get("type") === "scooter" ? "scooter" : "car";
+
+  const admin = createAdminClient();
+  const { data: existing, error } = await admin
+    .from("vehicles")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+  if (!existing || existing.type !== vehicleType) {
+    return NextResponse.json({ error: "Không tìm thấy sản phẩm" }, { status: 404 });
+  }
+
+  const references = await findProductReferences(vehicleType, id);
+  const publishCheck: PublishCheckItem[] = buildVehiclePublishCheck(existing);
+  return NextResponse.json({
+    product: {
+      id: existing.id,
+      name: existing.name,
+      slug: existing.slug,
+      type: existing.type,
+      status: existing.status,
+    },
+    references,
+    publishCheck,
+  });
+}
+
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
+  }
+
+  const session = await getSessionAdmin();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await context.params;
+  const { searchParams } = new URL(request.url);
+  const vehicleType = searchParams.get("type") === "scooter" ? "scooter" : "car";
+
+  try {
+    const result = await deleteVehicleProduct(id, vehicleType);
+    await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, result.slug ?? id));
+    revalidateAdminVehicleCaches(vehicleType);
+    return NextResponse.json({ ok: true, ...result });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Xóa sản phẩm thất bại";
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
 }
 
 export async function PATCH(

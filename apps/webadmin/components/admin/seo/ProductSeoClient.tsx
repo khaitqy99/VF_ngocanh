@@ -56,6 +56,8 @@ export function ProductSeoClient({
         const data = (await response.json().catch(() => null)) as { error?: string } | null;
         throw new Error(data?.error ?? "Lưu thất bại");
       }
+      const data = (await response.json()) as { slug?: string };
+      if (data.slug) setSlug(data.slug);
       toast("Đã lưu SEO sản phẩm");
     } catch (error) {
       toast(error instanceof Error ? error.message : "Lưu thất bại");

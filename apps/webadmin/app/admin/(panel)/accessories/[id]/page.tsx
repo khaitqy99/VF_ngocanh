@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AccessoryEditClient } from "@/components/admin/AccessoryEditClient";
 import { getAdminAccessoryById, getAdminAccessories } from "@/lib/cms-data";
+import { getAdminAccessoryMeta } from "@/lib/product-meta";
 
 export const revalidate = 60;
 
@@ -12,9 +13,10 @@ export async function generateStaticParams() {
 export default async function AccessoryEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const acc = await getAdminAccessoryById(id);
+  const meta = await getAdminAccessoryMeta(id);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-  if (!acc) {
+  if (!acc || !meta) {
     return (
       <p className="py-12 text-center text-zinc-500">
         Không tìm thấy phụ kiện.{" "}
@@ -25,5 +27,5 @@ export default async function AccessoryEditPage({ params }: { params: Promise<{ 
     );
   }
 
-  return <AccessoryEditClient product={acc} siteUrl={siteUrl} />;
+  return <AccessoryEditClient product={acc} meta={meta} siteUrl={siteUrl} />;
 }

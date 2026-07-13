@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ScooterEditClient } from "@/components/admin/ScooterEditClient";
 import { getAdminScooterDetail, getAdminScooters } from "@/lib/cms-data";
+import { getAdminVehicleMeta } from "@/lib/product-meta";
 
 export const revalidate = 60;
 
@@ -12,9 +13,10 @@ export async function generateStaticParams() {
 export default async function ScooterEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const detail = await getAdminScooterDetail(id);
+  const meta = await getAdminVehicleMeta(id, "scooter");
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-  if (!detail) {
+  if (!detail || !meta) {
     return (
       <p className="py-12 text-center text-zinc-500">
         Không tìm thấy sản phẩm.{" "}
@@ -25,5 +27,5 @@ export default async function ScooterEditPage({ params }: { params: Promise<{ id
     );
   }
 
-  return <ScooterEditClient detail={detail} id={id} siteUrl={siteUrl} />;
+  return <ScooterEditClient detail={detail} id={id} meta={meta} siteUrl={siteUrl} />;
 }

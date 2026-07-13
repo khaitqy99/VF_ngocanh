@@ -22,6 +22,7 @@
     "db:check": "node scripts/check-db.mjs",
     "db:schema": "node scripts/apply-remote-schema.mjs",
     "db:seed": "npx tsx scripts/seed-remote.ts",
+    "cache:warm": "npx tsx --tsconfig apps/webclient/tsconfig.json scripts/warm-redis-cache.ts",
     "images:webp": "node scripts/convert-png-to-webp.mjs && node scripts/replace-png-paths.mjs",
     "images:webp:jpg": "node scripts/convert-jpg-to-webp.mjs && node scripts/replace-jpg-paths.mjs",
     "images:webp:all": "npm run images:webp && npm run images:webp:jpg",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { getBanners, getScooters } from "@/lib/cms";
+import { getBanners } from "@/lib/cms";
+import { getScootersForAdminPreview } from "@/lib/cms/preview-catalog";
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewScootersPage } from "@/components/admin-edit/PreviewEditViews";
 import { previewNoindexMetadata } from "@/lib/seo";
@@ -13,7 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ScooterCatalogPreviewRoute() {
   const referer = (await headers()).get("referer");
   const serverAllowed = canEnablePreviewEdit({ referer });
-  const [scooters, heroBanners] = await Promise.all([getScooters(), getBanners("scooters")]);
+  const [scooters, heroBanners] = await Promise.all([
+    getScootersForAdminPreview(serverAllowed),
+    getBanners("scooters"),
+  ]);
 
   return (
     <PreviewEditScopeProvider scope="xe-may-dien" serverAllowed={serverAllowed}>

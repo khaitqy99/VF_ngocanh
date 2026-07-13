@@ -1,10 +1,13 @@
 import { revalidatePath, unstable_expirePath, unstable_expireTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { deleteCacheByPrefix } from "@/lib/cache";
+import { warmCmsRedisCache } from "@/lib/cms/warm-cache";
 
 type RevalidateBody = {
   tags?: string[];
   paths?: string[];
+  /** Mặc định true — ghi lại toàn bộ dữ liệu CMS vào Redis sau khi xóa cache. */
+  warm?: boolean;
 };
 
 export async function POST(request: Request) {
@@ -38,5 +41,22 @@ export async function POST(request: Request) {
 
   const redisDeletedKeys = await deleteCacheByPrefix("cms:");
 
-  return NextResponse.json({ revalidated: true, tags, paths, redisDeletedKeys });
+  const shouldWarm = body.warm !== false;
+  let warmResult: Awaited<ReturnType<typeof warmCmsRedisCache>> | null = null;
+  if (shouldWarm && process.env.REDIS_URL) {
+    try {
+      warmResult = await warmCmsRedisCache();
+    } catch (error) {
+      console.error("[revalidate] Warm Redis thất bại:", error);
+    }
+  }
+
+  return NextResponse.json({
+    revalidated: true,
+    tags,
+    paths,
+    redisDeletedKeys,
+    redisWarmed: Boolean(warmResult),
+    redisKeys: warmResult?.redisKeys ?? null,
+  });
 }

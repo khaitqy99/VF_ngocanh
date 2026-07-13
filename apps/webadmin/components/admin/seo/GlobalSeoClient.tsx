@@ -7,7 +7,7 @@ import { useToast } from "@/components/admin/ToastProvider";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from "@/components/ui/core";
 import { defaultSiteSeoSettings, type SiteSeoSettings } from "@/lib/seo";
 
-export function GlobalSeoClient() {
+export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
   const { toast } = useToast();
   const [settings, setSettings] = useState<SiteSeoSettings>(defaultSiteSeoSettings());
   const [loading, setLoading] = useState(true);
@@ -46,11 +46,13 @@ export function GlobalSeoClient() {
   if (loading) return <p className="text-sm text-zinc-500">Đang tải…</p>;
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Cài đặt SEO chung"
-        description="Title template, mô tả mặc định và thông tin tổ chức cho toàn site"
-      />
+    <div className={embedded ? "space-y-6" : "space-y-6"}>
+      {embedded ? null : (
+        <PageHeader
+          title="Cài đặt SEO chung"
+          description="Title template, mô tả mặc định và thông tin tổ chức cho toàn site"
+        />
+      )}
 
       <Card>
         <CardHeader>

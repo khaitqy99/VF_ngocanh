@@ -11,7 +11,7 @@ import {
   type CarPricingSettings,
 } from "./car-pricing";
 
-async function fetchCarPricingRow(): Promise<CarPricingSettings> {
+export async function fetchCarPricingRow(): Promise<CarPricingSettings> {
   return getOrSetCache(`cms:settings:car-pricing`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return mergeCarPricingSettings(null);
     const supabase = createAnonClient();

@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import { createAnonClient } from "@vinfast3s/supabase/anon";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
+import { getOrSetCache } from "@/lib/cache";
 import { mapNewsRow } from "@/lib/cms/news-mappers";
 import type { NewsArticle } from "@/lib/cms/news-types";
 import { MOCK_NEWS } from "@/lib/mock-news";
@@ -35,18 +36,20 @@ async function promoteDueScheduledArticles() {
     .lte("published_at", now);
 }
 
-async function fetchPublishedNews(): Promise<NewsArticle[]> {
+export async function fetchPublishedNews(): Promise<NewsArticle[]> {
   await promoteDueScheduledArticles();
 
-  const supabase = createAnonClient();
-  const { data, error } = await supabase
-    .from("news_articles")
-    .select("*")
-    .in("status", ["published", "scheduled"])
-    .order("published_at", { ascending: false, nullsFirst: false });
+  return getOrSetCache("cms:news:list", 60, async () => {
+    const supabase = createAnonClient();
+    const { data, error } = await supabase
+      .from("news_articles")
+      .select("*")
+      .in("status", ["published", "scheduled"])
+      .order("published_at", { ascending: false, nullsFirst: false });
 
-  if (error) throw new Error(error.message);
-  return (data ?? []).map(mapNewsRow).filter(isNewsVisibleOnSite).sort(sortNewsForList);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map(mapNewsRow).filter(isNewsVisibleOnSite).sort(sortNewsForList);
+  });
 }
 
 export const getNewsArticles = unstable_cache(

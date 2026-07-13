@@ -13,6 +13,9 @@ export function AccessoriesListClient() {
       previewPath="/phu-kien/preview"
       publicHref={`${siteUrl}/phu-kien`}
       mediaCategory="accessories"
+      productKind="accessory"
+      newHref="/admin/accessories/new"
+      newLabel="Thêm phụ kiện"
     />
   );
 }

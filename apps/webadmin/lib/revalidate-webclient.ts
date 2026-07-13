@@ -1,6 +1,7 @@
 type RevalidatePayload = {
   tags?: string[];
   paths?: string[];
+  warm?: boolean;
 };
 
 export async function revalidateWebclient(payload: RevalidatePayload) {
@@ -19,7 +20,7 @@ export async function revalidateWebclient(payload: RevalidatePayload) {
         "Content-Type": "application/json",
         "x-revalidate-secret": secret,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ warm: true, ...payload }),
     });
 
     if (!response.ok) {

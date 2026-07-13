@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronRight, ExternalLink, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/core";
 import { useToast } from "@/components/admin/ToastProvider";
-import { MediaLibraryPicker } from "@/components/admin/MediaLibraryPicker";
+import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 import type { MediaCategory } from "@/lib/media-library";
 import { STATIC_PAGE_META, type StaticPageSlug } from "@/lib/cms/static-pages";
 
@@ -155,10 +155,10 @@ export function StaticPageLiveEditor({ slug }: { slug: StaticPageSlug }) {
       />
 
       {imagePicker ? (
-        <MediaLibraryPicker
+        <GlobalMediaPicker
           open
-          category={mediaCategory}
-          slug="vf8-all-new"
+          defaultCategory={mediaCategory}
+          defaultFolderSlug="vf8-all-new"
           title="Chọn ảnh cho trang"
           onClose={() => setImagePicker(null)}
           onSelect={handleImageSelect}

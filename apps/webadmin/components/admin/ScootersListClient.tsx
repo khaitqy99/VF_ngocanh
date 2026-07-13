@@ -13,6 +13,9 @@ export function ScootersListClient() {
       previewPath="/xe-may-dien/preview"
       publicHref={`${siteUrl}/xe-may-dien`}
       mediaCategory="scooters"
+      productKind="scooter"
+      newHref="/admin/scooters/new"
+      newLabel="Thêm xe máy"
     />
   );
 }

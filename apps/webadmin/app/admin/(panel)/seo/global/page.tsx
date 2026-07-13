@@ -1,5 +1,5 @@
-import { GlobalSeoClient } from "@/components/admin/seo/GlobalSeoClient";
+import { redirect } from "next/navigation";
 
 export default function GlobalSeoPage() {
-  return <GlobalSeoClient />;
+  redirect("/admin/seo?tab=global");
 }

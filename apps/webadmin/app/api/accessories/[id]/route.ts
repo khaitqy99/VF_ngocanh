@@ -5,6 +5,12 @@ import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import type { Json, TablesInsert, TablesUpdate } from "@vinfast3s/supabase";
 import { accessoryRevalidatePayload, revalidateWebclient } from "@/lib/revalidate-webclient";
 import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
+import { getSessionAdmin } from "@/lib/auth";
+import { deleteAccessoryProduct, findProductReferences } from "@/lib/product-api";
+import {
+  buildAccessoryPublishCheck,
+  type PublishCheckItem,
+} from "@/lib/product-publish-check";
 
 type AccessoryPatchBody = {
   patches?: Record<string, unknown>;
@@ -40,6 +46,71 @@ function asStringArray(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) return undefined;
   const arr = value.filter((item): item is string => typeof item === "string");
   return arr;
+}
+
+export async function GET(
+  _request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
+  }
+
+  const session = await getSessionAdmin();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await context.params;
+  const admin = createAdminClient();
+  const { data: existing, error } = await admin.from("accessories").select("*").eq("id", id).maybeSingle();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+  if (!existing) {
+    return NextResponse.json({ error: "Không tìm thấy phụ kiện" }, { status: 404 });
+  }
+
+  const references = await findProductReferences("accessory", id);
+  const publishCheck: PublishCheckItem[] = buildAccessoryPublishCheck(existing);
+  return NextResponse.json({
+    product: {
+      id: existing.id,
+      name: existing.name,
+      slug: existing.slug,
+      status: existing.status,
+    },
+    references,
+    publishCheck,
+  });
+}
+
+export async function DELETE(
+  _request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
+  }
+
+  const session = await getSessionAdmin();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await context.params;
+
+  try {
+    const result = await deleteAccessoryProduct(id);
+    await revalidateWebclient(accessoryRevalidatePayload(id, result.slug ?? id));
+    revalidateTag("admin-cms-accessories");
+    revalidateTag(ADMIN_MEDIA_CACHE_TAG);
+    return NextResponse.json({ ok: true, ...result });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Xóa phụ kiện thất bại";
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
 }
 
 export async function PATCH(

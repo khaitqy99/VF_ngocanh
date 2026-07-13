@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewCarDetail } from "@/components/admin-edit/PreviewEditViews";
-import { getCarDetailBySlug } from "@/lib/cms";
+import { getCarDetailBySlugForAdminPreview } from "@/lib/cms/preview-catalog";
 import { previewNoindexMetadata } from "@/lib/seo";
 import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
 
@@ -21,7 +21,7 @@ export default async function CarPreviewRoute({ params }: Props) {
   const { slug } = await params;
   const referer = (await headers()).get("referer");
   const serverAllowed = canEnablePreviewEdit({ referer });
-  const detail = await getCarDetailBySlug(slug);
+  const detail = await getCarDetailBySlugForAdminPreview(slug, serverAllowed);
   if (!detail) notFound();
 
   return (

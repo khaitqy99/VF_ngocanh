@@ -68,7 +68,7 @@ function getClient() {
   return createAnonClient();
 }
 
-async function fetchVehiclesByType(type: "car" | "scooter") {
+export async function fetchVehiclesByType(type: "car" | "scooter") {
   return getOrSetCache(`cms:vehicles:${type}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
@@ -83,7 +83,7 @@ async function fetchVehiclesByType(type: "car" | "scooter") {
   });
 }
 
-async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> | null> {
+export async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> | null> {
   return getOrSetCache(`cms:vehicle:${id}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
@@ -98,7 +98,7 @@ async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> | null> 
   });
 }
 
-async function fetchAccessoriesRows() {
+export async function fetchAccessoriesRows() {
   return getOrSetCache(`cms:accessories`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
@@ -112,7 +112,7 @@ async function fetchAccessoriesRows() {
   });
 }
 
-async function fetchBannersByPlacement(placement: BannerPlacement) {
+export async function fetchBannersByPlacement(placement: BannerPlacement) {
   return getOrSetCache(`cms:banners:${placement}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
@@ -127,7 +127,7 @@ async function fetchBannersByPlacement(placement: BannerPlacement) {
   });
 }
 
-async function fetchHomePage(): Promise<Json | null> {
+export async function fetchHomePage(): Promise<Json | null> {
   return getOrSetCache(`cms:page:home`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase
@@ -375,7 +375,7 @@ export async function getScooterDetailAccessories(): Promise<AccessoryProduct[]>
     .slice(0, 4);
 }
 
-async function fetchCmsPageContent(slug: StaticPageSlug): Promise<Json | null> {
+export async function fetchCmsPageContent(slug: StaticPageSlug): Promise<Json | null> {
   return getOrSetCache(`cms:page:${slug}`, cmsRedisTtl(), async () => {
     const supabase = getClient();
     const { data, error } = await supabase

@@ -152,44 +152,6 @@ export function SeoForm({
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Robots & Canonical</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex flex-wrap gap-4 text-sm">
-              <label className="inline-flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={Boolean(value.noindex)}
-                  onChange={(e) => setField("noindex", e.target.checked)}
-                />
-                Noindex
-              </label>
-              <label className="inline-flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={value.robots?.follow === false}
-                  onChange={(e) =>
-                    setField("robots", {
-                      ...value.robots,
-                      follow: e.target.checked ? false : true,
-                    })
-                  }
-                />
-                Nofollow
-              </label>
-            </div>
-            <Field label="Canonical URL (tùy chọn)" hint="Để trống → dùng URL chuẩn của trang">
-              <Input
-                value={value.canonical ?? ""}
-                onChange={(e) => setField("canonical", e.target.value)}
-                placeholder={defaults.path}
-              />
-            </Field>
-          </CardContent>
-        </Card>
-
         <Button type="button" onClick={onSave} disabled={saving}>
           <Save className="mr-2 h-4 w-4" />
           {saving ? "Đang lưu…" : "Lưu SEO"}

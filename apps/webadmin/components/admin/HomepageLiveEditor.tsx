@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/core";
 import { useToast } from "@/components/admin/ToastProvider";
-import { MediaLibraryPicker } from "@/components/admin/MediaLibraryPicker";
+import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 import type { MediaCategory } from "@/lib/media-library";
 import type { HomeEditorData } from "@webclient/lib/cms/home-editor";
 
@@ -152,10 +152,10 @@ export function HomepageLiveEditor() {
       />
 
       {imagePicker ? (
-        <MediaLibraryPicker
+        <GlobalMediaPicker
           open
-          category={imagePicker.category}
-          slug={imagePicker.slug}
+          defaultCategory={imagePicker.category}
+          defaultFolderSlug={imagePicker.slug}
           title="Chọn ảnh cho trang chủ"
           onClose={() => setImagePicker(null)}
           onSelect={handleImageSelect}

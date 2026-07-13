@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/core";
 import { useToast } from "@/components/admin/ToastProvider";
-import { MediaLibraryPicker } from "@/components/admin/MediaLibraryPicker";
+import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 import type { MediaCategory } from "@/lib/media-library";
 
 function parsePreviewEditorPath(previewPath: string): {
@@ -110,12 +110,32 @@ export function ProductDetailLiveEditor({
 
   const handleStatusUpdate = async (status: "draft" | "published" | "archived") => {
     if (!productId || !productType || statusUpdating) return;
+
+    const endpoint =
+      productType === "accessory"
+        ? `/api/accessories/${encodeURIComponent(productId)}`
+        : `/api/vehicles/${encodeURIComponent(productId)}?type=${productType}`;
+
+    if (status === "published") {
+      try {
+        const checkRes = await fetch(endpoint, { credentials: "include" });
+        const checkData = await checkRes.json();
+        if (checkRes.ok && Array.isArray(checkData.publishCheck) && checkData.publishCheck.length > 0) {
+          const lines = [
+            "Sản phẩm chưa hoàn thiện:",
+            ...checkData.publishCheck.map((item: { label: string }) => `• ${item.label}`),
+            "",
+            "Vẫn xuất bản?",
+          ];
+          if (!window.confirm(lines.join("\n"))) return;
+        }
+      } catch {
+        // Bỏ qua nếu không kiểm tra được — vẫn cho publish
+      }
+    }
+
     setStatusUpdating(true);
     try {
-      const endpoint =
-        productType === "accessory"
-          ? `/api/accessories/${encodeURIComponent(productId)}`
-          : `/api/vehicles/${encodeURIComponent(productId)}`;
       const payload =
         productType === "accessory"
           ? { status }
@@ -296,10 +316,10 @@ export function ProductDetailLiveEditor({
       />
 
       {imagePicker ? (
-        <MediaLibraryPicker
+        <GlobalMediaPicker
           open
-          category={imagePicker.category}
-          slug={imagePicker.slug}
+          defaultCategory={imagePicker.category}
+          defaultFolderSlug={imagePicker.slug}
           title={imagePicker.kind === "svg" ? "Chọn icon SVG" : "Chọn ảnh cho preview"}
           filterKind={imagePicker.kind}
           onClose={() => setImagePicker(null)}

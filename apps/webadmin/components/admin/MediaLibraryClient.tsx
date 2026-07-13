@@ -20,6 +20,7 @@ import {
   type MediaFolder,
 } from "@/lib/media-library";
 import { clientAssetUrl } from "@/lib/product-utils";
+import { MediaFolderDeleteButton } from "@/components/admin/MediaFolderDeleteButton";
 
 const TAB_OPTIONS = MEDIA_CATEGORY_OPTIONS.filter((o) => o.value !== "all");
 
@@ -97,11 +98,8 @@ function FolderGrid({ folders }: { folders: MediaFolder[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {folders.map((folder) => (
-        <Link
-          key={`${folder.category}-${folder.slug}`}
-          href={`/admin/media/${folder.category}/${folder.slug}`}
-        >
-          <Card className="group h-full overflow-hidden transition-shadow hover:shadow-md">
+        <Card key={`${folder.category}-${folder.slug}`} className="group h-full overflow-hidden transition-shadow hover:shadow-md">
+          <Link href={`/admin/media/${folder.category}/${folder.slug}`}>
             <div className="relative aspect-[4/3] bg-zinc-50">
               <Image
                 src={clientAssetUrl(folder.coverImage)}
@@ -132,8 +130,18 @@ function FolderGrid({ folders }: { folders: MediaFolder[] }) {
                 Mở thư mục
               </p>
             </div>
-          </Card>
-        </Link>
+          </Link>
+          <div className="border-t border-zinc-100 px-4 pb-4">
+            <MediaFolderDeleteButton
+              category={folder.category}
+              slug={folder.slug}
+              folderName={folder.name}
+              variant="ghost"
+              size="sm"
+              label="Xóa thư mục"
+            />
+          </div>
+        </Card>
       ))}
     </div>
   );

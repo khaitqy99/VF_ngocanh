@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Images } from "lucide-react";
 import { Button, Input } from "@/components/ui/core";
 import { EditField } from "@/components/admin/pdp/EditSection";
-import { MediaLibraryPicker } from "@/components/admin/MediaLibraryPicker";
+import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 import { clientAssetUrl } from "@/lib/product-utils";
 import type { MediaCategory } from "@/lib/media-library";
 
@@ -65,13 +65,13 @@ export function MediaImageField({
         </div>
       </EditField>
 
-      <MediaLibraryPicker
+      <GlobalMediaPicker
         open={pickerOpen}
         onClose={() => setPickerOpen(false)}
         onSelect={setValue}
-        category={category}
-        slug={slug}
         title={`Chọn ${label.toLowerCase()}`}
+        defaultCategory={category}
+        defaultFolderSlug={slug}
       />
     </>
   );

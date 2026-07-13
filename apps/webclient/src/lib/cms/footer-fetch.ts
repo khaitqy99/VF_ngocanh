@@ -11,7 +11,7 @@ import {
   type FooterSettings,
 } from "./footer";
 
-async function fetchFooterSettingsRow(): Promise<FooterSettings> {
+export async function fetchFooterSettingsRow(): Promise<FooterSettings> {
   return getOrSetCache(`cms:settings:footer`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return mergeFooterSettings(null);
     const supabase = createAnonClient();

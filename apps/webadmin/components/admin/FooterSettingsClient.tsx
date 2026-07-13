@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Save, Trash2 } from "lucide-react";
+import { ExternalLink, Plus, RefreshCw, Save, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { useToast } from "@/components/admin/ToastProvider";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from "@/components/ui/core";
@@ -104,9 +104,11 @@ function ColumnEditor({
 
 export function FooterSettingsClient() {
   const { toast } = useToast();
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
   const [settings, setSettings] = useState<FooterSettings>(defaultFooterSettings());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [iframeKey, setIframeKey] = useState(0);
 
   useEffect(() => {
     fetch("/api/cms/footer", { credentials: "include" })
@@ -131,6 +133,7 @@ export function FooterSettingsClient() {
         throw new Error(data?.error ?? "Lưu thất bại");
       }
       toast("Đã lưu cài đặt footer");
+      setIframeKey((key) => key + 1);
     } catch (error) {
       toast(error instanceof Error ? error.message : "Lưu thất bại");
     } finally {
@@ -159,6 +162,43 @@ export function FooterSettingsClient() {
           </Button>
         }
       />
+
+      <Card>
+        <CardHeader className="flex-row items-center justify-between space-y-0">
+          <CardTitle className="text-sm">Xem trước footer</CardTitle>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIframeKey((key) => key + 1)}
+            >
+              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+              Tải lại
+            </Button>
+            <a
+              href={siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 items-center gap-1.5 rounded-md border border-zinc-200 px-3 text-xs font-medium hover:bg-zinc-50"
+            >
+              Website
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <iframe
+            key={iframeKey}
+            title="Xem trước footer"
+            src={`${siteUrl}/footer/preview`}
+            className="h-[560px] w-full rounded-b-xl border-0 bg-white"
+          />
+          <p className="border-t border-zinc-100 px-4 py-2 text-xs text-zinc-500">
+            Preview cập nhật sau khi bấm <strong>Lưu thay đổi</strong> — hoặc bấm Tải lại.
+          </p>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

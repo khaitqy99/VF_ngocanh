@@ -17,7 +17,7 @@ import { vehicleTag } from "./cache-tags";
 
 export const CMS_SEO_TAG = "cms-seo";
 
-async function fetchSiteSeoRow(): Promise<SiteSeoSettings> {
+export async function fetchSiteSeoRow(): Promise<SiteSeoSettings> {
   return getOrSetCache(`cms:settings:seo`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return defaultSiteSeoSettings();
     const supabase = createAnonClient();
@@ -32,7 +32,7 @@ async function fetchSiteSeoRow(): Promise<SiteSeoSettings> {
   });
 }
 
-async function fetchPageSeoRow(slug: string): Promise<SeoRecord | null> {
+export async function fetchPageSeoRow(slug: string): Promise<SeoRecord | null> {
   return getOrSetCache(`cms:page-seo:${slug}`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return null;
     const supabase = createAnonClient();
@@ -60,7 +60,7 @@ export async function getPageSeo(slug: string): Promise<SeoRecord | null> {
   })();
 }
 
-async function fetchVehicleSeoRow(id: string): Promise<SeoRecord> {
+export async function fetchVehicleSeoRow(id: string): Promise<SeoRecord> {
   return getOrSetCache(`cms:vehicle-seo:${id}`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return {};
     const supabase = createAnonClient();
@@ -83,7 +83,7 @@ export async function getVehicleSeoById(id: string): Promise<SeoRecord> {
   })();
 }
 
-async function fetchAccessorySeoRow(id: string): Promise<SeoRecord> {
+export async function fetchAccessorySeoRow(id: string): Promise<SeoRecord> {
   return getOrSetCache(`cms:accessory-seo:${id}`, getCmsCacheTtlSeconds(), async () => {
     if (!isSupabaseConfigured()) return {};
     const supabase = createAnonClient();

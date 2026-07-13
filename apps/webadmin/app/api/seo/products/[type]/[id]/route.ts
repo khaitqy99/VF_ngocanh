@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import type { Json, TablesUpdate } from "@vinfast3s/supabase";
+import { ensureUniqueSlug, isValidSlug, normalizeSlug } from "@/lib/content-slug";
 import {
   buildProductSeoDefaults,
   carDetailPath,
   defaultAccessorySlug,
   defaultCarSlug,
   defaultScooterSlug,
-  isValidSlug,
   parseSeoRecord,
   resolveSeoContent,
   scooterDetailPath,
@@ -135,8 +135,16 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  if (body.slug !== undefined && !isValidSlug(body.slug)) {
-    return NextResponse.json({ error: "Slug không hợp lệ" }, { status: 400 });
+  if (body.slug !== undefined) {
+    const normalized = normalizeSlug(body.slug);
+    if (!isValidSlug(normalized)) {
+      return NextResponse.json({ error: "Slug không hợp lệ" }, { status: 400 });
+    }
+    body.slug = await ensureUniqueSlug(
+      type === "accessory" ? "accessories" : "vehicles",
+      normalized,
+      id,
+    );
   }
 
   const admin = createAdminClient();
@@ -156,10 +164,25 @@ export async function PATCH(
     if (body.slug) {
       update.slug = body.slug;
     }
-    const { error } = await admin.from("accessories").update(update).eq("id", id);
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (existing) {
+      const { error } = await admin.from("accessories").update(update).eq("id", id);
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      const staticItem = ACCESSORIES.find((a) => a.id === id);
+      const { error } = await admin.from("accessories").insert({
+        id,
+        name: staticItem?.name ?? id,
+        slug: body.slug ?? defaultAccessorySlug(id, staticItem?.name),
+        status: "published",
+        content: {
+          ...content,
+          ...(body.seo ? { seo: body.seo as Json } : {}),
+        } as Json,
+      });
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     await revalidateWebclient(accessoryRevalidatePayload(id, body.slug ?? existing?.slug ?? id));
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, slug: body.slug });
   }
 
   const update: TablesUpdate<"vehicles"> = {};
@@ -187,5 +210,5 @@ export async function PATCH(
   await revalidateWebclient(
     vehicleRevalidatePayload(id, vehicleType, body.slug ?? existing?.slug ?? defaultSlugFor(type, id)),
   );
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, slug: body.slug });
 }
