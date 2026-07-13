@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
-import { getSessionAdmin, requireSuperAdmin } from "@/lib/auth";
+import { getSessionAdmin } from "@/lib/auth";
 import { provisionAdminAuthUser } from "@/lib/admin-auth-provision";
 import { mapAuthUser } from "@/lib/auth-users";
 
@@ -36,9 +36,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
   }
 
-  const session = await requireSuperAdmin();
+  const session = await getSessionAdmin();
   if (!session) {
-    return NextResponse.json({ error: "Chỉ super admin mới quản lý tài khoản" }, { status: 403 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let body: Record<string, unknown>;

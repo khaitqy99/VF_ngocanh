@@ -18,11 +18,3 @@ export async function getSessionAdmin(): Promise<{
 
   return { id: user.id, email: user.email, role };
 }
-
-export async function requireSuperAdmin() {
-  const session = await getSessionAdmin();
-  if (!session || session.role !== "super_admin") {
-    return null;
-  }
-  return session;
-}
