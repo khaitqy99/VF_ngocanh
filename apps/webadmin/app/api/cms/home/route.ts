@@ -18,6 +18,7 @@ type HomePagePayload = {
   featuredCarIds?: string[];
   featuredScooterIds?: string[];
   featuredAccessoryIds?: string[];
+  featuredNewsIds?: string[];
   featuredCarPrices?: HomeFeaturedPrices;
   featuredScooterPrices?: HomeFeaturedPrices;
   featuredCarSlideOverrides?: HomeFeaturedSlideOverrides;
@@ -66,6 +67,7 @@ export async function GET() {
     featuredCarPrices: {},
     featuredScooterPrices: {},
     featuredAccessoryIds: [],
+    featuredNewsIds: [],
     featuredCarSlideOverrides: {},
     featuredScooterSlideOverrides: {},
     banners: [],
@@ -123,6 +125,7 @@ export async function GET() {
     featuredCarPrices: parsed?.featuredCarPrices ?? {},
     featuredScooterPrices: parsed?.featuredScooterPrices ?? {},
     featuredAccessoryIds: parsed?.featuredAccessoryIds ?? [],
+    featuredNewsIds: parsed?.featuredNewsIds ?? [],
     featuredCarSlideOverrides: parsed?.featuredCarSlideOverrides ?? {},
     featuredScooterSlideOverrides: parsed?.featuredScooterSlideOverrides ?? {},
     banners: (bannersResult.data ?? []).map(mapBannerRow),
@@ -210,6 +213,7 @@ export async function PATCH(request: Request) {
       body.featuredScooterPrices ?? currentContent.featuredScooterPrices ?? {},
     featuredAccessoryIds:
       body.featuredAccessoryIds ?? currentContent.featuredAccessoryIds ?? [],
+    featuredNewsIds: body.featuredNewsIds ?? currentContent.featuredNewsIds ?? [],
     featuredCarSlideOverrides:
       body.featuredCarSlideOverrides ?? currentContent.featuredCarSlideOverrides ?? {},
     featuredScooterSlideOverrides:

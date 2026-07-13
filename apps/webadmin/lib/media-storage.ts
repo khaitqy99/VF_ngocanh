@@ -19,6 +19,8 @@ export function mediaFolderStoragePrefix(category: MediaCategory, slug: string):
       return `images/vinfast/scooters/${slug}`;
     case "accessories":
       return `images/vinfast/accessories/${slug}`;
+    case "news":
+      return `images/news/${slug}`;
   }
 }
 

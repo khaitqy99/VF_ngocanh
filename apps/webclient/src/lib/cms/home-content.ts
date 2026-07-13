@@ -54,6 +54,11 @@ export type HomeSectionsContent = {
     title: string;
     viewAllHref: string;
   };
+  news: {
+    eyebrow: string;
+    title: string;
+    viewAllHref: string;
+  };
   charging: {
     eyebrow: string;
     title: string;
@@ -106,6 +111,11 @@ export const DEFAULT_HOME_SECTIONS: HomeSectionsContent = {
     eyebrow: "VinFast",
     title: "Phụ kiện chính hãng",
     viewAllHref: "/phu-kien",
+  },
+  news: {
+    eyebrow: "Tin tức",
+    title: "Ưu đãi & hoạt động mới",
+    viewAllHref: "/tin-tuc",
   },
   charging: {
     eyebrow: "Hệ sinh thái",
@@ -314,6 +324,7 @@ export function mergeHomeSections(override: unknown): HomeSectionsContent {
   if (!root) return DEFAULT_HOME_SECTIONS;
 
   const accessories = asRecord(root.accessories);
+  const news = asRecord(root.news);
   const charging = asRecord(root.charging);
   const warranty = asRecord(root.warranty);
   const brandStory = asRecord(root.brandStory);
@@ -360,6 +371,11 @@ export function mergeHomeSections(override: unknown): HomeSectionsContent {
         DEFAULT_HOME_SECTIONS.accessories.viewAllHref,
         accessories?.viewAllHref,
       ),
+    },
+    news: {
+      eyebrow: mergeString(DEFAULT_HOME_SECTIONS.news.eyebrow, news?.eyebrow),
+      title: mergeString(DEFAULT_HOME_SECTIONS.news.title, news?.title),
+      viewAllHref: mergeString(DEFAULT_HOME_SECTIONS.news.viewAllHref, news?.viewAllHref),
     },
     charging: {
       eyebrow: mergeString(DEFAULT_HOME_SECTIONS.charging.eyebrow, charging?.eyebrow),
@@ -456,9 +472,12 @@ export type HomeFeaturedSlideOverrides = Record<string, HomeFeaturedSlideOverrid
 export function resolveFeaturedAccessories<T extends { id: string }>(
   catalog: T[],
   ids: string[] | undefined,
-  limit = 8,
+  limit = 4,
 ): T[] {
   const byId = new Map(catalog.map((item) => [item.id, item]));
   const resolvedIds = ids?.length ? ids : catalog.slice(0, limit).map((item) => item.id);
-  return resolvedIds.map((id) => byId.get(id)).filter((item): item is T => item != null);
+  return resolvedIds
+    .map((id) => byId.get(id))
+    .filter((item): item is T => item != null)
+    .slice(0, limit);
 }

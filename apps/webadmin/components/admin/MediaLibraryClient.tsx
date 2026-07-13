@@ -45,14 +45,14 @@ export function MediaLibraryClient({ folders }: { folders: MediaFolder[] }) {
     <div className="space-y-6">
       <PageHeader
         title="Thư viện ảnh"
-        description={`${totalFolders} thư mục · ${totalImages} ảnh — chia theo từng mẫu xe`}
+        description={`${totalFolders} thư mục · ${totalImages} ảnh — xe, phụ kiện và bài viết`}
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-zinc-400" />
           <Input
-            placeholder="Tìm thư mục xe..."
+            placeholder="Tìm thư mục..."
             className="bg-white pl-9"
             value={search}
             onChange={(e) => setSearch(e.target.value)}

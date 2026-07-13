@@ -137,7 +137,8 @@ function HomePreviewDraftBody({
         featuredScooters={
           previewFeaturedScooters.length ? previewFeaturedScooters : fallbackFeaturedScooters
         }
-        accessories={previewAccessories.length ? previewAccessories : accessories}
+        accessories={accessories}
+        latestNews={[]}
         contact={contact}
         sections={edit.draft.sections}
       />
@@ -151,6 +152,7 @@ export function HomePreviewClient({
   featuredCars,
   featuredScooters,
   accessories,
+  latestNews,
   contact,
   editorData,
   cars,
@@ -160,6 +162,7 @@ export function HomePreviewClient({
   featuredCars: VinFastHomeSlide[];
   featuredScooters: VinFastHomeSlide[];
   accessories: AccessoryProduct[];
+  latestNews: import("@/lib/cms/news-types").NewsArticle[];
   contact: DealershipContact;
   editorData: HomeEditorData;
   cars: CarModel[];
@@ -189,6 +192,7 @@ export function HomePreviewClient({
       featuredCars={featuredCars}
       featuredScooters={featuredScooters}
       accessories={accessories}
+      latestNews={latestNews}
       contact={contact}
       sections={editorData.sections}
     />

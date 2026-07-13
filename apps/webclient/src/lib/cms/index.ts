@@ -42,6 +42,7 @@ import {
   resolveFeaturedAccessories,
   type HomeSectionsContent,
 } from "./home-content";
+import { getFeaturedHomeNews } from "./news";
 import { resolveProductSlug } from "@/lib/seo/slugs";
 import { CMS_TAGS, vehicleTag, staticPageTag } from "./cache-tags";
 import { getCmsCacheRevalidate, getCmsCacheTtlSeconds } from "./cache-config";
@@ -322,6 +323,7 @@ export const getHomeData = unstable_cache(
       accessories,
       parsed?.featuredAccessoryIds,
     );
+    const latestNews = await getFeaturedHomeNews(5, parsed?.featuredNewsIds);
 
     return {
       heroBanners:
@@ -336,6 +338,7 @@ export const getHomeData = unstable_cache(
         ? (await fetchBannersByPlacement("home").catch(() => [])).map(mapHomeHeroBanner)
         : VINFAST_HERO_BANNERS,
       accessories: featuredAccessories,
+      latestNews,
       sections,
     };
   },
@@ -439,3 +442,5 @@ export async function getScooterDetailBySlug(slug: string) {
 export async function getAccessoryBySlugOrId(slug: string) {
   return (await getAccessoryBySlug(slug)) ?? (await getAccessoryById(slug));
 }
+
+export { getNewsArticles, getNewsBySlug, getFeaturedHomeNews } from "@/lib/cms/news";

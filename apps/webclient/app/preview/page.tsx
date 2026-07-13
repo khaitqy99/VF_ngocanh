@@ -33,6 +33,7 @@ export default async function HomePreviewRoute() {
         featuredCars={home.featuredCars}
         featuredScooters={home.featuredScooters}
         accessories={home.accessories}
+        latestNews={home.latestNews}
         contact={resolveDealershipContact(site)}
         editorData={editorData}
         cars={cars}

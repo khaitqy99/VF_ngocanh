@@ -12,6 +12,7 @@ export const MAIN_SITE_NAV: readonly SiteNavItem[] = [
   { label: "Dịch vụ hậu mãi", href: "/dich-vu-hau-mai" },
   { label: "Pin và trạm sạc", href: "/pin-va-tram-sac" },
   { label: "Lưu trữ năng lượng", href: "/luu-tru-nang-luong" },
+  { label: "Tin tức", href: "/tin-tuc" },
 ] as const;
 
 /** High-intent pages often shown as sitelinks for automotive brands */

@@ -19,7 +19,7 @@ create table public.site_settings (
   id uuid primary key default gen_random_uuid(),
   key text not null unique,
   value jsonb not null default '{}'::jsonb,
-  updated_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(), 
   updated_by uuid references auth.users (id)
 );
 

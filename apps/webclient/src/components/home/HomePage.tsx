@@ -24,12 +24,14 @@ import {
 import { FeatureCarouselSection } from "@/components/shared/FeatureCarouselSection";
 import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
 import type { VinFastHomeSlide } from "@/lib/vinfast-home";
+import type { NewsArticle } from "@/lib/cms/news-types";
 import { vfCardTitle, vfSectionHeadingLeft, vfSlideTitle } from "@/lib/typography";
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
 
 import { HomeHero } from "./HomeHero";
+import { HomeNewsSection } from "./HomeNewsSection";
 import { HomeOverlayCard } from "./HomeOverlayCard";
 import { HomeSectionHeader } from "./HomeSectionHeader";
 import {
@@ -78,6 +80,7 @@ export default function HomePage({
   featuredCars,
   featuredScooters,
   accessories,
+  latestNews,
   contact,
   sections,
 }: {
@@ -85,6 +88,7 @@ export default function HomePage({
   featuredCars: VinFastHomeSlide[];
   featuredScooters: VinFastHomeSlide[];
   accessories: AccessoryProduct[];
+  latestNews: NewsArticle[];
   contact: DealershipContact;
   sections: HomeSectionsContent;
 }) {
@@ -117,6 +121,7 @@ export default function HomePage({
         <WarrantyService section={sections.warranty} />
         <BrandStory section={sections.brandStory} />
         <ShowroomCommunity section={sections.showroomCommunity} />
+        <HomeNewsSection articles={latestNews} section={sections.news} />
         <Newsletter section={sections.newsletter} />
         <FaqSection section={sections.faq} />
         <ShowroomLocationSection contact={contact} showroom={sections.showroomLocation} />

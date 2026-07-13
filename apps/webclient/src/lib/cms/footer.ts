@@ -49,8 +49,7 @@ const DEFAULT_SERVICE_LINKS: FooterLink[] = [
 
 const DEFAULT_ABOUT_LINKS: FooterLink[] = [
   { label: "Giới thiệu", href: "/gioi-thieu" },
-  { label: "Tin tức", href: "/gioi-thieu" },
-  { label: "Tuyển dụng", href: "/gioi-thieu" },
+  { label: "Tin tức", href: "/tin-tuc" },
   { label: "Liên hệ", href: "/gioi-thieu" },
 ];
 

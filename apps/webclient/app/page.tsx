@@ -35,6 +35,7 @@ export default async function Page() {
         featuredCars={home.featuredCars}
         featuredScooters={home.featuredScooters}
         accessories={home.accessories}
+        latestNews={home.latestNews}
         contact={resolveDealershipContact(site)}
         sections={home.sections}
       />

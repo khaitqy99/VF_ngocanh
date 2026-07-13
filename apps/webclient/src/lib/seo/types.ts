@@ -149,6 +149,16 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
       "Giải pháp pin lưu trữ năng lượng VinFast cho gia đình và doanh nghiệp tại Cà Mau — tiết kiệm điện, an toàn, tư vấn lắp đặt và bảo hành chính hãng.",
     defaultOgImage: "/images/energy/hero.webp",
   },
+  {
+    slug: "news",
+    label: "Tin tức",
+    path: "/tin-tuc",
+    group: "core",
+    defaultTitle: "Tin tức VinFast Ngọc Anh Cà Mau",
+    defaultDescription:
+      "Cập nhật ưu đãi, sự kiện lái thử, công nghệ xe điện và hoạt động của đại lý VinFast Ngọc Anh Cà Mau.",
+    defaultOgImage: "/images/showroom.webp",
+  },
 ];
 
 export function getStaticPageSeoDefinition(slug: string): StaticPageSeoDefinition | undefined {

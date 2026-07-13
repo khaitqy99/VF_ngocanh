@@ -5,7 +5,14 @@ import type { ScooterModel } from "@webclient/lib/scooters";
 import type { AccessoryProduct } from "@webclient/lib/accessories";
 import { mediaFolderStoragePrefix } from "@/lib/media-storage";
 
-export type MediaCategory = "cars" | "scooters" | "accessories";
+export type MediaCategory = "cars" | "scooters" | "accessories" | "news";
+
+export type NewsArticleMediaRef = {
+  id: string;
+  slug: string;
+  title: string;
+  coverImageUrl?: string | null;
+};
 
 export type MediaImage = {
   id: string;
@@ -30,6 +37,7 @@ export const MEDIA_CATEGORY_OPTIONS: { value: MediaCategory | "all"; label: stri
   { value: "cars", label: "Ô tô" },
   { value: "scooters", label: "Xe máy" },
   { value: "accessories", label: "Phụ kiện theo xe" },
+  { value: "news", label: "Bài viết" },
 ];
 
 export function getMediaCategoryLabel(category: MediaCategory): string {
@@ -96,12 +104,55 @@ function mergeFolderImages(
   return merged;
 }
 
+function buildNewsMediaFolders(
+  articles: NewsArticleMediaRef[],
+  mediaAssetsByFolder: Map<string, MediaImage[]>,
+): MediaFolder[] {
+  const folders: MediaFolder[] = [];
+  const chungKey = mediaFolderStoragePrefix("news", "chung");
+  const chungDb = mediaAssetsByFolder.get(chungKey) ?? [];
+  folders.push({
+    category: "news",
+    slug: "chung",
+    name: "Ảnh chung bài viết",
+    subtitle: "Ảnh dùng trong nội dung tin tức & blog",
+    coverImage: chungDb[0]?.path ?? "/images/vinfast/showroom.webp",
+    storagePath: "/images/news/chung/",
+    images: mergeFolderImages(chungDb, [], "news-chung"),
+    productHref: "/admin/posts",
+  });
+
+  for (const article of articles) {
+    const folderKey = mediaFolderStoragePrefix("news", article.slug);
+    const dbAssets = mediaAssetsByFolder.get(folderKey) ?? [];
+    const seedPaths = article.coverImageUrl ? [article.coverImageUrl] : [];
+    const images = mergeFolderImages(dbAssets, seedPaths, article.slug);
+    folders.push({
+      category: "news",
+      slug: article.slug,
+      name: article.title,
+      subtitle: "Thư mục ảnh bài viết",
+      coverImage:
+        dbAssets[0]?.path ??
+        article.coverImageUrl ??
+        images[0]?.path ??
+        "/images/vinfast/showroom.webp",
+      storagePath: `/images/news/${article.slug}/`,
+      images,
+      productHref: `/admin/posts/${article.id}`,
+    });
+  }
+
+  return folders;
+}
+
 export function buildMediaFolders(
   cars: CarModel[],
   scooters: ScooterModel[],
   accessories: AccessoryProduct[],
   galleriesByVehicleId: Map<string, string[]> = new Map(),
   mediaAssetsByFolder: Map<string, MediaImage[]> = new Map(),
+  newsArticles: NewsArticleMediaRef[] = [],
 ): MediaFolder[] {
   const carFolders: MediaFolder[] = cars.map((car) => {
     const fromDb = galleriesByVehicleId.get(car.id);
@@ -188,7 +239,9 @@ export function buildMediaFolders(
       };
     });
 
-  return [...carFolders, ...scooterFolders, ...accessoryFolders];
+  const newsFolders = buildNewsMediaFolders(newsArticles, mediaAssetsByFolder);
+
+  return [...carFolders, ...scooterFolders, ...accessoryFolders, ...newsFolders];
 }
 
 export function getMediaFoldersByCategory(

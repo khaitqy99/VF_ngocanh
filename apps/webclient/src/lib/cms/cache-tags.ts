@@ -5,6 +5,7 @@ export const CMS_TAGS = {
   accessories: "cms-accessories",
   home: "cms-home",
   banners: "cms-banners",
+  news: "cms-news",
 } as const;
 
 export function staticPageTag(slug: string) {

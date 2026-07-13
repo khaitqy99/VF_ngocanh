@@ -623,6 +623,9 @@ export function parseHomeCms(content: Json) {
     featuredAccessoryIds: Array.isArray(obj?.featuredAccessoryIds)
       ? (obj.featuredAccessoryIds as string[]).filter((id) => typeof id === "string")
       : [],
+    featuredNewsIds: Array.isArray(obj?.featuredNewsIds)
+      ? (obj.featuredNewsIds as string[]).filter((id) => typeof id === "string")
+      : [],
     featuredCarPrices: parseFeaturedPrices(obj?.featuredCarPrices),
     featuredScooterPrices: parseFeaturedPrices(obj?.featuredScooterPrices),
     featuredCarSlideOverrides: slideOverrides(obj?.featuredCarSlideOverrides),

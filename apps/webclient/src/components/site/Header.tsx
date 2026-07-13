@@ -75,7 +75,8 @@ export default function Header() {
 
           <nav className="hidden flex-1 items-center justify-center gap-6 xl:gap-8 lg:flex">
             {MAIN_SITE_NAV.map(({ label, href }, i) => {
-              const active = pathname === href;
+              const active =
+                pathname === href || (href === "/tin-tuc" && pathname.startsWith("/tin-tuc/"));
               return (
                 <motion.div
                   key={label}
@@ -141,7 +142,8 @@ export default function Header() {
             <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Menu điều hướng">
               <ul className="space-y-1">
                 {MAIN_SITE_NAV.map(({ label, href }, i) => {
-                  const active = pathname === href;
+                  const active =
+                    pathname === href || (href === "/tin-tuc" && pathname.startsWith("/tin-tuc/"));
                   return (
                     <motion.li
                       key={label}

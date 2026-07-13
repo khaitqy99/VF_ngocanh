@@ -36,6 +36,8 @@
       "@/lib/seo-revalidate": ["./lib/seo-revalidate.ts"],
       "@/lib/footer-revalidate": ["./lib/footer-revalidate.ts"],
       "@/lib/car-pricing-revalidate": ["./lib/car-pricing-revalidate.ts"],
+      "@/lib/content-slug": ["./lib/content-slug.ts"],
+      "@/lib/news-api": ["./lib/news-api.ts"],
       "@/lib/*": ["../webclient/src/lib/*"],
       "@/*": ["./*"],
       "@webclient/*": ["../webclient/src/*"],

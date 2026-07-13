@@ -170,33 +170,96 @@ export type Database = {
       };
       job_postings: {
         Row: {
+          benefits: string | null;
           created_at: string;
+          deadline: string | null;
           department: string | null;
           description: string | null;
           employment_type: string | null;
           id: string;
+          location: string | null;
+          quantity: number;
+          requirements: string | null;
+          salary_range: string | null;
+          slug: string | null;
+          sort_order: number;
           status: Database["public"]["Enums"]["publish_status"];
           title: string;
           updated_at: string;
         };
         Insert: {
+          benefits?: string | null;
           created_at?: string;
+          deadline?: string | null;
           department?: string | null;
           description?: string | null;
           employment_type?: string | null;
           id?: string;
+          location?: string | null;
+          quantity?: number;
+          requirements?: string | null;
+          salary_range?: string | null;
+          slug?: string | null;
+          sort_order?: number;
           status?: Database["public"]["Enums"]["publish_status"];
           title: string;
           updated_at?: string;
         };
         Update: {
+          benefits?: string | null;
           created_at?: string;
+          deadline?: string | null;
           department?: string | null;
           description?: string | null;
           employment_type?: string | null;
           id?: string;
+          location?: string | null;
+          quantity?: number;
+          requirements?: string | null;
+          salary_range?: string | null;
+          slug?: string | null;
+          sort_order?: number;
           status?: Database["public"]["Enums"]["publish_status"];
           title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      job_applications: {
+        Row: {
+          cover_letter: string | null;
+          created_at: string;
+          email: string | null;
+          full_name: string;
+          id: string;
+          job_id: string | null;
+          metadata: Json;
+          phone: string;
+          status: Database["public"]["Enums"]["job_application_status"];
+          updated_at: string;
+        };
+        Insert: {
+          cover_letter?: string | null;
+          created_at?: string;
+          email?: string | null;
+          full_name: string;
+          id?: string;
+          job_id?: string | null;
+          metadata?: Json;
+          phone: string;
+          status?: Database["public"]["Enums"]["job_application_status"];
+          updated_at?: string;
+        };
+        Update: {
+          cover_letter?: string | null;
+          created_at?: string;
+          email?: string | null;
+          full_name?: string;
+          id?: string;
+          job_id?: string | null;
+          metadata?: Json;
+          phone?: string;
+          status?: Database["public"]["Enums"]["job_application_status"];
           updated_at?: string;
         };
         Relationships: [];
@@ -282,13 +345,18 @@ export type Database = {
       news_articles: {
         Row: {
           author_id: string | null;
+          author_name: string | null;
           body: string | null;
+          body_format: string;
           category: string | null;
           cover_image_url: string | null;
           created_at: string;
           excerpt: string | null;
           id: string;
+          is_featured: boolean;
           published_at: string | null;
+          related_products: Json;
+          seo: Json;
           slug: string;
           status: Database["public"]["Enums"]["publish_status"];
           title: string;
@@ -296,13 +364,18 @@ export type Database = {
         };
         Insert: {
           author_id?: string | null;
+          author_name?: string | null;
           body?: string | null;
+          body_format?: string;
           category?: string | null;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string | null;
           id?: string;
+          is_featured?: boolean;
           published_at?: string | null;
+          related_products?: Json;
+          seo?: Json;
           slug: string;
           status?: Database["public"]["Enums"]["publish_status"];
           title: string;
@@ -310,13 +383,18 @@ export type Database = {
         };
         Update: {
           author_id?: string | null;
+          author_name?: string | null;
           body?: string | null;
+          body_format?: string;
           category?: string | null;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string | null;
           id?: string;
+          is_featured?: boolean;
           published_at?: string | null;
+          related_products?: Json;
+          seo?: Json;
           slug?: string;
           status?: Database["public"]["Enums"]["publish_status"];
           title?: string;
@@ -465,7 +543,8 @@ export type Database = {
         | "charging"
         | "energy";
       lead_status: "new" | "in_progress" | "converted" | "closed";
-      publish_status: "draft" | "published" | "archived";
+      job_application_status: "new" | "reviewing" | "interviewed" | "hired" | "rejected";
+      publish_status: "draft" | "published" | "archived" | "scheduled";
       vehicle_type: "car" | "scooter";
     };
     CompositeTypes: Record<string, never>;

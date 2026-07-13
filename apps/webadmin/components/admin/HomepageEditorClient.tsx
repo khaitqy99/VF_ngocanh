@@ -360,7 +360,52 @@ export function HomepageEditorClient() {
           </div>
         </EditSection>
 
-        <EditSection id="charging" title="Pin & trạm sạc" subtitle="3 thẻ giới thiệu hệ sinh thái sạc" alt>
+        <EditSection id="news" title="Tin tức" subtitle="Hiển thị 3 bài mới nhất hoặc bài đã ghim trên trang chủ">
+          <div className="grid gap-4 md:grid-cols-3">
+            <EditField label="Eyebrow">
+              <Input
+                value={state.sections.news.eyebrow}
+                onChange={(event) =>
+                  updateSections((sections) => ({
+                    ...sections,
+                    news: { ...sections.news, eyebrow: event.target.value },
+                  }))
+                }
+              />
+            </EditField>
+            <EditField label="Tiêu đề">
+              <Input
+                value={state.sections.news.title}
+                onChange={(event) =>
+                  updateSections((sections) => ({
+                    ...sections,
+                    news: { ...sections.news, title: event.target.value },
+                  }))
+                }
+              />
+            </EditField>
+            <EditField label="Link xem tất cả">
+              <Input
+                value={state.sections.news.viewAllHref}
+                onChange={(event) =>
+                  updateSections((sections) => ({
+                    ...sections,
+                    news: { ...sections.news, viewAllHref: event.target.value },
+                  }))
+                }
+              />
+            </EditField>
+          </div>
+          <p className="mt-3 text-xs text-zinc-500">
+            Để chọn bài hiển thị, ghim bài nổi bật trong{" "}
+            <Link href="/admin/posts" className="text-red-600 hover:underline">
+              Tin tức
+            </Link>
+            .
+          </p>
+        </EditSection>
+
+        <EditSection id="charging" title="Pin & trạm sạc" subtitle="3 thẻ giới thiệu hệ sinh thái sạc">
           <div className="mb-4 grid gap-4 md:grid-cols-2">
             <EditField label="Eyebrow">
               <Input

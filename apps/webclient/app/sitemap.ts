@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getAccessories, getCars, getScooters } from "@/lib/cms";
+import { getAccessories, getCars, getNewsArticles, getScooters } from "@/lib/cms";
 import { accessoryDetailPath, carDetailPath, scooterDetailPath } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 const STATIC_ROUTES = [
   "",
   "/gioi-thieu",
+  "/tin-tuc",
   "/oto",
   "/xe-may-dien",
   "/pin-va-tram-sac",
@@ -36,10 +37,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = buildStaticEntries();
 
   try {
-    const [cars, scooters, accessories] = await Promise.all([
+    const [cars, scooters, accessories, newsArticles] = await Promise.all([
       getCars(),
       getScooters(),
       getAccessories(),
+      getNewsArticles(),
     ]);
 
     const carRoutes = cars.map((car) => ({
@@ -63,7 +65,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-    return [...staticRoutes, ...carRoutes, ...scooterRoutes, ...accessoryRoutes];
+    const newsRoutes = newsArticles.map((article) => ({
+      url: `${PRODUCTION_SITE_URL}/tin-tuc/${article.slug}`,
+      lastModified: article.updatedAt ? new Date(article.updatedAt) : new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }));
+
+    return [...staticRoutes, ...carRoutes, ...scooterRoutes, ...accessoryRoutes, ...newsRoutes];
   } catch (error) {
     console.error("[sitemap] Failed to load dynamic routes, serving static routes only:", error);
     return staticRoutes;

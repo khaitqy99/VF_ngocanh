@@ -29,6 +29,7 @@ export function PageEditorialHero({
   stats?: readonly { icon: LucideIcon; value: ReactNode; label: ReactNode }[];
 }) {
   const reduced = useReducedMotion();
+  const hasStats = Boolean(stats?.length);
 
   return (
     <section className="page-editorial-hero">
@@ -52,7 +53,13 @@ export function PageEditorialHero({
       </div>
 
       <div className="container-vf relative z-10 py-24 sm:py-28 lg:py-32">
-        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <div
+          className={
+            hasStats
+              ? "grid items-end gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14"
+              : "max-w-2xl"
+          }
+        >
           <motion.div
             initial={reduced ? false : { opacity: 0, y: 28 }}
             animate={MOTION_VISIBLE}

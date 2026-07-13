@@ -87,3 +87,10 @@ export function staticPageRevalidatePayload(slug: string): RevalidatePayload {
     paths: path ? [path] : [],
   };
 }
+
+export function newsRevalidatePayload(slug?: string): RevalidatePayload {
+  return {
+    tags: ["cms", "cms-news"],
+    paths: uniquePaths(["/tin-tuc", slug ? `/tin-tuc/${slug}` : ""]),
+  };
+}

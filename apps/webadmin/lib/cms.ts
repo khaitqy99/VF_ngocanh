@@ -18,7 +18,7 @@ import { SCOOTERS } from "@webclient/lib/scooters";
 import { VINFAST_ACCESSORIES } from "@webclient/lib/vinfast-accessories";
 import { getCarDetail } from "@webclient/lib/car-details";
 import { getScooterDetail } from "@webclient/lib/scooter-details";
-import type { MediaImage } from "@/lib/media-library";
+import type { MediaImage, NewsArticleMediaRef } from "@/lib/media-library";
 import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
 
 async function fetchVehicles(type: "car" | "scooter") {
@@ -174,6 +174,28 @@ export async function getAdminMediaAssetsByFolder(): Promise<Map<string, MediaIm
   return map;
 }
 
+export async function getAdminNewsArticlesForMedia(): Promise<NewsArticleMediaRef[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("news_articles")
+      .select("id, slug, title, cover_image_url")
+      .order("updated_at", { ascending: false });
+    if (error) throw error;
+
+    return (data ?? []).map((row) => ({
+      id: row.id,
+      slug: row.slug,
+      title: row.title,
+      coverImageUrl: row.cover_image_url,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export type AdminDashboardStats = {
   carCount: number;
   scooterCount: number;
@@ -201,14 +223,15 @@ export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
 export const getAdminMediaFolders = unstable_cache(
   async () => {
     const { buildMediaFolders } = await import("@/lib/media-library");
-    const [cars, scooters, accessories, galleries, mediaAssets] = await Promise.all([
+    const [cars, scooters, accessories, galleries, mediaAssets, newsArticles] = await Promise.all([
       getAdminCars(),
       getAdminScooters(),
       getAdminAccessories(),
       getAdminVehicleGalleries(),
       getAdminMediaAssetsByFolder(),
+      getAdminNewsArticlesForMedia(),
     ]);
-    return buildMediaFolders(cars, scooters, accessories, galleries, mediaAssets);
+    return buildMediaFolders(cars, scooters, accessories, galleries, mediaAssets, newsArticles);
   },
   ["admin-cms-media-folders"],
   { revalidate: 60, tags: [ADMIN_MEDIA_CACHE_TAG] },

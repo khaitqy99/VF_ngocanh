@@ -28,7 +28,7 @@ export function HomeAccessoryPicker() {
     : (available[0]?.id ?? "");
 
   const addSelected = (id: string) => {
-    if (!id || selected.includes(id)) return;
+    if (!id || selected.includes(id) || selected.length >= 4) return;
     edit.setFeaturedAccessoryIds([...selected, id]);
   };
 
@@ -53,11 +53,11 @@ export function HomeAccessoryPicker() {
         <p className="text-[11px] font-semibold text-brand-dark">
           Phụ kiện hiển thị
           <span className="ml-2 font-normal text-slate-500">
-            — chọn tối đa 8 sản phẩm, kéo thả sắp xếp
+            — chọn tối đa 4 sản phẩm, kéo thả sắp xếp
           </span>
         </p>
         <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-bold text-brand">
-          {selected.length} / 8
+          {selected.length} / 4
         </span>
       </div>
 
@@ -67,11 +67,11 @@ export function HomeAccessoryPicker() {
           <select
             value={effectivePickId}
             onChange={(event) => setPickId(event.target.value)}
-            disabled={available.length === 0 || selected.length >= 8}
+            disabled={available.length === 0 || selected.length >= 4}
             className={`${adminFormInput} min-w-0 flex-1 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50`}
           >
             {available.length === 0 ? (
-              <option value="">Đã chọn hết hoặc đủ 8 sản phẩm</option>
+              <option value="">Đã chọn hết hoặc đủ 4 sản phẩm</option>
             ) : (
               available.map((option) => (
                 <option key={option.id} value={option.id}>
@@ -83,7 +83,7 @@ export function HomeAccessoryPicker() {
           <button
             type="button"
             onClick={() => effectivePickId && addSelected(effectivePickId)}
-            disabled={!effectivePickId || selected.length >= 8}
+            disabled={!effectivePickId || selected.length >= 4}
             className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-brand px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-[#0046cc] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Plus className="size-3.5" />
@@ -138,7 +138,7 @@ export function HomeAccessoryPicker() {
         </ul>
       ) : (
         <p className="mt-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] text-slate-500">
-          Chưa chọn phụ kiện nào. Mặc định sẽ lấy 8 sản phẩm đầu danh mục.
+          Chưa chọn phụ kiện nào. Mặc định sẽ lấy 4 sản phẩm đầu danh mục.
         </p>
       )}
     </div>
