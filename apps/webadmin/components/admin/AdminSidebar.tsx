@@ -3,13 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home, FileText, PanelBottom, Calculator, Newspaper } from "lucide-react";
+import { Car, Bike, Wrench, Users, UserCog, Images, LogOut, Menu, Search, Home, FileText, PanelBottom, Calculator, Newspaper, LayoutDashboard } from "lucide-react";
 import { cn, Button } from "@/components/ui/core";
 import { useLeadsCounts } from "@/lib/use-leads-count";
 import { IMAGES } from "@webclient/lib/images";
 import { clientAssetUrl } from "@/lib/product-utils";
 
 const MENU_ITEMS = [
+  { href: "/admin", label: "Tổng quan", icon: LayoutDashboard },
   { href: "/admin/homepage", label: "Trang chủ", icon: Home },
   { href: "/admin/pages", label: "Nội dung trang", icon: FileText },
   { href: "/admin/posts", label: "Tin tức", icon: Newspaper },
@@ -34,8 +35,10 @@ export function AdminSidebar({
   const pathname = usePathname();
   const { new: newLeads } = useLeadsCounts();
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+  const isActive = (href: string) => {
+    if (href === "/admin") return pathname === "/admin";
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   return (
     <aside
