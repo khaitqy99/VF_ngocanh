@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { getAdminRole } from "@vinfast3s/supabase/middleware";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
-import { getSessionAdmin } from "@/lib/auth";
+import { requireSuperAdmin } from "@/lib/auth";
 import { mapAuthUser } from "@/lib/auth-users";
 
 function validatePassword(password: string): string | null {
@@ -19,9 +19,9 @@ export async function PATCH(
     return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
   }
 
-  const session = await getSessionAdmin();
+  const session = await requireSuperAdmin();
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Chỉ super admin mới quản lý tài khoản" }, { status: 403 });
   }
 
   const { id } = await params;
@@ -58,6 +58,7 @@ export async function PATCH(
   const authUpdate: {
     password?: string;
     ban_duration?: string;
+    email_confirm?: boolean;
   } = {};
 
   if (hasPassword) {
@@ -68,6 +69,7 @@ export async function PATCH(
     }
 
     authUpdate.password = password;
+    authUpdate.email_confirm = true;
   }
 
   if (hasBlocked) {
@@ -113,9 +115,9 @@ export async function DELETE(
     return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
   }
 
-  const session = await getSessionAdmin();
+  const session = await requireSuperAdmin();
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Chỉ super admin mới quản lý tài khoản" }, { status: 403 });
   }
 
   const { id } = await params;

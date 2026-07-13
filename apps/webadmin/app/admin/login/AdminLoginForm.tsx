@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@vinfast3s/supabase/client";
+import { translateAuthError } from "@/lib/auth-errors";
 import { Button, Input, Card, CardContent, CardHeader, CardTitle } from "@/components/ui/core";
 
 export default function AdminLoginForm() {
@@ -25,13 +26,14 @@ export default function AdminLoginForm() {
 
     try {
       const supabase = createBrowserClient();
+      const normalizedEmail = email.trim().toLowerCase();
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
+        email: normalizedEmail,
         password,
       });
 
       if (signInError) {
-        setError(signInError.message);
+        setError(translateAuthError(signInError.message));
         return;
       }
 

@@ -22,7 +22,7 @@ export function formatUserDate(iso: string | null): string {
 }
 
 export async function fetchAdminUsers(): Promise<{ users: AdminUser[]; configured: boolean }> {
-  const response = await fetch("/api/users", { cache: "no-store" });
+  const response = await fetch("/api/users", { cache: "no-store", credentials: "include" });
   if (!response.ok) {
     throw new Error("Không tải được danh sách tài khoản");
   }
@@ -39,6 +39,7 @@ export async function createAdminUser(input: CreateAdminUserInput): Promise<Admi
   const response = await fetch("/api/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(input),
   });
 
@@ -50,7 +51,7 @@ export async function createAdminUser(input: CreateAdminUserInput): Promise<Admi
 }
 
 export async function deleteAdminUser(id: string): Promise<void> {
-  const response = await fetch(`/api/users/${id}`, { method: "DELETE" });
+  const response = await fetch(`/api/users/${id}`, { method: "DELETE", credentials: "include" });
   const data = await response.json();
   if (!response.ok) {
     throw new Error(data.error ?? "Không xóa được tài khoản");
@@ -64,7 +65,7 @@ export type SessionAdmin = {
 };
 
 export async function fetchSessionAdmin(): Promise<SessionAdmin | null> {
-  const response = await fetch("/api/users/me", { cache: "no-store" });
+  const response = await fetch("/api/users/me", { cache: "no-store", credentials: "include" });
   if (!response.ok) return null;
   const data = await response.json();
   return data.user ?? null;
@@ -86,6 +87,7 @@ export async function updateAdminUser(
   const response = await fetch(`/api/users/${userId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(input),
   });
   const data = await response.json();

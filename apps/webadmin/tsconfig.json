@@ -23,6 +23,8 @@
       "@/lib/cms": ["./lib/cms.ts"],
       "@/lib/auth": ["./lib/auth.ts"],
       "@/lib/auth-users": ["./lib/auth-users.ts"],
+      "@/lib/auth-errors": ["./lib/auth-errors.ts"],
+      "@/lib/admin-auth-provision": ["./lib/admin-auth-provision.ts"],
       "@/lib/format": ["./lib/format.ts"],
       "@/lib/leads": ["./lib/leads.ts"],
       "@/lib/use-leads-count": ["./lib/use-leads-count.ts"],
