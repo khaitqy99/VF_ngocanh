@@ -1,9 +1,9 @@
 import { DashboardClient } from "@/components/admin/DashboardClient";
-import { getAdminDashboardStats } from "@/lib/cms-data";
+import { getDashboardOverview } from "@/lib/cms-data";
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 export default async function DashboardPage() {
-  const stats = await getAdminDashboardStats();
-  return <DashboardClient stats={stats} />;
+  const overview = await getDashboardOverview();
+  return <DashboardClient overview={overview} />;
 }

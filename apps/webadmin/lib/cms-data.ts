@@ -16,7 +16,14 @@ export {
   getAdminCarDetail,
   getAdminScooterDetail,
   getAdminAccessoryById,
-  getAdminDashboardStats,
   getAdminMediaFolders,
   type AdminDashboardStats,
 } from "@/lib/cms";
+
+export {
+  getDashboardOverview,
+  getAdminDashboardStats,
+  type DashboardOverview,
+  type DashboardLeadSummary,
+  type DashboardRecentLead,
+} from "./dashboard-stats";

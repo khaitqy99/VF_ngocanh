@@ -38,6 +38,7 @@
       "@/lib/product-utils": ["./lib/product-utils.ts"],
       "@/lib/revalidate-webclient": ["./lib/revalidate-webclient.ts"],
       "@/lib/warm-webclient-cache": ["./lib/warm-webclient-cache.ts"],
+      "@/lib/dashboard-stats": ["./lib/dashboard-stats.ts"],
       "@/lib/seo-revalidate": ["./lib/seo-revalidate.ts"],
       "@/lib/footer-revalidate": ["./lib/footer-revalidate.ts"],
       "@/lib/car-pricing-revalidate": ["./lib/car-pricing-revalidate.ts"],

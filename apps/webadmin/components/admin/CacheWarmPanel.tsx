@@ -76,51 +76,52 @@ export function CacheWarmPanel() {
   }
 
   const ready = config?.ready ?? false;
+  const statusLabel = loadingConfig ? "…" : ready ? "Sẵn sàng" : "Chưa OK";
+  const siteHost = config?.siteUrl?.replace(/^https?:\/\//, "") ?? null;
+  const isLocalSite =
+    siteHost != null &&
+    (siteHost.startsWith("localhost") || siteHost.startsWith("127.0.0.1"));
+  const sub = lastResult?.ok
+    ? formatWarmSummary(lastResult)
+    : siteHost
+      ? isLocalSite
+        ? `Dev · ${siteHost}`
+        : siteHost
+      : "Preload CMS lên Redis";
 
   return (
-    <Card className="border-sky-200 bg-sky-50/40">
-      <CardContent className="flex flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex gap-3">
-          <div className="rounded-lg bg-sky-100 p-2">
-            <Database className="h-5 w-5 text-sky-700" />
+    <Card className="h-full transition-shadow hover:shadow-md">
+      <CardContent className="flex h-full flex-col gap-3 p-5">
+        <div className="flex items-start justify-between">
+          <div className="rounded-lg bg-sky-50 p-2">
+            <Database className="h-5 w-5 text-sky-600" />
           </div>
-          <div className="min-w-0">
-            <p className="font-semibold text-sky-950">Cache Redis website</p>
-            <p className="mt-1 text-sm text-sky-900/80">
-              {loadingConfig
-                ? "Đang kiểm tra cấu hình..."
-                : ready
-                  ? "Preload toàn bộ dữ liệu CMS (sản phẩm, trang, SEO, tin tức…) lên Redis sau deploy hoặc khi cần làm mới."
-                  : "Chưa sẵn sàng — cần NEXT_PUBLIC_SITE_URL và REVALIDATION_SECRET trên webadmin. Redis URL cấu hình trên webclient (Vercel)."}
-            </p>
-            {config?.siteUrl ? (
-              <p className="mt-1 truncate text-xs text-sky-800/70">Website: {config.siteUrl}</p>
-            ) : null}
-            {lastResult?.ok ? (
-              <p className="mt-2 text-xs font-medium text-emerald-800">
-                Lần gần nhất: {formatWarmSummary(lastResult)}
-                {lastResult.redisDeletedKeys != null
-                  ? ` · đã xóa ${lastResult.redisDeletedKeys} key cũ`
-                  : ""}
-              </p>
-            ) : lastResult?.error ? (
-              <p className="mt-2 text-xs font-medium text-red-700">{lastResult.error}</p>
-            ) : null}
-          </div>
+          <span
+            className={`text-sm font-bold ${ready ? "text-emerald-600" : "text-amber-600"}`}
+          >
+            {statusLabel}
+          </span>
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="font-semibold text-zinc-900">Cache Redis</p>
+          <p className="mt-0.5 truncate text-xs text-zinc-500" title={sub}>
+            {sub}
+          </p>
         </div>
 
         <Button
           type="button"
           onClick={handleWarm}
           disabled={!ready || warming || loadingConfig}
-          className="shrink-0"
+          className="h-8 w-full text-xs"
         >
           {warming ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
           ) : (
-            <RefreshCw className="mr-2 h-4 w-4" />
+            <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
           )}
-          {warming ? "Đang warm cache..." : "Làm mới cache Redis"}
+          {warming ? "Đang warm..." : "Làm mới cache"}
         </Button>
       </CardContent>
     </Card>
