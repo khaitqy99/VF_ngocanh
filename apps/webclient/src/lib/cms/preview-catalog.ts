@@ -1,8 +1,8 @@
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
-import { CARS, type CarModel } from "@/lib/cars";
-import { SCOOTERS, type ScooterModel } from "@/lib/scooters";
-import { ACCESSORIES, type AccessoryProduct } from "@/lib/accessories";
+import type { CarModel } from "@/lib/cars";
+import type { ScooterModel } from "@/lib/scooters";
+import type { AccessoryProduct } from "@/lib/accessories";
 import type { CarDetail } from "@/lib/car-details";
 import type { ScooterDetail } from "@/lib/scooter-details";
 import { resolveProductSlug } from "@/lib/seo/slugs";
@@ -37,10 +37,10 @@ export async function getCarsForAdminPreview(includeDraft: boolean): Promise<Car
       .eq("type", "car")
       .order("sort_order", { ascending: true });
     if (error) throw error;
-    if (!data?.length) return CARS;
-    return data.map(mapVehicleToCar);
-  } catch {
-    return getCars();
+    return (data ?? []).map(mapVehicleToCar);
+  } catch (error) {
+    console.error("[preview-catalog/cars] fetch failed:", error);
+    return [];
   }
 }
 
@@ -55,10 +55,10 @@ export async function getScootersForAdminPreview(includeDraft: boolean): Promise
       .eq("type", "scooter")
       .order("sort_order", { ascending: true });
     if (error) throw error;
-    if (!data?.length) return SCOOTERS;
-    return data.map(mapVehicleToScooter);
-  } catch {
-    return getScooters();
+    return (data ?? []).map(mapVehicleToScooter);
+  } catch (error) {
+    console.error("[preview-catalog/scooters] fetch failed:", error);
+    return [];
   }
 }
 
@@ -74,10 +74,10 @@ export async function getAccessoriesForAdminPreview(
       .select("*")
       .order("sort_order", { ascending: true });
     if (error) throw error;
-    if (!data?.length) return ACCESSORIES;
-    return data.map(mapAccessoryRow);
-  } catch {
-    return getAccessories();
+    return (data ?? []).map(mapAccessoryRow);
+  } catch (error) {
+    console.error("[preview-catalog/accessories] fetch failed:", error);
+    return [];
   }
 }
 
@@ -94,8 +94,9 @@ export async function getCarDetailBySlugForAdminPreview(
     const row = data?.find((item) => matchesSlug(item, slug));
     if (!row) return undefined;
     return mapVehicleToCarDetail(row);
-  } catch {
-    return getCarDetailBySlug(slug);
+  } catch (error) {
+    console.error(`[preview-catalog/car-detail] fetch failed for ${slug}:`, error);
+    return undefined;
   }
 }
 
@@ -112,8 +113,9 @@ export async function getScooterDetailBySlugForAdminPreview(
     const row = data?.find((item) => matchesSlug(item, slug));
     if (!row) return undefined;
     return mapVehicleToScooterDetail(row);
-  } catch {
-    return getScooterDetailBySlug(slug);
+  } catch (error) {
+    console.error(`[preview-catalog/scooter-detail] fetch failed for ${slug}:`, error);
+    return undefined;
   }
 }
 
@@ -132,7 +134,8 @@ export async function getAccessoryForAdminPreview(
       .find(
         (item) => resolveProductSlug(item, "accessory", item.name) === slug || item.id === slug,
       );
-  } catch {
-    return getAccessoryBySlugOrId(slug);
+  } catch (error) {
+    console.error(`[preview-catalog/accessory] fetch failed for ${slug}:`, error);
+    return undefined;
   }
 }

@@ -91,6 +91,7 @@ import {
 } from "@/lib/detail-motion";
 import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
@@ -212,6 +213,7 @@ export default function ScooterDetailPage({
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState("Đăng ký lái thử");
   const [bookingForm, setBookingForm] = useState({ name: "", phone: "", email: "" });
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
   const thumbStripRef = useRef<HTMLDivElement>(null);
@@ -401,14 +403,35 @@ export default function ScooterDetailPage({
     setBookingOpen(true);
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookingForm.name || !bookingForm.phone) {
       toast.error("Vui lòng nhập họ tên và số điện thoại");
       return;
     }
-    setBookingSubmitted(true);
-    toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm nhất.");
+
+    setBookingSubmitting(true);
+    try {
+      await submitLead({
+        fullName: bookingForm.name.trim(),
+        phone: bookingForm.phone.trim(),
+        email: bookingForm.email.trim() || undefined,
+        service: bookingService,
+        type: "purchase",
+        vehicleInterest: detail.name,
+        message: formatLeadMessage({
+          "Dịch vụ": bookingService,
+          "Mẫu xe": detail.name,
+          "Phiên bản": variant.name,
+        }),
+      });
+      setBookingSubmitted(true);
+      toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm nhất.");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setBookingSubmitting(false);
+    }
   };
 
   return (
@@ -1061,8 +1084,8 @@ export default function ScooterDetailPage({
                     />
                   </div>
 
-                  <button type="submit" className={pdpCtaPrimary}>
-                    GỬI YÊU CẦU
+                  <button type="submit" disabled={bookingSubmitting} className={pdpCtaPrimary}>
+                    {bookingSubmitting ? "Đang gửi..." : "GỬI YÊU CẦU"}
                   </button>
                 </form>
               )}

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
 
 import { useModalMotion } from "@/hooks/use-modal-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import {
   Battery,
   BatteryCharging,
@@ -153,6 +154,7 @@ export default function ChargingPage({
 
   const [selectedProduct, setSelectedProduct] = useState<(typeof chargingProducts)[0] | null>(null);
   const [isInquirySuccess, setIsInquirySuccess] = useState(false);
+  const [inquirySubmitting, setInquirySubmitting] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
     name: "",
     phone: "",
@@ -221,14 +223,37 @@ export default function ChargingPage({
     };
   }, [simCurrentPct, simTargetPct, activeCar, activeCharger]);
 
-  const handleInquirySubmit = (e: React.FormEvent) => {
+  const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inquiryForm.name || !inquiryForm.phone) {
       toast.error("Vui lòng nhập Họ tên và Số điện thoại liên hệ");
       return;
     }
-    setIsInquirySuccess(true);
-    toast.success("Gửi yêu cầu thành công! Cố vấn sẽ liên hệ lại ngay.");
+
+    setInquirySubmitting(true);
+    try {
+      const productLabel = selectedProduct?.name;
+      await submitLead({
+        fullName: inquiryForm.name.trim(),
+        phone: inquiryForm.phone.trim(),
+        email: inquiryForm.email.trim() || undefined,
+        service: "Tư vấn trạm sạc",
+        vehicleInterest: inquiryForm.carModel,
+        message: formatLeadMessage({
+          "Sản phẩm quan tâm": productLabel,
+          "Mẫu xe": inquiryForm.carModel,
+          "Địa chỉ": inquiryForm.address,
+          "Hình thức nhận": inquiryForm.receiveType === "home" ? "Lắp tại nhà" : "Tại showroom",
+          "Ghi chú": inquiryForm.note,
+        }),
+      });
+      setIsInquirySuccess(true);
+      toast.success("Gửi yêu cầu thành công! Cố vấn sẽ liên hệ lại ngay.");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setInquirySubmitting(false);
+    }
   };
 
   return (
@@ -683,9 +708,11 @@ export default function ChargingPage({
 
                       <button
                         type="submit"
-                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-2"
+                        disabled={inquirySubmitting}
+                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-2 disabled:opacity-60"
                       >
-                        <ShoppingCart className="size-4" /> GỬI YÊU CẦU ĐẶT HẸN TƯ VẤN
+                        <ShoppingCart className="size-4" />{" "}
+                        {inquirySubmitting ? "Đang gửi..." : "GỬI YÊU CẦU ĐẶT HẸN TƯ VẤN"}
                       </button>
                     </form>
                   )}

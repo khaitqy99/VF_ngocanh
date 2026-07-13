@@ -31,12 +31,14 @@ async function main() {
   console.log("Đang warm Redis cache cho toàn bộ dữ liệu CMS...");
   const result = await warmCmsRedisCache();
   console.log("✅ Hoàn tất warm cache:");
-  console.log(`   • Xe (ô tô + xe máy): ${result.vehicles}`);
+  console.log(`   • Ô tô: ${result.cars} · Xe máy: ${result.scooters}`);
+  console.log(`   • PDP xe: ${result.vehicleDetails}`);
   console.log(`   • Phụ kiện: ${result.accessories}`);
   console.log(`   • Banner: ${result.banners} vị trí`);
-  console.log(`   • Trang tĩnh: ${result.staticPages}`);
+  console.log(`   • Trang tĩnh + trang chủ: ${result.staticPages}`);
   console.log(`   • SEO trang: ${result.pageSeo}`);
-  console.log(`   • Tin tức: đã cache danh sách`);
+  console.log(`   • Tin tức: ${result.newsArticles} bài`);
+  console.log(`   • Cài đặt (footer/seo/giá): ${result.settings}`);
   console.log(`   • Tổng key Redis (cms:*): ${result.redisKeys}`);
 }
 

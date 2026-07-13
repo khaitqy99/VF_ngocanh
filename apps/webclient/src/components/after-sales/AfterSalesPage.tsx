@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
 
 import { useModalMotion } from "@/hooks/use-modal-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import {
   Wrench,
   Shield,
@@ -145,6 +146,7 @@ export default function AfterSalesPage({
   const modalMotion = useModalMotion();
   // Booking Service State
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: "",
     phone: "",
@@ -156,14 +158,36 @@ export default function AfterSalesPage({
     note: "",
   });
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookingForm.name || !bookingForm.phone) {
       toast.error("Vui lòng điền Họ tên và Số điện thoại liên hệ");
       return;
     }
-    setIsSubmitSuccess(true);
-    toast.success("Đặt lịch bảo dưỡng thành công!");
+
+    setBookingSubmitting(true);
+    try {
+      await submitLead({
+        fullName: bookingForm.name.trim(),
+        phone: bookingForm.phone.trim(),
+        type: "service",
+        service: bookingForm.serviceType,
+        vehicleInterest: bookingForm.vehicleModel,
+        message: formatLeadMessage({
+          "Dịch vụ": bookingForm.serviceType,
+          "Biển số": bookingForm.licensePlate,
+          Xe: bookingForm.vehicleModel,
+          "Lịch hẹn": bookingForm.date ? `${bookingForm.time} ngày ${bookingForm.date}` : undefined,
+          "Ghi chú": bookingForm.note,
+        }),
+      });
+      setIsSubmitSuccess(true);
+      toast.success("Đặt lịch bảo dưỡng thành công!");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setBookingSubmitting(false);
+    }
   };
 
   return (
@@ -471,9 +495,11 @@ export default function AfterSalesPage({
 
                         <button
                           type="submit"
-                          className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2"
+                          disabled={bookingSubmitting}
+                          className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-4 flex items-center justify-center gap-2 disabled:opacity-60"
                         >
-                          <Calendar className="size-4" /> GỬI YÊU CẦU ĐẶT HẸN DỊCH VỤ
+                          <Calendar className="size-4" />{" "}
+                          {bookingSubmitting ? "Đang gửi..." : "GỬI YÊU CẦU ĐẶT HẸN DỊCH VỤ"}
                         </button>
                       </form>
                     )}

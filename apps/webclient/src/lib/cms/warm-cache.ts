@@ -4,8 +4,10 @@ import { STATIC_PAGE_SEO } from "@/lib/seo/types";
 import {
   fetchAccessoriesRows,
   fetchBannersByPlacement,
+  fetchCarDetailMapped,
   fetchCmsPageContent,
   fetchHomePage,
+  fetchScooterDetailMapped,
   fetchVehicleById,
   fetchVehiclesByType,
 } from "./index";
@@ -30,12 +32,16 @@ const BANNER_PLACEMENTS: BannerPlacement[] = [
 const STATIC_PAGE_SLUGS: StaticPageSlug[] = ["about", "after-sales", "charging", "energy"];
 
 export type WarmCmsRedisResult = {
+  cars: number;
+  scooters: number;
   vehicles: number;
+  vehicleDetails: number;
   accessories: number;
   banners: number;
   staticPages: number;
   pageSeo: number;
-  news: number;
+  newsArticles: number;
+  settings: number;
   redisKeys: number;
 };
 
@@ -66,32 +72,44 @@ export async function warmCmsRedisCache(): Promise<WarmCmsRedisResult> {
     fetchAccessoriesRows(),
   ]);
 
+  const newsArticles = await fetchPublishedNews();
+
   await Promise.all([
     fetchHomePage(),
     fetchFooterSettingsRow(),
     fetchSiteSeoRow(),
     fetchCarPricingRow(),
-    fetchPublishedNews(),
     ...BANNER_PLACEMENTS.map((placement) => fetchBannersByPlacement(placement)),
     ...STATIC_PAGE_SLUGS.map((slug) => fetchCmsPageContent(slug)),
     ...STATIC_PAGE_SEO.map((page) => fetchPageSeoRow(page.slug)),
   ]);
 
-  const vehicleIds = [...carRows, ...scooterRows].map((row) => row.id);
+  const vehicleRows = [...carRows, ...scooterRows];
+  const vehicleIds = vehicleRows.map((row) => row.id);
 
-  await Promise.all(vehicleIds.flatMap((id) => [fetchVehicleById(id), fetchVehicleSeoRow(id)]));
+  await Promise.all(
+    vehicleRows.flatMap((row) => {
+      const detailWarm =
+        row.type === "car" ? fetchCarDetailMapped(row.id) : fetchScooterDetailMapped(row.id);
+      return [fetchVehicleById(row.id), fetchVehicleSeoRow(row.id), detailWarm];
+    }),
+  );
 
   await Promise.all(accessoryRows.map((row) => fetchAccessorySeoRow(row.id)));
 
   const redisKeys = await countRedisCmsKeys();
 
   return {
+    cars: carRows.length,
+    scooters: scooterRows.length,
     vehicles: vehicleIds.length,
+    vehicleDetails: vehicleIds.length,
     accessories: accessoryRows.length,
     banners: BANNER_PLACEMENTS.length,
-    staticPages: STATIC_PAGE_SLUGS.length,
+    staticPages: STATIC_PAGE_SLUGS.length + 1,
     pageSeo: STATIC_PAGE_SEO.length,
-    news: 1,
+    newsArticles: newsArticles.length,
+    settings: 3,
     redisKeys,
   };
 }

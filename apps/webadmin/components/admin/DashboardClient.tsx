@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Car, Bike, Wrench, Users, Images, ChevronRight, AlertCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
+import { CacheWarmPanel } from "@/components/admin/CacheWarmPanel";
 import type { AdminDashboardStats } from "@/lib/cms-data";
 import { useLeadsCounts } from "@/lib/use-leads-count";
 
@@ -105,6 +106,8 @@ export function DashboardClient({ stats }: { stats: AdminDashboardStats }) {
           </CardContent>
         </Card>
       ) : null}
+
+      <CacheWarmPanel />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {links.map((item) => {

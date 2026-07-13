@@ -31,16 +31,24 @@ export async function POST(request: Request) {
 
   const fullName = String(body.fullName ?? body.full_name ?? "").trim();
   const phone = String(body.phone ?? "").trim();
+  const email = typeof body.email === "string" ? body.email.trim() : "";
 
-  if (!fullName || !phone) {
-    return NextResponse.json({ error: "Họ tên và số điện thoại là bắt buộc" }, { status: 400 });
+  if (!fullName) {
+    return NextResponse.json({ error: "Họ tên là bắt buộc" }, { status: 400 });
+  }
+
+  if (!phone && !email) {
+    return NextResponse.json(
+      { error: "Cần ít nhất số điện thoại hoặc email liên hệ" },
+      { status: 400 },
+    );
   }
 
   const service = typeof body.service === "string" ? body.service : undefined;
   const input: CreateLeadInput = {
     fullName,
-    phone,
-    email: typeof body.email === "string" ? body.email : undefined,
+    phone: phone || email,
+    email: email || undefined,
     type:
       (body.type as CreateLeadInput["type"]) ??
       (service ? SERVICE_TO_LEAD_TYPE[service] : undefined) ??

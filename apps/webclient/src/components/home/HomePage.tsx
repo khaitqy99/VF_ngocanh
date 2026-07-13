@@ -29,6 +29,7 @@ import { vfCardTitle, vfSectionHeadingLeft, vfSlideTitle } from "@/lib/typograph
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
+import { submitLead, SubmitLeadError } from "@/lib/submit-lead";
 
 import { HomeHero } from "./HomeHero";
 import { HomeNewsSection } from "./HomeNewsSection";
@@ -1189,6 +1190,7 @@ function ShowroomCommunity({ section }: { section: HomeSectionsContent["showroom
 function Newsletter({ section }: { section: HomeSectionsContent["newsletter"] }) {
   const edit = useHomeAdminEdit();
   const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { ref, reduced, initial, animate } = useSectionReveal(homeViewport);
 
   return (
@@ -1259,10 +1261,29 @@ function Newsletter({ section }: { section: HomeSectionsContent["newsletter"] })
           </motion.p>
           <motion.form
             variants={reduced ? undefined : homeNewsletterChild}
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              toast.success("Đăng ký thành công. Chúng tôi sẽ liên hệ sớm.");
-              setEmail("");
+              if (!email.trim()) {
+                toast.error("Vui lòng nhập email");
+                return;
+              }
+
+              setSubmitting(true);
+              try {
+                await submitLead({
+                  fullName: "Đăng ký nhận tin",
+                  email: email.trim(),
+                  phone: email.trim(),
+                  service: "Đăng ký nhận tin",
+                  message: `Email đăng ký nhận tin: ${email.trim()}`,
+                });
+                toast.success("Đăng ký thành công. Chúng tôi sẽ liên hệ sớm.");
+                setEmail("");
+              } catch (error) {
+                toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+              } finally {
+                setSubmitting(false);
+              }
             }}
             className="mt-4"
           >
@@ -1291,7 +1312,8 @@ function Newsletter({ section }: { section: HomeSectionsContent["newsletter"] })
               )}
               <MotionButton
                 type="submit"
-                className="mt-2.5 h-12 w-full bg-brand text-xs font-bold leading-[15px] text-white transition hover:bg-[#0046cc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:absolute md:right-0 md:top-1/2 md:mt-0 md:w-[200px] md:-translate-y-1/2"
+                disabled={submitting}
+                className="mt-2.5 h-12 w-full bg-brand text-xs font-bold leading-[15px] text-white transition hover:bg-[#0046cc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:absolute md:right-0 md:top-1/2 md:mt-0 md:w-[200px] md:-translate-y-1/2 disabled:opacity-60"
               >
                 {edit?.editMode ? (
                   <HomeEditableText

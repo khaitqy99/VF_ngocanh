@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { useModalMotion } from "@/hooks/use-modal-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 
 export type ShowroomBookingModalProps = {
   open: boolean;
@@ -49,28 +50,22 @@ export function ShowroomBookingModal({
 
     setSubmitting(true);
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: form.name.trim(),
-          phone: form.phone.trim(),
-          email: form.email.trim() || undefined,
-          service: bookingService,
-          vehicleName,
-          source: "website",
+      await submitLead({
+        fullName: form.name.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim() || undefined,
+        service: bookingService,
+        vehicleInterest: vehicleName,
+        message: formatLeadMessage({
+          "Dịch vụ": bookingService,
+          "Xe quan tâm": vehicleName,
         }),
       });
-
-      if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(data?.error ?? "Gửi thất bại");
-      }
 
       setSubmitted(true);
       toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm nhất.");
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Gửi thất bại";
+      const message = error instanceof SubmitLeadError ? error.message : "Gửi thất bại";
       toast.error(message);
     } finally {
       setSubmitting(false);

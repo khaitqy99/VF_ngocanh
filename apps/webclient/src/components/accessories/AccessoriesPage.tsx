@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
 
 import { useModalMotion } from "@/hooks/use-modal-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import {
   Shield,
   Wrench,
@@ -187,6 +188,7 @@ export default function AccessoriesPage({
   const [cart, setCart] = useState<AccessoryProduct[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
+  const [checkoutSubmitting, setCheckoutSubmitting] = useState(false);
   const [checkoutForm, setCheckoutForm] = useState({
     name: "",
     phone: "",
@@ -239,14 +241,36 @@ export default function AccessoriesPage({
   };
 
   // Handle Checkout/Quote Submission
-  const handleCheckout = (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!checkoutForm.name || !checkoutForm.phone) {
       toast.error("Vui lòng điền Họ tên và Số điện thoại liên hệ");
       return;
     }
-    setIsCheckoutSuccess(true);
-    toast.success("Gửi yêu cầu báo giá thành công!");
+
+    setCheckoutSubmitting(true);
+    try {
+      await submitLead({
+        fullName: checkoutForm.name.trim(),
+        phone: checkoutForm.phone.trim(),
+        type: "accessory",
+        service: "Tư vấn phụ kiện",
+        vehicleInterest: cart.map((item) => item.name).join(", "),
+        message: formatLeadMessage({
+          "Sản phẩm": cart.map((item) => `${item.name} (${item.id})`).join("; "),
+          "Hình thức nhận": checkoutForm.deliveryMethod === "home" ? "Lắp tại nhà" : "Tại showroom",
+          "Địa chỉ": checkoutForm.address,
+          "Ghi chú": checkoutForm.note,
+        }),
+      });
+      setIsCheckoutSuccess(true);
+      clearCart();
+      toast.success("Gửi yêu cầu báo giá thành công!");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setCheckoutSubmitting(false);
+    }
   };
 
   // Filter products based on sidebar filters + top tab + search query
@@ -786,9 +810,11 @@ export default function AccessoriesPage({
 
                         <button
                           type="submit"
-                          className="home-cta-primary mt-4 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs font-semibold tracking-wide text-white transition hover:bg-[#0046cc] shadow-md"
+                          disabled={checkoutSubmitting}
+                          className="home-cta-primary mt-4 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs font-semibold tracking-wide text-white transition hover:bg-[#0046cc] shadow-md disabled:opacity-60"
                         >
-                          <Calendar className="size-4" /> GỬI YÊU CẦU BÁO GIÁ LẮP ĐẶT
+                          <Calendar className="size-4" />{" "}
+                          {checkoutSubmitting ? "Đang gửi..." : "GỬI YÊU CẦU BÁO GIÁ LẮP ĐẶT"}
                         </button>
                       </form>
                     </div>

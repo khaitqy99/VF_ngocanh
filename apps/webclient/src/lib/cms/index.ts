@@ -8,6 +8,8 @@ import { SCOOTERS } from "@/lib/scooters";
 import { ACCESSORIES, type AccessoryProduct } from "@/lib/accessories";
 import { getCarDetail } from "@/lib/car-details";
 import { getScooterDetail } from "@/lib/scooter-details";
+import type { CarDetail } from "@/lib/car-details";
+import type { ScooterDetail } from "@/lib/scooter-details";
 import {
   CAR_HERO_BANNERS,
   SCOOTER_HERO_BANNERS,
@@ -31,7 +33,6 @@ import {
   mapVehicleToScooter,
   mapVehicleToScooterDetail,
   parseHomeCms,
-  applyVehicleContentPatches,
   hydrateFeaturedVehicleSlides,
   buildFeaturedSlidesFromIds,
   applyFeaturedPriceOverrides,
@@ -98,6 +99,22 @@ export async function fetchVehicleById(id: string): Promise<Tables<"vehicles"> |
   });
 }
 
+export async function fetchCarDetailMapped(id: string): Promise<CarDetail | undefined> {
+  return getOrSetCache(`cms:vehicle-detail:car:${id}`, cmsRedisTtl(), async () => {
+    const row = await fetchVehicleById(id);
+    if (!row || row.type !== "car") return undefined;
+    return mapVehicleToCarDetail(row);
+  });
+}
+
+export async function fetchScooterDetailMapped(id: string): Promise<ScooterDetail | undefined> {
+  return getOrSetCache(`cms:vehicle-detail:scooter:${id}`, cmsRedisTtl(), async () => {
+    const row = await fetchVehicleById(id);
+    if (!row || row.type !== "scooter") return undefined;
+    return mapVehicleToScooterDetail(row);
+  });
+}
+
 export async function fetchAccessoriesRows() {
   return getOrSetCache(`cms:accessories`, cmsRedisTtl(), async () => {
     const supabase = getClient();
@@ -148,10 +165,10 @@ export const getCars = unstable_cache(
     if (!isSupabaseConfigured()) return CARS;
     try {
       const rows = await fetchVehiclesByType("car");
-      if (!rows.length) return CARS;
       return rows.map(mapVehicleToCar);
-    } catch {
-      return CARS;
+    } catch (error) {
+      console.error("[cms/cars] fetch failed:", error);
+      return [];
     }
   },
   ["cms-cars"],
@@ -163,10 +180,10 @@ export const getScooters = unstable_cache(
     if (!isSupabaseConfigured()) return SCOOTERS;
     try {
       const rows = await fetchVehiclesByType("scooter");
-      if (!rows.length) return SCOOTERS;
       return rows.map(mapVehicleToScooter);
-    } catch {
-      return SCOOTERS;
+    } catch (error) {
+      console.error("[cms/scooters] fetch failed:", error);
+      return [];
     }
   },
   ["cms-scooters"],
@@ -178,10 +195,10 @@ export const getAccessories = unstable_cache(
     if (!isSupabaseConfigured()) return ACCESSORIES;
     try {
       const rows = await fetchAccessoriesRows();
-      if (!rows.length) return ACCESSORIES;
       return rows.map(mapAccessoryRow);
-    } catch {
-      return ACCESSORIES;
+    } catch (error) {
+      console.error("[cms/accessories] fetch failed:", error);
+      return [];
     }
   },
   ["cms-accessories"],
@@ -193,15 +210,10 @@ export async function getCarDetailById(id: string) {
     async () => {
       if (!isSupabaseConfigured()) return getCarDetail(id);
       try {
-        const row = await fetchVehicleById(id);
-        if (!row || row.type !== "car") return getCarDetail(id);
-        const mapped = mapVehicleToCarDetail(row);
-        if (mapped) return mapped;
-        const fallback = getCarDetail(id);
-        if (!fallback) return undefined;
-        return applyVehicleContentPatches(fallback, row.content);
-      } catch {
-        return getCarDetail(id);
+        return await fetchCarDetailMapped(id);
+      } catch (error) {
+        console.error(`[cms/car-detail] fetch failed for ${id}:`, error);
+        return undefined;
       }
     },
     ["cms-car-detail", id],
@@ -214,15 +226,10 @@ export async function getScooterDetailById(id: string) {
     async () => {
       if (!isSupabaseConfigured()) return getScooterDetail(id);
       try {
-        const row = await fetchVehicleById(id);
-        if (!row || row.type !== "scooter") return getScooterDetail(id);
-        const mapped = mapVehicleToScooterDetail(row);
-        if (mapped) return mapped;
-        const fallback = getScooterDetail(id);
-        if (!fallback) return undefined;
-        return applyVehicleContentPatches(fallback, row.content);
-      } catch {
-        return getScooterDetail(id);
+        return await fetchScooterDetailMapped(id);
+      } catch (error) {
+        console.error(`[cms/scooter-detail] fetch failed for ${id}:`, error);
+        return undefined;
       }
     },
     ["cms-scooter-detail", id],

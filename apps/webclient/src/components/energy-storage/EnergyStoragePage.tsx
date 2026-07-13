@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "sonner";
 
 import { useModalMotion } from "@/hooks/use-modal-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import {
   Battery,
   Zap,
@@ -96,6 +97,7 @@ export default function EnergyStoragePage({
   const modalMotion = useModalMotion();
   const [isConsultOpen, setIsConsultOpen] = useState(false);
   const [isConsultSuccess, setIsConsultSuccess] = useState(false);
+  const [consultSubmitting, setConsultSubmitting] = useState(false);
 
   // Consulting Form State
   const [consultForm, setConsultForm] = useState({
@@ -135,14 +137,35 @@ export default function EnergyStoragePage({
     };
   }, [calcBill, calcSolar, calcCapacity]);
 
-  const handleConsultSubmit = (e: React.FormEvent) => {
+  const handleConsultSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!consultForm.name || !consultForm.phone) {
       toast.error("Vui lòng điền Họ tên và Số điện thoại liên hệ");
       return;
     }
-    setIsConsultSuccess(true);
-    toast.success("Đăng ký tư vấn giải pháp lưu trữ năng lượng thành công!");
+
+    setConsultSubmitting(true);
+    try {
+      await submitLead({
+        fullName: consultForm.name.trim(),
+        phone: consultForm.phone.trim(),
+        email: consultForm.email.trim() || undefined,
+        service: "Tư vấn lưu trữ năng lượng",
+        message: formatLeadMessage({
+          "Giải pháp": consultForm.solutionType,
+          "Tiền điện/tháng": consultForm.monthlyBill,
+          "Điện mặt trời": consultForm.solarStatus,
+          "Địa chỉ": consultForm.address,
+          "Ghi chú": consultForm.note,
+        }),
+      });
+      setIsConsultSuccess(true);
+      toast.success("Đăng ký tư vấn giải pháp lưu trữ năng lượng thành công!");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setConsultSubmitting(false);
+    }
   };
 
   return (
@@ -581,9 +604,11 @@ export default function EnergyStoragePage({
 
                       <button
                         type="submit"
-                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-2"
+                        disabled={consultSubmitting}
+                        className="w-full bg-brand hover:bg-blue-600 text-white font-extrabold text-xs tracking-wider py-3.5 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-2 disabled:opacity-60"
                       >
-                        <CheckCircle2 className="size-4" /> ĐĂNG KÝ GỬI KHẢO SÁT 3D
+                        <CheckCircle2 className="size-4" />{" "}
+                        {consultSubmitting ? "Đang gửi..." : "ĐĂNG KÝ GỬI KHẢO SÁT 3D"}
                       </button>
                     </form>
                   )}

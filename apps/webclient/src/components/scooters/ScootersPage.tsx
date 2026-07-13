@@ -71,6 +71,7 @@ import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 import { carsBookingStep, carsEstimatorPanel } from "@/lib/cars-motion";
 import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000km" },
@@ -153,6 +154,7 @@ export default function ScootersPage({
   const [bookingScooter, setBookingScooter] = useState<ScooterModel | null>(null);
   const [bookingStep, setBookingStep] = useState(1);
   const [bookingStepDir, setBookingStepDir] = useState(1);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: "",
     phone: "",
@@ -232,15 +234,37 @@ export default function ScootersPage({
     setIsBookingOpen(true);
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookingForm.name || !bookingForm.phone) {
       toast.error("Vui lòng nhập đầy đủ Họ tên và Số điện thoại");
       return;
     }
-    // Advance to success step
-    setBookingStep(4);
-    toast.success("Gửi yêu cầu đặt lịch/mua xe thành công!");
+
+    setBookingSubmitting(true);
+    try {
+      await submitLead({
+        fullName: bookingForm.name.trim(),
+        phone: bookingForm.phone.trim(),
+        email: bookingForm.email.trim() || undefined,
+        service: bookingForm.service,
+        type: "purchase",
+        vehicleInterest: bookingScooter?.name,
+        message: formatLeadMessage({
+          "Dịch vụ": bookingForm.service,
+          Showroom: bookingForm.showroom,
+          "Lịch hẹn": bookingForm.date ? `${bookingForm.time} ngày ${bookingForm.date}` : undefined,
+          "Liên hệ qua": bookingForm.contactMethod,
+          "Ghi chú": bookingForm.note,
+        }),
+      });
+      setBookingStep(4);
+      toast.success("Gửi yêu cầu đặt lịch/mua xe thành công!");
+    } catch (error) {
+      toast.error(error instanceof SubmitLeadError ? error.message : "Gửi thất bại");
+    } finally {
+      setBookingSubmitting(false);
+    }
   };
 
   const selectedEstimatorScooter = useMemo(() => {
@@ -1061,9 +1085,11 @@ export default function ScootersPage({
                         </button>
                         <button
                           type="submit"
-                          className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs tracking-wider px-6 py-2.5 rounded-lg flex items-center gap-1.5 shadow-md"
+                          disabled={bookingSubmitting}
+                          className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs tracking-wider px-6 py-2.5 rounded-lg flex items-center gap-1.5 shadow-md disabled:opacity-60"
                         >
-                          <Check className="size-4" /> Hoàn tất đăng ký
+                          <Check className="size-4" />{" "}
+                          {bookingSubmitting ? "Đang gửi..." : "Hoàn tất đăng ký"}
                         </button>
                       </div>
                     </motion.div>

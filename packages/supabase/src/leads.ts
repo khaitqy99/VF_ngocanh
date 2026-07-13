@@ -99,4 +99,11 @@ export const SERVICE_TO_LEAD_TYPE: Record<string, LeadType> = {
   "Đặt cọc ngay": "deposit",
   "Nhận báo giá": "quote",
   "Tư vấn trả góp": "finance",
+  "Hỗ trợ trả góp 0%": "finance",
+  "Đặt lịch bảo dưỡng": "service",
+  "Đặt lịch sửa chữa": "service",
+  "Tư vấn phụ kiện": "accessory",
+  "Tư vấn trạm sạc": "general",
+  "Tư vấn lưu trữ năng lượng": "general",
+  "Đăng ký nhận tin": "general",
 };
