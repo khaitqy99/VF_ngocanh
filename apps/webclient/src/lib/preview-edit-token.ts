@@ -11,17 +11,6 @@ export function getAdminAppUrl(): string {
   return "";
 }
 
-/** Bật sửa preview chỉ khi iframe được mở từ admin CMS. */
-export function canEnablePreviewEdit(options: { referer?: string | null }): boolean {
-  const adminBase = getAdminAppUrl();
-  const referer = options.referer ?? "";
-  if (adminBase && referer.startsWith(adminBase)) {
-    return true;
-  }
-
-  return false;
-}
-
 export type PreviewEditScope =
   "oto" | "xe-may-dien" | "phu-kien" | "home" | "about" | "after-sales" | "charging" | "energy";
 

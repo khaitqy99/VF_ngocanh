@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewCarDetail } from "@/components/admin-edit/PreviewEditViews";
 import { getCarDetailBySlugForAdminPreview } from "@/lib/cms/preview-catalog";
 import { previewNoindexMetadata } from "@/lib/seo";
-import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
+import { resolvePreviewEditAccess } from "@/lib/preview-access";
 
 type Props = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ pt?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return previewNoindexMetadata(`Preview — ${slug}`);
 }
 
-export default async function CarPreviewRoute({ params }: Props) {
+export default async function CarPreviewRoute({ params, searchParams }: Props) {
   const { slug } = await params;
-  const referer = (await headers()).get("referer");
-  const serverAllowed = canEnablePreviewEdit({ referer });
+  const { pt } = await searchParams;
+  const serverAllowed = await resolvePreviewEditAccess({ pt });
   const detail = await getCarDetailBySlugForAdminPreview(slug, serverAllowed);
   if (!detail) notFound();
 

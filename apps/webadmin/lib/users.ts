@@ -51,10 +51,23 @@ export async function createAdminUser(input: CreateAdminUserInput): Promise<Admi
 }
 
 export async function deleteAdminUser(id: string): Promise<void> {
-  const response = await fetch(`/api/users/${id}`, { method: "DELETE", credentials: "include" });
-  const data = await response.json();
+  const response = await fetch(`/api/users/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const raw = await response.text();
+  let data: { error?: string } = {};
+  if (raw) {
+    try {
+      data = JSON.parse(raw) as { error?: string };
+    } catch {
+      data = {};
+    }
+  }
+
   if (!response.ok) {
-    throw new Error(data.error ?? "Không xóa được tài khoản");
+    throw new Error(data.error ?? (raw || "Không xóa được tài khoản"));
   }
 }
 

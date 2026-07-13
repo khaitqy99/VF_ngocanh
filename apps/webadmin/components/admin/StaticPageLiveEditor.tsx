@@ -6,6 +6,7 @@ import { ChevronRight, ExternalLink, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/core";
 import { useToast } from "@/components/admin/ToastProvider";
 import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
+import { usePreviewIframeSrc } from "@/lib/use-preview-iframe-src";
 import type { MediaCategory } from "@/lib/media-library";
 import { STATIC_PAGE_META, type StaticPageSlug } from "@/lib/cms/static-pages";
 
@@ -13,7 +14,7 @@ export function StaticPageLiveEditor({ slug }: { slug: StaticPageSlug }) {
   const meta = STATIC_PAGE_META[slug];
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
   const previewPath = `${meta.path}/preview`;
-  const iframeSrc = `${siteUrl}${previewPath}`;
+  const iframeSrc = usePreviewIframeSrc(previewPath);
   const { toast } = useToast();
   const [iframeKey, setIframeKey] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -145,14 +146,20 @@ export function StaticPageLiveEditor({ slug }: { slug: StaticPageSlug }) {
         Bấm trực tiếp vào chữ hoặc ảnh để sửa — Banner: đổi ảnh desktop/mobile, thêm/xóa/sắp xếp slide — Lưu ở thanh dưới
       </p>
 
-      <iframe
-        ref={iframeRef}
-        key={iframeKey}
-        title={`Xem trước ${meta.label}`}
-        src={iframeSrc}
-        onLoad={handleIframeLoad}
-        className="min-h-0 w-full flex-1 border-0 bg-white"
-      />
+      {iframeSrc ? (
+        <iframe
+          ref={iframeRef}
+          key={iframeKey}
+          title={`Xem trước ${meta.label}`}
+          src={iframeSrc}
+          onLoad={handleIframeLoad}
+          className="min-h-0 w-full flex-1 border-0 bg-white"
+        />
+      ) : (
+        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-zinc-500">
+          Đang tải preview...
+        </div>
+      )}
 
       {imagePicker ? (
         <GlobalMediaPicker

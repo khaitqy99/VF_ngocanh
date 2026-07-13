@@ -10,6 +10,7 @@
     "./admin": "./src/admin.ts",
     "./anon": "./src/anon.ts",
     "./middleware": "./src/middleware.ts",
+    "./preview-token": "./src/preview-token.ts",
     "./leads": "./src/leads.ts",
     "./types": "./src/database.types.ts"
   },

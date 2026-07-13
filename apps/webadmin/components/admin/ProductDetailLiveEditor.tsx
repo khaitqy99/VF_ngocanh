@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/core";
 import { useToast } from "@/components/admin/ToastProvider";
 import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
+import { usePreviewIframeSrc } from "@/lib/use-preview-iframe-src";
 import type { MediaCategory } from "@/lib/media-library";
 
 function parsePreviewEditorPath(previewPath: string): {
@@ -60,7 +61,7 @@ export function ProductDetailLiveEditor({
   editorHint?: string;
 }) {
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
-  const iframeSrc = `${siteUrl}${previewPath}`;
+  const iframeSrc = usePreviewIframeSrc(previewPath);
   const { toast } = useToast();
   const [iframeKey, setIframeKey] = useState(0);
   const [statusUpdating, setStatusUpdating] = useState(false);
@@ -306,14 +307,20 @@ export function ProductDetailLiveEditor({
         </p>
       ) : null}
 
-      <iframe
-        ref={iframeRef}
-        key={iframeKey}
-        title={`Xem trước ${productName}`}
-        src={iframeSrc}
-        onLoad={inlineEdit ? handleIframeLoad : undefined}
-        className="min-h-0 w-full flex-1 border-0 bg-white"
-      />
+      {iframeSrc ? (
+        <iframe
+          ref={iframeRef}
+          key={iframeKey}
+          title={`Xem trước ${productName}`}
+          src={iframeSrc}
+          onLoad={inlineEdit ? handleIframeLoad : undefined}
+          className="min-h-0 w-full flex-1 border-0 bg-white"
+        />
+      ) : (
+        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-zinc-500">
+          Đang tải preview...
+        </div>
+      )}
 
       {imagePicker ? (
         <GlobalMediaPicker

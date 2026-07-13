@@ -4,6 +4,7 @@ import { getAdminRole } from "@vinfast3s/supabase/middleware";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import { getSessionAdmin } from "@/lib/auth";
 import { mapAuthUser } from "@/lib/auth-users";
+import { detachAdminUserReferences, formatAdminUserDeleteError } from "@/lib/admin-user-delete";
 
 function validatePassword(password: string): string | null {
   if (!password) return "Mật khẩu là bắt buộc";
@@ -130,11 +131,21 @@ export async function DELETE(
   }
 
   const admin = createAdminClient();
+
+  try {
+    await detachAdminUserReferences(admin, id);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Không gỡ liên kết tài khoản";
+    console.error("[api/users/[id]] detach failed:", message);
+    return NextResponse.json({ error: formatAdminUserDeleteError(message) }, { status: 400 });
+  }
+
   const { error } = await admin.auth.admin.deleteUser(id);
 
   if (error) {
+    const message = formatAdminUserDeleteError(error.message);
     console.error("[api/users/[id]] delete failed:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 
   return NextResponse.json({ ok: true });

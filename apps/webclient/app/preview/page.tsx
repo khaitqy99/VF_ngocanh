@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 
 import { HomePreviewClient } from "@/components/admin-edit/HomePreviewClient";
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
@@ -8,15 +7,17 @@ import { getHomeEditorData } from "@/lib/cms/home-editor";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { resolveDealershipContact } from "@/lib/dealership";
 import { previewNoindexMetadata } from "@/lib/seo";
-import { canEnablePreviewEdit } from "@/lib/preview-edit-token";
+import { resolvePreviewEditAccess } from "@/lib/preview-access";
 
 export async function generateMetadata(): Promise<Metadata> {
   return previewNoindexMetadata("Preview — Trang chủ");
 }
 
-export default async function HomePreviewRoute() {
-  const referer = (await headers()).get("referer");
-  const serverAllowed = canEnablePreviewEdit({ referer });
+type Props = { searchParams: Promise<{ pt?: string }> };
+
+export default async function HomePreviewRoute({ searchParams }: Props) {
+  const { pt } = await searchParams;
+  const serverAllowed = await resolvePreviewEditAccess({ pt });
 
   const [home, editorData, site, cars, scooters] = await Promise.all([
     getHomeData(),

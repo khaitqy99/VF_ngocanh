@@ -211,7 +211,7 @@ export default function AdminUsersPage() {
                 <Input
                   type="email"
                   required
-                  placeholder="admin@vinfast3scamau.com"
+                  placeholder="Nhập email của bạn"
                   value={createForm.email}
                   onChange={(e) => setCreateForm((f) => ({ ...f, email: e.target.value }))}
                 />

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import { isAdminUser, updateSession } from "@vinfast3s/supabase/middleware";
 
-const PUBLIC_ADMIN_PATHS = ["/admin/login", "/api/auth/callback", "/api/health"];
+const PUBLIC_ADMIN_PATHS = ["/admin/login", "/api/auth/callback"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
