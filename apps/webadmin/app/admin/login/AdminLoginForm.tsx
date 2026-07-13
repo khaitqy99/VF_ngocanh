@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@vinfast3s/supabase/client";
+import { IMAGES } from "@webclient/lib/images";
 import { translateAuthError } from "@/lib/auth-errors";
+import { clientAssetUrl } from "@/lib/product-utils";
 import { Button, Input, Card, CardContent, CardHeader, CardTitle } from "@/components/ui/core";
 
 export default function AdminLoginForm() {
@@ -62,8 +65,16 @@ export default function AdminLoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
       <Card className="w-full max-w-md p-2">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-red-600">
-            <span className="text-xl font-bold text-white">V</span>
+          <div className="mx-auto flex justify-center">
+            <Image
+              src={clientAssetUrl(IMAGES.vinfastLogo)}
+              alt="VinFast — Đại lý VinFast Ngọc Anh Cà Mau"
+              width={180}
+              height={42}
+              priority
+              unoptimized
+              className="h-9 w-auto sm:h-10"
+            />
           </div>
           <div>
             <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
@@ -79,7 +90,7 @@ export default function AdminLoginForm() {
                 </label>
                 <Input
                   id="email"
-                  placeholder="admin@vfngocanh.com"
+                  placeholder="Nhập email của bạn"
                   type="email"
                   autoComplete="email"
                   value={email}
