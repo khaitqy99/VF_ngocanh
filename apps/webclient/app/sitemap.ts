@@ -4,13 +4,7 @@ import { accessoryDetailPath, carDetailPath, scooterDetailPath } from "@/lib/seo
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 /** Hub / landing ưu tiên crawl — ô tô & xe máy trước phụ kiện. */
-const PRIORITY_HUB_ROUTES = [
-  "",
-  "/oto",
-  "/xe-may-dien",
-  "/gioi-thieu",
-  "/tin-tuc",
-] as const;
+const PRIORITY_HUB_ROUTES = ["", "/oto", "/xe-may-dien", "/gioi-thieu", "/tin-tuc"] as const;
 
 const SECONDARY_HUB_ROUTES = [
   "/pin-va-tram-sac",
