@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronRight, Eye, Save, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -80,8 +80,10 @@ function NewsPreviewPanel({
 
 export function NewsEditorClient({ articleId }: { articleId?: string }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const isNew = !articleId;
+  const initialTab = searchParams.get("tab") === "seo" ? "seo" : "content";
   const [form, setForm] = useState(EMPTY_FORM);
   const [slugTouched, setSlugTouched] = useState(false);
   const [loading, setLoading] = useState(!isNew);
@@ -280,7 +282,7 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
         }
       />
 
-      <Tabs defaultValue="content" className="space-y-6">
+      <Tabs defaultValue={initialTab} className="space-y-6">
         <TabsList>
           <TabsTrigger value="content">Nội dung</TabsTrigger>
           <TabsTrigger value="seo">SEO</TabsTrigger>

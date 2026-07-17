@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getAccessories, getAccessoryBySlugOrId } from "@/lib/cms";
 import { buildAccessoryMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
+import { buildProductReviewFields, DEFAULT_ACCESSORY_REVIEWS } from "@/lib/seo/product-schema";
 import { accessoryDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
@@ -53,6 +54,7 @@ export default async function AccessoryDetailRoute({ params }: Props) {
       url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
       seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
     },
+    ...buildProductReviewFields(DEFAULT_ACCESSORY_REVIEWS),
   };
 
   const breadcrumb = buildBreadcrumbSchema([

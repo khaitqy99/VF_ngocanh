@@ -6,10 +6,10 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { GlobalSeoClient } from "@/components/admin/seo/GlobalSeoClient";
 import { SeoStaticPagesSection } from "@/components/admin/seo/SeoStaticPagesSection";
 
-type SeoHubTab = "global" | "products" | "pages";
+type SeoHubTab = "global" | "products" | "pages" | "blog";
 
 function parseTab(value: string | null): SeoHubTab {
-  if (value === "products" || value === "pages") return value;
+  if (value === "products" || value === "pages" || value === "blog") return value;
   return "global";
 }
 
@@ -25,13 +25,24 @@ const TAB_ITEMS: { value: SeoHubTab; label: string; hint: string }[] = [
     hint: "SEO từng ô tô, xe máy, phụ kiện",
   },
   {
+    value: "blog",
+    label: "Blog / Tin tức",
+    hint: "SEO từng bài viết tại /tin-tuc",
+  },
+  {
     value: "pages",
     label: "Trang tĩnh",
     hint: "Trang chủ, liên hệ, chính sách…",
   },
 ];
 
-export function SeoHubClient({ productsSection }: { productsSection: React.ReactNode }) {
+export function SeoHubClient({
+  productsSection,
+  blogSection,
+}: {
+  productsSection: React.ReactNode;
+  blogSection: React.ReactNode;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<SeoHubTab>(() => parseTab(searchParams.get("tab")));
@@ -76,6 +87,7 @@ export function SeoHubClient({ productsSection }: { productsSection: React.React
 
       {tab === "global" ? <GlobalSeoClient embedded /> : null}
       {tab === "products" ? productsSection : null}
+      {tab === "blog" ? blogSection : null}
       {tab === "pages" ? <SeoStaticPagesSection /> : null}
     </div>
   );
