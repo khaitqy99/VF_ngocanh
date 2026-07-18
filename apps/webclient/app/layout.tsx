@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 
 import "./globals.css";
 import SiteFooter from "@/components/site/SiteFooter";
@@ -28,6 +29,7 @@ const SITE_KEYWORDS = [
 ];
 
 const GOOGLE_SITE_VERIFICATION = "sxgFg7V_2_LtDK9QCin2ka8viud2xHBRLTD";
+const GOOGLE_TAG_MANAGER_ID = "GTM-WFTNR7TJ";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSeo();
@@ -85,7 +87,26 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi" suppressHydrationWarning>
+      <head>
+        <Script id="google-tag-manager" strategy="beforeInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GOOGLE_TAG_MANAGER_ID}');
+          `}
+        </Script>
+      </head>
       <body className={`${plusJakartaSans.variable} relative font-sans antialiased`}>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GOOGLE_TAG_MANAGER_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <div
           aria-hidden
           className="home-grain pointer-events-none fixed inset-0 z-0 opacity-[0.028] max-lg:hidden"
