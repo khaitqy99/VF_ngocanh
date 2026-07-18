@@ -181,8 +181,10 @@ export async function PATCH(
       });
       if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    await revalidateWebclient(accessoryRevalidatePayload(id, body.slug ?? existing?.slug ?? id));
-    return NextResponse.json({ ok: true, slug: body.slug });
+    const revalidated = await revalidateWebclient(
+      accessoryRevalidatePayload(id, body.slug ?? existing?.slug ?? id, existing?.slug),
+    );
+    return NextResponse.json({ ok: true, slug: body.slug ?? existing?.slug, revalidated });
   }
 
   const update: TablesUpdate<"vehicles"> = {};
@@ -207,8 +209,9 @@ export async function PATCH(
   }
 
   const vehicleType = type === "scooter" ? "scooter" : "car";
-  await revalidateWebclient(
-    vehicleRevalidatePayload(id, vehicleType, body.slug ?? existing?.slug ?? defaultSlugFor(type, id)),
+  const nextSlug = body.slug ?? existing?.slug ?? defaultSlugFor(type, id);
+  const revalidated = await revalidateWebclient(
+    vehicleRevalidatePayload(id, vehicleType, nextSlug, existing?.slug),
   );
-  return NextResponse.json({ ok: true, slug: body.slug });
+  return NextResponse.json({ ok: true, slug: nextSlug, revalidated });
 }

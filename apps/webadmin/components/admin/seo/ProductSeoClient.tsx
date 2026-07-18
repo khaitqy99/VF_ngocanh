@@ -31,14 +31,18 @@ export function ProductSeoClient({
     fetch(`/api/seo/products/${productType}/${encodeURIComponent(productId)}`, {
       credentials: "include",
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Không tải được SEO sản phẩm");
+        return res.json();
+      })
       .then((data) => {
         if (data.seo) setSeo(data.seo);
         if (data.slug) setSlug(data.slug);
         if (data.defaults) setDefaults(data.defaults);
       })
+      .catch(() => toast("Không tải được SEO sản phẩm", "error"))
       .finally(() => setLoading(false));
-  }, [productType, productId]);
+  }, [productType, productId, toast]);
 
   const save = async () => {
     setSaving(true);
@@ -52,13 +56,21 @@ export function ProductSeoClient({
           body: JSON.stringify({ seo, slug }),
         },
       );
+      const data = (await response.json().catch(() => null)) as
+        | { error?: string; slug?: string; revalidated?: boolean }
+        | null;
       if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
         throw new Error(data?.error ?? "Lưu thất bại");
       }
-      const data = (await response.json()) as { slug?: string };
-      if (data.slug) setSlug(data.slug);
-      toast("Đã lưu SEO sản phẩm");
+      if (data?.slug) setSlug(data.slug);
+      if (data?.revalidated === false) {
+        toast(
+          "Đã lưu SEO nhưng chưa làm mới cache website — kiểm tra NEXT_PUBLIC_SITE_URL và REVALIDATION_SECRET",
+          "error",
+        );
+      } else {
+        toast("Đã lưu SEO sản phẩm");
+      }
     } catch (error) {
       toast(error instanceof Error ? error.message : "Lưu thất bại");
     } finally {

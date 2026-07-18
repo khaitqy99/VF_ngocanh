@@ -194,7 +194,7 @@ async function seedVehicles() {
       variants: detail?.variants ?? [],
       spec_table: detail?.specGroups ?? [],
       content: { catalog: car, detail },
-      seo: { title: car.name, description: car.subtitle },
+      seo: { metaTitle: car.name, metaDescription: car.subtitle },
     });
   }
 
@@ -218,7 +218,7 @@ async function seedVehicles() {
       variants: detail?.variants ?? [],
       spec_table: detail?.specGroups ?? [],
       content: { catalog: scooter, detail },
-      seo: { title: scooter.name, description: scooter.subtitle },
+      seo: { metaTitle: scooter.name, metaDescription: scooter.subtitle },
     });
   }
 

@@ -35,8 +35,10 @@ export async function POST(request: Request) {
   }
 
   for (const path of paths) {
+    // Expire both page and layout so shared footer/SEO shells refresh with tagged data.
     unstable_expirePath(path, "page");
-    revalidatePath(path);
+    unstable_expirePath(path, "layout");
+    revalidatePath(path, "layout");
   }
 
   const redisDeletedKeys = await deleteCacheByPrefix("cms:");

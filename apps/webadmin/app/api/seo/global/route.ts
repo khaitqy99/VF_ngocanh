@@ -64,6 +64,6 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateSeo();
-  return NextResponse.json({ ok: true });
+  const revalidated = await revalidateSeo();
+  return NextResponse.json({ ok: true, revalidated });
 }

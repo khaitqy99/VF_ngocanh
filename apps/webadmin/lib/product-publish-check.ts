@@ -26,8 +26,14 @@ function galleryHasRealImages(gallery: Json | null | undefined): boolean {
 function seoIsIncomplete(seo: Json | null | undefined): boolean {
   if (!seo || typeof seo !== "object" || Array.isArray(seo)) return true;
   const record = seo as Record<string, unknown>;
-  const title = typeof record.title === "string" ? record.title.trim() : "";
-  const description = typeof record.description === "string" ? record.description.trim() : "";
+  const title =
+    (typeof record.metaTitle === "string" && record.metaTitle.trim()) ||
+    (typeof record.title === "string" && record.title.trim()) ||
+    "";
+  const description =
+    (typeof record.metaDescription === "string" && record.metaDescription.trim()) ||
+    (typeof record.description === "string" && record.description.trim()) ||
+    "";
   return !title || !description;
 }
 

@@ -3,6 +3,9 @@ import { getAccessories, getCars, getNewsArticles, getScooters } from "@/lib/cms
 import { accessoryDetailPath, carDetailPath, scooterDetailPath } from "@/lib/seo/slugs";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
+/** Keep sitemap in sync with CMS catalog cache (same cadence as public pages). */
+export const revalidate = 86400;
+
 /** Hub / landing ưu tiên crawl — ô tô & xe máy trước phụ kiện. */
 const PRIORITY_HUB_ROUTES = ["", "/oto", "/xe-may-dien", "/gioi-thieu", "/tin-tuc"] as const;
 

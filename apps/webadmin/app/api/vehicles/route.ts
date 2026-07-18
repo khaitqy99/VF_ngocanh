@@ -45,10 +45,12 @@ export async function POST(request: Request) {
 
   try {
     const vehicle = await createVehicleFromClone(body);
-    await revalidateWebclient(vehicleRevalidatePayload(vehicle.id, body.type, vehicle.slug));
+    const revalidated = await revalidateWebclient(
+      vehicleRevalidatePayload(vehicle.id, body.type, vehicle.slug),
+    );
     revalidateTag(body.type === "car" ? "admin-cms-cars" : "admin-cms-scooters");
     revalidateTag(ADMIN_MEDIA_CACHE_TAG);
-    return NextResponse.json({ vehicle });
+    return NextResponse.json({ vehicle, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Tạo sản phẩm thất bại";
     return NextResponse.json({ error: message }, { status: 400 });

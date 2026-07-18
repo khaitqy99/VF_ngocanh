@@ -63,6 +63,6 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateCarPricing();
-  return NextResponse.json({ ok: true, settings: value });
+  const revalidated = await revalidateCarPricing();
+  return NextResponse.json({ ok: true, settings: value, revalidated });
 }

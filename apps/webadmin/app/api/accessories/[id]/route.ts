@@ -103,10 +103,12 @@ export async function DELETE(
 
   try {
     const result = await deleteAccessoryProduct(id);
-    await revalidateWebclient(accessoryRevalidatePayload(id, result.slug ?? id));
+    const revalidated = await revalidateWebclient(
+      accessoryRevalidatePayload(id, result.slug ?? id),
+    );
     revalidateTag("admin-cms-accessories");
     revalidateTag(ADMIN_MEDIA_CACHE_TAG);
-    return NextResponse.json({ ok: true, ...result });
+    return NextResponse.json({ ok: true, ...result, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Xóa phụ kiện thất bại";
     return NextResponse.json({ error: message }, { status: 400 });
@@ -238,11 +240,12 @@ export async function PATCH(
     return NextResponse.json({ ok: true, mode: "insert" });
   }
 
+  const previousSlug = existing.slug ?? id;
   const { data: updated, error } = await admin
     .from("accessories")
     .update(updatePayload)
     .eq("id", id)
-    .select("id")
+    .select("id, slug")
     .maybeSingle();
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -251,9 +254,11 @@ export async function PATCH(
     return NextResponse.json({ error: "Không tìm thấy phụ kiện để cập nhật" }, { status: 404 });
   }
 
-  await revalidateWebclient(accessoryRevalidatePayload(id, existing.slug ?? id));
+  const revalidated = await revalidateWebclient(
+    accessoryRevalidatePayload(id, updated.slug ?? previousSlug, previousSlug),
+  );
   revalidateTag("admin-cms-accessories");
   revalidateTag(ADMIN_MEDIA_CACHE_TAG);
 
-  return NextResponse.json({ ok: true, mode: "update" });
+  return NextResponse.json({ ok: true, mode: "update", revalidated });
 }

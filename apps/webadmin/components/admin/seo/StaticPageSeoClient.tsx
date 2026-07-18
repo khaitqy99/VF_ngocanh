@@ -18,11 +18,14 @@ export function StaticPageSeoClient({ slug }: { slug: string }) {
   useEffect(() => {
     if (!definition) return;
     fetch(`/api/seo/pages/${encodeURIComponent(slug)}`, { credentials: "include" })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Không tải được dữ liệu SEO");
+        return res.json();
+      })
       .then((data) => {
         if (data.seo) setSeo(data.seo);
       })
-      .catch(() => toast("Không tải được dữ liệu SEO"))
+      .catch(() => toast("Không tải được dữ liệu SEO", "error"))
       .finally(() => setLoading(false));
   }, [slug, definition, toast]);
 
@@ -39,11 +42,20 @@ export function StaticPageSeoClient({ slug }: { slug: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ seo }),
       });
+      const data = (await response.json().catch(() => null)) as
+        | { error?: string; revalidated?: boolean }
+        | null;
       if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
         throw new Error(data?.error ?? "Lưu thất bại");
       }
-      toast("Đã lưu SEO trang");
+      if (data?.revalidated === false) {
+        toast(
+          "Đã lưu SEO nhưng chưa làm mới cache website — kiểm tra NEXT_PUBLIC_SITE_URL và REVALIDATION_SECRET",
+          "error",
+        );
+      } else {
+        toast("Đã lưu SEO trang");
+      }
     } catch (error) {
       toast(error instanceof Error ? error.message : "Lưu thất bại");
     } finally {

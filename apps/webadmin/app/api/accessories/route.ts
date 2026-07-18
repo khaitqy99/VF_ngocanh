@@ -30,10 +30,12 @@ export async function POST(request: Request) {
 
   try {
     const accessory = await createAccessoryFromClone(body);
-    await revalidateWebclient(accessoryRevalidatePayload(accessory.id, accessory.slug));
+    const revalidated = await revalidateWebclient(
+      accessoryRevalidatePayload(accessory.id, accessory.slug),
+    );
     revalidateTag("admin-cms-accessories");
     revalidateTag(ADMIN_MEDIA_CACHE_TAG);
-    return NextResponse.json({ accessory });
+    return NextResponse.json({ accessory, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Tạo phụ kiện thất bại";
     return NextResponse.json({ error: message }, { status: 400 });

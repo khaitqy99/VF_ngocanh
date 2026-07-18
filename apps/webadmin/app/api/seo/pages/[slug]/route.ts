@@ -111,6 +111,6 @@ export async function PATCH(
     }
   }
 
-  await revalidateSeo([definition.path]);
-  return NextResponse.json({ ok: true });
+  const revalidated = await revalidateSeo([definition.path]);
+  return NextResponse.json({ ok: true, revalidated });
 }

@@ -80,6 +80,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateWebclient(newsRevalidatePayload(slug));
-  return NextResponse.json({ article: mapNewsRow(data) });
+  const revalidated = await revalidateWebclient(newsRevalidatePayload(slug));
+  return NextResponse.json({ article: mapNewsRow(data), revalidated });
 }

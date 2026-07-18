@@ -213,6 +213,12 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
             ? "Đã lên lịch bài viết"
             : "Đã lưu bài viết",
       );
+      if (data.revalidated === false) {
+        toast(
+          "Đã lưu nhưng chưa làm mới cache website — kiểm tra NEXT_PUBLIC_SITE_URL và REVALIDATION_SECRET",
+          "error",
+        );
+      }
       if (isNew && data.article?.id) {
         router.replace(`/admin/posts/${data.article.id}`);
       } else if (data.article) {

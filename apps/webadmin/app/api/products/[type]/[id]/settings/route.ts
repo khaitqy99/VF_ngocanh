@@ -71,18 +71,27 @@ export async function PATCH(
   }
 
   try {
+    const previous =
+      type === "accessory"
+        ? await getAdminAccessoryMeta(id)
+        : await getAdminVehicleMeta(id, type);
     const meta = await updateProductSettings(type, id, body);
 
+    let revalidated = false;
     if (type === "accessory") {
-      await revalidateWebclient(accessoryRevalidatePayload(id, meta.slug));
+      revalidated = await revalidateWebclient(
+        accessoryRevalidatePayload(id, meta.slug, previous?.slug),
+      );
       revalidateTag("admin-cms-accessories");
     } else {
-      await revalidateWebclient(vehicleRevalidatePayload(id, type, meta.slug));
+      revalidated = await revalidateWebclient(
+        vehicleRevalidatePayload(id, type, meta.slug, previous?.slug),
+      );
       revalidateTag(type === "car" ? "admin-cms-cars" : "admin-cms-scooters");
     }
     revalidateTag(ADMIN_MEDIA_CACHE_TAG);
 
-    return NextResponse.json({ meta });
+    return NextResponse.json({ meta, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Lưu thất bại";
     return NextResponse.json({ error: message }, { status: 400 });

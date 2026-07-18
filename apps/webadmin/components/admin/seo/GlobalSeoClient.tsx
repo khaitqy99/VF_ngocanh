@@ -15,12 +15,16 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
 
   useEffect(() => {
     fetch("/api/seo/global", { credentials: "include" })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Không tải được SEO chung");
+        return res.json();
+      })
       .then((data) => {
         if (data.settings) setSettings(data.settings);
       })
+      .catch(() => toast("Không tải được cài đặt SEO chung", "error"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [toast]);
 
   const save = async () => {
     setSaving(true);
@@ -31,11 +35,20 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ settings }),
       });
+      const data = (await response.json().catch(() => null)) as
+        | { error?: string; revalidated?: boolean }
+        | null;
       if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
         throw new Error(data?.error ?? "Lưu thất bại");
       }
-      toast("Đã lưu cài đặt SEO chung");
+      if (data?.revalidated === false) {
+        toast(
+          "Đã lưu SEO nhưng chưa làm mới cache website — kiểm tra NEXT_PUBLIC_SITE_URL và REVALIDATION_SECRET",
+          "error",
+        );
+      } else {
+        toast("Đã lưu cài đặt SEO chung");
+      }
     } catch (error) {
       toast(error instanceof Error ? error.message : "Lưu thất bại");
     } finally {

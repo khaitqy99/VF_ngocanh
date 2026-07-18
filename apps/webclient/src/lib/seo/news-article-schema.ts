@@ -36,7 +36,7 @@ export function buildNewsArticleSchema(article: NewsArticle) {
       name: SITE_BRAND_NAME,
       logo: {
         "@type": "ImageObject",
-        url: `${PRODUCTION_SITE_URL}/images/vinfast-logo.webp`,
+        url: `${PRODUCTION_SITE_URL}/images/vinfast/vinfast-logo.webp`,
       },
     },
     mainEntityOfPage: {

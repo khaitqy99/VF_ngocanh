@@ -175,9 +175,11 @@ export async function DELETE(
 
   try {
     const result = await deleteVehicleProduct(id, vehicleType);
-    await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, result.slug ?? id));
+    const revalidated = await revalidateWebclient(
+      vehicleRevalidatePayload(id, vehicleType, result.slug ?? id),
+    );
     revalidateAdminVehicleCaches(vehicleType);
-    return NextResponse.json({ ok: true, ...result });
+    return NextResponse.json({ ok: true, ...result, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Xóa sản phẩm thất bại";
     return NextResponse.json({ error: message }, { status: 400 });
@@ -300,10 +302,12 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, existing.slug ?? id));
+    const revalidated = await revalidateWebclient(
+      vehicleRevalidatePayload(id, vehicleType, existing.slug ?? id),
+    );
     revalidateAdminVehicleCaches(vehicleType);
 
-    return NextResponse.json({ ok: true, mode: "update" });
+    return NextResponse.json({ ok: true, mode: "update", revalidated });
   }
   const insertPayload: TablesInsert<"vehicles"> = {
     id,
@@ -325,8 +329,10 @@ export async function PATCH(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateWebclient(vehicleRevalidatePayload(id, vehicleType, insertPayload.slug ?? id));
+  const revalidated = await revalidateWebclient(
+    vehicleRevalidatePayload(id, vehicleType, insertPayload.slug ?? id),
+  );
   revalidateAdminVehicleCaches(vehicleType);
 
-  return NextResponse.json({ ok: true, mode: "insert" });
+  return NextResponse.json({ ok: true, mode: "insert", revalidated });
 }

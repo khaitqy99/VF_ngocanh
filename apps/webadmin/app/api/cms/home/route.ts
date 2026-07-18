@@ -258,6 +258,6 @@ export async function PATCH(request: Request) {
     }
   }
 
-  await revalidateWebclient(homePageRevalidatePayload());
-  return NextResponse.json({ ok: true });
+  const revalidated = await revalidateWebclient(homePageRevalidatePayload());
+  return NextResponse.json({ ok: true, revalidated });
 }

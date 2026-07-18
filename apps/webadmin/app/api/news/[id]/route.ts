@@ -84,8 +84,10 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateWebclient(newsRevalidatePayload(data.slug));
-  return NextResponse.json({ article: mapNewsRow(data) });
+  const revalidated = await revalidateWebclient(
+    newsRevalidatePayload(data.slug, existing.slug),
+  );
+  return NextResponse.json({ article: mapNewsRow(data), revalidated });
 }
 
 export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
@@ -102,6 +104,6 @@ export async function DELETE(_request: Request, context: { params: Promise<{ id:
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  await revalidateWebclient(newsRevalidatePayload(existing?.slug));
-  return NextResponse.json({ ok: true });
+  const revalidated = await revalidateWebclient(newsRevalidatePayload(existing?.slug));
+  return NextResponse.json({ ok: true, revalidated });
 }

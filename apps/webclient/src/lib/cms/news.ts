@@ -63,7 +63,7 @@ export const getNewsArticles = unstable_cache(
     }
   },
   ["cms-news-list"],
-  { revalidate: 60, tags: [CMS_NEWS_TAG] },
+  { revalidate: 60, tags: ["cms", CMS_NEWS_TAG] },
 );
 
 export async function getNewsArticlesPage(page = 1): Promise<NewsListResult> {
@@ -88,7 +88,7 @@ export const getNewsBySlug = unstable_cache(
     return articles.find((a) => a.slug === slug) ?? null;
   },
   ["cms-news-by-slug"],
-  { revalidate: 60, tags: [CMS_NEWS_TAG] },
+  { revalidate: 60, tags: ["cms", CMS_NEWS_TAG] },
 );
 
 export async function getNewsArticleWithRelated(slug: string) {

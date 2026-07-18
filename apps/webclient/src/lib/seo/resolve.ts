@@ -43,6 +43,11 @@ export type SeoAutoFill = {
   path?: string;
 };
 
+function asTrimmedString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+/** Prefer camelCase SEO fields; accept legacy { title, description } from seed/create. */
 export function parseSeoRecord(value: unknown): SeoRecord {
   if (!value || typeof value !== "object" || Array.isArray(value)) return {};
   const raw = value as Record<string, unknown>;
@@ -61,13 +66,13 @@ export function parseSeoRecord(value: unknown): SeoRecord {
       : undefined;
 
   return {
-    metaTitle: typeof raw.metaTitle === "string" ? raw.metaTitle : undefined,
-    metaDescription: typeof raw.metaDescription === "string" ? raw.metaDescription : undefined,
-    focusKeyword: typeof raw.focusKeyword === "string" ? raw.focusKeyword : undefined,
-    ogTitle: typeof raw.ogTitle === "string" ? raw.ogTitle : undefined,
-    ogDescription: typeof raw.ogDescription === "string" ? raw.ogDescription : undefined,
-    ogImage: typeof raw.ogImage === "string" ? raw.ogImage : undefined,
-    canonical: typeof raw.canonical === "string" ? raw.canonical : undefined,
+    metaTitle: asTrimmedString(raw.metaTitle) ?? asTrimmedString(raw.title),
+    metaDescription: asTrimmedString(raw.metaDescription) ?? asTrimmedString(raw.description),
+    focusKeyword: asTrimmedString(raw.focusKeyword),
+    ogTitle: asTrimmedString(raw.ogTitle),
+    ogDescription: asTrimmedString(raw.ogDescription),
+    ogImage: asTrimmedString(raw.ogImage),
+    canonical: asTrimmedString(raw.canonical),
     robots,
     schemaType:
       raw.schemaType === "WebPage" ||
@@ -98,15 +103,15 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
       : undefined;
 
   return {
-    siteName: typeof raw.siteName === "string" ? raw.siteName : undefined,
-    titleTemplate: typeof raw.titleTemplate === "string" ? raw.titleTemplate : undefined,
-    defaultTitle: typeof raw.defaultTitle === "string" ? raw.defaultTitle : undefined,
+    siteName: asTrimmedString(raw.siteName),
+    titleTemplate: asTrimmedString(raw.titleTemplate) ?? asTrimmedString(raw.title_template),
+    defaultTitle: asTrimmedString(raw.defaultTitle) ?? asTrimmedString(raw.default_title),
     defaultDescription:
-      typeof raw.defaultDescription === "string" ? raw.defaultDescription : undefined,
-    defaultOgTitle: typeof raw.defaultOgTitle === "string" ? raw.defaultOgTitle : undefined,
+      asTrimmedString(raw.defaultDescription) ?? asTrimmedString(raw.default_description),
+    defaultOgTitle: asTrimmedString(raw.defaultOgTitle) ?? asTrimmedString(raw.default_og_title),
     defaultOgDescription:
-      typeof raw.defaultOgDescription === "string" ? raw.defaultOgDescription : undefined,
-    defaultOgImage: typeof raw.defaultOgImage === "string" ? raw.defaultOgImage : undefined,
+      asTrimmedString(raw.defaultOgDescription) ?? asTrimmedString(raw.default_og_description),
+    defaultOgImage: asTrimmedString(raw.defaultOgImage) ?? asTrimmedString(raw.default_og_image),
     robots:
       raw.robots && typeof raw.robots === "object" && !Array.isArray(raw.robots)
         ? {
@@ -171,9 +176,15 @@ export function defaultSiteSeoSettings(): SiteSeoSettings {
 export function mergeSiteSeoSettings(partial?: SiteSeoSettings | null): SiteSeoSettings {
   const base = defaultSiteSeoSettings();
   if (!partial) return base;
+  // Use ?? so explicit `undefined` from parsers does not wipe code defaults.
   return {
-    ...base,
-    ...partial,
+    siteName: partial.siteName ?? base.siteName,
+    titleTemplate: partial.titleTemplate ?? base.titleTemplate,
+    defaultTitle: partial.defaultTitle ?? base.defaultTitle,
+    defaultDescription: partial.defaultDescription ?? base.defaultDescription,
+    defaultOgTitle: partial.defaultOgTitle ?? base.defaultOgTitle,
+    defaultOgDescription: partial.defaultOgDescription ?? base.defaultOgDescription,
+    defaultOgImage: partial.defaultOgImage ?? base.defaultOgImage,
     robots: { ...base.robots, ...partial.robots },
     organization: mergeOrganization(base.organization, partial.organization),
   };
@@ -197,9 +208,9 @@ export function resolveSeoContent(
   const title = seo?.metaTitle?.trim() || defaults.title?.trim() || siteSeo.defaultTitle!;
   const description =
     seo?.metaDescription?.trim() || defaults.description?.trim() || siteSeo.defaultDescription!;
-  const ogTitle = seo?.ogTitle?.trim() || siteSeo.defaultOgTitle?.trim() || title;
-  const ogDescription =
-    seo?.ogDescription?.trim() || siteSeo.defaultOgDescription?.trim() || description;
+  // Prefer page title/description over global OG defaults so admin page SEO is reflected in social cards.
+  const ogTitle = seo?.ogTitle?.trim() || title;
+  const ogDescription = seo?.ogDescription?.trim() || description;
   const ogImage = seo?.ogImage?.trim() || defaults.image?.trim() || siteSeo.defaultOgImage!;
   const canonicalPath = seo?.canonical?.trim() || defaults.path || "/";
   const canonical = canonicalPath.startsWith("http")
@@ -264,6 +275,10 @@ export function seoToNextMetadata(
   site?: SiteSeoSettings | null,
 ): Metadata {
   const siteSeo = mergeSiteSeoSettings(site);
+  const shareImage = resolved.ogImage.startsWith("http")
+    ? resolved.ogImage
+    : `${PRODUCTION_SITE_URL}${resolved.ogImage.startsWith("/") ? resolved.ogImage : `/${resolved.ogImage}`}`;
+
   return {
     title: resolved.title,
     description: resolved.description,
@@ -279,7 +294,7 @@ export function seoToNextMetadata(
       type: "website",
       images: [
         {
-          url: resolved.ogImage,
+          url: shareImage,
           width: 1200,
           height: 630,
           alt: resolved.ogTitle,
@@ -290,7 +305,7 @@ export function seoToNextMetadata(
       card: "summary_large_image",
       title: resolved.ogTitle,
       description: resolved.ogDescription,
-      images: [resolved.ogImage],
+      images: [shareImage],
     },
     robots: {
       index: !resolved.noindex,

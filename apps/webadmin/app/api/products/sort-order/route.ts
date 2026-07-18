@@ -48,16 +48,17 @@ export async function PATCH(request: Request) {
   try {
     await updateProductSortOrder(kind, orderedIds);
 
+    let revalidated = false;
     if (kind === "accessory") {
-      await revalidateWebclient(accessoryRevalidatePayload("catalog"));
+      revalidated = await revalidateWebclient(accessoryRevalidatePayload("catalog"));
       revalidateTag("admin-cms-accessories");
     } else {
-      await revalidateWebclient(vehicleRevalidatePayload("catalog", kind));
+      revalidated = await revalidateWebclient(vehicleRevalidatePayload("catalog", kind));
       revalidateTag(kind === "car" ? "admin-cms-cars" : "admin-cms-scooters");
     }
     revalidateTag(ADMIN_MEDIA_CACHE_TAG);
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, revalidated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Sắp xếp thất bại";
     return NextResponse.json({ error: message }, { status: 400 });

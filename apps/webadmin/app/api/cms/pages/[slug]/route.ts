@@ -208,6 +208,6 @@ export async function PATCH(
     }
   }
 
-  await revalidateWebclient(staticPageRevalidatePayload(slug));
-  return NextResponse.json({ ok: true });
+  const revalidated = await revalidateWebclient(staticPageRevalidatePayload(slug));
+  return NextResponse.json({ ok: true, revalidated });
 }

@@ -350,7 +350,7 @@ export const getHomeData = unstable_cache(
     };
   },
   ["cms-home"],
-  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.home] },
+  { revalidate: cmsRevalidate(), tags: [CMS_TAGS.all, CMS_TAGS.home, CMS_TAGS.news] },
 );
 
 export async function getCarDetailAccessories(carId: string): Promise<AccessoryProduct[]> {

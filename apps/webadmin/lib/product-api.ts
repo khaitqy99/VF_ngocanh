@@ -110,7 +110,7 @@ function buildVehicleRowFromStatic(id: string, type: "car" | "scooter"): TablesI
       variants: (detail?.variants ?? []) as Json,
       spec_table: (detail?.specGroups ?? []) as Json,
       content: { catalog: car, detail } as Json,
-      seo: { title: car.name, description: car.subtitle } as Json,
+      seo: { metaTitle: car.name, metaDescription: car.subtitle } as Json,
     };
   }
 
@@ -134,7 +134,7 @@ function buildVehicleRowFromStatic(id: string, type: "car" | "scooter"): TablesI
     variants: (detail?.variants ?? []) as Json,
     spec_table: (detail?.specGroups ?? []) as Json,
     content: { catalog: scooter, detail } as Json,
-    seo: { title: scooter.name, description: scooter.subtitle } as Json,
+    seo: { metaTitle: scooter.name, metaDescription: scooter.subtitle } as Json,
   };
 }
 
@@ -277,7 +277,7 @@ export async function createVehicleFromClone(payload: CreateVehiclePayload) {
     content: cloneVehicleContent(source.content, { id, slug, name, type: payload.type }),
     seo: {
       ...(asObject(source.seo as Json) ?? {}),
-      title: name,
+      metaTitle: name,
     } as Json,
   };
 
