@@ -3,12 +3,10 @@ import { SeoHubClient } from "@/components/admin/seo/SeoHubClient";
 import { SeoProductsSection } from "@/components/admin/seo/SeoProductsSection";
 import { SeoNewsSection } from "@/components/admin/seo/SeoNewsSection";
 
+export const dynamic = "force-dynamic";
+
 function ProductsTabFallback() {
   return <p className="text-sm text-zinc-500">Đang tải danh sách sản phẩm…</p>;
-}
-
-function BlogTabFallback() {
-  return <p className="text-sm text-zinc-500">Đang tải danh sách bài viết…</p>;
 }
 
 function SeoHubFallback() {
@@ -24,11 +22,7 @@ export default function SeoHubPage() {
             <SeoProductsSection />
           </Suspense>
         }
-        blogSection={
-          <Suspense fallback={<BlogTabFallback />}>
-            <SeoNewsSection />
-          </Suspense>
-        }
+        blogSection={<SeoNewsSection />}
       />
     </Suspense>
   );

@@ -1,9 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FileText, Newspaper } from "lucide-react";
-import { createAdminClient } from "@vinfast3s/supabase/admin";
-import { isSupabaseConfigured } from "@vinfast3s/supabase";
-import { mapNewsRow } from "@webclient/lib/cms/news-mappers";
-import { getNewsCategoryLabel } from "@webclient/lib/cms/news-types";
+import { getNewsCategoryLabel, type NewsArticle } from "@webclient/lib/cms/news-types";
 import type { SeoRecord } from "@/lib/seo";
 import { Card, CardContent } from "@/components/ui/core";
 
@@ -18,8 +18,45 @@ function isSeoOptimized(seo: SeoRecord): boolean {
   return Boolean(seo.metaTitle?.trim() && seo.metaDescription?.trim());
 }
 
-export async function SeoNewsSection() {
-  if (!isSupabaseConfigured()) {
+export function SeoNewsSection() {
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [configured, setConfigured] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/news", { credentials: "include" })
+      .then(async (response) => {
+        const data = await response.json().catch(() => null);
+        if (!response.ok) {
+          throw new Error(data?.error ?? "Không tải được danh sách bài viết");
+        }
+        if (cancelled) return;
+        setConfigured(data?.configured !== false);
+        setArticles(Array.isArray(data?.articles) ? data.articles : []);
+        setError(null);
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setError(err instanceof Error ? err.message : "Không tải được danh sách bài viết");
+        setArticles([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return <p className="text-sm text-zinc-500">Đang tải danh sách bài viết…</p>;
+  }
+
+  if (!configured) {
     return (
       <p className="text-sm text-zinc-500">
         Database chưa được cấu hình nên chưa tải được danh sách bài viết.
@@ -27,17 +64,9 @@ export async function SeoNewsSection() {
     );
   }
 
-  const admin = createAdminClient();
-  const { data, error } = await admin
-    .from("news_articles")
-    .select("*")
-    .order("updated_at", { ascending: false });
-
   if (error) {
-    return <p className="text-sm text-red-600">Không tải được danh sách bài viết: {error.message}</p>;
+    return <p className="text-sm text-red-600">Không tải được danh sách bài viết: {error}</p>;
   }
-
-  const articles = (data ?? []).map(mapNewsRow);
 
   if (articles.length === 0) {
     return (
