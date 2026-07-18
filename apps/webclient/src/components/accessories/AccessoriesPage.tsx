@@ -921,10 +921,12 @@ function InstallProcessSection() {
           {INSTALL_STEPS.map(({ step, title, desc }, index) => (
             <StaggerItem key={step} index={index}>
               <div className="page-section-card relative h-full p-6 transition-all group hover:shadow-md">
-                <span className="text-3xl font-black text-brand/20 group-hover:text-brand transition-colors">
-                  {step}
-                </span>
-                <h3 className="mt-3 text-sm font-black text-brand-dark uppercase">{title}</h3>
+                <div className="flex items-baseline gap-3">
+                  <span className="text-3xl font-black text-brand/20 group-hover:text-brand transition-colors">
+                    {step}
+                  </span>
+                  <h3 className="text-sm font-black text-brand-dark uppercase">{title}</h3>
+                </div>
                 <p className="mt-2 text-xs leading-relaxed text-slate-400 font-medium">{desc}</p>
               </div>
             </StaggerItem>
@@ -960,7 +962,7 @@ function PromoBanners() {
             </p>
             <a
               href={HOTLINE_TEL}
-              className="home-cta-primary mt-5 inline-flex self-start rounded-full px-6 py-2.5 text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
+              className="home-cta-primary mt-5 inline-flex self-center rounded-full px-6 py-2.5 text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc] sm:self-start"
             >
               GỌI ĐẶT LỊCH HẸN NGAY
             </a>
@@ -996,7 +998,7 @@ function PromoBanners() {
             </ul>
             <a
               href={HOTLINE_TEL}
-              className="mt-5 inline-block rounded-full border-2 border-brand bg-white px-6 py-2.5 text-[11px] font-semibold tracking-wide text-brand transition hover:bg-brand hover:text-white"
+              className="mx-auto mt-5 block w-fit rounded-full border-2 border-brand bg-white px-6 py-2.5 text-[11px] font-semibold tracking-wide text-brand transition hover:bg-brand hover:text-white sm:mx-0"
             >
               TRA CỨU Hạn BẢO HÀNH
             </a>

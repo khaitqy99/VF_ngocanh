@@ -35,7 +35,7 @@ function ContactChip({
 }) {
   return (
     <div className={`home-stat-chip-light flex gap-3 rounded-xl p-3.5 ${className}`}>
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/8 text-brand">
+      <span className="flex size-8 shrink-0 items-center justify-center text-brand">
         <Icon className="size-4" strokeWidth={2} aria-hidden />
       </span>
       <div className="min-w-0">

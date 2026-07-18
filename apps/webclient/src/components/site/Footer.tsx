@@ -47,8 +47,8 @@ function FooterLinkList({ items }: { items: readonly FooterLink[] }) {
 function ContactRow({ icon: Icon, children }: { icon: ElementType; children: ReactNode }) {
   return (
     <li className="flex gap-2.5">
-      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-brand/8 text-brand">
-        <Icon size={14} strokeWidth={2} aria-hidden />
+      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center text-brand">
+        <Icon size={16} strokeWidth={2} aria-hidden />
       </span>
       <span className="min-w-0 pt-0.5 text-[13px] leading-relaxed text-foreground/80">
         {children}
@@ -111,7 +111,7 @@ export default function Footer({
             <FooterLinkList items={settings.columns.about.links} />
           </FadeIn>
 
-          <FadeIn delay={0.14} className="col-span-2 sm:col-span-1">
+          <FadeIn delay={0.14}>
             <FooterHeading>{settings.columns.policies.title}</FooterHeading>
             <FooterLinkList items={settings.columns.policies.links} />
           </FadeIn>

@@ -42,7 +42,7 @@ export function PdpQuickSpecBar({ specs, embedded }: { specs: PdpSpecItem[]; emb
       key={`quick-spec-${i}`}
       className="home-stat-chip-light group flex flex-col items-center rounded-2xl px-2 py-3 text-center transition hover:border-brand/30 hover:shadow-soft sm:px-3 sm:py-4"
     >
-      <span className="mb-2 flex size-9 items-center justify-center rounded-xl bg-brand/8 text-brand transition group-hover:bg-brand group-hover:text-white sm:size-10">
+      <span className="mb-2 flex size-9 items-center justify-center text-brand sm:size-10">
         <spec.icon className="size-4 sm:size-[18px]" strokeWidth={1.75} />
       </span>
       <div

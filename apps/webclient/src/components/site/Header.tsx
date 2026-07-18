@@ -140,7 +140,7 @@ export default function Header() {
             </SheetHeader>
 
             <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Menu điều hướng">
-              <ul className="space-y-1">
+              <ul className="space-y-1 text-center">
                 {MAIN_SITE_NAV.map(({ label, href }, i) => {
                   const active =
                     pathname === href || (href === "/tin-tuc" && pathname.startsWith("/tin-tuc/"));
