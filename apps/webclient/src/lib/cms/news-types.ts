@@ -47,9 +47,17 @@ export const NEWS_CATEGORIES = [
   { value: "general", label: "Tin chung" },
 ] as const;
 
+export const DEFAULT_NEWS_AUTHOR_LABEL = "Admin";
+
 export function getNewsCategoryLabel(value: string | null | undefined): string {
   if (!value) return "Tin chung";
   return NEWS_CATEGORIES.find((c) => c.value === value)?.label ?? value;
+}
+
+export function getNewsAuthorLabel(authorName: string | null | undefined): string {
+  const trimmed = authorName?.trim();
+  if (!trimmed || trimmed.includes("@")) return DEFAULT_NEWS_AUTHOR_LABEL;
+  return trimmed;
 }
 
 export function formatNewsDate(iso: string | null | undefined): string {

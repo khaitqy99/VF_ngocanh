@@ -1,4 +1,4 @@
-import type { NewsArticle } from "@/lib/cms/news-types";
+import { getNewsAuthorLabel, type NewsArticle } from "@/lib/cms/news-types";
 import { PRODUCTION_SITE_URL, SITE_BRAND_NAME } from "@/lib/seo/types";
 import { resolveSeoContent } from "@/lib/seo/resolve";
 
@@ -22,15 +22,10 @@ export function buildNewsArticleSchema(article: NewsArticle) {
     image: [imageUrl],
     datePublished: article.publishedAt ?? article.createdAt,
     dateModified: article.updatedAt,
-    author: article.authorName
-      ? {
-          "@type": "Person",
-          name: article.authorName,
-        }
-      : {
-          "@type": "Organization",
-          name: SITE_BRAND_NAME,
-        },
+    author: {
+      "@type": "Person",
+      name: getNewsAuthorLabel(article.authorName),
+    },
     publisher: {
       "@type": "Organization",
       name: SITE_BRAND_NAME,

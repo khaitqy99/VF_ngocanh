@@ -9,6 +9,7 @@ import { IMAGES } from "@/lib/images";
 import { formatPrice } from "@/lib/cars";
 import {
   formatNewsDate,
+  getNewsAuthorLabel,
   getNewsCategoryLabel,
   type NewsArticle,
   type ResolvedNewsProduct,
@@ -136,12 +137,10 @@ export default function NewsDetailPage({
                 {formatNewsDate(article.publishedAt)}
               </span>
             ) : null}
-            {article.authorName ? (
-              <span className="inline-flex items-center gap-1.5 font-medium">
-                <User className="h-4 w-4 text-brand/70" />
-                {article.authorName}
-              </span>
-            ) : null}
+            <span className="inline-flex items-center gap-1.5 font-medium">
+              <User className="h-4 w-4 text-brand/70" />
+              {getNewsAuthorLabel(article.authorName)}
+            </span>
           </div>
 
           <h1 className={vfHeroTitle}>{article.title}</h1>

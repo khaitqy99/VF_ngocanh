@@ -422,7 +422,7 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
                     onChange={(e) => {
                       const user = users.find((item) => item.id === e.target.value);
                       updateField("authorId", e.target.value);
-                      updateField("authorName", user?.fullName || user?.email || "");
+                      updateField("authorName", user?.fullName || "Admin");
                     }}
                     className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm"
                   >

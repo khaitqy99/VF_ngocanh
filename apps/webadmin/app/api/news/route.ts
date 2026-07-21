@@ -67,9 +67,7 @@ export async function POST(request: Request) {
       ...body,
       title,
       authorId: body.authorId ?? session?.id ?? null,
-      authorName:
-        body.authorName ??
-        (typeof session?.email === "string" ? session.email : null),
+      authorName: body.authorName ?? "Admin",
     },
     slug,
   );
