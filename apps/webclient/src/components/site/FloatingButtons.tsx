@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUp, Phone, MessageCircle } from "lucide-react";
-import { HOTLINE_TEL } from "@/lib/contact";
+import { ArrowUp, Phone } from "lucide-react";
+import { ZaloBrandIcon } from "@/components/icons/SocialBrandIcons";
+import {
+  FACEBOOK_URL as DEFAULT_FACEBOOK_URL,
+  HOTLINE_TEL,
+  ZALO_URL as DEFAULT_ZALO_URL,
+} from "@/lib/dealership";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { floatEntrance, springSnappy } from "@/lib/motion";
 
-const MESSENGER_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL?.trim() || "";
-const ZALO_URL = process.env.NEXT_PUBLIC_ZALO_URL?.trim() || "";
+const MESSENGER_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL?.trim() || DEFAULT_FACEBOOK_URL;
+const ZALO_URL = process.env.NEXT_PUBLIC_ZALO_URL?.trim() || DEFAULT_ZALO_URL;
 
 const floatBtn =
   "flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors sm:h-12 sm:w-12";
@@ -64,22 +69,29 @@ export default function FloatingButtons() {
         {...floatProps}
         custom={1}
         {...hoverTap}
-        className={`${floatBtn} border border-brand/25 bg-brand shadow-[var(--shadow-brand)] hover:bg-[#0046cc]${MESSENGER_URL ? "" : " pointer-events-none opacity-50"}`}
-        aria-label="Messenger"
+        className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${MESSENGER_URL ? "" : " pointer-events-none opacity-50"}`}
+        aria-label="Facebook"
         {...(MESSENGER_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
-        <MessageCircle size={20} />
+        <img
+          src="/images/icons/facebook-messenger.png"
+          alt=""
+          aria-hidden
+          width={48}
+          height={48}
+          className="h-full w-full"
+        />
       </motion.a>
       <motion.a
         href={ZALO_URL || "#"}
         {...floatProps}
         custom={2}
         {...hoverTap}
-        className={`${floatBtn} border border-blue-700/20 bg-[#0068FF] text-[10px] font-black hover:bg-[#0058d6]${ZALO_URL ? "" : " pointer-events-none opacity-50"}`}
+        className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${ZALO_URL ? "" : " pointer-events-none opacity-50"}`}
         aria-label="Zalo"
         {...(ZALO_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
-        Zalo
+        <ZaloBrandIcon size={48} className="h-full w-full" />
       </motion.a>
       <AnimatePresence>
         {show && (

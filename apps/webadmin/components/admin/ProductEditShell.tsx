@@ -117,7 +117,6 @@ export function ProductEditShell({
           listLabel={listLabel}
           productName={displayName}
           previewPath={previewPath}
-          publicHref={publicHref}
           mediaCategory={mediaCategory}
           mediaSlug={mediaSlug}
         />

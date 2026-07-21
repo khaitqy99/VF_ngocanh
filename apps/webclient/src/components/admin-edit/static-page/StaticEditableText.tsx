@@ -110,3 +110,57 @@ export function StaticEditImageButton({ imagePath }: { imagePath: string }) {
     </button>
   );
 }
+
+export function StaticEditHeroBannerControls({
+  imagePath,
+  imageAlt,
+  imageAltPath,
+  imagePosition = "center",
+  imagePositionPath,
+}: {
+  imagePath: string;
+  imageAlt: string;
+  imageAltPath: string;
+  imagePosition?: "top" | "center" | "bottom";
+  imagePositionPath: string;
+}) {
+  const edit = useStaticPageAdminEdit();
+  if (!edit?.editMode) return null;
+
+  return (
+    <div className="w-[220px] rounded-xl border border-white/30 bg-white/85 p-2.5 text-brand-dark shadow-lg backdrop-blur">
+      <button
+        type="button"
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          edit.requestImage(imagePath);
+        }}
+        className="mb-2 w-full rounded-md bg-brand px-2 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white"
+      >
+        Đổi ảnh banner
+      </button>
+      <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+        Alt ảnh banner
+      </label>
+      <input
+        type="text"
+        value={imageAlt}
+        onChange={(event) => edit.updateField(imageAltPath, event.target.value)}
+        className="mb-2 w-full rounded-md border border-border bg-white px-2 py-1.5 text-xs outline-none transition hover:border-brand/40 focus:border-brand"
+      />
+      <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+        Vị trí ảnh
+      </label>
+      <select
+        value={imagePosition}
+        onChange={(event) => edit.updateField(imagePositionPath, event.target.value)}
+        className="w-full rounded-md border border-border bg-white px-2 py-1.5 text-xs outline-none transition hover:border-brand/40 focus:border-brand"
+      >
+        <option value="top">Canh trên</option>
+        <option value="center">Canh giữa</option>
+        <option value="bottom">Canh dưới</option>
+      </select>
+    </div>
+  );
+}

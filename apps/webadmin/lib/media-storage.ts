@@ -21,7 +21,25 @@ export function mediaFolderStoragePrefix(category: MediaCategory, slug: string):
       return `images/vinfast/accessories/${slug}`;
     case "news":
       return `images/news/${slug}`;
+    case "pages":
+      return `images/pages/${slug}`;
   }
+}
+
+export function sanitizeMediaFolderSlug(input: string): string {
+  return (
+    input
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9._-]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .toLowerCase() || "thu-muc"
+  );
+}
+
+export function slugFromFolderName(name: string): string {
+  return sanitizeMediaFolderSlug(name.trim());
 }
 
 export function sanitizeMediaFilename(name: string): string {

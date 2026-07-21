@@ -18,7 +18,15 @@ import { SCOOTERS } from "@webclient/lib/scooters";
 import { VINFAST_ACCESSORIES } from "@webclient/lib/vinfast-accessories";
 import { getCarDetail } from "@webclient/lib/car-details";
 import { getScooterDetail } from "@webclient/lib/scooter-details";
-import type { MediaImage, NewsArticleMediaRef } from "@/lib/media-library";
+import type { MediaImage, NewsArticleMediaRef, PageMediaRef } from "@/lib/media-library";
+import { collectImagePathsFromValue } from "@/lib/media-page-images";
+import {
+  STATIC_PAGE_META,
+  STATIC_PAGE_SLUGS,
+  getDefaultStaticPageContent,
+  mergeStaticPageContent,
+  type StaticPageSlug,
+} from "@webclient/lib/cms/static-pages";
 import { ADMIN_MEDIA_CACHE_TAG } from "@/lib/media-revalidate";
 
 async function fetchVehicles(type: "car" | "scooter") {
@@ -196,6 +204,114 @@ export async function getAdminNewsArticlesForMedia(): Promise<NewsArticleMediaRe
   }
 }
 
+export async function getAdminPagesForMedia(): Promise<PageMediaRef[]> {
+  const buildRef = (
+    slug: string,
+    name: string,
+    productHref: string,
+    subtitle: string,
+    content: unknown,
+    banners: unknown[] = [],
+  ): PageMediaRef => {
+    const seedPaths = [
+      ...collectImagePathsFromValue(content),
+      ...collectImagePathsFromValue(banners),
+    ];
+    return {
+      slug,
+      name,
+      subtitle,
+      productHref,
+      seedPaths: [...new Set(seedPaths)],
+    };
+  };
+
+  if (!isSupabaseConfigured()) {
+    return [
+      buildRef("home", "Trang chủ", "/admin/homepage", "Banner & section trang chủ", null),
+      ...STATIC_PAGE_SLUGS.map((slug) => {
+        const meta = STATIC_PAGE_META[slug];
+        const defaults = getDefaultStaticPageContent(slug);
+        return buildRef(
+          slug,
+          meta.label,
+          `/admin/pages/${slug}`,
+          meta.path,
+          defaults,
+        );
+      }),
+    ];
+  }
+
+  try {
+    const admin = createAdminClient();
+    const { data: cmsPages, error: pagesError } = await admin
+      .from("cms_pages")
+      .select("slug, content")
+      .in("slug", ["home", ...STATIC_PAGE_SLUGS]);
+    if (pagesError) throw pagesError;
+
+    const contentBySlug = new Map((cmsPages ?? []).map((row) => [row.slug, row.content]));
+
+    const { data: bannerRows, error: bannersError } = await admin
+      .from("banners")
+      .select("placement, desktop_image_url, mobile_image_url, alt_text, sort_order")
+      .in("placement", ["home", "after_sales", "charging"]);
+    if (bannersError) throw bannersError;
+
+    const bannersByPlacement = new Map<string, unknown[]>();
+    for (const row of bannerRows ?? []) {
+      const list = bannersByPlacement.get(row.placement) ?? [];
+      list.push({
+        desktop: row.desktop_image_url,
+        mobile: row.mobile_image_url,
+        alt: row.alt_text,
+        sortOrder: row.sort_order,
+      });
+      bannersByPlacement.set(row.placement, list);
+    }
+
+    const homeContent = contentBySlug.get("home");
+    const pages: PageMediaRef[] = [
+      buildRef(
+        "home",
+        "Trang chủ",
+        "/admin/homepage",
+        "/",
+        homeContent,
+        bannersByPlacement.get("home") ?? [],
+      ),
+    ];
+
+    for (const slug of STATIC_PAGE_SLUGS) {
+      const meta = STATIC_PAGE_META[slug as StaticPageSlug];
+      const merged = mergeStaticPageContent(slug, contentBySlug.get(slug));
+      const banners = meta.bannerPlacement
+        ? bannersByPlacement.get(meta.bannerPlacement) ?? []
+        : [];
+      pages.push(
+        buildRef(slug, meta.label, `/admin/pages/${slug}`, meta.path, merged, banners),
+      );
+    }
+
+    return pages;
+  } catch {
+    return [
+      buildRef("home", "Trang chủ", "/admin/homepage", "/", null),
+      ...STATIC_PAGE_SLUGS.map((slug) => {
+        const meta = STATIC_PAGE_META[slug];
+        return buildRef(
+          slug,
+          meta.label,
+          `/admin/pages/${slug}`,
+          meta.path,
+          getDefaultStaticPageContent(slug),
+        );
+      }),
+    ];
+  }
+}
+
 export type AdminDashboardStats = {
   carCount: number;
   scooterCount: number;
@@ -211,15 +327,28 @@ export type AdminDashboardStats = {
 export const getAdminMediaFolders = unstable_cache(
   async () => {
     const { buildMediaFolders } = await import("@/lib/media-library");
-    const [cars, scooters, accessories, galleries, mediaAssets, newsArticles] = await Promise.all([
-      getAdminCars(),
-      getAdminScooters(),
-      getAdminAccessories(),
-      getAdminVehicleGalleries(),
-      getAdminMediaAssetsByFolder(),
-      getAdminNewsArticlesForMedia(),
-    ]);
-    return buildMediaFolders(cars, scooters, accessories, galleries, mediaAssets, newsArticles);
+    const { getCustomMediaFolders } = await import("@/lib/media-custom-folders");
+    const [cars, scooters, accessories, galleries, mediaAssets, newsArticles, customFolders, pages] =
+      await Promise.all([
+        getAdminCars(),
+        getAdminScooters(),
+        getAdminAccessories(),
+        getAdminVehicleGalleries(),
+        getAdminMediaAssetsByFolder(),
+        getAdminNewsArticlesForMedia(),
+        getCustomMediaFolders(),
+        getAdminPagesForMedia(),
+      ]);
+    return buildMediaFolders(
+      cars,
+      scooters,
+      accessories,
+      galleries,
+      mediaAssets,
+      newsArticles,
+      customFolders,
+      pages,
+    );
   },
   ["admin-cms-media-folders"],
   { revalidate: 60, tags: [ADMIN_MEDIA_CACHE_TAG] },

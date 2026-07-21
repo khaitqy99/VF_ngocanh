@@ -11,7 +11,6 @@ import {
   vehiclesToText,
 } from "@/components/admin-edit/catalog-edit";
 import {
-  adminFormImageBtn,
   adminFormInput,
   adminFormLabel,
   adminFormSelect,
@@ -28,6 +27,7 @@ import {
 } from "@/lib/accessories";
 import { vfCatalogCardTitle } from "@/lib/typography";
 import { ResilientLink } from "@/components/site/ResilientLink";
+import { AdminImageActions } from "@/components/admin-edit/AdminImageActions";
 
 export function AccessoryProductCard({
   product,
@@ -68,23 +68,6 @@ export function AccessoryProductCard({
     return () => window.removeEventListener("message", onMessage);
   }, [adminEdit, product.id, product.name]);
 
-  const requestImage = () => {
-    if (typeof window === "undefined" || window.parent === window) {
-      toast.message("Mở từ trang admin để dùng thư viện media");
-      return;
-    }
-    window.parent.postMessage(
-      {
-        type: "vf-admin-pick-image",
-        path: "image",
-        productId: product.id,
-        category: "accessories",
-        slug: resolveAccessoryMediaSlug(draft.vehicles),
-      },
-      "*",
-    );
-  };
-
   const saveToAdmin = () => {
     const patches = getAccessoryCatalogPatches(product, draft);
     if (Object.keys(patches).length === 0) {
@@ -122,9 +105,12 @@ export function AccessoryProductCard({
             alt={draft.name}
             className="aspect-square w-full bg-[#f7f9f9] object-contain p-3"
           />
-          <button type="button" onClick={requestImage} className={adminFormImageBtn}>
-            Đổi ảnh
-          </button>
+          <AdminImageActions
+            path="image"
+            category="accessories"
+            slug={resolveAccessoryMediaSlug(draft.vehicles)}
+            productId={product.id}
+          />
           {(draft.badge || !draft.inStock) && (
             <div className="absolute left-2 top-2 z-10 flex flex-col gap-1">
               {draft.badge ? (

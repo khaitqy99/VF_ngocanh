@@ -136,7 +136,7 @@ export function ProductCreateClient({
 
       const createdId =
         productKind === "accessory" ? data.accessory?.id : data.vehicle?.id;
-      toast("Đã tạo sản phẩm nháp — upload ảnh trong Thư viện ảnh");
+      toast("Đã tạo sản phẩm nháp — có thể upload ảnh ngay trong preview hoặc Thư viện ảnh");
       router.push(`${listHref}/${createdId}`);
     } catch (error) {
       toast(error instanceof Error ? error.message : "Tạo sản phẩm thất bại");

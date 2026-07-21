@@ -118,6 +118,7 @@ export function StaticPageAdminEditProvider({
           path,
           productType: "static-page",
           slug: draft.slug,
+          category: "pages",
         },
         "*",
       );

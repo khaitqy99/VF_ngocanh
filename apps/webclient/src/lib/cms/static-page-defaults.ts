@@ -10,6 +10,8 @@ export const DEFAULT_ABOUT_CONTENT: AboutPageContent = {
     description:
       "Tọa lạc tại Cà Mau, VinFast Ngọc Anh Cà Mau tự hào là đại lý ủy quyền 3S chính thức của VinFast Việt Nam. Chúng tôi cam kết mang tới cho khách hàng miền Tây những chiếc ô tô điện, xe máy điện thông minh đỉnh cao đi kèm dịch vụ bảo dưỡng, phụ tùng chính hãng vượt trội.",
     image: IMAGES.aboutShowroomBanner,
+    imageAlt: "Showroom VinFast Ngọc Anh Cà Mau",
+    imagePosition: "center",
   },
   stats: [
     { value: "5+", label: "Năm kinh nghiệm đồng hành cùng VinFast" },

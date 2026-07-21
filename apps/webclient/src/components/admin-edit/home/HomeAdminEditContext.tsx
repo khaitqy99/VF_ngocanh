@@ -232,8 +232,8 @@ export function HomeAdminEditProvider({
         type: "vf-admin-pick-image",
         path,
         productType: "home",
-        category: "cars",
-        slug: "vf8-all-new",
+        category: "pages",
+        slug: "home",
       },
       "*",
     );

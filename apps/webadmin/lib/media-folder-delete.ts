@@ -3,6 +3,7 @@ import type { MediaCategory } from "@/lib/media-library";
 import { deleteMediaFolderAssets } from "@/lib/product-media-cleanup";
 import { getAdminMediaFolders } from "@/lib/cms";
 import { getMediaFolder } from "@/lib/media-library";
+import { removeCustomMediaFolder, getCustomMediaFolders, isCustomMediaFolder } from "@/lib/media-custom-folders";
 
 export type MediaFolderDeletePreview = {
   folderName: string;
@@ -55,6 +56,14 @@ export async function getMediaFolderDeletePreview(
     }
   }
 
+  if (category === "pages") {
+    if (slug === "home") {
+      warnings.push("Đây là thư mục ảnh trang chủ — ảnh trên trang có thể bị lỗi.");
+    } else {
+      warnings.push("Trang này vẫn tồn tại — ảnh trên trang có thể bị lỗi.");
+    }
+  }
+
   return {
     folderName: folder.name,
     imageCount: folder.images.length,
@@ -67,5 +76,11 @@ export async function deleteMediaFolder(category: MediaCategory, slug: string) {
   if (!preview) throw new Error("Không tìm thấy thư mục ảnh");
 
   const media = await deleteMediaFolderAssets(category, slug);
+
+  const customFolders = await getCustomMediaFolders();
+  if (isCustomMediaFolder(customFolders, category, slug)) {
+    await removeCustomMediaFolder(category, slug);
+  }
+
   return { ...media, folderName: preview.folderName };
 }

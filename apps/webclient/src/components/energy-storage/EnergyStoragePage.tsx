@@ -67,6 +67,7 @@ import { useStaticPageAdminEdit } from "@/components/admin-edit/static-page/Stat
 import { StaticEditableFaqBlock } from "@/components/admin-edit/static-page/StaticEditableFaqBlock";
 import {
   StaticEditableText,
+  StaticEditHeroBannerControls,
   StaticEditImageButton,
 } from "@/components/admin-edit/static-page/StaticEditableText";
 import { FadeIn, StaggerGrid, StaggerItem } from "@/components/motion";
@@ -502,14 +503,14 @@ function HeroSection({
         <StaticEditableText
           value={stat.value}
           onChange={(value) => edit?.updateField(`stats.${index}.value`, value)}
-          className="text-white font-bold"
+          className="text-brand-dark font-bold"
         />
       ),
       label: (
         <StaticEditableText
           value={stat.label}
           onChange={(value) => edit?.updateField(`stats.${index}.label`, value)}
-          className="text-white/60 text-xs"
+          className="text-muted-foreground text-xs"
           multiline
         />
       ),
@@ -518,22 +519,31 @@ function HeroSection({
 
   return (
     <div className="relative">
-      <StaticEditImageButton imagePath="hero.image" />
       <PageEditorialHero
         imageSrc={hero?.image ?? IMAGES.chargingStations}
-        imageAlt="Hệ thống lưu trữ năng lượng VinFast"
+        imageAlt={hero?.imageAlt ?? "Hệ thống lưu trữ năng lượng VinFast"}
+        imagePosition={hero?.imagePosition ?? "center"}
+        bannerControls={
+          <StaticEditHeroBannerControls
+            imagePath="hero.image"
+            imageAlt={hero?.imageAlt ?? "Hệ thống lưu trữ năng lượng VinFast"}
+            imageAltPath="hero.imageAlt"
+            imagePosition={hero?.imagePosition ?? "center"}
+            imagePositionPath="hero.imagePosition"
+          />
+        }
         eyebrow={
           <StaticEditableText
             value={hero?.eyebrow ?? ""}
             onChange={(value) => edit?.updateField("hero.eyebrow", value)}
-            className="text-white"
+            className="text-brand"
           />
         }
         title={
           <StaticEditableText
             value={hero?.title ?? ""}
             onChange={(value) => edit?.updateField("hero.title", value)}
-            className="text-white"
+            className="text-brand-dark"
           />
         }
         titleAccent=""
@@ -541,7 +551,7 @@ function HeroSection({
           <StaticEditableText
             value={hero?.subtitle ?? ""}
             onChange={(value) => edit?.updateField("hero.subtitle", value)}
-            className="text-white/75"
+            className="text-muted-foreground"
             multiline
           />
         }
@@ -556,9 +566,9 @@ function HeroSection({
             </button>
             <a
               href={HOTLINE_TEL}
-              className="home-cta-ghost inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md"
+              className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-white px-7 py-3.5 text-sm font-semibold text-brand-dark shadow-sm transition hover:border-brand/30 hover:bg-surface-muted"
             >
-              <Phone className="size-4 text-accent-yellow" /> HOTLINE: {HOTLINE}
+              <Phone className="size-4 text-brand" /> HOTLINE: {HOTLINE}
             </a>
           </>
         }

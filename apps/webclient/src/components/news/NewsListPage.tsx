@@ -90,10 +90,18 @@ function CategoryBadge({
 function NewsHighlightsSection({ main, side }: { main: NewsArticle | null; side: NewsArticle[] }) {
   if (!main) return null;
 
+  const hasSideArticles = side.length > 0;
+
   return (
     <section className="section-y border-b border-border/60 bg-white">
       <div className="container-vf">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-5">
+        <div
+          className={
+            hasSideArticles
+              ? "grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-5"
+              : "grid gap-4"
+          }
+        >
           <Link
             href={`/tin-tuc/${main.slug}`}
             className="group relative min-h-[320px] overflow-hidden rounded-xl bg-brand-dark shadow-card md:min-h-[420px]"
@@ -127,35 +135,32 @@ function NewsHighlightsSection({ main, side }: { main: NewsArticle | null; side:
             </div>
           </Link>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            {side.map((article) => (
-              <Link
-                key={article.id}
-                href={`/tin-tuc/${article.slug}`}
-                className="group relative min-h-[180px] overflow-hidden rounded-xl bg-slate-100 shadow-soft lg:min-h-[200px]"
-              >
-                <Image
-                  src={article.coverImageUrl || IMAGES.showroom}
-                  alt={article.title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/85 via-brand-dark/25 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <CategoryBadge category={article.category} variant="on-dark" />
-                  <p className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-white">
-                    {article.title}
-                  </p>
-                </div>
-              </Link>
-            ))}
-            {side.length === 0 ? (
-              <div className="flex min-h-[180px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-muted p-6 text-center text-sm text-muted-foreground lg:min-h-[200px]">
-                Thêm bài viết để hiển thị tiêu điểm phụ
-              </div>
-            ) : null}
-          </div>
+          {hasSideArticles ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {side.map((article) => (
+                <Link
+                  key={article.id}
+                  href={`/tin-tuc/${article.slug}`}
+                  className="group relative min-h-[180px] overflow-hidden rounded-xl bg-slate-100 shadow-soft lg:min-h-[200px]"
+                >
+                  <Image
+                    src={article.coverImageUrl || IMAGES.showroom}
+                    alt={article.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/85 via-brand-dark/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <CategoryBadge category={article.category} variant="on-dark" />
+                    <p className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-white">
+                      {article.title}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

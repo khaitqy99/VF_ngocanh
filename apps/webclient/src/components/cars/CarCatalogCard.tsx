@@ -5,15 +5,12 @@ import { Save, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { getCarCatalogPatches } from "@/components/admin-edit/catalog-edit";
-import {
-  adminFormImageBtn,
-  adminFormInput,
-  adminFormLabel,
-} from "@/components/admin-edit/admin-form-styles";
+import { adminFormInput, adminFormLabel } from "@/components/admin-edit/admin-form-styles";
 import { formatPrice, type CarModel } from "@/lib/cars";
 import { carDetailPath } from "@/lib/seo/slugs";
 import { vfCatalogCardTitle } from "@/lib/typography";
 import { ResilientLink } from "@/components/site/ResilientLink";
+import { AdminImageActions } from "@/components/admin-edit/AdminImageActions";
 
 export function CarCatalogCard({
   car,
@@ -56,23 +53,6 @@ export function CarCatalogCard({
     return () => window.removeEventListener("message", onMessage);
   }, [adminEdit, car.id, car.name]);
 
-  const requestImage = () => {
-    if (typeof window === "undefined" || window.parent === window) {
-      toast.message("Mở từ trang admin để dùng thư viện media");
-      return;
-    }
-    window.parent.postMessage(
-      {
-        type: "vf-admin-pick-image",
-        path: "image",
-        productId: car.id,
-        category: "cars",
-        slug: car.id,
-      },
-      "*",
-    );
-  };
-
   const saveToAdmin = () => {
     const patches = getCarCatalogPatches(car, draft);
     if (Object.keys(patches).length === 0) {
@@ -112,9 +92,7 @@ export function CarCatalogCard({
               className="h-full w-full object-contain p-3 sm:p-4"
             />
           </div>
-          <button type="button" onClick={requestImage} className={adminFormImageBtn}>
-            Đổi ảnh
-          </button>
+          <AdminImageActions path="image" category="cars" slug={car.id} productId={car.id} />
           <div className="absolute left-2 top-2 z-10 flex flex-col gap-1">
             {draft.isBestSeller ? (
               <span className="rounded bg-brand px-1.5 py-0.5 text-[9px] font-extrabold uppercase text-white">

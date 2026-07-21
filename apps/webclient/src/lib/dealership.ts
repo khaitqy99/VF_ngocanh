@@ -23,6 +23,8 @@ export const SHOWROOM_EMAIL = "gdkdauto.vfcm@ngocanhcm.vn";
 
 export const RESCUE_HOTLINE = "0707 54 6666";
 export const RESCUE_HOTLINE_TEL = "tel:0707546666";
+export const ZALO_URL = "https://zalo.me/0707546666";
+export const FACEBOOK_URL = "https://www.facebook.com/vinfastngocanhcm";
 
 /** GPS for 111 Lý Thường Kiệt, Phường Tân Thành — align with Google Maps pin */
 export const SHOWROOM_LAT = 9.173417;
@@ -46,8 +48,8 @@ export const SHOWROOM_MAP_EMBED =
 export function getShowroomSameAs(): string[] {
   const links = [
     SHOWROOM_MAP_URL,
-    process.env.NEXT_PUBLIC_FACEBOOK_URL,
-    process.env.NEXT_PUBLIC_ZALO_URL,
+    process.env.NEXT_PUBLIC_FACEBOOK_URL?.trim() || FACEBOOK_URL,
+    process.env.NEXT_PUBLIC_ZALO_URL?.trim() || ZALO_URL,
     process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL,
   ].filter((url): url is string => Boolean(url?.trim()));
   return [...new Set(links)];

@@ -14,7 +14,7 @@ import { revalidateAdminMedia } from "@/lib/media-revalidate";
 
 export const runtime = "nodejs";
 
-const VALID_CATEGORIES = new Set<MediaCategory>(["cars", "scooters", "accessories", "news"]);
+const VALID_CATEGORIES = new Set<MediaCategory>(["cars", "scooters", "accessories", "news", "pages"]);
 
 async function appendToVehicleGallery(vehicleId: string, url: string) {
   const admin = createAdminClient();

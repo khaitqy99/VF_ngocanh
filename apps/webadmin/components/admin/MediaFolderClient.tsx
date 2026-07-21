@@ -26,9 +26,16 @@ import {
 } from "@/lib/media-library";
 import { clientAssetUrl } from "@/lib/product-utils";
 
-export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
+import { useMediaFolder } from "@/lib/use-media-folders";
+
+export function MediaFolderClient({ folder: initialFolder }: { folder: MediaFolder }) {
   const router = useRouter();
   const { toast } = useToast();
+  const { folder, refreshFolder } = useMediaFolder(
+    initialFolder,
+    initialFolder.category,
+    initialFolder.slug,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadCount, setUploadCount] = useState(0);
@@ -39,6 +46,7 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
 
   const uploadFiles = useCallback(
     async (fileList: FileList | File[]) => {
+      if (!folder) return;
       const files = Array.from(fileList).filter((file) => file.type.startsWith("image/"));
       if (!files.length) {
         toast("Không có file ảnh hợp lệ");
@@ -72,6 +80,7 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
         if (Array.isArray(data.errors) && data.errors.length) {
           toast(data.errors.join(" · "));
         }
+        await refreshFolder();
         router.refresh();
       } catch {
         toast("Upload thất bại — kiểm tra kết nối");
@@ -80,7 +89,7 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
         setUploadCount(0);
       }
     },
-    [folder.category, folder.slug, router, toast, uploading],
+    [folder, refreshFolder, router, toast, uploading],
   );
 
   const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,6 +147,7 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
       }
       toast("Đã xóa ảnh");
       setImageDeleteTarget(null);
+      await refreshFolder();
       router.refresh();
     } catch {
       toast("Không xóa được ảnh");
@@ -145,6 +155,10 @@ export function MediaFolderClient({ folder }: { folder: MediaFolder }) {
       setDeletingId(null);
     }
   };
+
+  if (!folder) {
+    return <p className="py-12 text-center text-sm text-zinc-500">Đang tải thư mục...</p>;
+  }
 
   return (
     <div className="space-y-6 pb-20">

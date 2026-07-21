@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getAdminMediaFolders } from "@/lib/cms";
 import { getMediaCategoryLabel } from "@/lib/media-library";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const folders = await getAdminMediaFolders();
 

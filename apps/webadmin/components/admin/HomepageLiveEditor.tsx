@@ -43,8 +43,8 @@ export function HomepageLiveEditor() {
       }
 
       if (event.data?.type === "vf-admin-pick-image" && event.data.productType === "home") {
-        const category = (event.data.category ?? "cars") as MediaCategory;
-        const slug = event.data.slug ?? "vf8-all-new";
+        const category = (event.data.category ?? "pages") as MediaCategory;
+        const slug = event.data.slug ?? "home";
         if (event.data.path) {
           setImagePicker({ path: event.data.path, category, slug });
         }

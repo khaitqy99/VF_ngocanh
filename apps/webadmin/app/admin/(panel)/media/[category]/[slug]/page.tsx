@@ -3,7 +3,7 @@ import { MediaFolderClient } from "@/components/admin/MediaFolderClient";
 import { getAdminMediaFolders } from "@/lib/cms-data";
 import { getMediaFolder, type MediaCategory } from "@/lib/media-library";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function MediaFolderPage({
   params,

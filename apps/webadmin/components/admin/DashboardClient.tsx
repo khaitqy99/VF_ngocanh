@@ -1,20 +1,17 @@
 "use client";
 
-import type { ComponentType, ReactNode } from "react";
+import type { ComponentType } from "react";
 import Link from "next/link";
 import {
   AlertCircle,
   Bike,
   Car,
   ChevronRight,
-  FileText,
   Globe,
   Images,
   Newspaper,
   Users,
   Wrench,
-  Zap,
-  Clock,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -91,43 +88,61 @@ function KpiCard({
   );
 }
 
-function AlertBanner({
-  title,
-  description,
-  tone = "amber",
-  actions,
+function DashboardAlerts({
+  items,
 }: {
-  title: string;
-  description: string;
-  tone?: "amber" | "red" | "blue";
-  actions?: ReactNode;
+  items: {
+    id: string;
+    tone: "amber" | "red";
+    message: string;
+    actions?: { href: string; label: string }[];
+  }[];
 }) {
-  const tones = {
-    amber: "border-amber-200 bg-amber-50/60 text-amber-950",
-    red: "border-red-200 bg-red-50/60 text-red-950",
-    blue: "border-blue-200 bg-blue-50/60 text-blue-950",
+  if (items.length === 0) return null;
+
+  const iconStyles = {
+    red: "text-red-600",
+    amber: "text-amber-600",
   };
-  const iconTones = {
-    amber: "bg-amber-100 text-amber-700",
-    red: "bg-red-100 text-red-700",
-    blue: "bg-blue-100 text-blue-700",
+  const textStyles = {
+    red: "text-red-950",
+    amber: "text-amber-950",
+  };
+  const linkStyles = {
+    red: "text-red-700 hover:text-red-900",
+    amber: "text-amber-800 hover:text-amber-950",
   };
 
   return (
-    <Card className={tones[tone]}>
-      <CardContent className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-3">
-          <div className={`rounded-lg p-2 ${iconTones[tone]}`}>
-            <AlertCircle className="h-5 w-5" />
+    <div className="overflow-hidden rounded-lg border border-zinc-200/80 bg-zinc-50/70 text-sm">
+      <div className="divide-y divide-zinc-200/60">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex flex-wrap items-center gap-x-2.5 gap-y-1 px-3.5 py-2"
+          >
+            <AlertCircle className={`h-3.5 w-3.5 shrink-0 ${iconStyles[item.tone]}`} />
+            <span className={`min-w-0 flex-1 ${textStyles[item.tone]}`}>{item.message}</span>
+            {item.actions?.length ? (
+              <div className="flex shrink-0 flex-wrap items-center gap-x-2.5 gap-y-0.5">
+                {item.actions.map((action, index) => (
+                  <span key={action.href} className="inline-flex items-center gap-x-2.5">
+                    {index > 0 ? <span className="text-xs text-zinc-300">·</span> : null}
+                    <Link
+                      href={action.href}
+                      className={`inline-flex items-center gap-0.5 text-xs font-medium underline-offset-2 hover:underline ${linkStyles[item.tone]}`}
+                    >
+                      {action.label}
+                      <ChevronRight className="h-3 w-3 opacity-60" />
+                    </Link>
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
-          <div>
-            <p className="font-semibold">{title}</p>
-            <p className="mt-1 text-sm opacity-80">{description}</p>
-          </div>
-        </div>
-        {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
-      </CardContent>
-    </Card>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -301,6 +316,103 @@ function LeadTypeDonutChart({
   );
 }
 
+function LeadPipelinePanel({ leads }: { leads: DashboardLeadSummary }) {
+  const statusItems = [
+    {
+      key: "new",
+      label: "Mới",
+      count: leads.new,
+      barClass: "bg-red-500",
+      href: "/admin/leads?status=new",
+    },
+    {
+      key: "in_progress",
+      label: "Đang xử lý",
+      count: leads.inProgress,
+      barClass: "bg-amber-400",
+      href: "/admin/leads?status=in_progress",
+    },
+    {
+      key: "converted",
+      label: "Chốt đơn",
+      count: leads.converted,
+      barClass: "bg-emerald-500",
+      href: "/admin/leads?status=converted",
+    },
+    {
+      key: "closed",
+      label: "Đóng",
+      count: leads.closed,
+      barClass: "bg-zinc-300",
+      href: "/admin/leads?status=closed",
+    },
+  ];
+
+  const activeItems = statusItems.filter((item) => item.count > 0);
+  const conversionRate = formatPercent(leads.converted, leads.total);
+
+  return (
+    <div className="mt-6 space-y-4 rounded-lg border border-zinc-100 bg-zinc-50/70 p-4">
+      <div className="flex items-center justify-between gap-3">
+        <h4 className="text-xs font-medium uppercase tracking-wide text-zinc-400">
+          Pipeline xử lý
+        </h4>
+        <span className="text-xs text-zinc-500">Tỷ lệ chốt {conversionRate}</span>
+      </div>
+
+      {leads.total > 0 ? (
+        <div className="flex h-2 overflow-hidden rounded-full bg-zinc-100">
+          {activeItems.map((item) => (
+            <div
+              key={item.key}
+              className={item.barClass}
+              style={{ width: `${(item.count / leads.total) * 100}%` }}
+              title={`${item.label}: ${item.count}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-zinc-400">Chưa có lead trong pipeline</p>
+      )}
+
+      <div className="grid grid-cols-2 gap-2">
+        {statusItems.map((item) => (
+          <Link
+            key={item.key}
+            href={item.href}
+            className="flex items-center justify-between rounded-md border border-zinc-100 bg-white px-3 py-2 text-sm transition-colors hover:border-zinc-200 hover:bg-zinc-50"
+          >
+            <span className="flex min-w-0 items-center gap-2 text-zinc-700">
+              <span className={`h-2 w-2 shrink-0 rounded-full ${item.barClass}`} />
+              <span className="truncate">{item.label}</span>
+            </span>
+            <span className="shrink-0 font-semibold tabular-nums text-zinc-900">{item.count}</span>
+          </Link>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 border-t border-zinc-100 pt-3">
+        <div className="rounded-md bg-white px-2 py-2 text-center">
+          <p className="text-lg font-bold tabular-nums text-zinc-900">{leads.today}</p>
+          <p className="text-[10px] text-zinc-500">Hôm nay</p>
+        </div>
+        <div className="rounded-md bg-white px-2 py-2 text-center">
+          <p className="text-lg font-bold tabular-nums text-emerald-600">{leads.converted}</p>
+          <p className="text-[10px] text-zinc-500">Đã chốt</p>
+        </div>
+        <div className="rounded-md bg-white px-2 py-2 text-center">
+          <p
+            className={`text-lg font-bold tabular-nums ${leads.staleNew > 0 ? "text-amber-600" : "text-zinc-900"}`}
+          >
+            {leads.staleNew}
+          </p>
+          <p className="text-[10px] text-zinc-500">Quá 24h</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LeadsOverviewCard({
   leads,
   recentLeads,
@@ -338,32 +450,14 @@ function LeadsOverviewCard({
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 border-b border-zinc-100 px-5 py-4 sm:grid-cols-4">
-          {[
-            { label: "Tổng lead", value: leads.total },
-            { label: "Mới", value: leads.new, accent: "text-red-600" },
-            { label: "Đang xử lý", value: leads.inProgress, accent: "text-amber-600" },
-            { label: "Chốt đơn", value: leads.converted, accent: "text-emerald-600" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-lg border border-zinc-100 bg-zinc-50/80 px-3 py-2.5"
-            >
-              <p className="text-xs text-zinc-500">{stat.label}</p>
-              <p className={`text-xl font-bold tabular-nums ${stat.accent ?? "text-zinc-900"}`}>
-                {stat.value}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 px-5 py-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 px-5 py-5 lg:grid-cols-2 lg:items-start">
           <div>
             <h3 className="mb-4 text-sm font-medium text-zinc-800">Tỷ lệ lead</h3>
             <LeadTypeDonutChart typeItems={typeEntries} total={leads.total} />
+            <LeadPipelinePanel leads={leads} />
           </div>
 
-          <div>
+          <div className="flex min-h-0 flex-col">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-sm font-medium text-zinc-800">Lead gần đây</h3>
               {leads.staleNew > 0 ? (
@@ -376,32 +470,34 @@ function LeadsOverviewCard({
             {recentLeads.length === 0 ? (
               <p className="py-6 text-center text-sm text-zinc-500">Chưa có lead nào</p>
             ) : (
-              <div className="divide-y divide-zinc-100 rounded-lg border border-zinc-100">
-                {recentLeads.map((lead) => (
-                  <Link
-                    key={lead.id}
-                    href={`/admin/leads/${lead.id}`}
-                    className="flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate font-medium text-zinc-900">{lead.fullName}</p>
-                      <p className="truncate text-sm text-zinc-500">
-                        {lead.phone}
-                        {lead.vehicleInterest ? ` · ${lead.vehicleInterest}` : ""}
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 flex-wrap items-center gap-2">
-                      <StatusBadge label={getLeadTypeLabel(lead.type)} variant="secondary" />
-                      <StatusBadge
-                        label={getLeadStatusLabel(lead.status)}
-                        variant={getLeadStatusVariant(lead.status)}
-                      />
-                      <span className="text-xs tabular-nums text-zinc-400">
-                        {formatLeadDate(lead.createdAt)}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+              <div className="max-h-[min(380px,55vh)] overflow-y-auto rounded-lg border border-zinc-100 pr-1">
+                <div className="divide-y divide-zinc-100">
+                  {recentLeads.map((lead) => (
+                    <Link
+                      key={lead.id}
+                      href={`/admin/leads/${lead.id}`}
+                      className="flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate font-medium text-zinc-900">{lead.fullName}</p>
+                        <p className="truncate text-sm text-zinc-500">
+                          {lead.phone}
+                          {lead.vehicleInterest ? ` · ${lead.vehicleInterest}` : ""}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 flex-wrap items-center gap-2">
+                        <StatusBadge label={getLeadTypeLabel(lead.type)} variant="secondary" />
+                        <StatusBadge
+                          label={getLeadStatusLabel(lead.status)}
+                          variant={getLeadStatusVariant(lead.status)}
+                        />
+                        <span className="text-xs tabular-nums text-zinc-400">
+                          {formatLeadDate(lead.createdAt)}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -430,6 +526,50 @@ export function DashboardClient({ overview }: { overview: DashboardOverview }) {
     overview.productStatus.scooters.published +
     overview.productStatus.accessories.published;
 
+  const alertItems: {
+    id: string;
+    tone: "amber" | "red";
+    message: string;
+    actions?: { href: string; label: string }[];
+  }[] = [];
+
+  if (!overview.configured) {
+    alertItems.push({
+      id: "config",
+      tone: "red",
+      message: "Database chưa cấu hình — kết nối Supabase trong .env để hiển thị dữ liệu thực.",
+    });
+  }
+
+  if (overview.leads.staleNew > 0) {
+    alertItems.push({
+      id: "stale-leads",
+      tone: "amber",
+      message: `${overview.leads.staleNew} lead mới quá 24h chưa xử lý`,
+      actions: [{ href: "/admin/leads?status=new", label: "Xem lead mới" }],
+    });
+  }
+
+  if (draftTotal > 0 || overview.draftMissingImageCount > 0) {
+    const draftActions: { href: string; label: string }[] = [];
+    if (overview.draftCarCount > 0) {
+      draftActions.push({ href: "/admin/cars", label: "Ô tô nháp" });
+    }
+    if (overview.draftScooterCount > 0) {
+      draftActions.push({ href: "/admin/scooters", label: "Xe máy nháp" });
+    }
+    if (overview.draftAccessoryCount > 0) {
+      draftActions.push({ href: "/admin/accessories", label: "Phụ kiện nháp" });
+    }
+
+    alertItems.push({
+      id: "draft-products",
+      tone: "amber",
+      message: draftParts.join(" · "),
+      actions: draftActions.length > 0 ? draftActions : undefined,
+    });
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -450,65 +590,9 @@ export function DashboardClient({ overview }: { overview: DashboardOverview }) {
         }
       />
 
-      {!overview.configured ? (
-        <AlertBanner
-          tone="red"
-          title="Database chưa được cấu hình"
-          description="Kết nối Supabase trong file .env để hiển thị dữ liệu thực trên dashboard."
-        />
-      ) : null}
+      <DashboardAlerts items={alertItems} />
 
-      {overview.leads.staleNew > 0 ? (
-        <AlertBanner
-          title="Lead mới chưa được xử lý"
-          description={`Có ${overview.leads.staleNew} lead mới hơn 24 giờ chưa chuyển trạng thái.`}
-          actions={
-            <Link
-              href="/admin/leads?status=new"
-              className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-xs font-medium hover:bg-amber-50"
-            >
-              Xem lead mới
-            </Link>
-          }
-        />
-      ) : null}
-
-      {draftTotal > 0 || overview.draftMissingImageCount > 0 ? (
-        <AlertBanner
-          title="Sản phẩm nháp cần xử lý"
-          description={draftParts.join(" · ")}
-          actions={
-            <>
-              {overview.draftCarCount > 0 ? (
-                <Link
-                  href="/admin/cars"
-                  className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-xs font-medium hover:bg-amber-50"
-                >
-                  Ô tô nháp
-                </Link>
-              ) : null}
-              {overview.draftScooterCount > 0 ? (
-                <Link
-                  href="/admin/scooters"
-                  className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-xs font-medium hover:bg-amber-50"
-                >
-                  Xe máy nháp
-                </Link>
-              ) : null}
-              {overview.draftAccessoryCount > 0 ? (
-                <Link
-                  href="/admin/accessories"
-                  className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-xs font-medium hover:bg-amber-50"
-                >
-                  Phụ kiện nháp
-                </Link>
-              ) : null}
-            </>
-          }
-        />
-      ) : null}
-
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-7">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5">
         <CacheWarmPanel />
         <KpiCard
           href="/admin/leads"
@@ -543,22 +627,6 @@ export function DashboardClient({ overview }: { overview: DashboardOverview }) {
           sub={`${overview.mediaFolderCount} thư mục`}
           icon={Images}
         />
-        <KpiCard
-          href="/admin/leads"
-          label="Đang xử lý"
-          value={overview.leads.inProgress}
-          sub={`${overview.leads.converted} chốt · ${overview.leads.closed} đóng`}
-          icon={Clock}
-          accent="amber"
-        />
-        <KpiCard
-          href="/admin/users"
-          label="Tài khoản admin"
-          value={overview.adminUserCount}
-          sub={overview.seoGlobalConfigured ? "SEO đã cấu hình" : "SEO chưa cấu hình"}
-          icon={Zap}
-          accent={overview.seoGlobalConfigured ? "emerald" : "amber"}
-        />
       </div>
 
       <LeadsOverviewCard leads={overview.leads} recentLeads={overview.recentLeads} />
@@ -576,43 +644,6 @@ export function DashboardClient({ overview }: { overview: DashboardOverview }) {
         </Card>
 
         <div className="space-y-6">
-          <Card>
-            <CardContent className="p-5">
-              <h2 className="mb-4 font-semibold text-zinc-900">Trang nội dung CMS</h2>
-              <ul className="space-y-2">
-                {overview.cmsPages.map((page) => (
-                  <li key={page.slug}>
-                    <Link
-                      href={page.adminHref}
-                      className="flex items-center justify-between rounded-lg border border-zinc-100 px-3 py-2.5 text-sm hover:bg-zinc-50"
-                    >
-                      <span className="flex items-center gap-2 text-zinc-800">
-                        <FileText className="h-4 w-4 text-zinc-400" />
-                        {page.label}
-                      </span>
-                      <StatusBadge
-                        label={
-                          page.status === "published"
-                            ? "Xuất bản"
-                            : page.status === "draft"
-                              ? "Nháp"
-                              : "Chưa tạo"
-                        }
-                        variant={
-                          page.status === "published"
-                            ? "success"
-                            : page.status === "draft"
-                              ? "warning"
-                              : "secondary"
-                        }
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-
           <div className="grid grid-cols-2 gap-3">
             {[
               { href: "/admin/cars", label: "Ô tô", count: overview.carCount, icon: Car },

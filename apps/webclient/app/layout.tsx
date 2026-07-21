@@ -5,6 +5,7 @@ import Script from "next/script";
 import "./globals.css";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
+import FloatingButtons from "@/components/site/FloatingButtons";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { SiteNavigationJsonLd } from "@/components/seo/SiteNavigationJsonLd";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
@@ -116,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <div className="relative">{children}</div>
         <SiteFooter />
+        <FloatingButtons />
       </body>
     </html>
   );

@@ -1,11 +1,19 @@
 "use client";
 
 import { Eye, Pencil, RotateCcw, Save } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
+import { isAdminIframeEmbed } from "@/lib/admin-iframe-embed";
 
 export function AdminEditToolbar() {
   const edit = useAdminEdit();
-  if (!edit) return null;
+  const [embedded, setEmbedded] = useState(false);
+
+  useEffect(() => {
+    setEmbedded(isAdminIframeEmbed());
+  }, []);
+
+  if (!edit || embedded) return null;
 
   return (
     <div className="sticky top-0 z-[70] border-b border-brand/30 bg-brand-dark px-4 py-2.5 text-white shadow-lg">

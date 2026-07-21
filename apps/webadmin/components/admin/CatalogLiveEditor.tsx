@@ -12,7 +12,6 @@ export function CatalogLiveEditor({
   listLabel,
   catalogLabel,
   previewPath,
-  publicHref,
   mediaCategory,
   productKind,
   newHref,
@@ -22,7 +21,6 @@ export function CatalogLiveEditor({
   listLabel: string;
   catalogLabel: string;
   previewPath: string;
-  publicHref: string;
   mediaCategory: MediaCategory;
   productKind: ProductType;
   newHref?: string;
@@ -47,9 +45,7 @@ export function CatalogLiveEditor({
       listLabel={listLabel}
       productName={catalogLabel}
       previewPath={previewPath}
-      publicHref={publicHref}
       mediaCategory={mediaCategory}
-      editorHint="Chỉnh sửa trực tiếp trên thẻ catalog — bấm Lưu thẻ sau khi hoàn tất"
       />
     </div>
   );

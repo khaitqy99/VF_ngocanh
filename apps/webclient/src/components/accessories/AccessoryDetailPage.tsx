@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { toast, Toaster } from "sonner";
 import { ArrowLeft, Check, Phone, Plus, Save, Shield, Undo2, Wrench } from "lucide-react";
 
@@ -26,6 +26,8 @@ import {
 } from "@/lib/accessories";
 import { HOTLINE_TEL } from "@/lib/contact";
 import { pdpCtaPrimary, pdpCtaSecondary } from "@/components/shared/PageCtaSection";
+import { AdminImageActions } from "@/components/admin-edit/AdminImageActions";
+import { isAdminIframeEmbed, postAdminUnsavedChanges } from "@/lib/admin-iframe-embed";
 import { vfDisplayHero, vfHeroEyebrow, vfHeroTitle } from "@/lib/typography";
 
 const HIGHLIGHTS = [
@@ -103,24 +105,14 @@ export default function AccessoryDetailPage({
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
   }, [adminEdit, hasUnsavedChanges]);
 
-  const requestImage = () => {
-    if (typeof window === "undefined" || window.parent === window) {
-      toast.message("Mở từ trang admin để dùng thư viện media");
-      return;
-    }
-    window.parent.postMessage(
-      {
-        type: "vf-admin-pick-image",
-        path: "image",
-        kind: "image",
-        category: "accessories",
-        slug: resolveAccessoryMediaSlug(draft.vehicles),
-      },
-      "*",
-    );
-  };
+  useEffect(() => {
+    if (!adminEdit) return;
+    postAdminUnsavedChanges(hasUnsavedChanges);
+  }, [adminEdit, hasUnsavedChanges]);
 
-  const saveToAdmin = () => {
+  const mediaSlug = resolveAccessoryMediaSlug(draft.vehicles);
+
+  const saveToAdmin = useCallback(() => {
     const patches = getAccessoryPatches(product, draft);
     if (Object.keys(patches).length === 0) {
       toast.message("Không có thay đổi để lưu");
@@ -140,7 +132,22 @@ export default function AccessoryDetailPage({
       return;
     }
     toast.message("Chỉ lưu được khi mở từ admin");
-  };
+  }, [draft, product]);
+
+  useEffect(() => {
+    if (!adminEdit || !isAdminIframeEmbed()) return;
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === "vf-admin-trigger-save") {
+        saveToAdmin();
+      }
+      if (event.data?.type === "vf-admin-trigger-reset") {
+        setDraft(product);
+        toast.message("Đã hoàn tác thay đổi chưa lưu");
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [adminEdit, product, saveToAdmin]);
 
   const addToCart = () => {
     if (adminEdit || !draft.inStock) return;
@@ -166,15 +173,13 @@ export default function AccessoryDetailPage({
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <Toaster position="top-center" richColors />
       <main>
-        {embedded ? (
+        {embedded && !adminEdit ? (
           <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
-            {adminEdit
-              ? "Chế độ sửa trực tiếp phụ kiện — chỉnh trên trang rồi bấm Lưu"
-              : "Chế độ xem trước — giao diện giống trang chi tiết trên website"}
+            Chế độ xem trước — giao diện giống trang chi tiết trên website
           </div>
         ) : null}
 
-        {adminEdit ? (
+        {adminEdit && !isAdminIframeEmbed() ? (
           <div className="sticky top-0 z-30 border-b border-brand/30 bg-brand-dark px-4 py-2.5 text-white shadow-lg">
             <div className="container-vf flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-semibold">Sửa phụ kiện trực tiếp trên preview</span>
@@ -262,13 +267,12 @@ export default function AccessoryDetailPage({
                     className="aspect-square w-full object-cover"
                   />
                   {adminEdit ? (
-                    <button
-                      type="button"
-                      onClick={requestImage}
-                      className="absolute right-3 top-3 rounded bg-brand px-2 py-1 text-[10px] font-bold text-white hover:bg-[#0046cc]"
-                    >
-                      Đổi ảnh
-                    </button>
+                    <AdminImageActions
+                      path="image"
+                      category="accessories"
+                      slug={mediaSlug}
+                      productId={draft.id}
+                    />
                   ) : null}
                   {(draft.badge || !draft.inStock) && (
                     <div className="absolute left-3 top-3 flex flex-col gap-1">

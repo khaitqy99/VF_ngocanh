@@ -111,8 +111,7 @@ export function StaticPageLiveEditor({ slug }: { slug: StaticPageSlug }) {
     toast("Đã chọn ảnh");
   };
 
-  const mediaCategory: MediaCategory =
-    slug === "charging" || slug === "after-sales" ? "cars" : "cars";
+  const mediaCategory: MediaCategory = "pages";
 
   return (
     <div className="-mx-4 flex min-h-[calc(100vh-4rem)] flex-col md:-mx-8">
@@ -165,7 +164,7 @@ export function StaticPageLiveEditor({ slug }: { slug: StaticPageSlug }) {
         <GlobalMediaPicker
           open
           defaultCategory={mediaCategory}
-          defaultFolderSlug="vf8-all-new"
+          defaultFolderSlug={slug}
           title="Chọn ảnh cho trang"
           onClose={() => setImagePicker(null)}
           onSelect={handleImageSelect}

@@ -11,9 +11,10 @@ const ToastContext = React.createContext<{
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = React.useState<Toast[]>([]);
+  const toastIdRef = React.useRef(0);
 
   const toast = React.useCallback((message: string, type: "success" | "error" = "success") => {
-    const id = Date.now();
+    const id = ++toastIdRef.current;
     setToasts((t) => [...t, { id, message, type }]);
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3000);
   }, []);

@@ -51,6 +51,8 @@ export type AboutPageContent = {
     subtitle?: string;
     description?: string;
     image?: string;
+    imageAlt?: string;
+    imagePosition?: "top" | "center" | "bottom";
   };
   stats?: CmsStatItem[];
   milestones?: AboutMilestone[];
@@ -110,7 +112,14 @@ export type ChargingPageContent = {
 };
 
 export type EnergyPageContent = {
-  hero?: { eyebrow?: string; title?: string; subtitle?: string; image?: string };
+  hero?: {
+    eyebrow?: string;
+    title?: string;
+    subtitle?: string;
+    image?: string;
+    imageAlt?: string;
+    imagePosition?: "top" | "center" | "bottom";
+  };
   intro?: { image?: string };
   calculator?: {
     eyebrow?: string;
@@ -202,6 +211,8 @@ export function getDefaultStaticPageContent<S extends StaticPageSlug>(
           subtitle:
             "Hệ thống pin lưu trữ năng lượng thông minh — tích hợp điện mặt trời, trạm sạc xe điện và quản lý từ xa.",
           image: IMAGES.chargingStations,
+          imageAlt: "Hệ thống lưu trữ năng lượng VinFast",
+          imagePosition: "center",
         },
         intro: {
           image: IMAGES.herioGreen,

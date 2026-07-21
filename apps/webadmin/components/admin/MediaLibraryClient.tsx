@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, FolderOpen, ImageIcon } from "lucide-react";
-import { Input, Card, Badge } from "@/components/ui/core";
+import { Search, FolderOpen, ImageIcon, RefreshCw } from "lucide-react";
+import { Input, Card, Badge, Button } from "@/components/ui/core";
 import {
   Tabs,
   TabsContent,
@@ -21,11 +21,13 @@ import {
 } from "@/lib/media-library";
 import { clientAssetUrl } from "@/lib/product-utils";
 import { MediaFolderDeleteButton } from "@/components/admin/MediaFolderDeleteButton";
+import { useMediaFolders } from "@/lib/use-media-folders";
 
 const TAB_OPTIONS = MEDIA_CATEGORY_OPTIONS.filter((o) => o.value !== "all");
 
-export function MediaLibraryClient({ folders }: { folders: MediaFolder[] }) {
+export function MediaLibraryClient({ folders: initialFolders }: { folders: MediaFolder[] }) {
   const [search, setSearch] = useState("");
+  const { folders, refreshing, refreshFolders } = useMediaFolders(initialFolders);
 
   const filterFolders = (category: MediaCategory | "all") => {
     const list = getMediaFoldersByCategory(folders, category);
@@ -46,7 +48,7 @@ export function MediaLibraryClient({ folders }: { folders: MediaFolder[] }) {
     <div className="space-y-6">
       <PageHeader
         title="Thư viện ảnh"
-        description={`${totalFolders} thư mục · ${totalImages} ảnh — xe, phụ kiện và bài viết`}
+        description={`${totalFolders} thư mục · ${totalImages} ảnh — xe, phụ kiện, trang và bài viết`}
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -59,9 +61,22 @@ export function MediaLibraryClient({ folders }: { folders: MediaFolder[] }) {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <p className="text-sm text-zinc-500">
-          Ảnh lưu tại <code className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">Supabase Storage / media</code>
-        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={refreshing}
+            onClick={() => void refreshFolders()}
+          >
+            <RefreshCw className={`mr-1.5 h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
+            Làm mới
+          </Button>
+          <p className="text-sm text-zinc-500">
+            Ảnh lưu tại{" "}
+            <code className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">Supabase Storage / media</code>
+          </p>
+        </div>
       </div>
 
       <Tabs defaultValue="cars">

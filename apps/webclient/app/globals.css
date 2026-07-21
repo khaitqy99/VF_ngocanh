@@ -395,26 +395,23 @@
 .page-editorial-hero {
   position: relative;
   display: flex;
-  min-height: min(72dvh, 760px);
+  min-height: min(46dvh, 360px);
   align-items: center;
   overflow: hidden;
   background: var(--color-brand-dark);
   color: #fff;
 }
 
-.page-editorial-hero-overlay {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      105deg,
-      rgba(11, 31, 91, 0.92) 0%,
-      rgba(11, 31, 91, 0.72) 34%,
-      rgba(11, 31, 91, 0.18) 58%,
-      transparent 78%
-    ),
-    linear-gradient(0deg, rgba(11, 31, 91, 0.75) 0%, transparent 32%);
+@media (width >= 640px) {
+  .page-editorial-hero {
+    min-height: min(58dvh, 560px);
+  }
+}
+
+@media (width >= 1024px) {
+  .page-editorial-hero {
+    min-height: min(72dvh, 760px);
+  }
 }
 
 .page-section-card {

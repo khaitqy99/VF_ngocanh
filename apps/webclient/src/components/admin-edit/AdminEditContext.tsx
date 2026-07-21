@@ -20,6 +20,7 @@ import {
   type PatchValue,
 } from "@/components/admin-edit/vehicle-edit";
 import { getAtPath } from "@/components/admin-edit/vehicle-edit-paths";
+import { isAdminIframeEmbed, postAdminUnsavedChanges } from "@/lib/admin-iframe-embed";
 
 export type { VehicleEditDraft as CarEditDraft, PatchValue };
 
@@ -40,6 +41,7 @@ type AdminEditContextValue = {
   toggleSectionHidden: (id: string) => void;
   requestImage: (path: string) => void;
   requestMedia: (path: string, kind?: "image" | "svg") => void;
+  requestUpload: (path: string, kind?: "image" | "svg") => void;
   save: () => void;
   reset: () => void;
 };
@@ -189,6 +191,28 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
           kind,
           category: mediaCategory,
           slug: detail.id,
+          productId: detail.id,
+        },
+        "*",
+      );
+    },
+    [detail.id, mediaCategory],
+  );
+
+  const requestUpload = useCallback(
+    (path: string, kind: "image" | "svg" = "image") => {
+      if (typeof window === "undefined" || window.parent === window) {
+        toast.message("Upload ảnh — mở từ trang admin");
+        return;
+      }
+      window.parent.postMessage(
+        {
+          type: "vf-admin-upload-image",
+          path,
+          kind,
+          category: mediaCategory,
+          slug: detail.id,
+          productId: detail.id,
         },
         "*",
       );
@@ -252,6 +276,24 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
     toast.message("Chỉ lưu được khi mở từ trang admin đã đăng nhập");
   }, [detail, productType, draft]);
 
+  useEffect(() => {
+    postAdminUnsavedChanges(hasUnsavedChanges);
+  }, [hasUnsavedChanges]);
+
+  useEffect(() => {
+    if (!isAdminIframeEmbed()) return;
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === "vf-admin-trigger-save") {
+        save();
+      }
+      if (event.data?.type === "vf-admin-trigger-reset") {
+        reset();
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [save, reset]);
+
   const ctx = useMemo(
     (): AdminEditContextValue => ({
       isAdmin: true,
@@ -268,6 +310,7 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
       toggleSectionHidden,
       requestImage,
       requestMedia,
+      requestUpload,
       save,
       reset,
     }),
@@ -284,6 +327,7 @@ function VehicleAdminEditProvider<T extends VehicleEditable>({
       toggleSectionHidden,
       requestImage,
       requestMedia,
+      requestUpload,
       save,
       reset,
     ],

@@ -2,7 +2,7 @@
 
 import type { ElementType, ReactNode } from "react";
 import Image from "next/image";
-import { Building2, Clock, Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { Building2, Clock, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { resolveDealershipContact, type DealershipContact } from "@/lib/dealership";
 import {
   defaultFooterSettings,
@@ -13,6 +13,7 @@ import {
 import { IMAGES } from "@/lib/images";
 import { FadeIn } from "@/components/motion";
 import { ResilientLink } from "@/components/site/ResilientLink";
+import { ZaloBrandIcon } from "@/components/icons/SocialBrandIcons";
 
 function phoneTelFromDisplay(phone: string) {
   const digits = phone.replace(/\D/g, "");
@@ -58,11 +59,21 @@ function ContactRow({ icon: Icon, children }: { icon: ElementType; children: Rea
 }
 
 function SocialIcon({ kind }: { kind: DealershipContact["socialLinks"][number]["kind"] }) {
-  if (kind === "facebook") return <Facebook size={16} />;
+  if (kind === "facebook") {
+    return (
+      <Image
+        src="/images/icons/facebook-messenger.png"
+        alt=""
+        width={24}
+        height={24}
+        aria-hidden
+        className="h-6 w-6 rounded-full"
+      />
+    );
+  }
   if (kind === "youtube") return <Youtube size={16} />;
-  return (
-    <span className="text-[10px] font-bold uppercase">{kind === "zalo" ? "Zalo" : "Web"}</span>
-  );
+  if (kind === "zalo") return <ZaloBrandIcon size={26} className="h-6.5 w-6.5" />;
+  return <span className="text-[10px] font-bold uppercase">Web</span>;
 }
 
 export default function Footer({
@@ -176,7 +187,11 @@ export default function Footer({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
+                    className={
+                      kind === "zalo" || kind === "facebook"
+                        ? "flex size-10 items-center justify-center transition-transform hover:scale-105"
+                        : "flex size-9 items-center justify-center rounded-full border border-border/70 bg-white text-brand-dark transition-colors hover:border-brand hover:text-brand"
+                    }
                   >
                     <SocialIcon kind={kind} />
                   </a>
