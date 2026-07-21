@@ -59,6 +59,7 @@ import {
   ENERGY_SPECS,
   INSTALLATION_STEPS,
   ENERGY_FAQS,
+  ENERGY_WHY_CHOOSE_ITEMS,
 } from "@/lib/energy-storage";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
 import type { EnergyPageContent } from "@/lib/cms/static-pages";
@@ -81,6 +82,8 @@ const SOLUTION_ICONS = {
 const BENEFIT_ICONS = [BarChart3, Leaf, Shield, Battery, Zap, Cpu] as const;
 
 const APPLICATION_ICONS = [Sun, Zap, Battery, Shield] as const;
+
+const WHY_CHOOSE_ICONS = [Award, Users, Cpu, Headphones] as const;
 
 // Cost Calculator Constants
 const ELECTRICAL_TIERS = [
@@ -237,7 +240,7 @@ export default function EnergyStoragePage({
         <ProcessSection content={content} />
 
         {/* Why choose energy storage solution at VF Ngoc Anh */}
-        <WhyChooseSection />
+        <WhyChooseSection content={content} />
 
         {/* FAQ Area */}
         <FaqSection content={content} />
@@ -573,6 +576,7 @@ function HeroSection({
           </>
         }
         stats={stats}
+        separateContentSection
       />
     </div>
   );
@@ -1179,68 +1183,88 @@ function ProcessSection({ content }: { content: EnergyPageContent }) {
   );
 }
 
-function WhyChooseSection() {
-  const items = [
-    {
-      icon: Award,
-      title: "Nhà phân phối ủy quyền chính thức 3S",
-      desc: "VinFast Ngọc Anh Cà Mau cam kết phân phối 100% dòng pin lưu trữ ESS chính hãng, chế độ bảo hành chuẩn hãng lâu dài và giá thành minh bạch nhất.",
-    },
-    {
-      icon: Users,
-      title: "Đội ngũ kỹ sư cơ điện tay nghề cao",
-      desc: "Sở hữu đội ngũ kỹ sư đạt đầy đủ chứng chỉ thi công điện mặt trời và pin ESS công nghiệp sấy hồng ngoại từ VinFast và đối tác ngoại.",
-    },
-    {
-      icon: Cpu,
-      title: "Giải pháp tích hợp độc quyền",
-      desc: "Tự hào là đơn vị duy nhất đấu nối hoàn chỉnh tủ pin BESS đồng bộ vào bộ sạc treo tường xe điện và hệ mặt trời không phát sinh độ trễ.",
-    },
-    {
-      icon: Headphones,
-      title: "Hệ thống giám sát đám mây 24/7",
-      desc: "Cố vấn kỹ thuật túc trực giám sát sức khỏe pin từ xa qua cổng IoT, nhanh chóng giải quyết sự cố mất điện lưới khẩn cấp.",
-    },
-  ] as const;
+function WhyChooseSection({ content }: { content: EnergyPageContent }) {
+  const edit = useStaticPageAdminEdit();
+  const defaults = getDefaultStaticPageContent("energy").whyChoose;
+  const whyChoose = {
+    eyebrow: content.whyChoose?.eyebrow ?? defaults?.eyebrow ?? "",
+    title: content.whyChoose?.title ?? defaults?.title ?? "",
+    image: content.whyChoose?.image ?? defaults?.image ?? IMAGES.showroom,
+    imageAlt:
+      content.whyChoose?.imageAlt ??
+      defaults?.imageAlt ??
+      "VinFast Ngọc Anh Cà Mau — Đại lý VinFast",
+    items: (content.whyChoose?.items ??
+      defaults?.items ??
+      ENERGY_WHY_CHOOSE_ITEMS.map(({ title, desc }) => ({ title, desc }))) as {
+      title: string;
+      desc: string;
+    }[],
+  };
 
   return (
     <section className="section-y bg-white border-b border-slate-200">
       <div className="container-vf">
         <SectionHeader
           align="centered"
-          eyebrow="Năng lực đại lý"
-          title="Vì sao chọn dịch vụ tại VinFast Ngọc Anh Cà Mau?"
+          eyebrow={
+            <StaticEditableText
+              value={whyChoose.eyebrow}
+              onChange={(value) => edit?.updateField("whyChoose.eyebrow", value)}
+            />
+          }
+          title={
+            <StaticEditableText
+              value={whyChoose.title}
+              onChange={(value) => edit?.updateField("whyChoose.title", value)}
+            />
+          }
         />
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <StaggerGrid className="space-y-6 order-2 lg:order-1">
-            {items.map(({ icon: Icon, title, desc }, index) => (
-              <StaggerItem key={title} index={index}>
-                <div className="flex gap-4 items-start bg-surface-muted border border-slate-200 p-5 rounded-2xl shadow-soft">
-                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                    <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+            {whyChoose.items.map(({ title, desc }, index) => {
+              const Icon = WHY_CHOOSE_ICONS[index] ?? Award;
+              return (
+                <StaggerItem key={`${title}-${index}`} index={index}>
+                  <div className="flex gap-4 items-start bg-surface-muted border border-slate-200 p-5 rounded-2xl shadow-soft">
+                    <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                      <Icon className="size-5.5 text-brand" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
+                        <StaticEditableText
+                          value={title}
+                          onChange={(value) =>
+                            edit?.updateField(`whyChoose.items.${index}.title`, value)
+                          }
+                        />
+                      </h3>
+                      <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
+                        <StaticEditableText
+                          value={desc}
+                          onChange={(value) =>
+                            edit?.updateField(`whyChoose.items.${index}.desc`, value)
+                          }
+                          multiline
+                        />
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
-                      {title}
-                    </h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-semibold">
-                      {desc}
-                    </p>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
+                </StaggerItem>
+              );
+            })}
           </StaggerGrid>
           <FadeIn
             direction="right"
             delay={0.1}
             className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-white aspect-[4/3] w-full border border-slate-200 shadow-soft order-1 lg:order-2 group"
           >
+            <StaticEditImageButton imagePath="whyChoose.image" />
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
             <Image
-              src={IMAGES.showroom}
-              alt="VinFast Ngọc Anh Cà Mau — Đại lý VinFast"
+              src={whyChoose.image}
+              alt={whyChoose.imageAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"

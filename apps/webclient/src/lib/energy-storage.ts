@@ -149,6 +149,25 @@ export const INSTALLATION_STEPS = [
   },
 ] as const;
 
+export const ENERGY_WHY_CHOOSE_ITEMS = [
+  {
+    title: "Nhà phân phối ủy quyền chính thức 3S",
+    desc: "VinFast Ngọc Anh Cà Mau cam kết phân phối 100% dòng pin lưu trữ ESS chính hãng, chế độ bảo hành chuẩn hãng lâu dài và giá thành minh bạch nhất.",
+  },
+  {
+    title: "Đội ngũ kỹ sư cơ điện tay nghề cao",
+    desc: "Sở hữu đội ngũ kỹ sư đạt đầy đủ chứng chỉ thi công điện mặt trời và pin ESS công nghiệp sấy hồng ngoại từ VinFast và đối tác ngoại.",
+  },
+  {
+    title: "Giải pháp tích hợp độc quyền",
+    desc: "Tự hào là đơn vị duy nhất đấu nối hoàn chỉnh tủ pin BESS đồng bộ vào bộ sạc treo tường xe điện và hệ mặt trời không phát sinh độ trễ.",
+  },
+  {
+    title: "Hệ thống giám sát đám mây 24/7",
+    desc: "Cố vấn kỹ thuật túc trực giám sát sức khỏe pin từ xa qua cổng IoT, nhanh chóng giải quyết sự cố mất điện lưới khẩn cấp.",
+  },
+] as const;
+
 export const ENERGY_FAQS = [
   {
     q: "Hệ thống lưu trữ năng lượng VinFast là gì?",

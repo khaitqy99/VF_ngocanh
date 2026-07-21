@@ -15,6 +15,7 @@ import {
   ENERGY_SOLUTIONS,
   ENERGY_SPECS,
   ENERGY_STATS,
+  ENERGY_WHY_CHOOSE_ITEMS,
   INSTALLATION_STEPS,
 } from "@/lib/energy-storage";
 import { DEFAULT_ABOUT_CONTENT, DEFAULT_AFTER_SALES_CONTENT } from "@/lib/cms/static-page-defaults";
@@ -133,6 +134,13 @@ export type EnergyPageContent = {
   applications?: { title: string; desc: string; benefits: string[] }[];
   specs?: { label: string; value: string }[];
   steps?: { step: string; title: string; desc: string }[];
+  whyChoose?: {
+    eyebrow?: string;
+    title?: string;
+    image?: string;
+    imageAlt?: string;
+    items?: { title: string; desc: string }[];
+  };
   faq?: CmsFaqItem[];
 };
 
@@ -234,6 +242,13 @@ export function getDefaultStaticPageContent<S extends StaticPageSlug>(
         })),
         specs: ENERGY_SPECS.map(({ label, value }) => ({ label, value })),
         steps: INSTALLATION_STEPS.map((step) => ({ ...step })),
+        whyChoose: {
+          eyebrow: "Năng lực đại lý",
+          title: "Vì sao chọn dịch vụ tại VinFast Ngọc Anh Cà Mau?",
+          image: IMAGES.showroom,
+          imageAlt: "VinFast Ngọc Anh Cà Mau — Đại lý VinFast",
+          items: ENERGY_WHY_CHOOSE_ITEMS.map(({ title, desc }) => ({ title, desc })),
+        },
         faq: ENERGY_FAQS.map(({ q, a }) => ({ q, a })),
       } as StaticPageContentMap[S];
     default:
@@ -307,6 +322,11 @@ export function mergeStaticPageContent<S extends StaticPageSlug>(
     }
     case "energy": {
       const base = defaults as EnergyPageContent;
+      const mergedWhyChoose = mergeRecord(base.whyChoose, raw.whyChoose);
+      const rawWhyChoose =
+        raw.whyChoose && typeof raw.whyChoose === "object" && !Array.isArray(raw.whyChoose)
+          ? (raw.whyChoose as Record<string, unknown>)
+          : undefined;
       return {
         hero: mergeRecord(base.hero, raw.hero),
         intro: mergeRecord(base.intro, raw.intro),
@@ -317,6 +337,12 @@ export function mergeStaticPageContent<S extends StaticPageSlug>(
         applications: mergeArray(base.applications, raw.applications),
         specs: mergeArray(base.specs, raw.specs),
         steps: mergeArray(base.steps, raw.steps),
+        whyChoose: mergedWhyChoose
+          ? {
+              ...mergedWhyChoose,
+              items: mergeArray(base.whyChoose?.items, rawWhyChoose?.items),
+            }
+          : base.whyChoose,
         faq: mergeArray(base.faq, raw.faq),
       } as StaticPageContentMap[S];
     }

@@ -839,6 +839,84 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                     ))}
                   </div>
                 </EditSection>
+
+                <EditSection id="why-choose" title="Năng lực đại lý">
+                  <div className="grid gap-4">
+                    <EditField label="Eyebrow">
+                      <Input
+                        value={energy.whyChoose?.eyebrow ?? ""}
+                        onChange={(event) =>
+                          updateContent("whyChoose", {
+                            ...energy.whyChoose,
+                            eyebrow: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                    <EditField label="Tiêu đề">
+                      <Input
+                        value={energy.whyChoose?.title ?? ""}
+                        onChange={(event) =>
+                          updateContent("whyChoose", {
+                            ...energy.whyChoose,
+                            title: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                    <ImagePathField
+                      label="Ảnh showroom"
+                      value={energy.whyChoose?.image ?? ""}
+                      onChange={(image) =>
+                        updateContent("whyChoose", { ...energy.whyChoose, image })
+                      }
+                    />
+                    <EditField label="Alt ảnh">
+                      <Input
+                        value={energy.whyChoose?.imageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("whyChoose", {
+                            ...energy.whyChoose,
+                            imageAlt: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                  </div>
+                  <div className="mt-4 space-y-4">
+                    {(energy.whyChoose?.items ?? []).map((item, index) => (
+                      <div key={index} className="rounded-lg border border-zinc-200 p-4">
+                        <EditField label={`Lý do ${index + 1} — Tiêu đề`}>
+                          <Input
+                            value={item.title}
+                            onChange={(event) =>
+                              updateContent("whyChoose", {
+                                ...energy.whyChoose,
+                                items: (energy.whyChoose?.items ?? []).map((row, i) =>
+                                  i === index ? { ...row, title: event.target.value } : row,
+                                ),
+                              })
+                            }
+                          />
+                        </EditField>
+                        <EditField label="Mô tả">
+                          <Textarea
+                            rows={2}
+                            value={item.desc}
+                            onChange={(event) =>
+                              updateContent("whyChoose", {
+                                ...energy.whyChoose,
+                                items: (energy.whyChoose?.items ?? []).map((row, i) =>
+                                  i === index ? { ...row, desc: event.target.value } : row,
+                                ),
+                              })
+                            }
+                          />
+                        </EditField>
+                      </div>
+                    ))}
+                  </div>
+                </EditSection>
               </>
             ) : null}
           </div>
