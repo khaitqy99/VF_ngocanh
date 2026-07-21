@@ -28,7 +28,6 @@ import {
   Navigation,
   Settings2,
   Battery,
-  Star,
   ArrowRight,
   X,
   ZoomIn,
@@ -41,7 +40,6 @@ import {
   Share2,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { ScooterCatalogCard } from "@/components/scooters/ScooterCatalogCard";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import type { AccessoryProduct } from "@/lib/accessories";
@@ -112,7 +110,6 @@ import {
   EditableBulletList,
   EditableFeatureGridSection,
   EditableOverviewImage,
-  EditableReviewCards,
   EditableTechGridSection,
   expandFeatureItemsForGrid,
 } from "@/components/admin-edit/EditableSections";
@@ -157,8 +154,7 @@ type SectionId =
   | "pin-sac"
   | "thong-so"
   | "phu-kien"
-  | "tai-chinh"
-  | "danh-gia";
+  | "tai-chinh";
 
 const SERVICE_BAR = [
   { icon: Shield, title: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000 km" },
@@ -257,7 +253,6 @@ export default function ScooterDetailPage({
       { id: "thong-so" as const, label: "Thông số" },
       { id: "phu-kien" as const, label: "Phụ kiện" },
       { id: "tai-chinh" as const, label: "Tài chính" },
-      { id: "danh-gia" as const, label: "Đánh giá" },
     ],
     [],
   );
@@ -770,10 +765,6 @@ export default function ScooterDetailPage({
                 onBook={() => openBooking("Nhận báo giá")}
               />
             </SectionWrap>
-
-            <SectionWrap id="danh-gia" alt>
-              <ReviewsSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
           </div>
         </SectionVisibilityProvider>
 
@@ -877,8 +868,6 @@ export default function ScooterDetailPage({
 
       {!embedded ? (
         <>
-          <FloatingButtons />
-
           {/* Mobile sticky bar */}
           <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-white lg:hidden">
             <div className="flex items-center gap-2 p-3">
@@ -2022,72 +2011,6 @@ function FinanceSection({
   );
 }
 
-function ReviewsSection({
-  detail,
-  adminEditable,
-}: {
-  detail: ScooterDetail;
-  adminEditable?: boolean;
-}) {
-  const rating = detail.reviews.averageRating;
-  const ratingPct = (rating / 5) * 100;
-
-  return (
-    <>
-      <div className="mx-auto max-w-3xl text-center">
-        <InlineSectionTitle
-          titlePath="_section.reviews.title"
-          titleFallback="Đánh giá khách hàng"
-          subtitlePath="_section.reviews.subtitle"
-          subtitleFallback="Trải nghiệm thực tế từ cộng đồng"
-          adminEditable={adminEditable}
-        />
-      </div>
-
-      <div className="mx-auto mt-8 max-w-5xl">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,240px)_1fr] lg:gap-10">
-          <aside className="flex flex-col items-center rounded-2xl border border-border/60 bg-surface/40 px-6 py-8 text-center lg:sticky lg:top-24 lg:items-start lg:self-start lg:py-10 lg:text-left">
-            <p className="text-5xl font-black leading-none tabular-nums text-brand-dark">
-              {rating.toFixed(1)}
-            </p>
-            <StarRating
-              rating={rating}
-              size={16}
-              className="mt-3 justify-center lg:justify-start"
-            />
-            <div className="mt-4 h-1.5 w-full max-w-[180px] overflow-hidden rounded-full bg-border/50">
-              <div
-                className="h-full rounded-full bg-brand transition-all"
-                style={{ width: `${ratingPct}%` }}
-              />
-            </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              Dựa trên{" "}
-              <span className="font-semibold text-brand-dark">{detail.reviews.totalReviews}</span>{" "}
-              đánh giá
-            </p>
-            <div className="mt-5 hidden text-xs leading-relaxed text-muted-foreground lg:block">
-              <InlineText
-                path="_section.reviews.asideNote"
-                fallback="Phản hồi từ khách hàng đã trải nghiệm và mua xe tại VinFast Ngọc Anh Cà Mau."
-                adminEditable={adminEditable}
-                className="text-xs leading-relaxed text-muted-foreground"
-                multiline
-              />
-            </div>
-          </aside>
-
-          <EditableReviewCards
-            items={detail.reviews.items}
-            adminEditable={adminEditable}
-            renderStars={(rating) => <StarRating rating={rating} size={12} />}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
 /* ─── Shared UI atoms ─── */
 
 function BreadcrumbBar({
@@ -2233,30 +2156,6 @@ function CostRow({
       <span className={`shrink-0 ${highlight ? "font-bold" : "font-bold text-slate-800"}`}>
         {value} VNĐ
       </span>
-    </div>
-  );
-}
-
-function StarRating({
-  rating,
-  size = 14,
-  className = "",
-}: {
-  rating: number;
-  size?: number;
-  className?: string;
-}) {
-  return (
-    <div className={`flex gap-0.5 ${className}`}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <Star
-          key={i}
-          size={size}
-          className={
-            i < Math.round(rating) ? "fill-accent-yellow text-accent-yellow" : "text-border"
-          }
-        />
-      ))}
     </div>
   );
 }

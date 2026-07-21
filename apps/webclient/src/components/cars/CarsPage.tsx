@@ -38,7 +38,6 @@ import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
 import { PageMarketingHero } from "@/components/shared/PageMarketingHero";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import { SHOWROOM_BOOKING_LABEL } from "@/lib/dealership";
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -773,8 +772,6 @@ export default function CarsPage({
           </>
         ) : null}
       </main>
-
-      {!embedded && <FloatingButtons />}
 
       {/* RENDER MODAL: Comprehensive Booking Appointment Scheduler */}
       <AnimatePresence>

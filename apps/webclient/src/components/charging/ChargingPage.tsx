@@ -34,7 +34,6 @@ import {
   Search,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageStatsBar } from "@/components/shared/PageStatsBar";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -722,8 +721,6 @@ export default function ChargingPage({
           </motion.div>
         )}
       </AnimatePresence>
-
-      <FloatingButtons />
     </div>
   );
 }
@@ -971,14 +968,14 @@ function BatterySection() {
             <StaggerGrid className="mt-6 grid gap-4 sm:grid-cols-2">
               {BATTERY_HIGHLIGHTS.map(({ title, desc }, index) => (
                 <StaggerItem key={title} index={index}>
-                  <div className="rounded-xl border border-slate-200 bg-surface-muted p-4 shadow-sm">
+                  <div className="flex h-full flex-col rounded-xl border border-slate-200 bg-surface-muted p-4 shadow-sm">
                     <div className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-brand/10">
                       <Battery className="size-4.5 text-brand" />
                     </div>
                     <h3 className="text-xs font-black text-brand-dark uppercase tracking-wider">
                       {title}
                     </h3>
-                    <p className="mt-1 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                    <p className="mt-1 flex-1 text-[11px] leading-relaxed text-slate-400 font-semibold">
                       {desc}
                     </p>
                   </div>
@@ -1200,7 +1197,7 @@ function GuideSection({ content }: { content: ChargingPageContent }) {
         <StaggerGrid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(({ step, title, desc }, index) => (
             <StaggerItem key={step} index={index}>
-              <div className="relative rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md">
+              <div className="relative flex h-full flex-col rounded-2xl border border-slate-200 bg-surface-muted p-6 shadow-soft transition-all duration-300 hover:shadow-md">
                 <span className="text-3xl font-black text-brand/20 tracking-wider">
                   <StaticEditableText
                     value={step}
@@ -1213,7 +1210,7 @@ function GuideSection({ content }: { content: ChargingPageContent }) {
                     onChange={(value) => edit?.updateField(`steps.${index}.title`, value)}
                   />
                 </h3>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-semibold">
+                <p className="mt-2 flex-1 text-[11px] leading-relaxed text-slate-400 font-semibold">
                   <StaticEditableText
                     value={desc}
                     onChange={(value) => edit?.updateField(`steps.${index}.desc`, value)}

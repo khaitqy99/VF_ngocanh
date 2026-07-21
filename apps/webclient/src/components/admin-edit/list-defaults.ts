@@ -10,14 +10,6 @@ export const DEFAULT_TECH_ITEM = () => ({
   desc: "Mô tả tính năng...",
 });
 
-export const DEFAULT_REVIEW = () => ({
-  name: "Khách hàng",
-  variant: "Phiên bản",
-  date: "2025",
-  rating: 5,
-  content: "Nội dung đánh giá...",
-});
-
 export const DEFAULT_SPEC_ITEM = () => ({ label: "Thông số", value: "Giá trị" });
 
 export const DEFAULT_SPEC_GROUP = () => ({

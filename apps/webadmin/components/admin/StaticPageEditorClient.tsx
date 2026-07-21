@@ -738,6 +738,65 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                   </div>
                 </EditSection>
 
+                <EditSection id="intro" title="Giới thiệu ESS">
+                  <ImagePathField
+                    label="Ảnh giới thiệu"
+                    value={energy.intro?.image ?? ""}
+                    onChange={(image) => updateContent("intro", { ...energy.intro, image })}
+                  />
+                </EditSection>
+
+                <EditSection id="calculator" title="Máy tính tiết kiệm">
+                  <div className="grid gap-4">
+                    <EditField label="Eyebrow">
+                      <Input
+                        value={energy.calculator?.eyebrow ?? ""}
+                        onChange={(event) =>
+                          updateContent("calculator", {
+                            ...energy.calculator,
+                            eyebrow: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                    <EditField label="Tiêu đề">
+                      <Input
+                        value={energy.calculator?.title ?? ""}
+                        onChange={(event) =>
+                          updateContent("calculator", {
+                            ...energy.calculator,
+                            title: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                    <EditField label="Mô tả">
+                      <Textarea
+                        rows={3}
+                        value={energy.calculator?.description ?? ""}
+                        onChange={(event) =>
+                          updateContent("calculator", {
+                            ...energy.calculator,
+                            description: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                    <EditField label="Ghi chú kết quả">
+                      <Textarea
+                        rows={2}
+                        value={energy.calculator?.note ?? ""}
+                        onChange={(event) =>
+                          updateContent("calculator", {
+                            ...energy.calculator,
+                            note: event.target.value,
+                          })
+                        }
+                      />
+                    </EditField>
+                  </div>
+                </EditSection>
+
                 <EditSection id="stats" title="Thống kê">
                   <StatsEditor
                     items={energy.stats ?? []}

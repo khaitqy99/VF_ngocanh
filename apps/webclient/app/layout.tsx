@@ -109,12 +109,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         <div
           aria-hidden
-          className="home-grain pointer-events-none fixed inset-0 z-0 opacity-[0.028] max-lg:hidden"
+          className="home-grain pointer-events-none fixed inset-0 -z-10 opacity-[0.028] max-lg:hidden"
         />
         <GoogleAnalytics />
         <SiteNavigationJsonLd />
         <SiteHeader />
-        <div className="relative z-10">{children}</div>
+        <div className="relative">{children}</div>
         <SiteFooter />
       </body>
     </html>

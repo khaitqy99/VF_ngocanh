@@ -199,18 +199,20 @@ export function ScootersPromoBanners() {
               variants={reduced ? undefined : carsPromoImage}
             />
             <div className="absolute inset-0 bg-brand-dark/75 sm:bg-gradient-to-r sm:from-brand-dark/90 sm:via-brand-dark/65 sm:to-transparent" />
-            <div className="relative z-10 flex h-full max-w-sm flex-col justify-center p-6 text-white md:p-8">
-              <span className="mb-3 self-start rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
-                Lái thử miễn phí
-              </span>
-              <h3 className={`${vfPanelTitle} text-white`}>Hành trình xanh — Lái thử ngay</h3>
-              <p className="mt-2 text-xs font-medium leading-relaxed text-slate-300">
-                Trải nghiệm khả năng tăng tốc mượt mà, công nghệ định vị thông minh của xe máy điện
-                VinFast tại Showroom VinFast Ngọc Anh Cà Mau hoàn toàn miễn phí.
-              </p>
+            <div className="relative z-10 flex h-full w-full flex-col justify-center p-6 text-white md:p-8">
+              <div className="max-w-sm">
+                <span className="mb-3 inline-block rounded bg-accent-yellow px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-900">
+                  Lái thử miễn phí
+                </span>
+                <h3 className={`${vfPanelTitle} text-white`}>Hành trình xanh — Lái thử ngay</h3>
+                <p className="mt-2 text-xs font-medium leading-relaxed text-slate-300">
+                  Trải nghiệm khả năng tăng tốc mượt mà, công nghệ định vị thông minh của xe máy
+                  điện VinFast tại Showroom VinFast Ngọc Anh Cà Mau hoàn toàn miễn phí.
+                </p>
+              </div>
               <MotionLinkButton
                 href={HOTLINE_TEL}
-                className="home-cta-primary mt-5 self-center rounded-full px-5 py-2.5 text-center text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
+                className="home-cta-primary mx-auto mt-5 block w-fit rounded-full px-5 py-2.5 text-center text-[11px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
               >
                 LIÊN HỆ SHOWROOM NGAY
               </MotionLinkButton>

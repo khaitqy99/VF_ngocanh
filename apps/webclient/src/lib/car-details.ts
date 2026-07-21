@@ -75,20 +75,6 @@ export type AccessoryItem = {
   image: string;
 };
 
-export type ReviewItem = {
-  name: string;
-  rating: number;
-  date: string;
-  content: string;
-  variant?: string;
-};
-
-export type ReviewsSection = {
-  averageRating: number;
-  totalReviews: number;
-  items: ReviewItem[];
-};
-
 export type CarDetail = Omit<CarModel, "colors"> & {
   tagline: string;
   badges: string[];
@@ -113,7 +99,6 @@ export type CarDetail = Omit<CarModel, "colors"> & {
   charging?: ChargingHighlight;
   specGroups: SpecGroup[];
   accessories: AccessoryItem[];
-  reviews: ReviewsSection;
   /** Ẩn lựa chọn thuê/mua pin trên trang chi tiết */
   hideBatteryOption?: boolean;
 };
@@ -235,38 +220,6 @@ function buildAccessories(car: CarModel): AccessoryItem[] {
   ];
 }
 
-function buildReviews(car: CarModel): ReviewsSection {
-  return {
-    averageRating: 4.8,
-    totalReviews: 128,
-    items: [
-      {
-        name: "Nguyễn Văn A",
-        rating: 5,
-        date: "15/03/2026",
-        variant: car.name,
-        content: `Xe ${car.name} rất đẹp, nội thất sang trọng. Vận hành êm, tiết kiệm điện. Đội ngũ VinFast Ngọc Anh Cà Mau tư vấn nhiệt tình, giao xe đúng hẹn.`,
-      },
-      {
-        name: "Trần Thị B",
-        rating: 5,
-        date: "02/03/2026",
-        variant: car.name,
-        content:
-          "Lái thử rất thích, tăng tốc nhanh mà vẫn êm. Hệ thống ADAS hỗ trợ lái rất tiện trong giao thông đô thị.",
-      },
-      {
-        name: "Lê Minh C",
-        rating: 4,
-        date: "20/02/2026",
-        variant: car.name,
-        content:
-          "Thiết kế ngoại thất ấn tượng, công nghệ hiện đại. Giá hợp lý so với các dòng xe điện cùng phân khúc.",
-      },
-    ],
-  };
-}
-
 const DETAIL_OVERRIDES: Partial<Record<string, Partial<CarDetail>>> = {
   ...(VINFAST_CAR_DETAIL_OVERRIDES as Partial<Record<string, Partial<CarDetail>>>),
   ...CAR_DETAIL_PATCHES,
@@ -338,7 +291,6 @@ function buildDefaultDetail(car: CarModel): CarDetail {
     },
     specGroups: buildSpecGroups(car),
     accessories: buildAccessories(car),
-    reviews: buildReviews(car),
   };
 }
 

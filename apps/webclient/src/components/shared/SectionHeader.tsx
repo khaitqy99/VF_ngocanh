@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { useSectionReveal } from "@/hooks/use-section-reveal";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { homeSectionRule, homeSectionTitle, homeViewport } from "@/lib/home-motion";
 import { reducedVariants } from "@/lib/motion";
 import { vfEyebrow, vfHomeSectionTitle } from "@/lib/typography";
@@ -20,9 +20,9 @@ export function SectionHeader({
   id,
   className = "",
 }: {
-  title: string;
-  eyebrow?: string;
-  description?: string;
+  title: ReactNode;
+  eyebrow?: ReactNode;
+  description?: ReactNode;
   descriptionClassName?: string;
   viewAllHref?: string;
   align?: "editorial" | "centered";

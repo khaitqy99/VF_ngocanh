@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 
 import FaqSection from "@/components/site/FaqSection";
 import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { type DealershipContact } from "@/lib/dealership";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem, FadeIn, StaggerItem } from "@/components/motion";
@@ -127,7 +126,6 @@ export default function HomePage({
         <FaqSection section={sections.faq} />
         <ShowroomLocationSection contact={contact} showroom={sections.showroomLocation} />
       </main>
-      <FloatingButtons />
       <ShowroomBookingModal
         open={bookingSlide !== null}
         onClose={() => setBookingSlide(null)}

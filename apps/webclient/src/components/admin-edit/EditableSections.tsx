@@ -1,14 +1,10 @@
 "use client";
 
-import type { ElementType, ReactNode } from "react";
+import type { ElementType } from "react";
 import { EditableImage, ImagePickerFab } from "@/components/admin-edit/EditableImage";
 import { EditableListControls } from "@/components/admin-edit/EditableListControls";
-import { InlineText, InlineTextBlock } from "@/components/admin-edit/EditablePath";
-import {
-  DEFAULT_FEATURE_CARD,
-  DEFAULT_REVIEW,
-  DEFAULT_TECH_ITEM,
-} from "@/components/admin-edit/list-defaults";
+import { InlineText } from "@/components/admin-edit/EditablePath";
+import { DEFAULT_FEATURE_CARD, DEFAULT_TECH_ITEM } from "@/components/admin-edit/list-defaults";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
 import { EditableSvgIcon } from "@/components/admin-edit/EditableColorPicker";
 import { getImageAtPath } from "@/components/admin-edit/vehicle-edit-paths";
@@ -250,88 +246,5 @@ export function EditableOverviewImage({
         />
       </div>
     </div>
-  );
-}
-
-export function EditableReviewCards({
-  items,
-  adminEditable,
-  renderStars,
-}: {
-  items: { name: string; variant?: string; date?: string; rating: number; content: string }[];
-  adminEditable?: boolean;
-  renderStars: (rating: number) => ReactNode;
-}) {
-  const edit = useAdminEdit();
-
-  return (
-    <>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {items.map((review, i) => (
-          <article
-            key={`review-${i}`}
-            className="relative flex flex-col rounded-2xl border border-border/60 p-5"
-          >
-            {adminEditable && edit?.editMode ? (
-              <EditableListControls
-                path="reviews.items"
-                index={i}
-                minItems={0}
-                adminEditable
-                label="đánh giá"
-                onAdd={() => undefined}
-              />
-            ) : null}
-            {renderStars(review.rating)}
-            <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-foreground/85">
-              &ldquo;
-              <InlineTextBlock
-                path={`reviews.items.${i}.content`}
-                fallback={review.content}
-                adminEditable={adminEditable}
-                className="text-sm leading-relaxed text-foreground/85"
-                label="Nội dung đánh giá"
-              />
-              &rdquo;
-            </blockquote>
-            <footer className="mt-4 flex items-center gap-3 border-t border-border/40 pt-4">
-              <div
-                className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-black text-brand"
-                aria-hidden
-              >
-                {review.name.trim().charAt(0)}
-              </div>
-              <div className="min-w-0">
-                <div className="truncate text-xs font-bold text-brand-dark">
-                  <InlineText
-                    path={`reviews.items.${i}.name`}
-                    fallback={review.name}
-                    adminEditable={adminEditable}
-                    className="text-xs font-bold text-brand-dark"
-                  />
-                </div>
-                <div className="truncate text-[10px] text-muted-foreground">
-                  <InlineText
-                    path={`reviews.items.${i}.variant`}
-                    fallback={review.variant ?? ""}
-                    adminEditable={adminEditable}
-                    className="text-[10px] text-muted-foreground"
-                  />
-                  {review.date ? ` · ${review.date}` : ""}
-                </div>
-              </div>
-            </footer>
-          </article>
-        ))}
-      </div>
-      {adminEditable && edit?.editMode ? (
-        <EditableListControls
-          path="reviews.items"
-          adminEditable
-          label="đánh giá"
-          onAdd={() => edit.addListItem("reviews.items", DEFAULT_REVIEW())}
-        />
-      ) : null}
-    </>
   );
 }

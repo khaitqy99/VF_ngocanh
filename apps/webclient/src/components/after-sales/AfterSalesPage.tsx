@@ -35,7 +35,6 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { FaqBlock } from "@/components/shared/FaqBlock";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -519,8 +518,6 @@ export default function AfterSalesPage({
         {/* CTA Section and Map detail */}
         <CtaBanner />
       </main>
-
-      <FloatingButtons />
     </div>
   );
 }

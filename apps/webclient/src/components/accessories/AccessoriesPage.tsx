@@ -30,7 +30,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { FilterCheck, FilterGroup } from "@/components/catalog/FilterControls";
 import {
@@ -508,8 +507,6 @@ export default function AccessoriesPage({
           </>
         ) : null}
       </main>
-
-      {!embedded && <FloatingButtons />}
 
       {!adminEdit ? (
         <AnimatePresence>

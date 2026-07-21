@@ -38,7 +38,6 @@ import {
   ZapOff,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { PageEditorialHero } from "@/components/shared/PageEditorialHero";
 import { PageCtaSection, pageCtaGhost, pageCtaPrimary } from "@/components/shared/PageCtaSection";
 import { FaqBlock } from "@/components/shared/FaqBlock";
@@ -207,188 +206,19 @@ export default function EnergyStoragePage({
         </section>
 
         {/* ESS Concept Intro */}
-        <IntroSection />
+        <IntroSection content={content} />
 
         {/* Interactive Saving & Payback Estimator Calculator */}
-        <section
-          id="saving-calculator"
-          className="section-y relative overflow-hidden border-b border-border/60 bg-background text-slate-800"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
-
-          <div className="container-vf relative z-10">
-            <SectionHeader
-              align="centered"
-              eyebrow="Năng lượng tương lai"
-              title="Dự toán hiệu quả đầu tư & tiết kiệm"
-              description="Nhập số tiền điện tiêu thụ trung bình hàng tháng của bạn để tính toán ngay khả năng tiết kiệm chi phí, giảm phát thải carbon CO2 và thời gian hoàn vốn đầu tư hệ thống pin lưu trữ ESS."
-            />
-
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-5xl mx-auto grid lg:grid-cols-12">
-              {/* Inputs Control Side */}
-              <div className="lg:col-span-7 p-6 md:p-8 bg-white space-y-6">
-                <h3 className="text-sm font-black border-b border-slate-100 pb-3 flex items-center gap-2 text-brand-dark uppercase">
-                  <Sliders className="size-4 text-brand" /> Nhập thông số điện tiêu thụ
-                </h3>
-
-                {/* Bill slider input */}
-                <div>
-                  <div className="flex justify-between text-xs font-bold mb-2">
-                    <span className="text-slate-500 uppercase text-[10px]">
-                      Tiền điện trung bình hàng tháng
-                    </span>
-                    <span className="text-brand text-xs font-black">
-                      {new Intl.NumberFormat("vi-VN").format(calcBill)} VNĐ
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min={1000000}
-                    max={20000000}
-                    step={500000}
-                    value={calcBill}
-                    onChange={(e) => setCalcBill(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand"
-                  />
-                  <div className="flex justify-between text-[11px] text-slate-400 font-semibold mt-1">
-                    <span>1.000.000đ</span>
-                    <span>10.000.000đ</span>
-                    <span>20.000.000đ</span>
-                  </div>
-                </div>
-
-                {/* Solar setup status toggler */}
-                <div className="bg-surface-muted border border-slate-100 p-4 rounded-xl flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-brand/10 text-brand rounded-lg">
-                      <Sun className="size-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-black text-brand-dark uppercase">
-                        Kết hợp điện mặt trời mái nhà
-                      </p>
-                      <p className="text-[10px] text-slate-400 font-semibold">
-                        Tận dụng lưu trữ năng lượng xanh miễn phí
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setCalcSolar(!calcSolar)}
-                    className={`w-14 h-7 rounded-full p-1 transition-all ${calcSolar ? "bg-brand" : "bg-slate-200"}`}
-                  >
-                    <div
-                      className={`size-5 rounded-full bg-white transition-all shadow ${calcSolar ? "translate-x-7" : "translate-x-0"}`}
-                    />
-                  </button>
-                </div>
-
-                {/* Battery capacity selected */}
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
-                    Cấu hình pin lưu trữ ESS đề xuất
-                  </label>
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    {[5, 10, 15, 20].map((cap) => (
-                      <button
-                        key={cap}
-                        type="button"
-                        onClick={() => setCalcCapacity(cap)}
-                        className={`py-3 px-2 rounded-xl text-center border text-xs font-black transition-all ${
-                          calcCapacity === cap
-                            ? "border-brand bg-brand/10 text-brand shadow-md"
-                            : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
-                        }`}
-                      >
-                        {cap} kWh
-                      </button>
-                    ))}
-                  </div>
-                  <span className="block text-[10px] text-slate-400 mt-2 font-semibold">
-                    * Dung lượng sạc/xả khả dụng thiết kế LFP hiệu năng tối đa 95%.
-                  </span>
-                </div>
-              </div>
-
-              {/* Estimate Saving Results Side */}
-              <div className="lg:col-span-5 p-6 md:p-8 bg-surface-muted border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-black border-b border-slate-200 pb-3 text-brand-dark uppercase flex items-center gap-2">
-                    <BarChart3 className="size-4 text-brand" /> Phân tích hiệu quả
-                  </h3>
-
-                  <div className="mt-8 space-y-5">
-                    {/* Monthly Saving Block */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 relative group overflow-hidden shadow-sm">
-                      <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider">
-                        Tiết kiệm dự kiến mỗi tháng
-                      </p>
-                      <p className="text-2xl md:text-3xl font-black text-brand mt-1.5">
-                        {new Intl.NumberFormat("vi-VN").format(calcResults.monthlySaving)} VNĐ
-                      </p>
-                      <p className="text-[10px] text-slate-400 font-semibold mt-1">
-                        Cắt giảm đến {calcSolar ? "60%" : "25%"} tiền điện giờ cao điểm tối đa
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {/* Yearly Savings Block */}
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
-                          Tiết kiệm / năm
-                        </p>
-                        <p className="text-base font-black text-brand-dark mt-1">
-                          {new Intl.NumberFormat("vi-VN").format(calcResults.yearlySaving)}đ
-                        </p>
-                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
-                          Giá trị kinh tế lũy kế
-                        </p>
-                      </div>
-
-                      {/* Payback period Block */}
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
-                          Thời gian hoàn vốn
-                        </p>
-                        <p className="text-base font-black text-brand mt-1">
-                          ~ {calcResults.paybackYears} năm
-                        </p>
-                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
-                          Trục kỳ thu hồi đầu tư
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* CO2 block */}
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                      <div>
-                        <p className="text-[11px] text-slate-500 font-extrabold uppercase">
-                          Giảm phát thải khí nhà kính
-                        </p>
-                        <p className="text-base font-black text-brand mt-1">
-                          ~ {calcResults.reducedCo2} kg CO2 / năm
-                        </p>
-                      </div>
-                      <div className="bg-brand/10 p-2 rounded-lg text-brand">
-                        <Recycle className="size-5" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-slate-200">
-                  <div className="flex items-start gap-2 text-[10px] text-slate-500 font-semibold leading-relaxed">
-                    <Info className="size-4 text-brand shrink-0" />
-                    <span>
-                      Lưu ý: Kết quả trên dựa trên mô hình thuật toán cạo đỉnh giờ cao điểm (Peak
-                      Shaving) và tối ưu nguồn sạc giá điện bậc thang của điện lực EVN.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <SavingCalculatorSection
+          content={content}
+          calcBill={calcBill}
+          setCalcBill={setCalcBill}
+          calcSolar={calcSolar}
+          setCalcSolar={setCalcSolar}
+          calcCapacity={calcCapacity}
+          setCalcCapacity={setCalcCapacity}
+          calcResults={calcResults}
+        />
 
         {/* Solutions Grid Section */}
         <SolutionsSection content={content} />
@@ -420,7 +250,7 @@ export default function EnergyStoragePage({
         {isConsultOpen && (
           <motion.div
             {...modalMotion.overlay}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end"
+            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex justify-end"
           >
             <motion.div
               {...modalMotion.drawer}
@@ -623,8 +453,6 @@ export default function EnergyStoragePage({
           </motion.div>
         )}
       </AnimatePresence>
-
-      <FloatingButtons />
     </div>
   );
 }
@@ -740,7 +568,235 @@ function HeroSection({
   );
 }
 
-function IntroSection() {
+function SavingCalculatorSection({
+  content,
+  calcBill,
+  setCalcBill,
+  calcSolar,
+  setCalcSolar,
+  calcCapacity,
+  setCalcCapacity,
+  calcResults,
+}: {
+  content: EnergyPageContent;
+  calcBill: number;
+  setCalcBill: (value: number) => void;
+  calcSolar: boolean;
+  setCalcSolar: (value: boolean) => void;
+  calcCapacity: number;
+  setCalcCapacity: (value: number) => void;
+  calcResults: {
+    monthlySaving: number;
+    yearlySaving: number;
+    paybackYears: number;
+    reducedCo2: number;
+  };
+}) {
+  const edit = useStaticPageAdminEdit();
+  const defaults = getDefaultStaticPageContent("energy").calculator;
+  const calculator = {
+    eyebrow: content.calculator?.eyebrow ?? defaults?.eyebrow ?? "",
+    title: content.calculator?.title ?? defaults?.title ?? "",
+    description: content.calculator?.description ?? defaults?.description ?? "",
+    note: content.calculator?.note ?? defaults?.note ?? "",
+  };
+
+  return (
+    <section
+      id="saving-calculator"
+      className="section-y relative overflow-hidden border-b border-border/60 bg-background text-slate-800"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,87,255,0.06),transparent)] pointer-events-none" />
+
+      <div className="container-vf relative z-10">
+        <SectionHeader
+          align="centered"
+          eyebrow={
+            <StaticEditableText
+              value={calculator.eyebrow}
+              onChange={(value) => edit?.updateField("calculator.eyebrow", value)}
+            />
+          }
+          title={
+            <StaticEditableText
+              value={calculator.title}
+              onChange={(value) => edit?.updateField("calculator.title", value)}
+            />
+          }
+          description={
+            <StaticEditableText
+              value={calculator.description}
+              onChange={(value) => edit?.updateField("calculator.description", value)}
+              multiline
+            />
+          }
+        />
+
+        <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl max-w-5xl mx-auto grid lg:grid-cols-12">
+          <div className="lg:col-span-7 p-6 md:p-8 bg-white space-y-6">
+            <h3 className="text-sm font-black border-b border-slate-100 pb-3 flex items-center gap-2 text-brand-dark uppercase">
+              <Sliders className="size-4 text-brand" /> Nhập thông số điện tiêu thụ
+            </h3>
+
+            <div>
+              <div className="flex justify-between text-xs font-bold mb-2">
+                <span className="text-slate-500 uppercase text-[10px]">
+                  Tiền điện trung bình hàng tháng
+                </span>
+                <span className="text-brand text-xs font-black">
+                  {new Intl.NumberFormat("vi-VN").format(calcBill)} VNĐ
+                </span>
+              </div>
+              <input
+                type="range"
+                min={1000000}
+                max={20000000}
+                step={500000}
+                value={calcBill}
+                onChange={(e) => setCalcBill(parseInt(e.target.value))}
+                className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand"
+              />
+              <div className="flex justify-between text-[11px] text-slate-400 font-semibold mt-1">
+                <span>1.000.000đ</span>
+                <span>10.000.000đ</span>
+                <span>20.000.000đ</span>
+              </div>
+            </div>
+
+            <div className="bg-surface-muted border border-slate-100 p-4 rounded-xl flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-brand/10 text-brand rounded-lg">
+                  <Sun className="size-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-black text-brand-dark uppercase">
+                    Kết hợp điện mặt trời mái nhà
+                  </p>
+                  <p className="text-[10px] text-slate-400 font-semibold">
+                    Tận dụng lưu trữ năng lượng xanh miễn phí
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCalcSolar(!calcSolar)}
+                className={`w-14 h-7 rounded-full p-1 transition-all ${calcSolar ? "bg-brand" : "bg-slate-200"}`}
+              >
+                <div
+                  className={`size-5 rounded-full bg-white transition-all shadow ${calcSolar ? "translate-x-7" : "translate-x-0"}`}
+                />
+              </button>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2">
+                Cấu hình pin lưu trữ ESS đề xuất
+              </label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[5, 10, 15, 20].map((cap) => (
+                  <button
+                    key={cap}
+                    type="button"
+                    onClick={() => setCalcCapacity(cap)}
+                    className={`py-3 px-2 rounded-xl text-center border text-xs font-black transition-all ${
+                      calcCapacity === cap
+                        ? "border-brand bg-brand/10 text-brand shadow-md"
+                        : "border-slate-200 bg-surface-muted text-slate-500 hover:text-brand-dark hover:bg-slate-100"
+                    }`}
+                  >
+                    {cap} kWh
+                  </button>
+                ))}
+              </div>
+              <span className="block text-[10px] text-slate-400 mt-2 font-semibold">
+                * Dung lượng sạc/xả khả dụng thiết kế LFP hiệu năng tối đa 95%.
+              </span>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 p-6 md:p-8 bg-surface-muted border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-between">
+            <div>
+              <h3 className="text-sm font-black border-b border-slate-200 pb-3 text-brand-dark uppercase flex items-center gap-2">
+                <BarChart3 className="size-4 text-brand" /> Phân tích hiệu quả
+              </h3>
+
+              <div className="mt-8 space-y-5">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 relative group overflow-hidden shadow-sm">
+                  <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider">
+                    Tiết kiệm dự kiến mỗi tháng
+                  </p>
+                  <p className="text-2xl md:text-3xl font-black text-brand mt-1.5">
+                    {new Intl.NumberFormat("vi-VN").format(calcResults.monthlySaving)} VNĐ
+                  </p>
+                  <p className="text-[10px] text-slate-400 font-semibold mt-1">
+                    Cắt giảm đến {calcSolar ? "60%" : "25%"} tiền điện giờ cao điểm tối đa
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p className="text-[11px] text-slate-500 font-extrabold uppercase">
+                      Tiết kiệm / năm
+                    </p>
+                    <p className="text-base font-black text-brand-dark mt-1">
+                      {new Intl.NumberFormat("vi-VN").format(calcResults.yearlySaving)}đ
+                    </p>
+                    <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                      Giá trị kinh tế lũy kế
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p className="text-[11px] text-slate-500 font-extrabold uppercase">
+                      Thời gian hoàn vốn
+                    </p>
+                    <p className="text-base font-black text-brand mt-1">
+                      ~ {calcResults.paybackYears} năm
+                    </p>
+                    <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                      Trục kỳ thu hồi đầu tư
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] text-slate-500 font-extrabold uppercase">
+                      Giảm phát thải khí nhà kính
+                    </p>
+                    <p className="text-base font-black text-brand mt-1">
+                      ~ {calcResults.reducedCo2} kg CO2 / năm
+                    </p>
+                  </div>
+                  <div className="bg-brand/10 p-2 rounded-lg text-brand">
+                    <Recycle className="size-5" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-slate-200">
+              <div className="flex items-start gap-2 text-[10px] text-slate-500 font-semibold leading-relaxed">
+                <Info className="size-4 text-brand shrink-0" />
+                <StaticEditableText
+                  value={calculator.note}
+                  onChange={(value) => edit?.updateField("calculator.note", value)}
+                  multiline
+                  className="text-[10px] text-slate-500 font-semibold leading-relaxed"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function IntroSection({ content }: { content: EnergyPageContent }) {
+  const introImage =
+    content.intro?.image || getDefaultStaticPageContent("energy").intro?.image || IMAGES.herioGreen;
+
   return (
     <section className="section-y bg-white">
       <div className="container-vf">
@@ -749,8 +805,9 @@ function IntroSection() {
             direction="left"
             className="relative overflow-hidden rounded-2xl shadow-card order-2 lg:order-1 aspect-[4/3] w-full border border-slate-200"
           >
+            <StaticEditImageButton imagePath="intro.image" />
             <Image
-              src={IMAGES.herioGreen}
+              src={introImage}
               alt="Năng lượng xanh VinFast"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"

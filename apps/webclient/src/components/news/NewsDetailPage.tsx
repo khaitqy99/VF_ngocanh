@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { ArticleBody } from "@/components/news/ArticleBody";
 import { IMAGES } from "@/lib/images";
 import { formatPrice } from "@/lib/cars";
@@ -215,8 +214,6 @@ export default function NewsDetailPage({
           </section>
         ) : null}
       </article>
-
-      <FloatingButtons />
     </div>
   );
 }

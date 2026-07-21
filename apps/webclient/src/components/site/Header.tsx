@@ -6,8 +6,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Toaster } from "sonner";
 
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
 import { useMountReveal } from "@/hooks/use-scroll-reveal";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IMAGES } from "@/lib/images";
@@ -32,6 +34,7 @@ export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const reduced = useReducedMotion();
   const mount = useMountReveal(0.05);
 
@@ -46,6 +49,11 @@ export default function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  const openTestDriveBooking = () => {
+    setMobileOpen(false);
+    setBookingOpen(true);
+  };
+
   const navLink = (active: boolean) =>
     active ? "text-brand" : "text-foreground/80 hover:text-brand";
 
@@ -57,6 +65,7 @@ export default function Header() {
 
   return (
     <>
+      <Toaster position="top-center" richColors />
       <motion.header
         initial={mount.initial}
         animate={mount.animate}
@@ -103,7 +112,13 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <motion.button whileHover={buttonHover} whileTap={buttonTap} className={ctaClass}>
+            <motion.button
+              type="button"
+              whileHover={buttonHover}
+              whileTap={buttonTap}
+              className={ctaClass}
+              onClick={openTestDriveBooking}
+            >
               ĐĂNG KÝ LÁI THỬ
             </motion.button>
 
@@ -170,19 +185,26 @@ export default function Header() {
             </nav>
 
             <div className="border-t border-border/60 p-4">
-              <SheetClose asChild>
-                <button
-                  type="button"
-                  className="home-cta-primary flex w-full items-center justify-center rounded-full px-4 py-3 text-[12px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
-                >
-                  ĐĂNG KÝ LÁI THỬ
-                </button>
-              </SheetClose>
+              <button
+                type="button"
+                onClick={openTestDriveBooking}
+                className="home-cta-primary flex w-full items-center justify-center rounded-full px-4 py-3 text-[12px] font-semibold tracking-wide text-white transition hover:bg-[#0046cc]"
+              >
+                ĐĂNG KÝ LÁI THỬ
+              </button>
             </div>
           </SheetContent>
         </Sheet>
       </motion.header>
       <div className="h-14 shrink-0" aria-hidden />
+
+      <ShowroomBookingModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        vehicleName="VinFast — Tư vấn chọn xe"
+        vehicleImage={IMAGES.showroom}
+        service="Đăng ký lái thử"
+      />
     </>
   );
 }

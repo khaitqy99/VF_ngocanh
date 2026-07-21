@@ -7,7 +7,6 @@ import { getCarDetailAccessories, getCarDetailBySlug, getCarBySlug, getCars } fr
 import { getCarPricingSettings } from "@/lib/cms/car-pricing-fetch";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
-import { buildProductReviewFields } from "@/lib/seo/product-schema";
 import {
   carDetailPath,
   resolveLegacyVehicleSlug,
@@ -70,7 +69,6 @@ export default async function CarDetailRoute({ params }: Props) {
       priceValidUntil: "2027-12-31",
       seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
     },
-    ...(detail.reviews ? buildProductReviewFields(detail.reviews) : {}),
   };
 
   const breadcrumb = buildBreadcrumbSchema([

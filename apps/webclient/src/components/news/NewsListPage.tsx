@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowRight, ArrowUpRight, Clock, Search } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { IMAGES } from "@/lib/images";
 import { HOTLINE, HOTLINE_TEL } from "@/lib/contact";
@@ -167,7 +166,7 @@ function NewsListRow({ article }: { article: NewsArticle }) {
   return (
     <Link
       href={`/tin-tuc/${article.slug}`}
-      className="group flex gap-4 border-b border-border/60 py-6 transition first:pt-0 last:border-b-0 hover:bg-surface-muted/40"
+      className="group flex gap-4 border-b border-border/60 py-6 transition last:border-b-0 hover:bg-surface-muted/40"
     >
       <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-black/5 sm:h-28 sm:w-40">
         <Image
@@ -188,11 +187,11 @@ function NewsListRow({ article }: { article: NewsArticle }) {
             </span>
           ) : null}
         </div>
-        <h3 className={`${vfCardTitle} line-clamp-2 transition group-hover:text-brand`}>
+        <h3 className={`${vfCardTitle} line-clamp-1 transition group-hover:text-brand`}>
           {article.title}
         </h3>
         {article.excerpt ? (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-1 text-sm leading-relaxed text-muted-foreground">
             {article.excerpt}
           </p>
         ) : null}
@@ -336,24 +335,17 @@ export default function NewsListPage({ articles }: { articles: NewsArticle[] }) 
     return articles.filter((article) => article.id !== highlightMain.id).slice(0, 2);
   }, [articles, highlightMain]);
 
-  const highlightIds = useMemo(
-    () => new Set([highlightMain?.id, ...highlightSide.map((a) => a.id)].filter(Boolean)),
-    [highlightMain, highlightSide],
-  );
-
   const filtered = useMemo(() => {
-    return articles
-      .filter((article) => !highlightIds.has(article.id))
-      .filter((article) => {
-        if (category !== "all" && article.category !== category) return false;
-        if (!search.trim()) return true;
-        const q = search.toLowerCase();
-        return (
-          article.title.toLowerCase().includes(q) ||
-          (article.excerpt?.toLowerCase().includes(q) ?? false)
-        );
-      });
-  }, [articles, category, search, highlightIds]);
+    return articles.filter((article) => {
+      if (category !== "all" && article.category !== category) return false;
+      if (!search.trim()) return true;
+      const q = search.toLowerCase();
+      return (
+        article.title.toLowerCase().includes(q) ||
+        (article.excerpt?.toLowerCase().includes(q) ?? false)
+      );
+    });
+  }, [articles, category, search]);
 
   const paged = useMemo(() => paginateNews(filtered, page, NEWS_PAGE_SIZE), [filtered, page]);
 
@@ -434,7 +426,7 @@ export default function NewsListPage({ articles }: { articles: NewsArticle[] }) 
                     </div>
                   </div>
 
-                  <div className="px-4 sm:px-6">
+                  <div className="px-4 pt-2 sm:px-6">
                     {filtered.length === 0 && articles.length === 0 ? (
                       <div className="py-16 text-center text-sm text-muted-foreground">
                         Chưa có bài viết nào.
@@ -485,8 +477,6 @@ export default function NewsListPage({ articles }: { articles: NewsArticle[] }) 
           </div>
         </section>
       </main>
-
-      <FloatingButtons />
     </div>
   );
 }

@@ -96,7 +96,7 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
           </div>
           <div className="md:col-span-2">
             <label className="mb-1 block text-xs font-semibold">Mô tả mặc định</label>
-            <Textarea
+            <Textarea 
               rows={3}
               value={settings.defaultDescription ?? ""}
               onChange={(e) => setSettings((s) => ({ ...s, defaultDescription: e.target.value }))}

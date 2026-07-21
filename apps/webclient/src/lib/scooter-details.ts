@@ -62,20 +62,6 @@ export type AccessoryItem = {
   image: string;
 };
 
-export type ReviewItem = {
-  name: string;
-  rating: number;
-  date: string;
-  content: string;
-  variant?: string;
-};
-
-export type ReviewsSection = {
-  averageRating: number;
-  totalReviews: number;
-  items: ReviewItem[];
-};
-
 export type ScooterDetail = Omit<ScooterModel, "colors"> & {
   tagline: string;
   badges: string[];
@@ -97,7 +83,6 @@ export type ScooterDetail = Omit<ScooterModel, "colors"> & {
   safety: SafetySection;
   specGroups: SpecGroup[];
   accessories: AccessoryItem[];
-  reviews: ReviewsSection;
 };
 
 function typeLabel(type: ScooterModel["type"]) {
@@ -217,38 +202,6 @@ function buildAccessories(scooter: ScooterModel): AccessoryItem[] {
   ];
 }
 
-function buildReviews(scooter: ScooterModel): ReviewsSection {
-  return {
-    averageRating: 4.7,
-    totalReviews: 86,
-    items: [
-      {
-        name: "Nguyễn Minh Tuấn",
-        rating: 5,
-        date: "12/03/2026",
-        variant: scooter.name,
-        content: `${scooter.name} chạy rất êm, tiết kiệm điện. Pin đủ dùng cả ngày đi làm. Đội ngũ VinFast Ngọc Anh Cà Mau tư vấn nhiệt tình.`,
-      },
-      {
-        name: "Trần Thị Hoa",
-        rating: 5,
-        date: "28/02/2026",
-        variant: scooter.name,
-        content:
-          "Thiết kế đẹp, app kết nối tiện lợi. Sạc tại nhà qua đêm là đủ dùng. Rất hài lòng với quyết định chuyển sang xe điện.",
-      },
-      {
-        name: "Lê Văn Phúc",
-        rating: 4,
-        date: "15/02/2026",
-        variant: scooter.name,
-        content:
-          "Xe mạnh, tăng tốc nhanh. Giá hợp lý so với xe xăng cùng phân khúc. Chỉ mong thêm cốp rộng hơn một chút.",
-      },
-    ],
-  };
-}
-
 function buildDefaultDetail(scooter: ScooterModel): ScooterDetail {
   return {
     ...scooter,
@@ -348,7 +301,6 @@ function buildDefaultDetail(scooter: ScooterModel): ScooterDetail {
     safety: buildSafety(scooter),
     specGroups: buildSpecGroups(scooter),
     accessories: buildAccessories(scooter),
-    reviews: buildReviews(scooter),
   };
 }
 

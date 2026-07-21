@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "sonner";
 import { ArrowLeft, Check, Phone, Plus, Save, Shield, Undo2, Wrench } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { CatalogGrid, CatalogGridItem, FadeIn } from "@/components/motion";
 import {
@@ -470,8 +469,6 @@ export default function AccessoryDetailPage({
           </section>
         )}
       </main>
-
-      {!embedded && <FloatingButtons />}
     </div>
   );
 }

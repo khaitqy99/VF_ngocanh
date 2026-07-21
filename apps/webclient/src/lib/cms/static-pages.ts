@@ -111,6 +111,13 @@ export type ChargingPageContent = {
 
 export type EnergyPageContent = {
   hero?: { eyebrow?: string; title?: string; subtitle?: string; image?: string };
+  intro?: { image?: string };
+  calculator?: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+    note?: string;
+  };
   stats?: CmsStatItem[];
   solutions?: typeof ENERGY_SOLUTIONS;
   benefits?: { title: string; desc: string }[];
@@ -194,7 +201,17 @@ export function getDefaultStaticPageContent<S extends StaticPageSlug>(
           title: "Lưu trữ năng lượng VinFast",
           subtitle:
             "Hệ thống pin lưu trữ năng lượng thông minh — tích hợp điện mặt trời, trạm sạc xe điện và quản lý từ xa.",
+          image: IMAGES.chargingStations,
+        },
+        intro: {
           image: IMAGES.herioGreen,
+        },
+        calculator: {
+          eyebrow: "Năng lượng tương lai",
+          title: "Dự toán hiệu quả đầu tư & tiết kiệm",
+          description:
+            "Nhập số tiền điện tiêu thụ trung bình hàng tháng của bạn để tính toán ngay khả năng tiết kiệm chi phí, giảm phát thải carbon CO2 và thời gian hoàn vốn đầu tư hệ thống pin lưu trữ ESS.",
+          note: "Lưu ý: Kết quả trên dựa trên mô hình thuật toán cạo đỉnh giờ cao điểm (Peak Shaving) và tối ưu nguồn sạc giá điện bậc thang của điện lực EVN.",
         },
         stats: ENERGY_STATS.map(({ value, label }) => ({ value, label })),
         solutions: clone(ENERGY_SOLUTIONS),
@@ -281,6 +298,8 @@ export function mergeStaticPageContent<S extends StaticPageSlug>(
       const base = defaults as EnergyPageContent;
       return {
         hero: mergeRecord(base.hero, raw.hero),
+        intro: mergeRecord(base.intro, raw.intro),
+        calculator: mergeRecord(base.calculator, raw.calculator),
         stats: mergeArray(base.stats, raw.stats),
         solutions: mergeArray(base.solutions, raw.solutions),
         benefits: mergeArray(base.benefits, raw.benefits),

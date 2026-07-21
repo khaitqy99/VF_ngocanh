@@ -18,7 +18,6 @@ import {
   Phone,
 } from "lucide-react";
 
-import FloatingButtons from "@/components/site/FloatingButtons";
 import ShowroomLocationSection from "@/components/site/ShowroomLocationSection";
 import { type DealershipContact } from "@/lib/dealership";
 import {
@@ -67,6 +66,7 @@ import {
   StaticEditableText,
   StaticEditImageButton,
 } from "@/components/admin-edit/static-page/StaticEditableText";
+import { cn } from "@/lib/utils";
 
 const STAT_ICONS = [Award, Users, Car] as const;
 const WHY_ICONS = [Award, Users, Wrench, Cpu, Headphones] as const;
@@ -119,8 +119,6 @@ export default function AboutPage({
         <ShowroomLocationSection className="section-y bg-surface-muted" contact={contact} />
         <CtaBanner />
       </main>
-
-      <FloatingButtons />
     </div>
   );
 }
@@ -260,7 +258,9 @@ function MissionSection({ content }: { content: AboutPageContent }) {
         <StaggerGrid className="grid gap-6 md:grid-cols-3">
           <StaggerItem variant="home" index={0}>
             <MissionCard
+              variant="statement"
               icon={Target}
+              eyebrow="Định hướng thương hiệu"
               title={
                 <StaticEditableText
                   value={mission?.title ?? "SỨ MỆNH CỐT LÕI"}
@@ -268,38 +268,16 @@ function MissionSection({ content }: { content: AboutPageContent }) {
                 />
               }
             >
-              <p className="mt-4 text-xs font-semibold leading-relaxed text-slate-400">
-                <StaticEditableText
-                  value={mission?.content ?? ""}
-                  onChange={(value) => edit?.updateField("mission.content", value)}
-                  multiline
-                />
-              </p>
+              <StaticEditableText
+                value={mission?.content ?? ""}
+                onChange={(value) => edit?.updateField("mission.content", value)}
+                multiline
+              />
             </MissionCard>
           </StaggerItem>
 
           <StaggerItem variant="home" index={1}>
-            <MissionCard
-              icon={Eye}
-              title={
-                <StaticEditableText
-                  value={vision?.title ?? "TẦM NHÌN CHIẾN LƯỢC"}
-                  onChange={(value) => edit?.updateField("vision.title", value)}
-                />
-              }
-            >
-              <p className="mt-4 text-xs font-semibold leading-relaxed text-slate-400">
-                <StaticEditableText
-                  value={vision?.content ?? ""}
-                  onChange={(value) => edit?.updateField("vision.content", value)}
-                  multiline
-                />
-              </p>
-            </MissionCard>
-          </StaggerItem>
-
-          <StaggerItem variant="home" index={2}>
-            <MissionCard icon={Gem} title="GIÁ TRỊ CỐT LÕI">
+            <MissionCard variant="list" icon={Gem} title="GIÁ TRỊ CỐT LÕI">
               <ul className="mt-5 w-full space-y-3.5 border-t border-slate-100 pt-4">
                 {CORE_VALUES.map((v) => (
                   <li
@@ -313,6 +291,26 @@ function MissionSection({ content }: { content: AboutPageContent }) {
               </ul>
             </MissionCard>
           </StaggerItem>
+
+          <StaggerItem variant="home" index={2}>
+            <MissionCard
+              variant="statement"
+              icon={Eye}
+              eyebrow="Mục tiêu dài hạn"
+              title={
+                <StaticEditableText
+                  value={vision?.title ?? "TẦM NHÌN CHIẾN LƯỢC"}
+                  onChange={(value) => edit?.updateField("vision.title", value)}
+                />
+              }
+            >
+              <StaticEditableText
+                value={vision?.content ?? ""}
+                onChange={(value) => edit?.updateField("vision.content", value)}
+                multiline
+              />
+            </MissionCard>
+          </StaggerItem>
         </StaggerGrid>
       </div>
     </section>
@@ -323,28 +321,80 @@ function MissionCard({
   icon: Icon,
   title,
   children,
+  variant = "list",
+  eyebrow,
 }: {
   icon: typeof Target;
   title: React.ReactNode;
   children: React.ReactNode;
+  variant?: "statement" | "list";
+  eyebrow?: string;
 }) {
   const reduced = useReducedMotion();
+  const isStatement = variant === "statement";
 
   return (
     <motion.div
       initial="rest"
       whileHover={reduced ? undefined : "hover"}
       variants={reduced ? undefined : aboutMissionCard}
-      className="page-section-card group flex h-full flex-col items-center p-8 text-center transition-shadow duration-300 hover:shadow-card"
+      className={cn(
+        "page-section-card group relative flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-card",
+        isStatement ? "p-7 text-left sm:p-8" : "items-center p-8 text-center",
+      )}
     >
-      <motion.div
-        variants={reduced ? undefined : aboutMissionIcon}
-        className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand shadow-sm transition-colors duration-300 group-hover:bg-brand group-hover:text-white"
-      >
-        <Icon className="size-7" strokeWidth={1.5} />
-      </motion.div>
-      <h3 className="mt-6 text-xs font-black uppercase tracking-widest text-brand-dark">{title}</h3>
-      {children}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-brand via-brand/70 to-brand/20"
+      />
+
+      {isStatement ? (
+        <>
+          <div className="flex items-center gap-3.5">
+            <motion.div
+              variants={reduced ? undefined : aboutMissionIcon}
+              className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand shadow-sm transition-colors duration-300 group-hover:bg-brand group-hover:text-white"
+            >
+              <Icon className="size-6" strokeWidth={1.5} />
+            </motion.div>
+            <div className="min-w-0">
+              {eyebrow ? (
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
+                  {eyebrow}
+                </p>
+              ) : null}
+              <h3 className="mt-1 text-xs font-black uppercase tracking-widest text-brand-dark">
+                {title}
+              </h3>
+            </div>
+          </div>
+
+          <blockquote className="relative mt-6 flex flex-1 flex-col justify-center border-l-2 border-brand/25 pl-4">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -top-3 left-3 select-none text-5xl font-black leading-none text-brand/15"
+            >
+              “
+            </span>
+            <p className="relative text-[13px] font-semibold leading-relaxed text-slate-600">
+              {children}
+            </p>
+          </blockquote>
+        </>
+      ) : (
+        <>
+          <motion.div
+            variants={reduced ? undefined : aboutMissionIcon}
+            className="flex size-14 items-center justify-center rounded-xl border border-brand/20 bg-brand/5 text-brand shadow-sm transition-colors duration-300 group-hover:bg-brand group-hover:text-white"
+          >
+            <Icon className="size-7" strokeWidth={1.5} />
+          </motion.div>
+          <h3 className="mt-6 text-xs font-black uppercase tracking-widest text-brand-dark">
+            {title}
+          </h3>
+          {children}
+        </>
+      )}
     </motion.div>
   );
 }
