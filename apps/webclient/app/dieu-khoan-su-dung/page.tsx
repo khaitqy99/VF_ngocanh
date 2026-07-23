@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/legal/LegalPage";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
-import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
+import { getPageSeo, getSiteSeo } from "@/lib/cms/seo";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/seo/local-business";
+import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
+import { getStaticPageSeoDefinition, resolveStaticPageSeo } from "@/lib/seo";
 import {
   DEALERSHIP_NAME,
   SHOWROOM_ADDRESS,
@@ -15,30 +17,31 @@ export const revalidate = 86400;
 
 const PAGE_PATH = "/dieu-khoan-su-dung";
 const PAGE_TITLE = "Điều khoản sử dụng";
+const PAGE_SLUG = "terms";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description:
-    "Điều khoản sử dụng website vinfast3scamau.com của VinFast Ngọc Anh Cà Mau — quy định về nội dung, giá bán tham khảo, sở hữu trí tuệ và trách nhiệm của người dùng.",
-  alternates: { canonical: PAGE_PATH },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: "Quy định và điều khoản khi sử dụng website của VinFast Ngọc Anh Cà Mau.",
-    url: `${PRODUCTION_SITE_URL}${PAGE_PATH}`,
-    type: "website",
-    locale: "vi_VN",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildStaticPageMetadata(PAGE_SLUG);
+}
 
-export default function DieuKhoanSuDungPage() {
+export default async function DieuKhoanSuDungPage() {
+  const definition = getStaticPageSeoDefinition(PAGE_SLUG)!;
+  const [site, seo] = await Promise.all([getSiteSeo(), getPageSeo(PAGE_SLUG)]);
+  const resolved = resolveStaticPageSeo(definition, seo, site);
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },
     { name: PAGE_TITLE, path: PAGE_PATH },
   ]);
+  const webpage = buildWebPageSchema({
+    name: resolved.title,
+    description: resolved.description,
+    path: PAGE_PATH,
+    schemaType: seo?.schemaType ?? "WebPage",
+  });
 
   return (
     <>
       <JsonLd data={breadcrumb} />
+      <JsonLd data={webpage} />
       <LegalPage
         title="Điều khoản sử dụng website"
         breadcrumbLabel={PAGE_TITLE}

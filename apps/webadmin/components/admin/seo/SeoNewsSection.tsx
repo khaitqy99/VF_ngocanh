@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FileText, Newspaper } from "lucide-react";
 import { getNewsCategoryLabel, type NewsArticle } from "@webclient/lib/cms/news-types";
-import type { SeoRecord } from "@/lib/seo";
+import { buildSeoChecklist, type SeoRecord } from "@/lib/seo";
 import { Card, CardContent } from "@/components/ui/core";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -14,8 +14,13 @@ const STATUS_LABELS: Record<string, string> = {
   archived: "Lưu trữ",
 };
 
-function isSeoOptimized(seo: SeoRecord): boolean {
-  return Boolean(seo.metaTitle?.trim() && seo.metaDescription?.trim());
+function isSeoOptimized(seo: SeoRecord, article: NewsArticle): boolean {
+  return buildSeoChecklist(seo, {
+    title: article.title,
+    description: article.excerpt || article.title,
+    image: article.coverImageUrl || undefined,
+    path: `/tin-tuc/${article.slug}`,
+  }).optimized;
 }
 
 export function SeoNewsSection() {
@@ -84,20 +89,20 @@ export function SeoNewsSection() {
     );
   }
 
-  const optimizedCount = articles.filter((article) => isSeoOptimized(article.seo)).length;
+  const optimizedCount = articles.filter((article) => isSeoOptimized(article.seo, article)).length;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 text-sm text-zinc-500">
         <Newspaper className="h-4 w-4" />
         <span>
-          {optimizedCount}/{articles.length} bài đã có meta title &amp; mô tả
+          {optimizedCount}/{articles.length} bài đạt checklist SEO (title, mô tả, OG)
         </span>
       </div>
 
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((article) => {
-          const optimized = isSeoOptimized(article.seo);
+          const optimized = isSeoOptimized(article.seo, article);
           return (
             <Card key={article.id} className="transition hover:border-red-200 hover:shadow-sm">
               <CardContent className="flex flex-col gap-3 p-4">

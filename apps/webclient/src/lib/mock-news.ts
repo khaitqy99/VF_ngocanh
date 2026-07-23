@@ -7,6 +7,7 @@ const baseFields = {
   relatedProducts: [],
   authorId: null,
   authorName: "VinFast Ngọc Anh Cà Mau",
+  coverImageAlt: null as string | null,
 };
 
 export const MOCK_NEWS: NewsArticle[] = [

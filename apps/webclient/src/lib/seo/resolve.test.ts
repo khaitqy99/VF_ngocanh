@@ -38,7 +38,7 @@ test("mergeSiteSeoSettings does not wipe defaults with undefined", () => {
   assert.equal(merged.organization?.name, "Showroom");
 });
 
-test("resolveSeoContent uses page title for OG before global OG defaults", () => {
+test("resolveSeoContent prefers site default OG over page title when ogTitle unset", () => {
   const resolved = resolveSeoContent(
     { metaTitle: "VF 3 custom", metaDescription: "Mô tả VF 3" },
     { title: "Fallback", description: "Fallback desc", path: "/oto/vf3" },
@@ -48,8 +48,8 @@ test("resolveSeoContent uses page title for OG before global OG defaults", () =>
     },
   );
   assert.equal(resolved.title, "VF 3 custom");
-  assert.equal(resolved.ogTitle, "VF 3 custom");
-  assert.equal(resolved.ogDescription, "Mô tả VF 3");
+  assert.equal(resolved.ogTitle, "Global OG title");
+  assert.equal(resolved.ogDescription, "Global OG desc");
 });
 
 test("resolveSeoContent keeps explicit ogTitle when set", () => {

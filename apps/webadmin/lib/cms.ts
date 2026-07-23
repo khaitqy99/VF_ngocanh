@@ -160,7 +160,7 @@ export async function getAdminMediaAssetsByFolder(): Promise<Map<string, MediaIm
     const admin = createAdminClient();
     const { data, error } = await admin
       .from("media_assets")
-      .select("id, filename, url, folder")
+      .select("id, filename, url, folder, alt_text")
       .order("created_at", { ascending: false });
     if (error) throw error;
 
@@ -172,6 +172,7 @@ export async function getAdminMediaAssetsByFolder(): Promise<Map<string, MediaIm
         name: row.filename,
         path: row.url,
         assetId: row.id,
+        altText: row.alt_text,
       });
       map.set(row.folder, list);
     }

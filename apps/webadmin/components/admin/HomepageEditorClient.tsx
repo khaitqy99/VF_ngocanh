@@ -552,6 +552,18 @@ export function HomepageEditorClient() {
                 }))
               }
             />
+            <EditField label="Alt ảnh">
+              <Input
+                value={state.sections.warranty.imageAlt}
+                onChange={(event) =>
+                  updateSections((sections) => ({
+                    ...sections,
+                    warranty: { ...sections.warranty, imageAlt: event.target.value },
+                  }))
+                }
+                placeholder="Mô tả ảnh bảo hành / ưu đãi"
+              />
+            </EditField>
             <div className="md:col-span-2">
               <EditField label="Mô tả">
                 <Textarea
@@ -695,6 +707,18 @@ export function HomepageEditorClient() {
                 }))
               }
             />
+            <EditField label="Alt ảnh nền">
+              <Input
+                value={state.sections.brandStory.imageAlt}
+                onChange={(event) =>
+                  updateSections((sections) => ({
+                    ...sections,
+                    brandStory: { ...sections.brandStory, imageAlt: event.target.value },
+                  }))
+                }
+                placeholder="Mô tả ảnh thương hiệu / showroom"
+              />
+            </EditField>
             {state.sections.brandStory.points.map((point, index) => (
               <EditField key={index} label={`Điểm nổi bật ${index + 1}`}>
                 <Input

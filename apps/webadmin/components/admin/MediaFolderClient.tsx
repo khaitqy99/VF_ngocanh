@@ -14,7 +14,7 @@ import {
   Loader2,
   ImageIcon,
 } from "lucide-react";
-import { Button, Card, CardContent } from "@/components/ui/core";
+import { Button, Card, CardContent, Input } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { MediaFolderDeleteButton } from "@/components/admin/MediaFolderDeleteButton";
@@ -319,14 +319,40 @@ function ImageCard({
   const { toast } = useToast();
   const [copied, setCopied] = useState<"path" | "url" | null>(null);
   const [failed, setFailed] = useState(false);
+  const [altText, setAltText] = useState(image.altText ?? "");
+  const [savingAlt, setSavingAlt] = useState(false);
   const src = clientAssetUrl(image.path);
   const canDelete = Boolean(image.assetId);
+  const canEditAlt = Boolean(image.assetId);
 
   const copy = async (text: string, kind: "path" | "url") => {
     await navigator.clipboard.writeText(text);
     setCopied(kind);
     toast(kind === "path" ? "Đã copy đường dẫn" : "Đã copy URL");
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const saveAlt = async () => {
+    if (!image.assetId) return;
+    const next = altText.trim();
+    if (next === (image.altText ?? "").trim()) return;
+    setSavingAlt(true);
+    try {
+      const res = await fetch(`/api/cms/media-asset/${image.assetId}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ altText: next }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error ?? "Không lưu được alt");
+      toast("Đã lưu alt ảnh");
+    } catch (error) {
+      toast(error instanceof Error ? error.message : "Không lưu được alt", "error");
+      setAltText(image.altText ?? "");
+    } finally {
+      setSavingAlt(false);
+    }
   };
 
   return (
@@ -341,7 +367,7 @@ function ImageCard({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
-            alt={image.name}
+            alt={altText || image.name}
             className="h-full w-full object-contain p-1"
             loading="lazy"
             decoding="async"
@@ -390,9 +416,26 @@ function ImageCard({
           ) : null}
         </div>
       </div>
-      <p className="truncate px-2 py-1.5 font-mono text-[10px] text-zinc-500" title={image.name}>
-        {image.name}
-      </p>
+      <div className="space-y-1.5 px-2 py-1.5">
+        <p className="truncate font-mono text-[10px] text-zinc-500" title={image.name}>
+          {image.name}
+        </p>
+        {canEditAlt ? (
+          <Input
+            value={altText}
+            onChange={(e) => setAltText(e.target.value)}
+            onBlur={() => void saveAlt()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.currentTarget.blur();
+              }
+            }}
+            disabled={savingAlt}
+            placeholder="Alt text (SEO)"
+            className="h-7 text-[11px]"
+          />
+        ) : null}
+      </div>
     </Card>
   );
 }

@@ -12,10 +12,14 @@ export { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 export function NewsCoverImageField({
   value,
   onChange,
+  altValue,
+  onAltChange,
   articleSlug,
 }: {
   value: string;
   onChange: (value: string) => void;
+  altValue?: string;
+  onAltChange?: (alt: string) => void;
   articleSlug?: string;
 }) {
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -55,7 +59,12 @@ export function NewsCoverImageField({
       <GlobalMediaPicker
         open={pickerOpen}
         onClose={() => setPickerOpen(false)}
-        onSelect={onChange}
+        onSelect={(path, meta) => {
+          onChange(path);
+          if (meta?.altText?.trim() && onAltChange && !altValue?.trim()) {
+            onAltChange(meta.altText.trim());
+          }
+        }}
         title="Chọn ảnh bìa"
         defaultCategory="news"
         defaultFolderSlug={articleSlug ?? "chung"}

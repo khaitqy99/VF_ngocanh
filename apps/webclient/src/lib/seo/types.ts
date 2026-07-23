@@ -3,7 +3,28 @@ export type SeoRobots = {
   follow?: boolean;
 };
 
-export type SeoSchemaType = "WebPage" | "Product" | "Car" | "LocalBusiness" | "BreadcrumbList";
+export type SeoSchemaType =
+  | "WebPage"
+  | "Product"
+  | "Car"
+  | "Motorcycle"
+  | "NewsArticle"
+  | "Service"
+  | "FAQPage"
+  | "LocalBusiness"
+  | "BreadcrumbList";
+
+export const SEO_SCHEMA_TYPE_OPTIONS: { value: SeoSchemaType; label: string }[] = [
+  { value: "WebPage", label: "WebPage" },
+  { value: "Product", label: "Product" },
+  { value: "Car", label: "Car (ô tô)" },
+  { value: "Motorcycle", label: "Motorcycle (xe máy)" },
+  { value: "NewsArticle", label: "NewsArticle" },
+  { value: "Service", label: "Service" },
+  { value: "FAQPage", label: "FAQPage" },
+  { value: "LocalBusiness", label: "LocalBusiness" },
+  { value: "BreadcrumbList", label: "BreadcrumbList" },
+];
 
 export type SeoRecord = {
   metaTitle?: string;
@@ -51,6 +72,9 @@ export type SiteSeoSettings = {
   defaultOgTitle?: string;
   defaultOgDescription?: string;
   defaultOgImage?: string;
+  googleSiteVerification?: string;
+  keywords?: string[];
+  robotsDisallow?: string[];
   robots?: SeoRobots;
   organization?: OrganizationSettings;
 };
@@ -59,7 +83,7 @@ export type StaticPageSeoDefinition = {
   slug: string;
   label: string;
   path: string;
-  group: "core" | "catalog" | "service";
+  group: "core" | "catalog" | "service" | "legal";
   defaultTitle: string;
   defaultDescription: string;
   defaultOgImage?: string;
@@ -157,6 +181,26 @@ export const STATIC_PAGE_SEO: StaticPageSeoDefinition[] = [
     defaultTitle: "Tin tức VinFast Ngọc Anh Cà Mau",
     defaultDescription:
       "Cập nhật ưu đãi, sự kiện lái thử, công nghệ xe điện và hoạt động của đại lý VinFast Ngọc Anh Cà Mau.",
+    defaultOgImage: "/images/showroom.webp",
+  },
+  {
+    slug: "privacy",
+    label: "Chính sách bảo mật",
+    path: "/chinh-sach-bao-mat",
+    group: "legal",
+    defaultTitle: "Chính sách bảo mật",
+    defaultDescription:
+      "Chính sách bảo mật thông tin khách hàng của VinFast Ngọc Anh Cà Mau — cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu cá nhân khi bạn sử dụng website vinfast3scamau.com.",
+    defaultOgImage: "/images/showroom.webp",
+  },
+  {
+    slug: "terms",
+    label: "Điều khoản sử dụng",
+    path: "/dieu-khoan-su-dung",
+    group: "legal",
+    defaultTitle: "Điều khoản sử dụng",
+    defaultDescription:
+      "Điều khoản sử dụng website vinfast3scamau.com của VinFast Ngọc Anh Cà Mau — quy định về nội dung, giá bán tham khảo, sở hữu trí tuệ và trách nhiệm của người dùng.",
     defaultOgImage: "/images/showroom.webp",
   },
 ];

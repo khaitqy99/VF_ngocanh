@@ -12,6 +12,7 @@ import { NEWS_PAGE_SIZE, paginateNews } from "@/lib/cms/news-publish";
 import {
   formatNewsDate,
   getNewsCategoryLabel,
+  getNewsCoverAlt,
   NEWS_CATEGORIES,
   type NewsArticle,
 } from "@/lib/cms/news-types";
@@ -108,7 +109,7 @@ function NewsHighlightsSection({ main, side }: { main: NewsArticle | null; side:
           >
             <Image
               src={main.coverImageUrl || IMAGES.showroom}
-              alt={main.title}
+              alt={getNewsCoverAlt(main)}
               fill
               className="object-cover transition duration-700 group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 66vw"
@@ -145,7 +146,7 @@ function NewsHighlightsSection({ main, side }: { main: NewsArticle | null; side:
                 >
                   <Image
                     src={article.coverImageUrl || IMAGES.showroom}
-                    alt={article.title}
+                    alt={getNewsCoverAlt(article)}
                     fill
                     className="object-cover transition duration-500 group-hover:scale-105"
                     sizes="(max-width: 1024px) 50vw, 33vw"
@@ -176,7 +177,7 @@ function NewsListRow({ article }: { article: NewsArticle }) {
       <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-black/5 sm:h-28 sm:w-40">
         <Image
           src={article.coverImageUrl || IMAGES.showroom}
-          alt={article.title}
+          alt={getNewsCoverAlt(article)}
           fill
           className="object-cover transition duration-500 group-hover:scale-105"
           sizes="160px"

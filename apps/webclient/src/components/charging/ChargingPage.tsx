@@ -885,7 +885,11 @@ function StationTypesSection({ content }: { content: ChargingPageContent }) {
                   <StaticEditImageButton imagePath={`stationTypes.${index}.image`} />
                   <Image
                     src={station.image}
-                    alt={station.title}
+                    alt={
+                      "imageAlt" in station
+                        ? station.imageAlt?.trim() || station.title
+                        : station.title
+                    }
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover transition duration-500 group-hover:scale-105"
@@ -990,7 +994,7 @@ function BatterySection() {
           >
             <Image
               src={CHARGING_IMAGES.stations}
-              alt="Công nghệ pin VinFast"
+              alt="Công nghệ pin LFP và hệ thống trạm sạc VinFast"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition duration-500 group-hover:scale-105"
@@ -1264,7 +1268,7 @@ function AppSection() {
           >
             <Image
               src={CHARGING_IMAGES.promoApp}
-              alt="App VinFast quản lý sạc"
+              alt="Ứng dụng VinFast quản lý sạc pin và trạm sạc"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"

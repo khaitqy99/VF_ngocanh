@@ -23,7 +23,10 @@ function galleryHasRealImages(gallery: Json | null | undefined): boolean {
   return gallery.some((item) => typeof item === "string" && !isPlaceholderImage(item));
 }
 
-function seoIsIncomplete(seo: Json | null | undefined): boolean {
+function seoIsIncomplete(
+  seo: Json | null | undefined,
+  options?: { productImage?: string | null },
+): boolean {
   if (!seo || typeof seo !== "object" || Array.isArray(seo)) return true;
   const record = seo as Record<string, unknown>;
   const title =
@@ -34,7 +37,14 @@ function seoIsIncomplete(seo: Json | null | undefined): boolean {
     (typeof record.metaDescription === "string" && record.metaDescription.trim()) ||
     (typeof record.description === "string" && record.description.trim()) ||
     "";
-  return !title || !description;
+  if (!title || !description) return true;
+
+  const ogImage =
+    typeof record.ogImage === "string" && record.ogImage.trim() ? record.ogImage.trim() : "";
+  if (ogImage) return false;
+  // OG image optional when the product already has a real hero/gallery image.
+  if (options?.productImage && !isPlaceholderImage(options.productImage)) return false;
+  return true;
 }
 
 export function buildVehiclePublishCheck(row: Tables<"vehicles">): PublishCheckItem[] {
@@ -55,8 +65,21 @@ export function buildVehiclePublishCheck(row: Tables<"vehicles">): PublishCheckI
     issues.push({ id: "gallery", label: "Gallery chưa có ảnh sản phẩm" });
   }
 
-  if (seoIsIncomplete(row.seo)) {
-    issues.push({ id: "seo", label: "SEO chưa điền đầy đủ (tiêu đề và mô tả)" });
+  if (
+    seoIsIncomplete(row.seo, {
+      productImage: !isPlaceholderImage(row.hero_image_url)
+        ? row.hero_image_url
+        : Array.isArray(row.gallery)
+          ? (row.gallery.find(
+              (item): item is string => typeof item === "string" && !isPlaceholderImage(item),
+            ) ?? null)
+          : null,
+    })
+  ) {
+    issues.push({
+      id: "seo",
+      label: "SEO chưa điền đầy đủ (tiêu đề, mô tả, và OG image nếu chưa có ảnh sản phẩm)",
+    });
   }
 
   return issues;
@@ -81,8 +104,11 @@ export function buildAccessoryPublishCheck(row: Tables<"accessories">): PublishC
       ? (row.content as Record<string, unknown>)
       : null;
   const seo = content?.seo;
-  if (seoIsIncomplete(seo as Json | undefined)) {
-    issues.push({ id: "seo", label: "SEO chưa điền đầy đủ (tiêu đề và mô tả)" });
+  if (seoIsIncomplete(seo as Json | undefined, { productImage: row.image_url })) {
+    issues.push({
+      id: "seo",
+      label: "SEO chưa điền đầy đủ (tiêu đề, mô tả, và OG image nếu chưa có ảnh sản phẩm)",
+    });
   }
 
   return issues;

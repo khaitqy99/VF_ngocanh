@@ -21,6 +21,7 @@ export function mapNewsRow(row: NewsRow): NewsArticle {
     bodyFormat: row.body_format === "html" ? "html" : "plain",
     category: row.category,
     coverImageUrl: row.cover_image_url,
+    coverImageAlt: row.cover_image_alt ?? null,
     status: row.status as NewsArticle["status"],
     publishedAt: row.published_at,
     isFeatured: Boolean(row.is_featured),

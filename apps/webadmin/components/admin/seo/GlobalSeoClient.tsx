@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Save } from "lucide-react";
+import Image from "next/image";
+import { Images, Save } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { useToast } from "@/components/admin/ToastProvider";
+import { GlobalMediaPicker } from "@/components/admin/GlobalMediaPicker";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } from "@/components/ui/core";
+import { clientAssetUrl } from "@/lib/product-utils";
 import { defaultSiteSeoSettings, type SiteSeoSettings } from "@/lib/seo";
 
 export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
@@ -12,6 +15,8 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
   const [settings, setSettings] = useState<SiteSeoSettings>(defaultSiteSeoSettings());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [ogPickerOpen, setOgPickerOpen] = useState(false);
+  const [logoPickerOpen, setLogoPickerOpen] = useState(false);
 
   useEffect(() => {
     fetch("/api/seo/global", { credentials: "include" })
@@ -121,11 +126,140 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
             onChange={(e) => setSettings((s) => ({ ...s, defaultOgDescription: e.target.value }))}
             placeholder="OG description mặc định"
           />
-          <Input
-            value={settings.defaultOgImage ?? ""}
-            onChange={(e) => setSettings((s) => ({ ...s, defaultOgImage: e.target.value }))}
-            placeholder="/images/cars/oto-hero.webp"
-          />
+          <div>
+            <label className="mb-1 block text-xs font-semibold">OG image (khuyến nghị 1200×630)</label>
+            <div className="flex gap-3">
+              <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg border bg-zinc-50">
+                {settings.defaultOgImage ? (
+                  <Image
+                    src={clientAssetUrl(settings.defaultOgImage)}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-zinc-300">
+                    <Images className="h-6 w-6" />
+                  </div>
+                )}
+              </div>
+              <div className="min-w-0 flex-1 space-y-2">
+                <Input
+                  value={settings.defaultOgImage ?? ""}
+                  onChange={(e) => setSettings((s) => ({ ...s, defaultOgImage: e.target.value }))}
+                  placeholder="/images/cars/oto-hero.webp"
+                  className="font-mono text-xs"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-8"
+                  onClick={() => setOgPickerOpen(true)}
+                >
+                  <Images className="mr-1.5 h-3.5 w-3.5" />
+                  Chọn từ thư viện
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm">Robots mặc định (site)</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-3 sm:grid-cols-2">
+          <label className="flex items-center gap-2 text-sm text-zinc-700">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-zinc-300"
+              checked={settings.robots?.index !== false}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  robots: { ...s.robots, index: e.target.checked, follow: s.robots?.follow !== false },
+                }))
+              }
+            />
+            Cho phép index toàn site
+          </label>
+          <label className="flex items-center gap-2 text-sm text-zinc-700">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-zinc-300"
+              checked={settings.robots?.follow !== false}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  robots: { ...s.robots, index: s.robots?.index !== false, follow: e.target.checked },
+                }))
+              }
+            />
+            Cho phép follow link
+          </label>
+          <div className="sm:col-span-2">
+            <label className="mb-1 block text-xs font-semibold">
+              robots.txt disallow (mỗi dòng một path)
+            </label>
+            <Textarea
+              rows={3}
+              value={(settings.robotsDisallow ?? []).join("\n")}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  robotsDisallow: e.target.value
+                    .split("\n")
+                    .map((line) => line.trim())
+                    .filter(Boolean),
+                }))
+              }
+              placeholder="/api/&#10;/_next/&#10;/preview"
+              className="font-mono text-xs"
+            />
+          </div>
+          <p className="sm:col-span-2 text-[11px] text-zinc-500">
+            Áp dụng cho metadata mặc định và file robots.txt (luôn nên chặn /api, /preview). Site hiện
+            chỉ phục vụ tiếng Việt (vi) — không cấu hình hreflang đa ngôn ngữ.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm">Verification & Keywords</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div>
+            <label className="mb-1 block text-xs font-semibold">Google Search Console verification</label>
+            <Input
+              value={settings.googleSiteVerification ?? ""}
+              onChange={(e) =>
+                setSettings((s) => ({ ...s, googleSiteVerification: e.target.value }))
+              }
+              placeholder="Mã meta google-site-verification"
+              className="font-mono text-xs"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-semibold">Keywords (mỗi dòng một từ khóa)</label>
+            <Textarea
+              rows={4}
+              value={(settings.keywords ?? []).join("\n")}
+              onChange={(e) =>
+                setSettings((s) => ({
+                  ...s,
+                  keywords: e.target.value
+                    .split("\n")
+                    .map((line) => line.trim())
+                    .filter(Boolean),
+                }))
+              }
+              placeholder="VinFast Ngọc Anh Cà Mau"
+            />
+          </div>
         </CardContent>
       </Card>
 
@@ -154,6 +288,49 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
             }
             placeholder="Hotline"
           />
+          <div className="md:col-span-2">
+            <label className="mb-1 block text-xs font-semibold">Logo tổ chức (schema)</label>
+            <div className="flex gap-3">
+              <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg border bg-zinc-50">
+                {settings.organization?.logo ? (
+                  <Image
+                    src={clientAssetUrl(settings.organization.logo)}
+                    alt=""
+                    fill
+                    className="object-contain p-1"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-zinc-300">
+                    <Images className="h-6 w-6" />
+                  </div>
+                )}
+              </div>
+              <div className="min-w-0 flex-1 space-y-2">
+                <Input
+                  value={settings.organization?.logo ?? ""}
+                  onChange={(e) =>
+                    setSettings((s) => ({
+                      ...s,
+                      organization: { ...s.organization, logo: e.target.value },
+                    }))
+                  }
+                  placeholder="https://…/logo.webp hoặc /images/…"
+                  className="font-mono text-xs"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-8"
+                  onClick={() => setLogoPickerOpen(true)}
+                >
+                  <Images className="mr-1.5 h-3.5 w-3.5" />
+                  Chọn từ thư viện
+                </Button>
+              </div>
+            </div>
+          </div>
           <Input
             value={settings.organization?.email ?? ""}
             onChange={(e) =>
@@ -319,6 +496,30 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
         <Save className="mr-2 h-4 w-4" />
         {saving ? "Đang lưu…" : "Lưu cài đặt chung"}
       </Button>
+
+      <GlobalMediaPicker
+        open={ogPickerOpen}
+        onClose={() => setOgPickerOpen(false)}
+        onSelect={(path) => {
+          setSettings((s) => ({ ...s, defaultOgImage: path }));
+          setOgPickerOpen(false);
+        }}
+        title="Chọn ảnh Open Graph mặc định"
+        defaultCategory="pages"
+      />
+      <GlobalMediaPicker
+        open={logoPickerOpen}
+        onClose={() => setLogoPickerOpen(false)}
+        onSelect={(path) => {
+          setSettings((s) => ({
+            ...s,
+            organization: { ...s.organization, logo: path },
+          }));
+          setLogoPickerOpen(false);
+        }}
+        title="Chọn logo tổ chức"
+        defaultCategory="pages"
+      />
     </div>
   );
 }

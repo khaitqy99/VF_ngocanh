@@ -822,7 +822,11 @@ function IntroSection({ content }: { content: EnergyPageContent }) {
             <StaticEditImageButton imagePath="intro.image" />
             <Image
               src={introImage}
-              alt="Năng lượng xanh VinFast"
+              alt={
+                content.intro?.imageAlt?.trim() ||
+                getDefaultStaticPageContent("energy").intro?.imageAlt ||
+                "Năng lượng xanh VinFast — hệ thống pin lưu trữ ESS"
+              }
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 hover:scale-105"
@@ -1073,6 +1077,12 @@ function ApplicationsSection({ content }: { content: EnergyPageContent }) {
 function SpecsSection({ content }: { content: EnergyPageContent }) {
   const edit = useStaticPageAdminEdit();
   const specs = content.specs ?? ENERGY_SPECS;
+  const defaults = getDefaultStaticPageContent("energy");
+  const ecosystemImage = content.ecosystem?.image || defaults.ecosystem?.image || IMAGES.community;
+  const ecosystemAlt =
+    content.ecosystem?.imageAlt?.trim() ||
+    defaults.ecosystem?.imageAlt ||
+    "Hệ sinh thái năng lượng VinFast — pin lưu trữ, điện mặt trời và trạm sạc";
 
   return (
     <section className="section-y bg-white">
@@ -1117,9 +1127,10 @@ function SpecsSection({ content }: { content: EnergyPageContent }) {
             delay={0.1}
             className="relative overflow-hidden rounded-2xl shadow-card aspect-[4/3] border border-slate-200 group bg-slate-100"
           >
+            <StaticEditImageButton imagePath="ecosystem.image" />
             <Image
-              src={IMAGES.community}
-              alt="Hệ sinh thái năng lượng VinFast"
+              src={ecosystemImage}
+              alt={ecosystemAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"

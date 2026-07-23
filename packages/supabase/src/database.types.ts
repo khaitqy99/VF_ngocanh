@@ -349,6 +349,7 @@ export type Database = {
           body: string | null;
           body_format: string;
           category: string | null;
+          cover_image_alt: string | null;
           cover_image_url: string | null;
           created_at: string;
           excerpt: string | null;
@@ -368,6 +369,7 @@ export type Database = {
           body?: string | null;
           body_format?: string;
           category?: string | null;
+          cover_image_alt?: string | null;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string | null;
@@ -387,6 +389,7 @@ export type Database = {
           body?: string | null;
           body_format?: string;
           category?: string | null;
+          cover_image_alt?: string | null;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string | null;
@@ -423,6 +426,36 @@ export type Database = {
           updated_at?: string;
           updated_by?: string | null;
           value?: Json;
+        };
+        Relationships: [];
+      };
+      seo_redirects: {
+        Row: {
+          id: string;
+          from_path: string;
+          to_path: string;
+          status_code: number;
+          enabled: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          from_path: string;
+          to_path: string;
+          status_code?: number;
+          enabled?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          from_path?: string;
+          to_path?: string;
+          status_code?: number;
+          enabled?: boolean;
+          created_at?: string;
+          updated_at?: string;
         };
         Relationships: [];
       };

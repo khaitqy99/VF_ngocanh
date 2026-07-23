@@ -181,3 +181,34 @@ export function buildFaqPageSchema(faqs: { question: string; answer: string }[])
     })),
   };
 }
+
+export function buildWebPageSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  schemaType?: string;
+}) {
+  const url = `${PRODUCTION_SITE_URL}${input.path.startsWith("/") ? input.path : `/${input.path}`}`;
+  const type =
+    input.schemaType === "Service" ||
+    input.schemaType === "FAQPage" ||
+    input.schemaType === "LocalBusiness" ||
+    input.schemaType === "WebPage"
+      ? input.schemaType
+      : "WebPage";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${url}#webpage`,
+    name: input.name,
+    description: input.description,
+    url,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${PRODUCTION_SITE_URL}/#website`,
+      name: SITE_BRAND_NAME,
+      url: PRODUCTION_SITE_URL,
+    },
+  };
+}

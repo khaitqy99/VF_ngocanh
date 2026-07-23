@@ -11,6 +11,7 @@ import {
   formatNewsDate,
   getNewsAuthorLabel,
   getNewsCategoryLabel,
+  getNewsCoverAlt,
   type NewsArticle,
   type ResolvedNewsProduct,
 } from "@/lib/cms/news-types";
@@ -33,7 +34,7 @@ function RelatedArticleCard({ item }: { item: NewsArticle }) {
       <div className="relative aspect-[16/10] bg-slate-100">
         <Image
           src={item.coverImageUrl || IMAGES.showroom}
-          alt={item.title}
+          alt={getNewsCoverAlt(item)}
           fill
           className="object-cover transition duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, 33vw"
@@ -152,7 +153,7 @@ export default function NewsDetailPage({
           <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl bg-slate-100 shadow-card ring-1 ring-black/5">
             <Image
               src={cover}
-              alt={article.title}
+              alt={getNewsCoverAlt(article)}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 896px"

@@ -5,11 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { GlobalSeoClient } from "@/components/admin/seo/GlobalSeoClient";
 import { SeoStaticPagesSection } from "@/components/admin/seo/SeoStaticPagesSection";
+import { SeoRedirectsSection } from "@/components/admin/seo/SeoRedirectsSection";
 
-type SeoHubTab = "global" | "products" | "pages" | "blog";
+type SeoHubTab = "global" | "products" | "pages" | "blog" | "redirects";
 
 function parseTab(value: string | null): SeoHubTab {
-  if (value === "products" || value === "pages" || value === "blog") return value;
+  if (value === "products" || value === "pages" || value === "blog" || value === "redirects") {
+    return value;
+  }
   return "global";
 }
 
@@ -33,6 +36,11 @@ const TAB_ITEMS: { value: SeoHubTab; label: string; hint: string }[] = [
     value: "pages",
     label: "Trang tĩnh",
     hint: "Trang chủ, liên hệ, chính sách…",
+  },
+  {
+    value: "redirects",
+    label: "Redirects",
+    hint: "301/302 từ path cũ sang path mới",
   },
 ];
 
@@ -89,6 +97,7 @@ export function SeoHubClient({
       {tab === "products" ? productsSection : null}
       {tab === "blog" ? blogSection : null}
       {tab === "pages" ? <SeoStaticPagesSection /> : null}
+      {tab === "redirects" ? <SeoRedirectsSection /> : null}
     </div>
   );
 }

@@ -90,6 +90,7 @@ export async function PATCH(
       .from("cms_pages")
       .update({
         seo: seo as Json,
+        status: "published",
         updated_at: new Date().toISOString(),
       })
       .eq("slug", slug);

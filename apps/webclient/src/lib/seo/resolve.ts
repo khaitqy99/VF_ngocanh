@@ -78,6 +78,10 @@ export function parseSeoRecord(value: unknown): SeoRecord {
       raw.schemaType === "WebPage" ||
       raw.schemaType === "Product" ||
       raw.schemaType === "Car" ||
+      raw.schemaType === "Motorcycle" ||
+      raw.schemaType === "NewsArticle" ||
+      raw.schemaType === "Service" ||
+      raw.schemaType === "FAQPage" ||
       raw.schemaType === "LocalBusiness" ||
       raw.schemaType === "BreadcrumbList"
         ? raw.schemaType
@@ -112,6 +116,22 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
     defaultOgDescription:
       asTrimmedString(raw.defaultOgDescription) ?? asTrimmedString(raw.default_og_description),
     defaultOgImage: asTrimmedString(raw.defaultOgImage) ?? asTrimmedString(raw.default_og_image),
+    googleSiteVerification:
+      asTrimmedString(raw.googleSiteVerification) ?? asTrimmedString(raw.google_site_verification),
+    keywords: Array.isArray(raw.keywords)
+      ? raw.keywords.filter(
+          (item): item is string => typeof item === "string" && Boolean(item.trim()),
+        )
+      : undefined,
+    robotsDisallow: Array.isArray(raw.robotsDisallow)
+      ? raw.robotsDisallow.filter(
+          (item): item is string => typeof item === "string" && Boolean(item.trim()),
+        )
+      : Array.isArray(raw.robots_disallow)
+        ? raw.robots_disallow.filter(
+            (item): item is string => typeof item === "string" && Boolean(item.trim()),
+          )
+        : undefined,
     robots:
       raw.robots && typeof raw.robots === "object" && !Array.isArray(raw.robots)
         ? {
@@ -149,6 +169,16 @@ export function defaultSiteSeoSettings(): SiteSeoSettings {
     defaultOgDescription:
       "Khám phá ô tô điện, xe máy điện VinFast với nhiều ưu đãi hấp dẫn tại Cà Mau.",
     defaultOgImage: "/images/cars/oto-hero.webp",
+    googleSiteVerification: "sxgFg7V_2_LtDK9QCin2ka8viud2xHBRLTD",
+    keywords: [
+      "VinFast Ngọc Anh Cà Mau",
+      "Vinfast 3S Cà Mau",
+      "đại lý VinFast Ngọc Anh Cà Mau",
+      "ô tô điện Cà Mau",
+      "xe máy điện Cà Mau",
+      "showroom VinFast Ngọc Anh Cà Mau",
+    ],
+    robotsDisallow: ["/api/", "/_next/", "/static/", "/preview", "/*/preview", "/*/preview/*"],
     robots: { index: true, follow: true },
     organization: {
       name: SCHEMA_BUSINESS_NAME,
@@ -185,6 +215,9 @@ export function mergeSiteSeoSettings(partial?: SiteSeoSettings | null): SiteSeoS
     defaultOgTitle: partial.defaultOgTitle ?? base.defaultOgTitle,
     defaultOgDescription: partial.defaultOgDescription ?? base.defaultOgDescription,
     defaultOgImage: partial.defaultOgImage ?? base.defaultOgImage,
+    googleSiteVerification: partial.googleSiteVerification ?? base.googleSiteVerification,
+    keywords: partial.keywords?.length ? partial.keywords : base.keywords,
+    robotsDisallow: partial.robotsDisallow?.length ? partial.robotsDisallow : base.robotsDisallow,
     robots: { ...base.robots, ...partial.robots },
     organization: mergeOrganization(base.organization, partial.organization),
   };
@@ -208,9 +241,10 @@ export function resolveSeoContent(
   const title = seo?.metaTitle?.trim() || defaults.title?.trim() || siteSeo.defaultTitle!;
   const description =
     seo?.metaDescription?.trim() || defaults.description?.trim() || siteSeo.defaultDescription!;
-  // Prefer page title/description over global OG defaults so admin page SEO is reflected in social cards.
-  const ogTitle = seo?.ogTitle?.trim() || title;
-  const ogDescription = seo?.ogDescription?.trim() || description;
+  // Prefer explicit OG fields, then site-wide OG defaults, then page title/description.
+  const ogTitle = seo?.ogTitle?.trim() || siteSeo.defaultOgTitle?.trim() || title;
+  const ogDescription =
+    seo?.ogDescription?.trim() || siteSeo.defaultOgDescription?.trim() || description;
   const ogImage = seo?.ogImage?.trim() || defaults.image?.trim() || siteSeo.defaultOgImage!;
   const canonicalPath = seo?.canonical?.trim() || defaults.path || "/";
   const canonical = canonicalPath.startsWith("http")
@@ -218,9 +252,20 @@ export function resolveSeoContent(
     : `${PRODUCTION_SITE_URL}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
 
   const noindex = Boolean(
-    seo?.noindex ?? (seo?.robots?.index !== undefined ? !seo.robots.index : false),
+    seo?.noindex ??
+    (seo?.robots?.index !== undefined
+      ? !seo.robots.index
+      : siteSeo.robots?.index !== undefined
+        ? !siteSeo.robots.index
+        : false),
   );
-  const nofollow = Boolean(seo?.robots?.follow !== undefined ? !seo.robots.follow : false);
+  const nofollow = Boolean(
+    seo?.robots?.follow !== undefined
+      ? !seo.robots.follow
+      : siteSeo.robots?.follow !== undefined
+        ? !siteSeo.robots.follow
+        : false,
+  );
 
   return { title, description, ogTitle, ogDescription, ogImage, canonical, noindex, nofollow };
 }

@@ -36,6 +36,7 @@ const EMPTY_FORM = {
   bodyFormat: "html" as NewsBodyFormat,
   category: "general",
   coverImageUrl: "",
+  coverImageAlt: "",
   status: "draft" as PublishStatus,
   publishedAt: "",
   isFeatured: false,
@@ -66,7 +67,7 @@ function NewsPreviewPanel({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={form.coverImageUrl}
-          alt={form.title}
+          alt={form.coverImageAlt || form.title}
           className="mt-8 aspect-[16/9] w-full rounded-3xl object-cover"
         />
       ) : null}
@@ -132,6 +133,7 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
           bodyFormat: article.bodyFormat,
           category: article.category ?? "general",
           coverImageUrl: article.coverImageUrl ?? "",
+          coverImageAlt: article.coverImageAlt ?? "",
           status: article.status,
           publishedAt: article.publishedAt?.slice(0, 16) ?? "",
           isFeatured: article.isFeatured,
@@ -178,6 +180,23 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
       return;
     }
 
+    if (nextStatus === "published") {
+      const missingTitle = !form.seo.metaTitle?.trim();
+      const missingDesc = !form.seo.metaDescription?.trim();
+      const missingOg = !form.seo.ogImage?.trim() && !form.coverImageUrl.trim();
+      if (missingTitle || missingDesc || missingOg) {
+        const lines = [
+          "SEO bài viết chưa đầy đủ:",
+          missingTitle ? "• Thiếu meta title" : null,
+          missingDesc ? "• Thiếu meta description" : null,
+          missingOg ? "• Thiếu OG image / ảnh bìa" : null,
+          "",
+          "Vẫn xuất bản?",
+        ].filter((line): line is string => line !== null);
+        if (!window.confirm(lines.join("\n"))) return;
+      }
+    }
+
     setSaving(true);
     const payload = {
       title: form.title.trim(),
@@ -187,6 +206,7 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
       bodyFormat: form.bodyFormat,
       category: form.category,
       coverImageUrl: form.coverImageUrl.trim() || null,
+      coverImageAlt: form.coverImageAlt.trim() || null,
       status: nextStatus,
       publishedAt: form.publishedAt ? new Date(form.publishedAt).toISOString() : null,
       isFeatured: form.isFeatured,
@@ -338,8 +358,21 @@ export function NewsEditorClient({ articleId }: { articleId?: string }) {
                   <NewsCoverImageField
                     value={form.coverImageUrl}
                     onChange={(value) => updateField("coverImageUrl", value)}
+                    altValue={form.coverImageAlt}
+                    onAltChange={(alt) => updateField("coverImageAlt", alt)}
                     articleSlug={form.slug.trim() || undefined}
                   />
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-zinc-600">Alt ảnh bìa (SEO)</label>
+                    <Input
+                      value={form.coverImageAlt}
+                      onChange={(e) => updateField("coverImageAlt", e.target.value)}
+                      placeholder={form.title || "Mô tả ngắn ảnh bìa"}
+                    />
+                    <p className="text-[11px] text-zinc-500">
+                      Để trống → dùng tiêu đề bài viết. Nên mô tả nội dung ảnh, không nhồi từ khóa.
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Nội dung bài viết</label>

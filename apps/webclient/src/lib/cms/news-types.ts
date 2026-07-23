@@ -18,6 +18,7 @@ export type NewsArticle = {
   bodyFormat: NewsBodyFormat;
   category: string | null;
   coverImageUrl: string | null;
+  coverImageAlt: string | null;
   status: PublishStatus;
   publishedAt: string | null;
   isFeatured: boolean;
@@ -58,6 +59,11 @@ export function getNewsAuthorLabel(authorName: string | null | undefined): strin
   const trimmed = authorName?.trim();
   if (!trimmed || trimmed.includes("@")) return DEFAULT_NEWS_AUTHOR_LABEL;
   return trimmed;
+}
+
+/** Prefer dedicated cover alt; fall back to article title for accessibility/SEO. */
+export function getNewsCoverAlt(article: Pick<NewsArticle, "title" | "coverImageAlt">): string {
+  return article.coverImageAlt?.trim() || article.title;
 }
 
 export function formatNewsDate(iso: string | null | undefined): string {

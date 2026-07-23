@@ -289,6 +289,18 @@ export function HomeEditPanel({
             }
           />
         </Field>
+        <Field label="Alt ảnh">
+          <input
+            className={inputClass}
+            value={draft.sections.warranty.imageAlt}
+            onChange={(event) =>
+              updateSections((sections) => ({
+                ...sections,
+                warranty: { ...sections.warranty, imageAlt: event.target.value },
+              }))
+            }
+          />
+        </Field>
       </Section>
 
       <Section title="Thương hiệu">
@@ -312,6 +324,18 @@ export function HomeEditPanel({
               updateSections((sections) => ({
                 ...sections,
                 brandStory: { ...sections.brandStory, subtitle: event.target.value },
+              }))
+            }
+          />
+        </Field>
+        <Field label="Alt ảnh nền">
+          <input
+            className={inputClass}
+            value={draft.sections.brandStory.imageAlt}
+            onChange={(event) =>
+              updateSections((sections) => ({
+                ...sections,
+                brandStory: { ...sections.brandStory, imageAlt: event.target.value },
               }))
             }
           />

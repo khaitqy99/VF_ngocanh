@@ -38,6 +38,7 @@ export type AboutMilestone = {
   title: string;
   desc: string;
   image: string;
+  imageAlt?: string;
 };
 
 export type AboutWhyItem = {
@@ -58,8 +59,10 @@ export type AboutPageContent = {
   stats?: CmsStatItem[];
   milestones?: AboutMilestone[];
   whyChoose?: AboutWhyItem[];
-  mission?: { title?: string; content?: string; image?: string };
-  vision?: { title?: string; content?: string; image?: string };
+  mission?: { title?: string; content?: string; image?: string; imageAlt?: string };
+  vision?: { title?: string; content?: string; image?: string; imageAlt?: string };
+  whyChooseImage?: string;
+  whyChooseImageAlt?: string;
   faq?: CmsFaqItem[];
 };
 
@@ -105,6 +108,7 @@ export type ChargingPageContent = {
     desc: string;
     features: string[];
     image: string;
+    imageAlt?: string;
   }[];
   products?: ChargingProduct[];
   steps?: { step: string; title: string; desc: string }[];
@@ -121,7 +125,8 @@ export type EnergyPageContent = {
     imageAlt?: string;
     imagePosition?: "top" | "center" | "bottom";
   };
-  intro?: { image?: string };
+  intro?: { image?: string; imageAlt?: string };
+  ecosystem?: { image?: string; imageAlt?: string };
   calculator?: {
     eyebrow?: string;
     title?: string;
@@ -224,6 +229,11 @@ export function getDefaultStaticPageContent<S extends StaticPageSlug>(
         },
         intro: {
           image: IMAGES.herioGreen,
+          imageAlt: "Năng lượng xanh VinFast — hệ thống pin lưu trữ ESS",
+        },
+        ecosystem: {
+          image: IMAGES.community,
+          imageAlt: "Hệ sinh thái năng lượng VinFast — pin lưu trữ, điện mặt trời và trạm sạc",
         },
         calculator: {
           eyebrow: "Năng lượng tương lai",
@@ -296,6 +306,12 @@ export function mergeStaticPageContent<S extends StaticPageSlug>(
         whyChoose: mergeArray(base.whyChoose, raw.whyChoose),
         mission: mergeRecord(base.mission, raw.mission),
         vision: mergeRecord(base.vision, raw.vision),
+        whyChooseImage:
+          typeof raw.whyChooseImage === "string" ? raw.whyChooseImage : base.whyChooseImage,
+        whyChooseImageAlt:
+          typeof raw.whyChooseImageAlt === "string"
+            ? raw.whyChooseImageAlt
+            : base.whyChooseImageAlt,
         faq: mergeArray(base.faq, raw.faq),
       } as StaticPageContentMap[S];
     }
@@ -330,6 +346,7 @@ export function mergeStaticPageContent<S extends StaticPageSlug>(
       return {
         hero: mergeRecord(base.hero, raw.hero),
         intro: mergeRecord(base.intro, raw.intro),
+        ecosystem: mergeRecord(base.ecosystem, raw.ecosystem),
         calculator: mergeRecord(base.calculator, raw.calculator),
         stats: mergeArray(base.stats, raw.stats),
         solutions: mergeArray(base.solutions, raw.solutions),

@@ -330,6 +330,15 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                       value={about.hero?.image ?? ""}
                       onChange={(image) => updateContent("hero", { ...about.hero, image })}
                     />
+                    <EditField label="Alt ảnh hero">
+                      <Input
+                        value={about.hero?.imageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("hero", { ...about.hero, imageAlt: event.target.value })
+                        }
+                        placeholder="Mô tả ảnh hero giới thiệu"
+                      />
+                    </EditField>
                     <div className="md:col-span-2">
                       <EditField label="Tiêu đề">
                         <Input
@@ -403,6 +412,25 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                   </div>
                 </EditSection>
 
+                <EditSection id="why-image" title="Ảnh mục Vì sao chọn">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <ImagePathField
+                      label="Ảnh"
+                      value={about.whyChooseImage ?? ""}
+                      onChange={(whyChooseImage) => updateContent("whyChooseImage", whyChooseImage)}
+                    />
+                    <EditField label="Alt ảnh">
+                      <Input
+                        value={about.whyChooseImageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("whyChooseImageAlt", event.target.value)
+                        }
+                        placeholder="Showroom VinFast Ngọc Anh Cà Mau"
+                      />
+                    </EditField>
+                  </div>
+                </EditSection>
+
                 <EditSection id="timeline" title="Timeline" subtitle="Các mốc phát triển">
                   <div className="space-y-4">
                     {(about.milestones ?? []).map((item, index) => (
@@ -433,6 +461,22 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                               )
                             }
                           />
+                          <EditField label="Alt ảnh">
+                            <Input
+                              value={item.imageAlt ?? ""}
+                              onChange={(event) =>
+                                updateContent(
+                                  "milestones",
+                                  (about.milestones ?? []).map((row, i) =>
+                                    i === index
+                                      ? { ...row, imageAlt: event.target.value }
+                                      : row,
+                                  ),
+                                )
+                              }
+                              placeholder={item.title || "Mô tả ảnh mốc phát triển"}
+                            />
+                          </EditField>
                           <div className="md:col-span-2">
                             <EditField label="Tiêu đề">
                               <Input
@@ -638,6 +682,46 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                   />
                 </EditSection>
 
+                <EditSection id="station-types" title="Loại trạm sạc">
+                  <div className="space-y-4">
+                    {(charging.stationTypes ?? []).map((station, index) => (
+                      <div key={station.id} className="rounded-lg border border-zinc-200 p-4">
+                        <p className="mb-3 text-sm font-semibold text-zinc-900">{station.title}</p>
+                        <div className="grid gap-3 md:grid-cols-2">
+                          <ImagePathField
+                            label="Ảnh"
+                            value={station.image}
+                            onChange={(image) =>
+                              updateContent(
+                                "stationTypes",
+                                (charging.stationTypes ?? []).map((row, i) =>
+                                  i === index ? { ...row, image } : row,
+                                ),
+                              )
+                            }
+                          />
+                          <EditField label="Alt ảnh">
+                            <Input
+                              value={station.imageAlt ?? ""}
+                              onChange={(event) =>
+                                updateContent(
+                                  "stationTypes",
+                                  (charging.stationTypes ?? []).map((row, i) =>
+                                    i === index
+                                      ? { ...row, imageAlt: event.target.value }
+                                      : row,
+                                  ),
+                                )
+                              }
+                              placeholder={station.title}
+                            />
+                          </EditField>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </EditSection>
+
                 <EditSection id="products" title="Sản phẩm sạc">
                   <div className="space-y-4">
                     {(charging.products ?? []).map((product, index) => (
@@ -714,6 +798,15 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                       value={energy.hero?.image ?? ""}
                       onChange={(image) => updateContent("hero", { ...energy.hero, image })}
                     />
+                    <EditField label="Alt ảnh hero">
+                      <Input
+                        value={energy.hero?.imageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("hero", { ...energy.hero, imageAlt: event.target.value })
+                        }
+                        placeholder="Mô tả ảnh hero lưu trữ năng lượng"
+                      />
+                    </EditField>
                     <div className="md:col-span-2">
                       <EditField label="Tiêu đề">
                         <Input
@@ -739,11 +832,49 @@ export function StaticPageEditorClient({ slug }: { slug: StaticPageSlug }) {
                 </EditSection>
 
                 <EditSection id="intro" title="Giới thiệu ESS">
-                  <ImagePathField
-                    label="Ảnh giới thiệu"
-                    value={energy.intro?.image ?? ""}
-                    onChange={(image) => updateContent("intro", { ...energy.intro, image })}
-                  />
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <ImagePathField
+                      label="Ảnh giới thiệu"
+                      value={energy.intro?.image ?? ""}
+                      onChange={(image) => updateContent("intro", { ...energy.intro, image })}
+                    />
+                    <EditField label="Alt ảnh giới thiệu">
+                      <Input
+                        value={energy.intro?.imageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("intro", {
+                            ...energy.intro,
+                            imageAlt: event.target.value,
+                          })
+                        }
+                        placeholder="Năng lượng xanh VinFast — hệ thống pin lưu trữ ESS"
+                      />
+                    </EditField>
+                  </div>
+                </EditSection>
+
+                <EditSection id="ecosystem" title="Ảnh hệ sinh thái (bảng thông số)">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <ImagePathField
+                      label="Ảnh hệ sinh thái"
+                      value={energy.ecosystem?.image ?? ""}
+                      onChange={(image) =>
+                        updateContent("ecosystem", { ...energy.ecosystem, image })
+                      }
+                    />
+                    <EditField label="Alt ảnh hệ sinh thái">
+                      <Input
+                        value={energy.ecosystem?.imageAlt ?? ""}
+                        onChange={(event) =>
+                          updateContent("ecosystem", {
+                            ...energy.ecosystem,
+                            imageAlt: event.target.value,
+                          })
+                        }
+                        placeholder="Hệ sinh thái năng lượng VinFast"
+                      />
+                    </EditField>
+                  </div>
                 </EditSection>
 
                 <EditSection id="calculator" title="Máy tính tiết kiệm">

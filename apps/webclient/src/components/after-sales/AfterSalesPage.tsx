@@ -752,7 +752,7 @@ function MaintenanceSection() {
           >
             <img
               src={IMAGES.community}
-              alt="Bảo dưỡng xe VinFast"
+              alt="Kỹ thuật viên bảo dưỡng xe điện VinFast tại xưởng dịch vụ 3S"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
@@ -845,7 +845,7 @@ function WhyChooseSection() {
             <div className="absolute inset-0 bg-brand-dark/10 group-hover:bg-brand-dark/20 z-10 transition-colors pointer-events-none" />
             <img
               src={IMAGES.chargingStations}
-              alt="Hệ thống dịch vụ VinFast"
+              alt="Hệ thống dịch vụ hậu mãi VinFast 3S — phụ tùng và bảo dưỡng chính hãng"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />

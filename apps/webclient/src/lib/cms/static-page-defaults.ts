@@ -82,6 +82,8 @@ export const DEFAULT_ABOUT_CONTENT: AboutPageContent = {
     content:
       "Trở thành biểu tượng showroom 3S dẫn đầu cả nước về quy mô doanh số lẫn chỉ số hài lòng của khách hàng (CSI), là địa chỉ tin cậy hàng đầu khi nhắc đến thương hiệu xe điện VinFast.",
   },
+  whyChooseImage: IMAGES.aboutShowroomBanner,
+  whyChooseImageAlt: "Showroom VinFast Ngọc Anh Cà Mau — không gian trưng bày và tư vấn",
 };
 
 export const DEFAULT_AFTER_SALES_CONTENT: AfterSalesPageContent = {

@@ -19,6 +19,7 @@ export async function GET() {
       id: image.id,
       name: image.name,
       path: image.path,
+      altText: image.altText ?? null,
     })),
   }));
 

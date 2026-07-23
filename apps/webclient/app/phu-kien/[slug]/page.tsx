@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import AccessoryDetailPage from "@/components/accessories/AccessoryDetailPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getAccessories, getAccessoryBySlugOrId } from "@/lib/cms";
+import { getAccessorySeoById } from "@/lib/cms/seo";
 import { buildAccessoryMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
+import { buildAccessoryProductSchema } from "@/lib/seo/product-schema";
 import { accessoryDetailPath, resolveProductSlug, isReservedProductSlug } from "@/lib/seo/slugs";
-import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 86400;
 
@@ -34,26 +35,11 @@ export default async function AccessoryDetailRoute({ params }: Props) {
   if (!product) notFound();
 
   const canonicalPath = accessoryDetailPath(product);
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    image: product.image.startsWith("http")
-      ? product.image
-      : `${PRODUCTION_SITE_URL}${product.image}`,
-    description: product.description,
-    brand: { "@type": "Brand", name: "VinFast" },
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: "VND",
-      availability: product.inStock
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
-      seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
-    },
-  };
+  const seo = await getAccessorySeoById(product.id);
+  const productSchema = buildAccessoryProductSchema(product, canonicalPath, {
+    description: seo.metaDescription,
+    schemaType: seo.schemaType,
+  });
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },

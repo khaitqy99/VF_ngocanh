@@ -29,6 +29,7 @@ export type MediaImage = {
   name: string;
   path: string;
   assetId?: string;
+  altText?: string | null;
 };
 
 export type MediaFolder = {

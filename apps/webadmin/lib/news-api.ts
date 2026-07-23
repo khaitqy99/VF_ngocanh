@@ -15,6 +15,7 @@ export type NewsPayload = {
   bodyFormat?: NewsBodyFormat;
   category?: string | null;
   coverImageUrl?: string | null;
+  coverImageAlt?: string | null;
   status?: PublishStatus;
   publishedAt?: string | null;
   isFeatured?: boolean;
@@ -57,6 +58,7 @@ export function buildNewsInsertRow(body: NewsPayload, slug: string) {
     body_format: body.bodyFormat ?? "html",
     category: body.category ?? "general",
     cover_image_url: body.coverImageUrl ?? null,
+    cover_image_alt: body.coverImageAlt ?? null,
     status,
     published_at: resolvePublishedAtForStatus(status, body.publishedAt, null),
     is_featured: Boolean(body.isFeatured),
@@ -79,6 +81,7 @@ export function buildNewsPatchRow(
   if (body.bodyFormat !== undefined) patch.body_format = body.bodyFormat;
   if (body.category !== undefined) patch.category = body.category;
   if (body.coverImageUrl !== undefined) patch.cover_image_url = body.coverImageUrl;
+  if (body.coverImageAlt !== undefined) patch.cover_image_alt = body.coverImageAlt;
   if (body.isFeatured !== undefined) patch.is_featured = body.isFeatured;
   if (body.seo !== undefined) patch.seo = body.seo as Json;
   if (body.relatedProducts !== undefined) {

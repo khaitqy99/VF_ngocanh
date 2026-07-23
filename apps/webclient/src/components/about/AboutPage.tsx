@@ -87,7 +87,7 @@ const ABOUT_CTA_SLIDES: FeatureCarouselSlide[] = [
     description:
       "Hãy đăng ký lái thử trực tuyến ngay hôm nay để trực tiếp cảm nhận sức mạnh, sự êm ái và các công nghệ ADAS tự lái thông minh tiên phong từ các dòng ô tô điện VinFast thế hệ mới.",
     image: "/images/vinfast/cars/vf9.webp",
-    imageAlt: "VF 9",
+    imageAlt: "Ô tô điện VinFast VF 9 tại showroom Ngọc Anh Cà Mau",
     imageClass: "h-full w-full object-contain object-left",
     specs: [
       { value: "3S", label: "Đại lý ủy quyền" },
@@ -455,7 +455,7 @@ function TimelineSection({ content }: { content: AboutPageContent }) {
                     <StaticEditImageButton imagePath={`milestones.${index}.image`} />
                     <img
                       src={m.image}
-                      alt={m.title}
+                      alt={m.imageAlt?.trim() || m.title}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
@@ -532,7 +532,7 @@ function TimelineSection({ content }: { content: AboutPageContent }) {
                     <StaticEditImageButton imagePath={`milestones.${index}.image`} />
                     <img
                       src={m.image}
-                      alt={m.title}
+                      alt={m.imageAlt?.trim() || m.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -585,8 +585,16 @@ function WhyChooseSection({ content }: { content: AboutPageContent }) {
           >
             <div className="pointer-events-none absolute inset-0 z-10 bg-brand-dark/5 transition-all duration-300 group-hover:bg-brand-dark/15" />
             <motion.img
-              src={IMAGES.aboutShowroomBanner}
-              alt="Showroom VinFast Ngọc Anh Cà Mau"
+              src={
+                content.whyChooseImage?.trim() ||
+                DEFAULT_ABOUT_CONTENT.whyChooseImage ||
+                IMAGES.aboutShowroomBanner
+              }
+              alt={
+                content.whyChooseImageAlt?.trim() ||
+                DEFAULT_ABOUT_CONTENT.whyChooseImageAlt ||
+                "Showroom VinFast Ngọc Anh Cà Mau — không gian trưng bày và tư vấn"
+              }
               className="h-full w-full object-cover object-center"
               loading="lazy"
               whileHover={reduced ? undefined : { scale: 1.05 }}

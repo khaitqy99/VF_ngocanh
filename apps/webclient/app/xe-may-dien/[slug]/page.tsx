@@ -9,6 +9,7 @@ import {
   getScooterDetailBySlug,
   getScooters,
 } from "@/lib/cms";
+import { getVehicleSeoById } from "@/lib/cms/seo";
 import { buildScooterMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { buildMotorcycleSchema } from "@/lib/seo/product-schema";
@@ -53,7 +54,11 @@ export default async function ScooterDetailRoute({ params }: Props) {
   }
 
   const canonicalPath = scooterDetailPath({ id: detail.id, slug });
-  const motorcycleSchema = buildMotorcycleSchema(detail, canonicalPath);
+  const seo = await getVehicleSeoById(detail.id);
+  const motorcycleSchema = buildMotorcycleSchema(detail, canonicalPath, {
+    description: seo.metaDescription,
+    schemaType: seo.schemaType,
+  });
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },

@@ -5,15 +5,16 @@ import CarDetailPage from "@/components/cars/CarDetailPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getCarDetailAccessories, getCarDetailBySlug, getCarBySlug, getCars } from "@/lib/cms";
 import { getCarPricingSettings } from "@/lib/cms/car-pricing-fetch";
+import { getVehicleSeoById } from "@/lib/cms/seo";
 import { buildCarMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
+import { buildCarSchema } from "@/lib/seo/product-schema";
 import {
   carDetailPath,
   resolveLegacyVehicleSlug,
   resolveProductSlug,
   isReservedProductSlug,
 } from "@/lib/seo/slugs";
-import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
 
 export const revalidate = 86400;
 
@@ -45,31 +46,17 @@ export default async function CarDetailRoute({ params }: Props) {
     notFound();
   }
 
-  const [detailAccessories, pricing] = await Promise.all([
+  const [detailAccessories, pricing, seo] = await Promise.all([
     getCarDetailAccessories(detail.id),
     getCarPricingSettings(),
+    getVehicleSeoById(detail.id),
   ]);
   const canonicalPath = carDetailPath({ id: detail.id, slug });
 
-  const carSchema = {
-    "@context": "https://schema.org",
-    "@type": "Car",
-    name: `VinFast ${detail.name}`,
-    image: detail.image.startsWith("http") ? detail.image : `${PRODUCTION_SITE_URL}${detail.image}`,
-    description: `${detail.slogan} — ${detail.tagline}`,
-    brand: { "@type": "Brand", name: "VinFast" },
-    model: detail.name,
-    vehicleSeatingCapacity: detail.seats,
-    offers: {
-      "@type": "Offer",
-      price: detail.price,
-      priceCurrency: "VND",
-      availability: "https://schema.org/InStock",
-      url: `${PRODUCTION_SITE_URL}${canonicalPath}`,
-      priceValidUntil: "2027-12-31",
-      seller: { "@id": `${PRODUCTION_SITE_URL}/#dealer` },
-    },
-  };
+  const carSchema = buildCarSchema(detail, canonicalPath, {
+    description: seo.metaDescription,
+    schemaType: seo.schemaType,
+  });
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },

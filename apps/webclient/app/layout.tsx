@@ -48,6 +48,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const lat = site.organization?.geo?.latitude ?? 9.173417;
   const lng = site.organization?.geo?.longitude ?? 105.19138;
+  const keywords = site.keywords?.length ? site.keywords : SITE_KEYWORDS;
+  const verification =
+    site.googleSiteVerification?.trim() ||
+    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+    GOOGLE_SITE_VERIFICATION;
 
   return {
     ...meta,
@@ -56,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: site.defaultTitle ?? "Vinfast 3S Cà Mau",
       template: site.titleTemplate ?? "%s | Vinfast 3S Cà Mau",
     },
-    keywords: SITE_KEYWORDS,
+    keywords,
     authors: [{ name: SCHEMA_BUSINESS_NAME, url: PRODUCTION_SITE_URL }],
     creator: SCHEMA_BUSINESS_NAME,
     publisher: SCHEMA_BUSINESS_NAME,
@@ -75,7 +80,7 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: ["/favicon.ico", "/favicon.png"],
       apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
-    verification: { google: GOOGLE_SITE_VERIFICATION },
+    verification: { google: verification },
     other: {
       "geo.region": "VN-59",
       "geo.placename": "Cà Mau",

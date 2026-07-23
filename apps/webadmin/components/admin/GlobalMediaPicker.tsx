@@ -21,7 +21,7 @@ type MediaFolderOption = {
   subtitle?: string;
   coverImage: string;
   storagePath: string;
-  images: { id: string; name: string; path: string }[];
+  images: { id: string; name: string; path: string; altText?: string | null }[];
 };
 
 const PICKER_CATEGORIES = MEDIA_CATEGORY_OPTIONS.filter((option) => option.value !== "all") as {
@@ -49,7 +49,7 @@ export function GlobalMediaPicker({
 }: {
   open: boolean;
   onClose: () => void;
-  onSelect: (path: string) => void;
+  onSelect: (path: string, meta?: { altText?: string | null }) => void;
   title?: string;
   defaultCategory?: MediaCategory;
   defaultFolderSlug?: string;
@@ -542,7 +542,7 @@ export function GlobalMediaPicker({
                     key={img.id}
                     type="button"
                     onClick={() => {
-                      onSelect(img.path);
+                      onSelect(img.path, { altText: img.altText });
                       onClose();
                     }}
                     className="group overflow-hidden rounded-lg border border-zinc-200 bg-white text-left transition hover:border-red-400 hover:ring-2 hover:ring-red-200"
