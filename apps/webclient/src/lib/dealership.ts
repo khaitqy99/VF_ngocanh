@@ -23,7 +23,7 @@ export const SHOWROOM_EMAIL = "gdkdauto.vfcm@ngocanhcm.vn";
 
 export const RESCUE_HOTLINE = "0707 54 6666";
 export const RESCUE_HOTLINE_TEL = "tel:0707546666";
-export const ZALO_URL = "https://zalo.me/0707546666";
+export const ZALO_URL = "https://zalo.me/0707536666";
 export const FACEBOOK_URL = "https://www.facebook.com/vinfastngocanhcm";
 
 /** GPS for 111 Lý Thường Kiệt, Phường Tân Thành — align with Google Maps pin */
