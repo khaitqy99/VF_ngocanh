@@ -6,7 +6,7 @@ import { ArrowUp, Phone } from "lucide-react";
 import { ZaloBrandIcon } from "@/components/icons/SocialBrandIcons";
 import {
   FACEBOOK_URL as DEFAULT_FACEBOOK_URL,
-  HOTLINE_TEL,
+  SHOWROOM_PHONE_TEL,
   ZALO_URL as DEFAULT_ZALO_URL,
 } from "@/lib/dealership";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
@@ -48,7 +48,7 @@ export default function FloatingButtons() {
   return (
     <div className="fixed right-3 bottom-24 z-40 flex flex-col gap-2.5 sm:right-4 sm:gap-3 lg:bottom-6">
       <motion.a
-        href={HOTLINE_TEL}
+        href={SHOWROOM_PHONE_TEL}
         {...floatProps}
         custom={0}
         {...hoverTap}

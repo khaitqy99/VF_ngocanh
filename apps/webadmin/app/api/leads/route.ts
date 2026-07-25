@@ -77,3 +77,36 @@ export async function PATCH(request: Request) {
 
   return NextResponse.json({ ok: true });
 }
+
+export async function DELETE(request: Request) {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Database chưa được cấu hình" }, { status: 503 });
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const ids = Array.isArray(body.ids)
+    ? body.ids.filter((id): id is string => typeof id === "string" && id.length > 0)
+    : typeof body.id === "string" && body.id
+      ? [body.id]
+      : [];
+
+  if (ids.length === 0) {
+    return NextResponse.json({ error: "Missing lead id" }, { status: 400 });
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin.from("leads").delete().in("id", ids);
+
+  if (error) {
+    console.error("[api/leads] delete failed:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true, deleted: ids.length });
+}

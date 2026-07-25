@@ -182,6 +182,23 @@ export async function updateLead(
   }
 }
 
+export async function deleteLead(id: string): Promise<void> {
+  await deleteLeads([id]);
+}
+
+export async function deleteLeads(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+  const response = await fetch("/api/leads", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ids.length === 1 ? { id: ids[0] } : { ids }),
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => null);
+    throw new Error(data?.error ?? "Không xóa được lead");
+  }
+}
+
 export function countNewLeads(leads: Lead[]): number {
   return leads.filter((l) => l.status === "new").length;
 }

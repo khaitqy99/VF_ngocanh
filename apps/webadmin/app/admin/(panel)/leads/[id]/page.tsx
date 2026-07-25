@@ -2,7 +2,8 @@
 
 import { Suspense, use, useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Phone, Mail, Car, MessageSquare } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronRight, Phone, Mail, Car, MessageSquare, Trash2 } from "lucide-react";
 import {
   Button,
   Textarea,
@@ -13,10 +14,13 @@ import {
   Badge,
 } from "@/components/ui/core";
 import { PageHeader } from "@/components/admin/PageHeader";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { useToast } from "@/components/admin/ToastProvider";
+import { notifyLeadsUpdated } from "@/lib/use-leads-count";
 import {
   fetchLeads,
   getLeadById,
+  deleteLead,
   LEAD_STATUS_OPTIONS,
   LEAD_TYPE_OPTIONS,
   getLeadBadgeLabel,
@@ -29,12 +33,15 @@ import {
 } from "@/lib/leads";
 
 function LeadDetailContent({ id }: { id: string }) {
+  const router = useRouter();
   const { toast } = useToast();
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<LeadStatus | "">("");
   const [note, setNote] = useState("");
   const [saving, setSaving] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetchLeads()
@@ -87,6 +94,21 @@ function LeadDetailContent({ id }: { id: string }) {
       toast("Không thể lưu — kiểm tra kết nối database");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteLead(lead.id);
+      notifyLeadsUpdated();
+      toast("Đã xóa lead");
+      setDeleteOpen(false);
+      router.push("/admin/leads");
+    } catch (error) {
+      toast(error instanceof Error ? error.message : "Không thể xóa lead");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -216,7 +238,7 @@ function LeadDetailContent({ id }: { id: string }) {
         </CardContent>
       </Card>
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <Button variant="outline" onClick={() => history.back()}>
           Quay lại
         </Button>
@@ -226,7 +248,29 @@ function LeadDetailContent({ id }: { id: string }) {
         >
           Gọi khách
         </a>
+        <Button
+          type="button"
+          variant="outline"
+          className="border-red-200 bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-800"
+          onClick={() => setDeleteOpen(true)}
+          disabled={deleting}
+        >
+          <Trash2 className="mr-1.5 h-4 w-4" />
+          Xóa lead
+        </Button>
       </div>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        title={`Xóa lead "${lead.fullName}"?`}
+        description="Lead sẽ bị xóa khỏi database và không thể khôi phục."
+        bullets={[`SĐT: ${lead.phone}`, getLeadBadgeLabel(lead)]}
+        confirmLabel="Xóa lead"
+        destructive
+        loading={deleting}
+        onClose={() => setDeleteOpen(false)}
+        onConfirm={() => void handleDelete()}
+      />
     </div>
   );
 }
