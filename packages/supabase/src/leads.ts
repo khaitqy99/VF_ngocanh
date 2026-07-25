@@ -98,8 +98,15 @@ export const SERVICE_TO_LEAD_TYPE: Record<string, LeadType> = {
   "Đăng ký lái thử": "test_drive",
   "Đặt cọc ngay": "deposit",
   "Nhận báo giá": "quote",
+  "Nhận báo giá và ưu đãi": "quote",
   "Tư vấn trả góp": "finance",
   "Hỗ trợ trả góp 0%": "finance",
+  "Thu cũ đổi mới": "general",
+  "Bảo dưỡng - sửa chữa": "service",
+  "Bảo dưỡng định kỳ": "service",
+  "Sửa chữa điện tử": "service",
+  "Sơn sấy vỏ xe": "service",
+  "Đặt mua ngay": "purchase",
   "Đặt lịch bảo dưỡng": "service",
   "Đặt lịch sửa chữa": "service",
   "Tư vấn phụ kiện": "accessory",
@@ -107,3 +114,26 @@ export const SERVICE_TO_LEAD_TYPE: Record<string, LeadType> = {
   "Tư vấn lưu trữ năng lượng": "general",
   "Đăng ký nhận tin": "general",
 };
+
+/** Resolve lead type from service label, including dynamic strings like "Đăng ký lái thử VF 8". */
+export function resolveLeadTypeFromService(service?: string | null): LeadType | undefined {
+  if (!service?.trim()) return undefined;
+  const trimmed = service.trim();
+
+  const exact = SERVICE_TO_LEAD_TYPE[trimmed];
+  if (exact) return exact;
+
+  const entries = Object.entries(SERVICE_TO_LEAD_TYPE).sort((a, b) => b[0].length - a[0].length);
+  for (const [label, type] of entries) {
+    if (trimmed.startsWith(label)) return type;
+  }
+
+  if (/^đặt mua\b/i.test(trimmed)) return "purchase";
+  if (/^đăng ký lái thử\b/i.test(trimmed)) return "test_drive";
+  if (/^đặt cọc\b/i.test(trimmed)) return "deposit";
+  if (/^nhận báo giá\b/i.test(trimmed)) return "quote";
+  if (/^tư vấn trả góp\b/i.test(trimmed)) return "finance";
+  if (/^bảo dưỡng\b|^sửa chữa\b/i.test(trimmed)) return "service";
+
+  return undefined;
+}

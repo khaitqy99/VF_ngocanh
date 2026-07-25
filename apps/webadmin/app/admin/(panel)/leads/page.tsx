@@ -16,7 +16,7 @@ import {
   fetchLeads,
   updateLead,
   LEAD_STATUS_OPTIONS,
-  getLeadTypeLabel,
+  getLeadBadgeLabel,
   getLeadStatusLabel,
   getLeadSourceLabel,
   getLeadStatusVariant,
@@ -27,14 +27,14 @@ import {
 
 const TYPE_TABS = [
   { value: "all", label: "Tất cả" },
-  { value: "test_drive", label: "Lái thử" },
-  { value: "deposit", label: "Đặt cọc" },
-  { value: "quote", label: "Báo giá" },
-  { value: "finance", label: "Trả góp" },
-  { value: "purchase", label: "Đặt mua XMD" },
-  { value: "accessory", label: "Phụ kiện" },
-  { value: "service", label: "Hậu mãi" },
-  { value: "general", label: "Liên hệ" },
+  { value: "test_drive", label: "Đăng ký lái thử" },
+  { value: "deposit", label: "Đặt cọc ngay" },
+  { value: "quote", label: "Nhận báo giá" },
+  { value: "finance", label: "Tư vấn trả góp" },
+  { value: "purchase", label: "Đặt mua ngay" },
+  { value: "accessory", label: "Tư vấn phụ kiện" },
+  { value: "service", label: "Bảo dưỡng định kỳ" },
+  { value: "general", label: "Liên hệ chung" },
 ] as const;
 
 export default function LeadsListPage() {
@@ -274,7 +274,7 @@ function LeadCard({
 
       <div className="flex flex-1 flex-col gap-2 px-4 text-sm">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
-          <Badge variant="outline">{getLeadTypeLabel(lead.type)}</Badge>
+          <Badge variant="outline">{getLeadBadgeLabel(lead)}</Badge>
           <span className="text-zinc-400">{getLeadSourceLabel(lead.source)}</span>
         </div>
 

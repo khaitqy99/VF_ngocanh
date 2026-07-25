@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@vinfast3s/supabase/admin";
 import { isSupabaseAdminConfigured, isSupabaseConfigured } from "@vinfast3s/supabase";
 import {
-  SERVICE_TO_LEAD_TYPE,
+  resolveLeadTypeFromService,
   toLeadInsert,
   type CreateLeadInput,
 } from "@vinfast3s/supabase/leads";
@@ -45,14 +45,12 @@ export async function POST(request: Request) {
   }
 
   const service = typeof body.service === "string" ? body.service : undefined;
+  const explicitType = body.type as CreateLeadInput["type"] | undefined;
   const input: CreateLeadInput = {
     fullName,
     phone: phone || email,
     email: email || undefined,
-    type:
-      (body.type as CreateLeadInput["type"]) ??
-      (service ? SERVICE_TO_LEAD_TYPE[service] : undefined) ??
-      "general",
+    type: explicitType ?? resolveLeadTypeFromService(service) ?? "general",
     vehicleInterest:
       typeof body.vehicleInterest === "string"
         ? body.vehicleInterest

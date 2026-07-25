@@ -247,7 +247,6 @@ export default function ScootersPage({
         phone: bookingForm.phone.trim(),
         email: bookingForm.email.trim() || undefined,
         service: bookingForm.service,
-        type: "purchase",
         vehicleInterest: bookingScooter?.name,
         message: formatLeadMessage({
           "Dịch vụ": bookingForm.service,

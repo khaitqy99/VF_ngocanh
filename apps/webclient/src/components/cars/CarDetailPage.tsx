@@ -854,7 +854,7 @@ export default function CarDetailPage({
                 >
                   <CarCatalogCard
                     car={car}
-                    onBookDrive={() => openBooking(`Đăng ký lái thử ${car.name}`)}
+                    onBookDrive={() => openBooking("Đăng ký lái thử")}
                     onEstimatePrice={() => router.push(`${carDetailPath(car)}#tai-chinh`)}
                   />
                 </motion.div>
@@ -1720,6 +1720,8 @@ function SpecsSection({ detail, adminEditable }: { detail: CarDetail; adminEdita
       />
       <div className="mx-auto mt-8 max-w-3xl space-y-3 lg:mt-10">
         {detail.specGroups.map((group, gi) => {
+          if (!group) return null;
+          const items = Array.isArray(group.items) ? group.items : [];
           const isOpen = expanded === group.category;
           return (
             <div
@@ -1762,39 +1764,42 @@ function SpecsSection({ detail, adminEditable }: { detail: CarDetail; adminEdita
                     className="overflow-hidden"
                   >
                     <div className="divide-y divide-border/40 border-t border-border/40">
-                      {group.items.map((item, ii) => (
-                        <div
-                          key={`spec-${gi}-${ii}`}
-                          className="relative flex flex-col gap-1 px-5 py-3 sm:flex-row sm:items-center sm:justify-between"
-                        >
-                          {adminEditable && edit?.editMode ? (
-                            <EditableListControls
-                              path={`specGroups.${gi}.items`}
-                              index={ii}
-                              minItems={1}
-                              adminEditable
-                              label="thông số"
-                              onAdd={() => undefined}
-                            />
-                          ) : null}
-                          <span className="text-xs text-muted-foreground">
-                            <InlineText
-                              path={`specGroups.${gi}.items.${ii}.label`}
-                              fallback={item.label}
-                              adminEditable={adminEditable}
-                              className="text-xs text-muted-foreground"
-                            />
-                          </span>
-                          <span className="text-xs font-semibold text-brand-dark sm:text-right">
-                            <InlineText
-                              path={`specGroups.${gi}.items.${ii}.value`}
-                              fallback={item.value}
-                              adminEditable={adminEditable}
-                              className="text-xs font-semibold text-brand-dark"
-                            />
-                          </span>
-                        </div>
-                      ))}
+                      {items.map((item, ii) => {
+                        if (!item) return null;
+                        return (
+                          <div
+                            key={`spec-${gi}-${ii}`}
+                            className="relative flex flex-col gap-1 px-5 py-3 sm:flex-row sm:items-center sm:justify-between"
+                          >
+                            {adminEditable && edit?.editMode ? (
+                              <EditableListControls
+                                path={`specGroups.${gi}.items`}
+                                index={ii}
+                                minItems={1}
+                                adminEditable
+                                label="thông số"
+                                onAdd={() => undefined}
+                              />
+                            ) : null}
+                            <span className="text-xs text-muted-foreground">
+                              <InlineText
+                                path={`specGroups.${gi}.items.${ii}.label`}
+                                fallback={item.label ?? ""}
+                                adminEditable={adminEditable}
+                                className="text-xs text-muted-foreground"
+                              />
+                            </span>
+                            <span className="text-xs font-semibold text-brand-dark sm:text-right">
+                              <InlineText
+                                path={`specGroups.${gi}.items.${ii}.value`}
+                                fallback={item.value ?? ""}
+                                adminEditable={adminEditable}
+                                className="text-xs font-semibold text-brand-dark"
+                              />
+                            </span>
+                          </div>
+                        );
+                      })}
                       {adminEditable && edit?.editMode ? (
                         <div className="px-5 py-3">
                           <EditableListControls

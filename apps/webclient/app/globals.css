@@ -427,3 +427,16 @@
   paint-order: stroke fill;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
 }
+
+/* GTM lead widget: replace ☎ emoji with VinFast mark */
+#vfcmWidgetRoot .vfcm-trigger-icon {
+  overflow: hidden;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  background-color: #fff !important;
+  background-image: url("/icon-192.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 82% !important;
+}

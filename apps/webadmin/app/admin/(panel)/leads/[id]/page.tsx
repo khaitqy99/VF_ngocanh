@@ -19,7 +19,7 @@ import {
   getLeadById,
   LEAD_STATUS_OPTIONS,
   LEAD_TYPE_OPTIONS,
-  getLeadTypeLabel,
+  getLeadBadgeLabel,
   getLeadStatusLabel,
   getLeadSourceLabel,
   getLeadStatusVariant,
@@ -102,7 +102,7 @@ function LeadDetailContent({ id }: { id: string }) {
 
       <PageHeader
         title={lead.fullName}
-        description={`${getLeadTypeLabel(lead.type)} · ${formatLeadDate(lead.createdAt)}`}
+        description={`${getLeadBadgeLabel(lead)} · ${formatLeadDate(lead.createdAt)}`}
         action={
           <Badge variant={getLeadStatusVariant(lead.status)} className="text-sm px-3 py-1">
             {getLeadStatusLabel(lead.status)}
@@ -141,7 +141,7 @@ function LeadDetailContent({ id }: { id: string }) {
                 Nguồn: <strong className="text-zinc-800">{getLeadSourceLabel(lead.source)}</strong>
               </p>
               <p className="mt-1">
-                Loại: <strong className="text-zinc-800">{getLeadTypeLabel(lead.type)}</strong>
+                Loại: <strong className="text-zinc-800">{getLeadBadgeLabel(lead)}</strong>
               </p>
               {lead.assignedTo && (
                 <p className="mt-1">

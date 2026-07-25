@@ -13,9 +13,9 @@ export const LEAD_TYPE_OPTIONS: { value: LeadType | "all"; label: string }[] = [
   { value: "deposit", label: "Đặt cọc ngay" },
   { value: "quote", label: "Nhận báo giá" },
   { value: "finance", label: "Tư vấn trả góp" },
-  { value: "purchase", label: "Đặt mua xe máy" },
+  { value: "purchase", label: "Đặt mua ngay" },
   { value: "accessory", label: "Tư vấn phụ kiện" },
-  { value: "service", label: "Bảo dưỡng / cứu hộ" },
+  { value: "service", label: "Bảo dưỡng định kỳ" },
   { value: "general", label: "Liên hệ chung" },
 ];
 
@@ -38,6 +38,93 @@ export const LEAD_SOURCE_OPTIONS: { value: LeadSource; label: string }[] = [
 
 export function getLeadTypeLabel(type: LeadType): string {
   return LEAD_TYPE_OPTIONS.find((o) => o.value === type)?.label ?? type;
+}
+
+/** Known service labels shown on lead badges (prefer exact wording from forms). */
+const LEAD_SERVICE_LABELS = [
+  "Đăng ký lái thử",
+  "Đặt cọc ngay",
+  "Đặt mua ngay",
+  "Nhận báo giá và ưu đãi",
+  "Nhận báo giá",
+  "Tư vấn trả góp",
+  "Hỗ trợ trả góp 0%",
+  "Thu cũ đổi mới",
+  "Bảo dưỡng - sửa chữa",
+  "Bảo dưỡng định kỳ",
+  "Sửa chữa điện tử",
+  "Sơn sấy vỏ xe",
+  "Đặt lịch bảo dưỡng",
+  "Đặt lịch sửa chữa",
+  "Tư vấn phụ kiện",
+  "Tư vấn trạm sạc",
+  "Tư vấn lưu trữ năng lượng",
+  "Đăng ký nhận tin",
+] as const;
+
+function extractServiceFromMessage(message?: string | null): string | null {
+  if (!message?.trim()) return null;
+
+  const patterns = [
+    /(?:^|\n)\s*(?:Dịch vụ|Nhu cầu)\s*:\s*(.+?)(?:\n|$)/i,
+    /(?:^|\||\n)\s*service\s*=\s*([^|\n]+)/i,
+  ];
+
+  let raw: string | null = null;
+  for (const pattern of patterns) {
+    const match = message.match(pattern);
+    if (match?.[1]?.trim()) {
+      raw = match[1].trim();
+      break;
+    }
+  }
+
+  if (raw) {
+    const corrupted = /�|\?/.test(raw) && !/[ăâêôơưđ]/i.test(raw);
+    if (!corrupted) {
+      const known = [...LEAD_SERVICE_LABELS]
+        .sort((a, b) => b.length - a.length)
+        .find((label) => raw === label || raw.startsWith(label));
+      return known ?? raw;
+    }
+  }
+
+  // Recover from LEADTEST messages: ...|expected=deposit|service=...
+  const expected = message.match(/(?:^|\||\n)\s*expected\s*=\s*([a-z_]+)/i)?.[1];
+  if (expected && LEAD_TYPE_OPTIONS.some((o) => o.value === expected)) {
+    return getLeadTypeLabel(expected as LeadType);
+  }
+
+  // Heuristics when forms don't write "Dịch vụ:" into message.
+  if (/thẻ sạc|trạm sạc|sản phẩm quan tâm:/i.test(message)) {
+    return "Tư vấn trạm sạc";
+  }
+  if (/giải pháp:|tiền điện|điện mặt trời|lưu trữ năng lượng/i.test(message)) {
+    return "Tư vấn lưu trữ năng lượng";
+  }
+  if (/email đăng ký nhận tin|đăng ký nhận tin/i.test(message)) {
+    return "Đăng ký nhận tin";
+  }
+  if (/(?:^|\n)\s*sản phẩm\s*:/i.test(message) && /hình thức nhận/i.test(message)) {
+    return "Tư vấn phụ kiện";
+  }
+
+  return null;
+}
+
+/** Badge text: prefer concrete service from message, else type label. */
+export function getLeadBadgeLabel(lead: Pick<Lead, "type" | "message" | "fullName">): string {
+  const fromMessage = extractServiceFromMessage(lead.message);
+  if (fromMessage) return fromMessage;
+
+  if (lead.fullName?.trim() === "Đăng ký nhận tin") {
+    return "Đăng ký nhận tin";
+  }
+
+  if (lead.type === "accessory") return "Tư vấn phụ kiện";
+  if (lead.type === "service") return "Bảo dưỡng định kỳ";
+
+  return getLeadTypeLabel(lead.type);
 }
 
 export function getLeadStatusLabel(status: LeadStatus): string {
