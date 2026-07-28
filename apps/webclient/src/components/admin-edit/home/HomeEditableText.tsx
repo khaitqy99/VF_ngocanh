@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { Pencil } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -45,14 +45,20 @@ export function HomeEditableText({
     return <span className={className}>{value}</span>;
   }
 
+  const stopLinkNav = (event: SyntheticEvent) => {
+    event.stopPropagation();
+  };
+
   if (multiline) {
     return (
-      <span className="relative block w-full">
+      <span className="relative block w-full" onClick={stopLinkNav} onMouseDown={stopLinkNav}>
         <textarea
           value={value}
           onChange={(event) => onChange(event.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
+          onClick={stopLinkNav}
+          onMouseDown={stopLinkNav}
           rows={3}
           className={cn(
             className,
@@ -70,13 +76,19 @@ export function HomeEditableText({
   }
 
   return (
-    <span className="relative inline-block w-full max-w-full">
+    <span
+      className="relative inline-block w-full max-w-full"
+      onClick={stopLinkNav}
+      onMouseDown={stopLinkNav}
+    >
       <input
         type="text"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        onClick={stopLinkNav}
+        onMouseDown={stopLinkNav}
         className={cn(
           className,
           "w-full min-w-0 rounded-md border-2 px-2 py-0.5 outline-none transition",

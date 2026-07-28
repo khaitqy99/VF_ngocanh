@@ -18,6 +18,7 @@ import {
   homeBrandLine,
   homeNewsletterBlock,
   homeNewsletterChild,
+  homeOverlayCard,
   homeViewport,
 } from "@/lib/home-motion";
 import { FeatureCarouselSection } from "@/components/shared/FeatureCarouselSection";
@@ -25,6 +26,7 @@ import { ShowroomBookingModal } from "@/components/shared/ShowroomBookingModal";
 import type { VinFastHomeSlide } from "@/lib/vinfast-home";
 import type { NewsArticle } from "@/lib/cms/news-types";
 import { vfCardTitle, vfSectionHeadingLeft, vfSlideTitle } from "@/lib/typography";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
@@ -297,9 +299,6 @@ function Accessories({
 const chargingOverlayDark =
   "absolute inset-x-0 bottom-0 w-full translate-y-0 bg-[linear-gradient(359deg,#000_0.54%,rgba(0,0,0,0)_98.5%)] p-5 text-white transition-transform duration-500 ease-in-out sm:p-[30px] [@media(hover:hover)_and_(pointer:fine)]:translate-y-[65%] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-y-0";
 
-const chargingOverlayLight =
-  "absolute inset-x-0 bottom-0 w-full translate-y-0 bg-[linear-gradient(359deg,#f7f9f9_0.54%,rgba(247,249,249,0)_98.5%)] p-5 text-[#3c3c3c] transition-transform duration-500 ease-in-out sm:p-[30px] [@media(hover:hover)_and_(pointer:fine)]:translate-y-[65%] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-y-0";
-
 type ChargingTileView = HomeChargingTile & {
   aspect: string;
   imageFit?: "contain" | "cover";
@@ -310,10 +309,187 @@ function toChargingTileView(tile: HomeChargingTile, index: number): ChargingTile
   const isPortable = index === 2 || tile.theme === "light";
   return {
     ...tile,
-    aspect: isPortable ? "h-full min-h-full" : "lg:aspect-[21/9]",
+    aspect: isPortable ? "h-full min-h-full" : "",
     imageFit: isPortable ? "contain" : "cover",
     imageZoom: !isPortable,
   };
+}
+
+function ChargingCardCopy({
+  item,
+  index,
+  onMoveUp,
+  onMoveDown,
+  onRemove,
+  total,
+  light,
+}: {
+  item: ChargingTileView;
+  index: number;
+  total: number;
+  light: boolean;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  onRemove?: () => void;
+}) {
+  const edit = useHomeAdminEdit();
+  return (
+    <>
+      <h3 className={`${vfCardTitle} ${light ? "text-[#3c3c3c]" : "text-stroke-white"}`}>
+        {edit?.editMode ? (
+          <HomeEditableText
+            value={item.title}
+            onChange={(title) =>
+              edit.updateSections((sections) => ({
+                ...sections,
+                charging: {
+                  ...sections.charging,
+                  tiles: sections.charging.tiles.map((tile, tileIndex) =>
+                    tileIndex === index ? { ...tile, title } : tile,
+                  ),
+                },
+              }))
+            }
+            className={`${vfCardTitle} ${light ? "text-[#3c3c3c]" : "text-stroke-white text-white"}`}
+            label="Tiêu đề thẻ"
+          />
+        ) : (
+          item.title
+        )}
+      </h3>
+      <p className="pt-3 text-xs leading-relaxed opacity-90 sm:pt-4 sm:text-sm">
+        {edit?.editMode ? (
+          <HomeEditableText
+            value={item.desc}
+            onChange={(desc) =>
+              edit.updateSections((sections) => ({
+                ...sections,
+                charging: {
+                  ...sections.charging,
+                  tiles: sections.charging.tiles.map((tile, tileIndex) =>
+                    tileIndex === index ? { ...tile, desc } : tile,
+                  ),
+                },
+              }))
+            }
+            multiline
+            className={`text-xs leading-relaxed sm:text-sm ${light ? "text-[#3c3c3c]" : "text-white"}`}
+            label="Mô tả thẻ"
+          />
+        ) : (
+          item.desc
+        )}
+      </p>
+      <span
+        className={`mt-3 block pt-1 text-xs font-semibold tracking-wide sm:mt-0 sm:pt-4 ${
+          light ? "text-brand" : "text-white/90"
+        }`}
+      >
+        Xem chi tiết →
+      </span>
+      {edit?.editMode ? (
+        <>
+          <div className="mt-2">
+            <HomeEditableText
+              value={item.href}
+              onChange={(href) =>
+                edit.updateSections((sections) => ({
+                  ...sections,
+                  charging: {
+                    ...sections.charging,
+                    tiles: sections.charging.tiles.map((tile, tileIndex) =>
+                      tileIndex === index ? { ...tile, href } : tile,
+                    ),
+                  },
+                }))
+              }
+              className={`text-[10px] ${light ? "text-[#3c3c3c]/70" : "text-white/70"}`}
+              label="Link thẻ"
+            />
+          </div>
+          <HomeEditListControls
+            onMoveUp={onMoveUp}
+            onMoveDown={onMoveDown}
+            onRemove={onRemove}
+            canMoveUp={index > 0}
+            canMoveDown={index < total - 1}
+            canRemove={total > 1}
+          />
+        </>
+      ) : null}
+    </>
+  );
+}
+
+function ChargingProductCard({
+  item,
+  index,
+  total,
+  onMoveUp,
+  onMoveDown,
+  onRemove,
+}: {
+  item: ChargingTileView;
+  index: number;
+  total: number;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  onRemove?: () => void;
+}) {
+  const edit = useHomeAdminEdit();
+  const reduced = useReducedMotion();
+  const editing = Boolean(edit?.editMode);
+
+  const body = (
+    <>
+      <div className="relative z-[1] shrink-0 bg-[#f7f9f9] p-5 text-[#3c3c3c] sm:p-[30px]">
+        <ChargingCardCopy
+          item={item}
+          index={index}
+          total={total}
+          light
+          onMoveUp={onMoveUp}
+          onMoveDown={onMoveDown}
+          onRemove={onRemove}
+        />
+      </div>
+      <div className="relative flex min-h-[220px] flex-1 items-center justify-center bg-[#f7f9f9] px-6 pb-8 pt-2 sm:min-h-[260px]">
+        <HomeEditImageButton imagePath={`sections.charging.tiles.${index}.img`} />
+        <div className="relative mx-auto aspect-[1437/1395] w-full max-w-[420px]">
+          <img
+            src={item.img}
+            alt={item.title}
+            className="absolute inset-0 h-full w-full object-contain object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </>
+  );
+
+  const rootClass =
+    "group relative flex h-full min-h-[300px] w-full flex-col overflow-hidden rounded-2xl bg-[#f7f9f9] shadow-soft transition-[box-shadow,transform] duration-300 hover:shadow-[var(--shadow-brand)] sm:min-h-[340px] lg:min-h-0";
+
+  return (
+    <StaggerItem variant="home" index={index} className="h-full min-h-0">
+      <div className="relative h-full">
+        {editing ? (
+          <div className={rootClass}>{body}</div>
+        ) : (
+          <motion.a
+            href={item.href}
+            initial="rest"
+            whileHover={reduced ? undefined : "hover"}
+            whileTap={reduced ? undefined : "tap"}
+            variants={homeOverlayCard}
+            className={rootClass}
+          >
+            {body}
+          </motion.a>
+        )}
+      </div>
+    </StaggerItem>
+  );
 }
 
 function ChargingCard({
@@ -331,114 +507,50 @@ function ChargingCard({
   onMoveDown?: () => void;
   onRemove?: () => void;
 }) {
-  const edit = useHomeAdminEdit();
-  const overlay = item.theme === "light" ? chargingOverlayLight : chargingOverlayDark;
-  const fillHeight = item.aspect.includes("min-h");
-  const mobilePanel =
-    item.theme === "light"
-      ? "border-t border-slate-100 bg-[#f7f9f9] p-5 text-[#3c3c3c]"
-      : "border-t border-brand-dark/20 bg-brand-dark p-5 text-white";
+  const isProductCard = item.theme === "light" || item.imageFit === "contain";
+  if (isProductCard) {
+    return (
+      <ChargingProductCard
+        item={item}
+        index={index}
+        total={total}
+        onMoveUp={onMoveUp}
+        onMoveDown={onMoveDown}
+        onRemove={onRemove}
+      />
+    );
+  }
+
+  const overlay = chargingOverlayDark;
+  const mobilePanel = "border-t border-brand-dark/20 bg-brand-dark p-5 text-white";
 
   return (
-    <StaggerItem variant="home" index={index} className={fillHeight ? "h-full min-h-0" : undefined}>
-      <div className={fillHeight ? "relative h-full" : "relative"}>
-        <HomeEditImageButton imagePath={`sections.charging.tiles.${index}.img`} />
+    <StaggerItem variant="home" index={index} className="min-h-0 flex-1">
+      <div className="relative h-full">
         <HomeOverlayCard
           href={item.href}
           title={item.title}
           image={item.img}
           imageAlt={item.title}
           overlayClass={overlay}
-          aspectClass={item.aspect}
-          fillHeight={fillHeight}
-          stackOnMobile={!fillHeight}
+          aspectClass=""
+          fillHeight
+          stackOnMobile
           mobilePanelClass={mobilePanel}
-          heightClass={fillHeight ? "h-full min-h-[300px] sm:min-h-[340px] lg:min-h-0" : undefined}
-          imageFit={item.imageFit ?? "cover"}
-          imageZoom={item.imageZoom ?? true}
+          heightClass="h-full min-h-[240px] sm:min-h-[260px] lg:min-h-[280px]"
+          imageFit="cover"
+          imageZoom
+          imageEditPath={`sections.charging.tiles.${index}.img`}
         >
-          <h3 className={`${vfCardTitle} ${item.theme === "light" ? "" : "text-stroke-white"}`}>
-            {edit?.editMode ? (
-              <HomeEditableText
-                value={item.title}
-                onChange={(title) =>
-                  edit.updateSections((sections) => ({
-                    ...sections,
-                    charging: {
-                      ...sections.charging,
-                      tiles: sections.charging.tiles.map((tile, tileIndex) =>
-                        tileIndex === index ? { ...tile, title } : tile,
-                      ),
-                    },
-                  }))
-                }
-                className={`${vfCardTitle} ${item.theme === "light" ? "" : "text-stroke-white text-white"}`}
-                label="Tiêu đề thẻ"
-              />
-            ) : (
-              item.title
-            )}
-          </h3>
-          <p className="pt-3 text-xs leading-relaxed opacity-90 sm:pt-4 sm:text-sm">
-            {edit?.editMode ? (
-              <HomeEditableText
-                value={item.desc}
-                onChange={(desc) =>
-                  edit.updateSections((sections) => ({
-                    ...sections,
-                    charging: {
-                      ...sections.charging,
-                      tiles: sections.charging.tiles.map((tile, tileIndex) =>
-                        tileIndex === index ? { ...tile, desc } : tile,
-                      ),
-                    },
-                  }))
-                }
-                multiline
-                className={`text-xs leading-relaxed sm:text-sm ${item.theme === "light" ? "text-[#3c3c3c]" : "text-white"}`}
-                label="Mô tả thẻ"
-              />
-            ) : (
-              item.desc
-            )}
-          </p>
-          <span
-            className={`mt-3 block pt-1 text-xs font-semibold tracking-wide sm:mt-0 sm:pt-4 ${
-              item.theme === "light" ? "text-brand" : "text-white/90"
-            }`}
-          >
-            Xem chi tiết →
-          </span>
-          {edit?.editMode ? (
-            <>
-              <div className="mt-2">
-                <HomeEditableText
-                  value={item.href}
-                  onChange={(href) =>
-                    edit.updateSections((sections) => ({
-                      ...sections,
-                      charging: {
-                        ...sections.charging,
-                        tiles: sections.charging.tiles.map((tile, tileIndex) =>
-                          tileIndex === index ? { ...tile, href } : tile,
-                        ),
-                      },
-                    }))
-                  }
-                  className="text-[10px] text-white/70"
-                  label="Link thẻ"
-                />
-              </div>
-              <HomeEditListControls
-                onMoveUp={onMoveUp}
-                onMoveDown={onMoveDown}
-                onRemove={onRemove}
-                canMoveUp={index > 0}
-                canMoveDown={index < total - 1}
-                canRemove={total > 1}
-              />
-            </>
-          ) : null}
+          <ChargingCardCopy
+            item={item}
+            index={index}
+            total={total}
+            light={false}
+            onMoveUp={onMoveUp}
+            onMoveDown={onMoveDown}
+            onRemove={onRemove}
+          />
         </HomeOverlayCard>
       </div>
     </StaggerItem>
@@ -520,15 +632,15 @@ function ChargingEcosystem({ section }: { section: HomeSectionsContent["charging
 
         <div className="grid gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-5">
           {tiles.length <= 2 ? (
-            <div className="flex flex-col gap-4 lg:col-span-2 lg:gap-5">
+            <div className="flex h-full flex-col gap-4 lg:col-span-2 lg:gap-5">
               {tiles.map((item, index) => renderCard(item, index))}
             </div>
           ) : (
             <>
-              <div className="flex flex-col gap-4 lg:gap-5">
+              <div className="flex h-full flex-col gap-4 lg:gap-5">
                 {leftTiles.map((item, index) => renderCard(item, index))}
               </div>
-              <div className="flex flex-col gap-4 lg:gap-5">
+              <div className="flex h-full flex-col gap-4 lg:gap-5">
                 {rightTiles.map((item, index) => renderCard(item, index + 2))}
               </div>
             </>
@@ -1051,7 +1163,6 @@ function ShowroomCommunity({ section }: { section: HomeSectionsContent["showroom
           {section.cards.map((card, index) => (
             <StaggerItem key={card.title} variant="home" index={index} className="w-full">
               <div className="relative">
-                <HomeEditImageButton imagePath={`sections.showroomCommunity.cards.${index}.img`} />
                 <HomeOverlayCard
                   href={card.href}
                   title={card.title}
@@ -1063,6 +1174,7 @@ function ShowroomCommunity({ section }: { section: HomeSectionsContent["showroom
                   mobilePanelClass="border-t border-brand-dark/20 bg-brand-dark p-5 text-white"
                   heightClass="lg:min-h-[354px]"
                   external={card.external}
+                  imageEditPath={`sections.showroomCommunity.cards.${index}.img`}
                   rel={
                     "nofollow" in card && card.nofollow
                       ? "nofollow noopener noreferrer"

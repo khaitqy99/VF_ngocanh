@@ -67,6 +67,7 @@ import { carsBookingStep, carsEstimatorPanel } from "@/lib/cars-motion";
 import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
+import { defaultCarPricingSettings, type CarPricingSettings } from "@/lib/cms/car-pricing";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 10 năm hoặc 200.000km" },
@@ -115,24 +116,23 @@ const defaultFilters = (): Filters => ({
   drives: new Set(),
 });
 
-// Cities and Provinces for Rolling Cost Estimator
-const PROVINCES = [
-  { id: "hanoi", name: "Hà Nội (Phí biển 20tr)", plateFee: 20_000_000 },
-  { id: "hcm", name: "TP. Hồ Chí Minh (Phí biển 20tr)", plateFee: 20_000_000 },
-  { id: "other", name: "Tỉnh/Thành phố khác (Phí biển 1tr)", plateFee: 1_000_000 },
-];
-
 export default function CarsPage({
   cars: CARS,
   heroBanners: CAR_HERO_BANNERS,
+  pricing: pricingProp,
   embedded = false,
   adminEdit = false,
 }: {
   cars: CarModel[];
   heroBanners: HeroBannerSlide[];
+  pricing?: CarPricingSettings;
   embedded?: boolean;
   adminEdit?: boolean;
 }) {
+  const pricing = pricingProp ?? defaultCarPricingSettings();
+  const physicalInsurancePercent = Number((pricing.physicalInsuranceRate * 100).toFixed(2))
+    .toString()
+    .replace(".", ",");
   const reduced = useReducedMotion();
   const modalMotion = useModalMotion();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
@@ -161,7 +161,9 @@ export default function CarsPage({
 
   // Rolling Cost Estimator State
   const [estimatorCarId, setEstimatorCarId] = useState<string>("vf3");
-  const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
+  const [estimatorLocation, setEstimatorLocation] = useState(
+    () => pricing.provinces[0]?.id ?? "other",
+  );
   const [includeInsurance, setIncludeInsurance] = useState<boolean>(true);
 
   // Installment Calculator State
@@ -272,29 +274,22 @@ export default function CarsPage({
     return CARS.find((c) => c.id === estimatorCarId) || CARS[0];
   }, [estimatorCarId, CARS]);
 
-  // Rolling Cost Calculation
+  // Rolling Cost Calculation — always from admin fee table
   const rollingCostResult = useMemo(() => {
     const car = selectedEstimatorCar;
     const basePrice = car.price;
-
-    // Taxes & Fees in Vietnam
-    const registrationTax = 0; // 0% for Electric Vehicles
-    const province = PROVINCES.find((p) => p.id === estimatorLocation) || PROVINCES[0];
-    const plateFee = province.plateFee;
-    const inspectionFee = 340_000;
-    const roadMaintenanceFee = 1_560_000; // 1 year
-
-    // Civil Liability Insurance based on Seats
-    let civilInsurance = 480_700; // Default for <= 5 seats
-    if (car.seats === 7) civilInsurance = 873_400;
-    if (car.seats === 2) civilInsurance = 288_000;
-
-    // Optional physical damage insurance (~1.1% of base price)
-    const physicalInsurance = includeInsurance ? Math.round(basePrice * 0.011) : 0;
+    const province =
+      pricing.provinces.find((p) => p.id === estimatorLocation) ?? pricing.provinces[0];
+    const plateFee = province?.plateFee ?? 0;
+    const inspectionFee = pricing.inspectionFee;
+    const roadMaintenanceFee = pricing.roadMaintenanceFee;
+    const civilInsurance = pricing.civilInsurance;
+    const physicalInsurance = includeInsurance
+      ? Math.round(basePrice * pricing.physicalInsuranceRate)
+      : 0;
 
     const totalRolling =
       basePrice +
-      registrationTax +
       plateFee +
       inspectionFee +
       roadMaintenanceFee +
@@ -303,7 +298,7 @@ export default function CarsPage({
 
     return {
       basePrice,
-      registrationTax,
+      registrationTax: 0,
       plateFee,
       inspectionFee,
       roadMaintenanceFee,
@@ -311,7 +306,7 @@ export default function CarsPage({
       physicalInsurance,
       totalRolling,
     };
-  }, [selectedEstimatorCar, estimatorLocation, includeInsurance]);
+  }, [selectedEstimatorCar, estimatorLocation, includeInsurance, pricing]);
 
   // Installment Calculator Calculation
   const installmentResult = useMemo(() => {
@@ -536,7 +531,7 @@ export default function CarsPage({
                             <SelectValue placeholder="Chọn Tỉnh/Thành" />
                           </SelectTrigger>
                           <SelectContent className="bg-white border-slate-200 text-slate-800">
-                            {PROVINCES.map((p) => (
+                            {pricing.provinces.map((p) => (
                               <SelectItem
                                 key={p.id}
                                 value={p.id}
@@ -560,7 +555,7 @@ export default function CarsPage({
                               className="border-slate-300 text-brand"
                             />
                             <span className="text-xs text-slate-600 font-semibold select-none">
-                              Bao gồm Bảo hiểm vật chất xe (Tùy chọn ~1.1%)
+                              Bao gồm Bảo hiểm vật chất xe (Tùy chọn ~{physicalInsurancePercent}%)
                             </span>
                           </label>
                         </div>
@@ -686,7 +681,7 @@ export default function CarsPage({
                             />
                             {includeInsurance && (
                               <EstimatorCostRow
-                                label="Bảo hiểm vật chất thân vỏ (~1.1%)"
+                                label={`Bảo hiểm vật chất thân vỏ (~${physicalInsurancePercent}%)`}
                                 value={`${formatPrice(rollingCostResult.physicalInsurance)} đ`}
                               />
                             )}

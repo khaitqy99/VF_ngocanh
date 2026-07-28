@@ -15,7 +15,7 @@ export function HomeEditImageButton({ imagePath }: { imagePath: string }) {
         event.stopPropagation();
         edit.requestImage(imagePath);
       }}
-      className={adminFormImageBtn}
+      className={`${adminFormImageBtn} z-30`}
     >
       Đổi ảnh
     </button>

@@ -3,21 +3,36 @@
 import CarDetailPage from "@/components/cars/CarDetailPage";
 import { CarAdminEditProvider, useAdminEdit } from "@/components/admin-edit/AdminEditContext";
 import type { CarDetail } from "@/lib/car-details";
+import type { CarPricingSettings } from "@/lib/cms/car-pricing";
 
-function MergedCarDetailPage({ detail }: { detail: CarDetail }) {
+function MergedCarDetailPage({
+  detail,
+  pricing,
+}: {
+  detail: CarDetail;
+  pricing?: CarPricingSettings;
+}) {
   const edit = useAdminEdit();
   const merged = (edit?.values ?? detail) as CarDetail;
-  return <CarDetailPage detail={merged} embedded adminEdit />;
+  return <CarDetailPage detail={merged} pricing={pricing} embedded adminEdit />;
 }
 
-export function CarPreviewClient({ detail, admin }: { detail: CarDetail; admin?: boolean }) {
+export function CarPreviewClient({
+  detail,
+  pricing,
+  admin,
+}: {
+  detail: CarDetail;
+  pricing?: CarPricingSettings;
+  admin?: boolean;
+}) {
   if (admin) {
     return (
       <CarAdminEditProvider detail={detail}>
-        <MergedCarDetailPage detail={detail} />
+        <MergedCarDetailPage detail={detail} pricing={pricing} />
       </CarAdminEditProvider>
     );
   }
 
-  return <CarDetailPage detail={detail} embedded />;
+  return <CarDetailPage detail={detail} pricing={pricing} embedded />;
 }

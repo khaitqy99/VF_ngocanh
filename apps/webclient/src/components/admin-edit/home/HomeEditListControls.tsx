@@ -45,7 +45,11 @@ export function HomeEditListControls({
       {onMoveUp ? (
         <button
           type="button"
-          onClick={onMoveUp}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onMoveUp();
+          }}
           disabled={!canMoveUp}
           className="inline-flex items-center gap-0.5 rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[9px] font-semibold text-slate-600 disabled:opacity-30"
           title="Lên trên"
@@ -56,7 +60,11 @@ export function HomeEditListControls({
       {onMoveDown ? (
         <button
           type="button"
-          onClick={onMoveDown}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onMoveDown();
+          }}
           disabled={!canMoveDown}
           className="inline-flex items-center gap-0.5 rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[9px] font-semibold text-slate-600 disabled:opacity-30"
           title="Xuống dưới"
@@ -67,7 +75,11 @@ export function HomeEditListControls({
       {onRemove ? (
         <button
           type="button"
-          onClick={onRemove}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onRemove();
+          }}
           disabled={!canRemove}
           className="inline-flex items-center gap-0.5 rounded border border-red-200 bg-red-50 px-1.5 py-0.5 text-[9px] font-semibold text-red-600 disabled:opacity-30"
         >

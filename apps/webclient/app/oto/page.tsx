@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import CarsPage from "@/components/cars/CarsPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBanners, getCars } from "@/lib/cms";
+import { getCarPricingSettings } from "@/lib/cms/car-pricing-fetch";
 import { buildBreadcrumbSchema, buildItemListSchema } from "@/lib/seo/local-business";
 import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
 import { carDetailPath } from "@/lib/seo/slugs";
@@ -14,7 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OtoPage() {
-  const [cars, heroBanners] = await Promise.all([getCars(), getBanners("cars")]);
+  const [cars, heroBanners, pricing] = await Promise.all([
+    getCars(),
+    getBanners("cars"),
+    getCarPricingSettings(),
+  ]);
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },
     { name: "Ô tô điện", path: "/oto" },
@@ -29,7 +34,7 @@ export default async function OtoPage() {
   return (
     <>
       <JsonLd data={[breadcrumb, itemList]} />
-      <CarsPage cars={cars} heroBanners={heroBanners} />
+      <CarsPage cars={cars} heroBanners={heroBanners} pricing={pricing} />
     </>
   );
 }

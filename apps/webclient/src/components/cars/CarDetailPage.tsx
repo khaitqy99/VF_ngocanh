@@ -222,7 +222,9 @@ export default function CarDetailPage({
   const lowestVariantPrice = Math.min(...detail.variants.map((v) => v.price));
   const thumbStripRef = useRef<HTMLDivElement>(null);
 
-  const [estimatorLocation, setEstimatorLocation] = useState("camau");
+  const [estimatorLocation, setEstimatorLocation] = useState(
+    () => pricing.provinces[0]?.id ?? "camau",
+  );
   const [includeInsurance, setIncludeInsurance] = useState(true);
   const [estimatorTab, setEstimatorTab] = useState<"rolling" | "installment">("rolling");
   const [downPaymentPct, setDownPaymentPct] = useState(30);
@@ -232,7 +234,6 @@ export default function CarDetailPage({
   const variant = detail.variants.find((v) => v.id === selectedVariant) ?? detail.variants[0];
   const selectedColorObj = detail.colors.find((c) => c.id === selectedColor) ?? detail.colors[0];
   const related = getRelatedCars(detail.id);
-  const fixedRollingCost = variant.rollingCost;
 
   const sectionNavItems = useMemo(() => {
     const items: { id: SectionId; label: string }[] = [
@@ -348,16 +349,6 @@ export default function CarDetailPage({
     .replace(".", ",");
 
   const rollingCost = useMemo(() => {
-    if (fixedRollingCost != null) {
-      return {
-        plateFee: 0,
-        roadMaintenanceFee: 0,
-        inspectionFee: 0,
-        civilInsurance: 0,
-        physicalInsurance: 0,
-        totalRolling: fixedRollingCost,
-      };
-    }
     const province =
       pricing.provinces.find((p) => p.id === estimatorLocation) ?? pricing.provinces[0];
     const roadMaintenanceFee = pricing.roadMaintenanceFee;
@@ -379,7 +370,7 @@ export default function CarDetailPage({
       physicalInsurance,
       totalRolling,
     };
-  }, [basePrice, estimatorLocation, includeInsurance, fixedRollingCost, pricing]);
+  }, [basePrice, estimatorLocation, includeInsurance, pricing]);
 
   const installment = useMemo(() => {
     const upfrontAmount = Math.round(rollingCost.totalRolling * (downPaymentPct / 100));
@@ -804,8 +795,6 @@ export default function CarDetailPage({
                 detail={detail}
                 variant={variant}
                 adminEditable={adminEdit}
-                basePrice={basePrice}
-                fixedRollingCost={fixedRollingCost}
                 estimatorLocation={estimatorLocation}
                 setEstimatorLocation={setEstimatorLocation}
                 includeInsurance={includeInsurance}
@@ -1873,8 +1862,6 @@ type FinanceProps = {
   detail: CarDetail;
   variant: { name: string; price: number; rollingCost?: number };
   adminEditable?: boolean;
-  basePrice: number;
-  fixedRollingCost?: number;
   estimatorLocation: string;
   setEstimatorLocation: (v: string) => void;
   includeInsurance: boolean;
@@ -1912,8 +1899,6 @@ function FinanceSection({
   detail,
   variant,
   adminEditable,
-  basePrice,
-  fixedRollingCost,
   estimatorLocation,
   setEstimatorLocation,
   includeInsurance,
@@ -1974,37 +1959,33 @@ function FinanceSection({
             </div>
 
             <div className="space-y-4">
-              {fixedRollingCost == null && (
-                <>
-                  <div>
-                    <p className="mb-2 text-[10px] font-bold text-muted-foreground uppercase">
-                      Khu vực đăng ký
-                    </p>
-                    <Select value={estimatorLocation} onValueChange={setEstimatorLocation}>
-                      <SelectTrigger className="w-full text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {provinces.map((p) => (
-                          <SelectItem key={p.id} value={p.id} className="text-xs">
-                            {p.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+              <div>
+                <p className="mb-2 text-[10px] font-bold text-muted-foreground uppercase">
+                  Khu vực đăng ký
+                </p>
+                <Select value={estimatorLocation} onValueChange={setEstimatorLocation}>
+                  <SelectTrigger className="w-full text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {provinces.map((p) => (
+                      <SelectItem key={p.id} value={p.id} className="text-xs">
+                        {p.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                  <label className="flex cursor-pointer items-center gap-2">
-                    <Checkbox
-                      checked={includeInsurance}
-                      onCheckedChange={(v) => setIncludeInsurance(!!v)}
-                    />
-                    <span className="text-xs text-muted-foreground">
-                      Bao gồm bảo hiểm vật chất ({physicalInsuranceLabel})
-                    </span>
-                  </label>
-                </>
-              )}
+              <label className="flex cursor-pointer items-center gap-2">
+                <Checkbox
+                  checked={includeInsurance}
+                  onCheckedChange={(v) => setIncludeInsurance(!!v)}
+                />
+                <span className="text-xs text-muted-foreground">
+                  Bao gồm bảo hiểm vật chất ({physicalInsuranceLabel})
+                </span>
+              </label>
 
               {estimatorTab === "installment" && (
                 <>
@@ -2073,34 +2054,22 @@ function FinanceSection({
             {estimatorTab === "rolling" ? (
               <div className="space-y-3 text-xs">
                 <CostRow label="Giá bán xe (đã bao gồm pin)" value={formatPrice(variant.price)} />
-                {fixedRollingCost == null ? (
-                  <>
-                    <CostRow label="Lệ phí trước bạ (miễn 0%)" value="0" highlight />
-                    <CostRow
-                      label="Phí đăng ký biển số"
-                      value={formatPrice(rollingCost.plateFee)}
-                    />
-                    <CostRow
-                      label="Phí bảo trì đường bộ (12 tháng)"
-                      value={formatPrice(rollingCost.roadMaintenanceFee)}
-                    />
-                    <CostRow label="Phí đăng kiểm" value={formatPrice(rollingCost.inspectionFee)} />
-                    <CostRow
-                      label="Bảo hiểm TNDS bắt buộc"
-                      value={formatPrice(rollingCost.civilInsurance)}
-                    />
-                    {includeInsurance && (
-                      <CostRow
-                        label={`Bảo hiểm vật chất (${physicalInsuranceLabel})`}
-                        value={formatPrice(rollingCost.physicalInsurance)}
-                      />
-                    )}
-                  </>
-                ) : (
-                  <p className="text-[11px] leading-relaxed text-muted-foreground">
-                    Bao gồm lệ phí trước bạ, đăng ký biển số, bảo trì đường bộ, đăng kiểm và bảo
-                    hiểm bắt buộc theo quy định hiện hành.
-                  </p>
+                <CostRow label="Lệ phí trước bạ (miễn 0%)" value="0" highlight />
+                <CostRow label="Phí đăng ký biển số" value={formatPrice(rollingCost.plateFee)} />
+                <CostRow
+                  label="Phí bảo trì đường bộ (12 tháng)"
+                  value={formatPrice(rollingCost.roadMaintenanceFee)}
+                />
+                <CostRow label="Phí đăng kiểm" value={formatPrice(rollingCost.inspectionFee)} />
+                <CostRow
+                  label="Bảo hiểm TNDS bắt buộc"
+                  value={formatPrice(rollingCost.civilInsurance)}
+                />
+                {includeInsurance && (
+                  <CostRow
+                    label={`Bảo hiểm vật chất (${physicalInsuranceLabel})`}
+                    value={formatPrice(rollingCost.physicalInsurance)}
+                  />
                 )}
               </div>
             ) : (
