@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
 
 import { ArticleBody } from "@/components/news/ArticleBody";
+import { CarCatalogCard } from "@/components/cars/CarCatalogCard";
+import { ScooterCatalogCard } from "@/components/scooters/ScooterCatalogCard";
+import { AccessoryProductCard } from "@/components/accessories/AccessoryProductCard";
 import { IMAGES } from "@/lib/images";
-import { formatPrice } from "@/lib/cars";
 import {
   formatNewsDate,
   getNewsAuthorLabel,
@@ -15,6 +18,7 @@ import {
   type NewsArticle,
   type ResolvedNewsProduct,
 } from "@/lib/cms/news-types";
+import { carDetailPath, scooterDetailPath } from "@/lib/seo/slugs";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -67,6 +71,34 @@ function RelatedArticleCard({ item }: { item: NewsArticle }) {
       </div>
     </Link>
   );
+}
+
+function RelatedProductCard({ item }: { item: ResolvedNewsProduct }) {
+  const router = useRouter();
+
+  if (item.type === "car") {
+    const href = carDetailPath(item.product);
+    return (
+      <CarCatalogCard
+        car={item.product}
+        onBookDrive={() => router.push(href)}
+        onEstimatePrice={() => router.push(`${href}#tai-chinh`)}
+      />
+    );
+  }
+
+  if (item.type === "scooter") {
+    const href = scooterDetailPath(item.product);
+    return (
+      <ScooterCatalogCard
+        scooter={item.product}
+        onBookDrive={() => router.push(href)}
+        onEstimatePrice={() => router.push(`${href}#tai-chinh`)}
+      />
+    );
+  }
+
+  return <AccessoryProductCard product={item.product} />;
 }
 
 export default function NewsDetailPage({
@@ -171,30 +203,11 @@ export default function NewsDetailPage({
         {relatedProducts.length > 0 ? (
           <section className="mx-auto mt-16 max-w-4xl border-t border-border/60 pt-10">
             <h2 className="text-xl font-extrabold text-brand-dark">Sản phẩm liên quan</h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
               {relatedProducts.map((product) => (
-                <Link
-                  key={`${product.type}-${product.id}`}
-                  href={product.href}
-                  className="page-section-card overflow-hidden transition hover:-translate-y-0.5 hover:shadow-card"
-                >
-                  <div className="relative aspect-[4/3] bg-surface-muted">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-contain p-3"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <p className="font-semibold text-brand-dark">{product.name}</p>
-                    {product.price ? (
-                      <p className="mt-1 text-sm font-bold text-brand">
-                        {formatPrice(product.price)} VNĐ
-                      </p>
-                    ) : null}
-                  </div>
-                </Link>
+                <div key={`${product.type}-${product.product.id}`} className="h-full">
+                  <RelatedProductCard item={product} />
+                </div>
               ))}
             </div>
           </section>

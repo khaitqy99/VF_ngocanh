@@ -4,6 +4,7 @@ import { Fragment, type ElementType, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, BatteryCharging, Gauge, Leaf, Timer, Wind, Zap } from "lucide-react";
 import { FadeIn } from "@/components/motion";
+import { useImageLightbox } from "@/components/shared/ImageLightbox";
 import {
   vfCard,
   vfCardLg,
@@ -151,6 +152,7 @@ export function PdpSplitOverview({
   imageSlot?: ReactNode;
   imageAlt: string;
 }) {
+  const lightbox = useImageLightbox();
   return (
     <FadeIn>
       <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
@@ -158,13 +160,18 @@ export function PdpSplitOverview({
           {imageSlot ?? (
             <div className="relative">
               <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand/15 to-transparent blur-sm" />
-              <div className="relative overflow-hidden rounded-[1.75rem] bg-[#eef2f8] shadow-card ring-1 ring-border/40">
+              <button
+                type="button"
+                onClick={() => lightbox.open(image, 0, imageAlt)}
+                className="relative block w-full cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-[#eef2f8] shadow-card ring-1 ring-border/40"
+                aria-label={`Phóng to ${imageAlt}`}
+              >
                 <img
                   src={image}
                   alt={imageAlt}
                   className="aspect-[4/3] w-full object-cover sm:aspect-[16/10] lg:aspect-[4/5] lg:min-h-[420px]"
                 />
-              </div>
+              </button>
             </div>
           )}
         </div>
@@ -199,9 +206,11 @@ export function PdpSplitOverview({
 }
 
 export function PdpImageFeatureGrid({ items }: { items: PdpFeatureCard[] }) {
+  const lightbox = useImageLightbox();
   const grid = items.slice(0, 4);
   if (!grid.length) return null;
 
+  const gallery = grid.map((item) => item.image).filter(Boolean);
   const useBento = grid.length >= 3;
 
   const spanClass = (i: number) => {
@@ -227,28 +236,38 @@ export function PdpImageFeatureGrid({ items }: { items: PdpFeatureCard[] }) {
   return (
     <FadeIn>
       <div className={`mt-10 grid gap-4 sm:grid-cols-2 ${gridClass}`}>
-        {grid.map((item, i) => (
-          <article
-            key={`pdp-feature-${i}-${item.image}`}
-            className={`group relative overflow-hidden bg-[#e8edf5] ${vfCardLg} ${spanClass(i)} ${cellMinH(i)}`}
-          >
-            {item.editSlot}
-            {item.imageSlot ?? (
-              <img
-                src={item.image}
-                alt={typeof item.title === "string" ? item.title : `Ảnh ${i + 1}`}
-                className="absolute inset-0 z-[1] h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
-              />
-            )}
-            {item.imagePickerSlot}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-brand-dark via-brand-dark/65 to-transparent px-4 pt-16 pb-4 sm:px-5 sm:pt-20 sm:pb-5 [&_input]:pointer-events-auto [&_textarea]:pointer-events-auto">
-              <h3 className={`${vfCardTitle} text-white`}>{item.title}</h3>
-              <div className="mt-1.5 text-xs leading-relaxed text-white/85 sm:mt-2 sm:text-sm">
-                {item.desc}
+        {grid.map((item, i) => {
+          const alt = typeof item.title === "string" ? item.title : `Ảnh ${i + 1}`;
+          return (
+            <article
+              key={`pdp-feature-${i}-${item.image}`}
+              className={`group relative overflow-hidden bg-[#e8edf5] ${vfCardLg} ${spanClass(i)} ${cellMinH(i)}`}
+            >
+              {item.editSlot}
+              {item.imageSlot ?? (
+                <button
+                  type="button"
+                  onClick={() => lightbox.open(gallery.length ? gallery : item.image, i, alt)}
+                  className="absolute inset-0 z-[1] cursor-zoom-in"
+                  aria-label={`Phóng to ${alt}`}
+                >
+                  <img
+                    src={item.image}
+                    alt={alt}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                  />
+                </button>
+              )}
+              {item.imagePickerSlot}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-brand-dark/55 via-brand-dark/20 to-transparent px-4 pt-10 pb-4 sm:px-5 sm:pt-12 sm:pb-5 [&_input]:pointer-events-auto [&_textarea]:pointer-events-auto">
+                <h3 className={`${vfCardTitle} text-white`}>{item.title}</h3>
+                <div className="mt-1.5 text-xs leading-relaxed text-white/90 sm:mt-2 sm:text-sm">
+                  {item.desc}
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </FadeIn>
   );
@@ -357,6 +376,7 @@ export function PdpPerformanceShowcase({
   metrics: PdpMetric[];
   driveModes: { name: ReactNode; desc: ReactNode; editSlot?: ReactNode }[];
 }) {
+  const lightbox = useImageLightbox();
   return (
     <FadeIn>
       <div className="mt-10 overflow-hidden rounded-[1.75rem] border border-border/40 bg-gradient-to-br from-[#eef2f9] via-white to-[#f8fafc] shadow-card lg:mt-12">
@@ -364,11 +384,18 @@ export function PdpPerformanceShowcase({
           <div className="relative min-h-[280px] bg-[#e8edf5] lg:min-h-[440px]">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,87,255,0.08),transparent_55%)]" />
             {imageSlot ?? (
-              <img
-                src={image}
-                alt={imageAlt}
-                className="absolute inset-0 h-full w-full object-cover object-center"
-              />
+              <button
+                type="button"
+                onClick={() => lightbox.open(image, 0, imageAlt)}
+                className="absolute inset-0 cursor-zoom-in"
+                aria-label={`Phóng to ${imageAlt}`}
+              >
+                <img
+                  src={image}
+                  alt={imageAlt}
+                  className="h-full w-full object-cover object-center"
+                />
+              </button>
             )}
           </div>
           <div className="flex flex-col justify-center border-t border-border/40 p-6 sm:p-8 lg:border-t-0 lg:border-l lg:p-10">
@@ -437,6 +464,7 @@ export function PdpSafetyShowcase({
   features?: { icon: ElementType; title: ReactNode; desc: ReactNode }[];
   featuresSlot?: ReactNode;
 }) {
+  const lightbox = useImageLightbox();
   return (
     <FadeIn>
       <>
@@ -460,11 +488,14 @@ export function PdpSafetyShowcase({
           <div className="grid lg:grid-cols-12">
             <div className="relative min-h-[260px] overflow-hidden bg-[#e8edf5] lg:col-span-5 lg:min-h-[440px]">
               {imageSlot ?? (
-                <img
-                  src={image}
-                  alt={imageAlt}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+                <button
+                  type="button"
+                  onClick={() => lightbox.open(image, 0, imageAlt)}
+                  className="absolute inset-0 cursor-zoom-in"
+                  aria-label={`Phóng to ${imageAlt}`}
+                >
+                  <img src={image} alt={imageAlt} className="h-full w-full object-cover" />
+                </button>
               )}
             </div>
             <div className="border-t border-border/40 p-6 sm:p-8 lg:col-span-7 lg:border-t-0 lg:border-l lg:p-10">
@@ -514,7 +545,9 @@ export function PdpChargingShowcase({
   solutions: PdpFeatureCard[];
   moreHref?: string;
 }) {
+  const lightbox = useImageLightbox();
   const titleAlt = typeof title === "string" ? title : "Pin & Sạc";
+  const solutionGallery = solutions.map((s) => s.image).filter(Boolean);
   return (
     <FadeIn>
       <>
@@ -525,33 +558,52 @@ export function PdpChargingShowcase({
           actionLabel="Tìm hiểu thêm"
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-5">
-          {solutions.map((item, i) => (
-            <article
-              key={`charging-${i}-${item.image}`}
-              className="group relative overflow-hidden rounded-3xl border border-border/50 bg-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-card"
-            >
-              {item.editSlot}
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#eef2f8]">
-                {item.imageSlot ?? (
-                  <img
-                    src={item.image}
-                    alt={typeof item.title === "string" ? item.title : `Giải pháp ${i + 1}`}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                  />
-                )}
-              </div>
-              <div className="p-4 sm:p-5">
-                <h3 className={vfCardTitleSm}>{item.title}</h3>
-                <div className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  {item.desc}
+          {solutions.map((item, i) => {
+            const alt = typeof item.title === "string" ? item.title : `Giải pháp ${i + 1}`;
+            return (
+              <article
+                key={`charging-${i}-${item.image}`}
+                className="group relative overflow-hidden rounded-3xl border border-border/50 bg-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-card"
+              >
+                {item.editSlot}
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#eef2f8]">
+                  {item.imageSlot ?? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        lightbox.open(solutionGallery.length ? solutionGallery : item.image, i, alt)
+                      }
+                      className="absolute inset-0 cursor-zoom-in"
+                      aria-label={`Phóng to ${alt}`}
+                    >
+                      <img
+                        src={item.image}
+                        alt={alt}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      />
+                    </button>
+                  )}
                 </div>
-              </div>
-            </article>
-          ))}
+                <div className="p-4 sm:p-5">
+                  <h3 className={vfCardTitleSm}>{item.title}</h3>
+                  <div className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                    {item.desc}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
         <div className="mt-6 overflow-hidden rounded-3xl bg-[#eef2f8] ring-1 ring-border/40 lg:hidden">
           {heroImageSlot ?? (
-            <img src={heroImage} alt={titleAlt} className="aspect-[16/9] w-full object-cover" />
+            <button
+              type="button"
+              onClick={() => lightbox.open(heroImage, 0, titleAlt)}
+              className="block w-full cursor-zoom-in"
+              aria-label={`Phóng to ${titleAlt}`}
+            >
+              <img src={heroImage} alt={titleAlt} className="aspect-[16/9] w-full object-cover" />
+            </button>
           )}
         </div>
         <div className="mt-8 text-center">

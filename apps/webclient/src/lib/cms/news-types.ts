@@ -1,4 +1,7 @@
 import type { SeoRecord } from "@/lib/seo/types";
+import type { CarModel } from "@/lib/cars";
+import type { ScooterModel } from "@/lib/scooters";
+import type { AccessoryProduct } from "@/lib/accessories";
 
 export type PublishStatus = "draft" | "published" | "archived" | "scheduled";
 
@@ -30,14 +33,10 @@ export type NewsArticle = {
   updatedAt: string;
 };
 
-export type ResolvedNewsProduct = {
-  type: NewsRelatedProduct["type"];
-  id: string;
-  name: string;
-  image: string;
-  href: string;
-  price?: number;
-};
+export type ResolvedNewsProduct =
+  | { type: "car"; product: CarModel }
+  | { type: "scooter"; product: ScooterModel }
+  | { type: "accessory"; product: AccessoryProduct };
 
 export const NEWS_CATEGORIES = [
   { value: "promotion", label: "Khuyến mãi" },

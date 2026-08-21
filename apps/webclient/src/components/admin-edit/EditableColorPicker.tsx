@@ -22,7 +22,6 @@ export function EditableColorPicker({
   adminEditable,
   selectedColor,
   onSelectColor,
-  selectedColorName,
   fallbackImage,
   withImage = true,
 }: {
@@ -30,7 +29,6 @@ export function EditableColorPicker({
   adminEditable?: boolean;
   selectedColor: string;
   onSelectColor: (id: string) => void;
-  selectedColorName?: string;
   fallbackImage?: string;
   withImage?: boolean;
 }) {
@@ -39,28 +37,23 @@ export function EditableColorPicker({
 
   if (!active || !edit) {
     return (
-      <>
-        <div className="flex flex-wrap gap-2.5 sm:gap-3">
-          {colors.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              title={c.name}
-              onClick={() => onSelectColor(c.id)}
-              className={`size-8 rounded-full border-2 transition sm:size-9 ${
-                selectedColor === c.id
-                  ? "border-brand ring-2 ring-brand/30 ring-offset-2"
-                  : "border-border hover:border-brand/50"
-              }`}
-              style={{ backgroundColor: c.hex }}
-              aria-label={c.name}
-            />
-          ))}
-        </div>
-        {selectedColorName ? (
-          <p className="mt-2 text-xs font-medium text-muted-foreground">{selectedColorName}</p>
-        ) : null}
-      </>
+      <div className="flex flex-wrap gap-2.5 sm:gap-3">
+        {colors.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            title={c.name}
+            onClick={() => onSelectColor(c.id)}
+            className={`size-8 rounded-full border-2 transition sm:size-9 ${
+              selectedColor === c.id
+                ? "border-brand ring-2 ring-brand/30 ring-offset-2"
+                : "border-border hover:border-brand/50"
+            }`}
+            style={{ backgroundColor: c.hex }}
+            aria-label={c.name}
+          />
+        ))}
+      </div>
     );
   }
 
@@ -130,11 +123,6 @@ export function EditableColorPicker({
         label="màu sắc"
         onAdd={() => edit.addListItem("colors", DEFAULT_COLOR(fallbackImage))}
       />
-      {selectedColorName ? (
-        <p className="mt-2 text-xs font-medium text-muted-foreground">
-          Đang xem: {selectedColorName}
-        </p>
-      ) : null}
     </>
   );
 }

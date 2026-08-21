@@ -92,6 +92,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
 import { useSectionReveal } from "@/hooks/use-section-reveal";
 import { PdpSectionNav } from "@/components/shared/PdpSectionNav";
+import { ImageLightboxProvider } from "@/components/shared/ImageLightbox";
 import { useAdminEdit } from "@/components/admin-edit/AdminEditContext";
 import { AdminEditToolbar } from "@/components/admin-edit/AdminEditToolbar";
 import { EditablePrice, EditableTextBlock } from "@/components/admin-edit/EditableField";
@@ -425,156 +426,140 @@ export default function ScooterDetailPage({
   };
 
   return (
-    <div
-      className={`relative min-h-screen overflow-x-hidden bg-background ${embedded ? "pb-8" : "pb-28 lg:pb-0"}`}
-    >
-      <Toaster position="top-center" richColors />
-      <main>
-        {embedded && !adminEdit ? (
-          <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
-            Chế độ xem trước — giao diện giống trang chi tiết trên website
-          </div>
-        ) : null}
-        {adminEdit ? <AdminEditToolbar /> : null}
-        <BreadcrumbBar scooterName={detail.name} variantName={variant.name} reduced={reduced} />
+    <ImageLightboxProvider>
+      <div
+        className={`relative min-h-screen overflow-x-hidden bg-background ${embedded ? "pb-8" : "pb-28 lg:pb-0"}`}
+      >
+        <Toaster position="top-center" richColors />
+        <main>
+          {embedded && !adminEdit ? (
+            <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-900">
+              Chế độ xem trước — giao diện giống trang chi tiết trên website
+            </div>
+          ) : null}
+          {adminEdit ? <AdminEditToolbar /> : null}
+          <BreadcrumbBar scooterName={detail.name} variantName={variant.name} reduced={reduced} />
 
-        <PdpHeroHeader
-          tagline={detail.tagline}
-          name={detail.name}
-          slogan={detail.slogan}
-          badges={detail.badges}
-          isNew={detail.isNew}
-          isBestSeller={detail.isBestSeller}
-          adminEditable={adminEdit}
-        />
+          <PdpHeroHeader
+            tagline={detail.tagline}
+            name={detail.name}
+            slogan={detail.slogan}
+            badges={detail.badges}
+            isNew={detail.isNew}
+            isBestSeller={detail.isBestSeller}
+            adminEditable={adminEdit}
+          />
 
-        {/* Hero */}
-        <section className="relative overflow-x-hidden border-b border-border/40 bg-white">
-          <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-10">
-            <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12 lg:gap-10">
-              {/* Gallery */}
-              <motion.div
-                className="min-w-0 w-full lg:col-span-7"
-                variants={reduced ? undefined : detailHeroStagger}
-                initial={reduced ? false : "hidden"}
-                animate="visible"
-              >
-                <EditableHeroGallery
-                  images={detail.gallery}
-                  path="gallery"
-                  activeImage={activeImage}
-                  onActiveChange={setActiveImage}
-                  onPrev={prevImage}
-                  onNext={nextImage}
-                  onZoom={() => setLightboxOpen(true)}
-                  adminEditable={adminEdit}
-                  fallbackImage={detail.image}
-                  altLabel={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"}`}
-                  reduced={reduced}
-                  thumbStripRef={thumbStripRef}
-                  onScrollThumbs={scrollThumbs}
-                  footer={<PdpQuickSpecBar specs={quickSpecItems} embedded />}
-                />
-              </motion.div>
-
-              {/* Purchase panel — sticky on desktop */}
-              <motion.div
-                className="min-w-0 w-full lg:col-span-5"
-                variants={reduced ? undefined : detailHeroCol}
-                initial={reduced ? false : "hidden"}
-                animate="visible"
-              >
-                <div className="page-showcase-shell box-border w-full min-w-0 max-w-full rounded-[1.75rem] p-4 sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
-                  <div className="flex items-start justify-between gap-2 sm:gap-3">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Giá bán từ
-                      </p>
-                      <div className="mt-0.5">
-                        <AnimatePresence mode="wait">
-                          <motion.span
-                            key={selectedVariant}
-                            variants={reduced ? undefined : detailPricePulse}
-                            initial={reduced ? false : "hidden"}
-                            animate="visible"
-                            className="block break-all text-lg font-black tabular-nums leading-tight text-brand sm:inline sm:break-normal sm:text-2xl lg:text-4xl"
-                          >
-                            {adminEdit && edit?.editMode ? (
-                              <EditablePrice
-                                value={variant.price}
-                                onChange={(p) => edit.update({ price: p, variantId: variant.id })}
-                                className="text-lg font-black sm:text-2xl lg:text-4xl"
-                              />
-                            ) : (
-                              formatPrice(variant.price)
-                            )}
-                          </motion.span>
-                        </AnimatePresence>
-                        <span className="mt-0.5 block text-xs font-bold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline sm:text-base">
-                          VND
-                        </span>
+          {/* Hero */}
+          <section className="relative overflow-x-hidden border-b border-border/40 bg-white">
+            <div className="container-vf relative w-full min-w-0 py-6 sm:py-8 lg:py-10">
+              <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12 lg:gap-10">
+                {/* Gallery */}
+                <motion.div
+                  className="order-1 min-w-0 w-full lg:col-span-7"
+                  variants={reduced ? undefined : detailHeroStagger}
+                  initial={reduced ? false : "hidden"}
+                  animate="visible"
+                >
+                  <EditableHeroGallery
+                    images={detail.gallery}
+                    path="gallery"
+                    activeImage={activeImage}
+                    onActiveChange={setActiveImage}
+                    onPrev={prevImage}
+                    onNext={nextImage}
+                    onZoom={() => setLightboxOpen(true)}
+                    adminEditable={adminEdit}
+                    fallbackImage={detail.image}
+                    altLabel={`${detail.name} - ${selectedColorObj?.name ?? "ảnh"}`}
+                    reduced={reduced}
+                    thumbStripRef={thumbStripRef}
+                    onScrollThumbs={scrollThumbs}
+                    footer={
+                      <div className="hidden lg:block">
+                        <PdpQuickSpecBar specs={quickSpecItems} embedded />
                       </div>
+                    }
+                  />
+                </motion.div>
+
+                {/* Purchase panel — sticky on desktop; above specs on mobile */}
+                <motion.div
+                  className="order-2 min-w-0 w-full lg:col-span-5"
+                  variants={reduced ? undefined : detailHeroCol}
+                  initial={reduced ? false : "hidden"}
+                  animate="visible"
+                >
+                  <div className="page-showcase-shell box-border w-full min-w-0 max-w-full rounded-[1.75rem] p-4 sm:p-5 lg:sticky lg:top-[8.75rem] lg:p-6">
+                    <div className="flex items-start justify-between gap-2 sm:gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] font-semibold text-muted-foreground sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
+                          Giá bán từ
+                        </p>
+                        <div className="mt-0.5">
+                          <AnimatePresence mode="wait">
+                            <motion.span
+                              key={selectedVariant}
+                              variants={reduced ? undefined : detailPricePulse}
+                              initial={reduced ? false : "hidden"}
+                              animate="visible"
+                              className="text-lg font-black tabular-nums leading-tight text-brand sm:text-2xl lg:text-4xl"
+                            >
+                              {adminEdit && edit?.editMode ? (
+                                <EditablePrice
+                                  value={variant.price}
+                                  onChange={(p) => edit.update({ price: p, variantId: variant.id })}
+                                  className="text-lg font-black sm:text-2xl lg:text-4xl"
+                                />
+                              ) : (
+                                formatPrice(variant.price)
+                              )}
+                              <span className="ml-1.5 text-xs font-bold text-muted-foreground sm:text-base">
+                                VND
+                              </span>
+                            </motion.span>
+                          </AnimatePresence>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => toast.info("Chức năng chia sẻ sẽ sớm có mặt")}
+                        className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-brand hover:text-brand"
+                        aria-label="Chia sẻ"
+                      >
+                        <Share2 className="size-4" />
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => toast.info("Chức năng chia sẻ sẽ sớm có mặt")}
-                      className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-brand hover:text-brand"
-                      aria-label="Chia sẻ"
-                    >
-                      <Share2 className="size-4" />
-                    </button>
-                  </div>
 
-                  {/* Quick highlights — desktop only */}
-                  <div className="mt-4 hidden grid-cols-3 gap-2 rounded-xl bg-surface p-3 lg:grid">
-                    <EditableHighlightStat
-                      icon={Gauge}
-                      specKey="range"
-                      value={`${detail.quickSpecs.range} km`}
-                      label="Quãng đường"
-                      adminEditable={adminEdit}
-                    />
-                    <EditableHighlightStat
-                      icon={Zap}
-                      specKey="topSpeed"
-                      value={`${detail.quickSpecs.topSpeed}`}
-                      label="km/h tối đa"
-                      adminEditable={adminEdit}
-                    />
-                    <EditableHighlightStat
-                      icon={Package}
-                      specKey="trunk"
-                      value={
-                        detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk}L` : "Móc treo"
-                      }
-                      label="Cốp xe"
-                      adminEditable={adminEdit}
-                    />
-                  </div>
-
-                  {/* Mobile config toggle */}
-                  <button
-                    type="button"
-                    onClick={() => setConfigOpen((o) => !o)}
-                    className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-left transition hover:border-brand/40 lg:hidden"
-                    aria-expanded={configOpen}
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-brand-dark">Cấu hình xe</p>
-                      <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
-                        {variant.name} · {selectedColorObj?.name}
-                      </p>
+                    {/* Quick highlights — desktop only */}
+                    <div className="mt-4 hidden grid-cols-3 gap-2 rounded-xl bg-surface p-3 lg:grid">
+                      <EditableHighlightStat
+                        icon={Gauge}
+                        specKey="range"
+                        value={`${detail.quickSpecs.range} km`}
+                        label="Quãng đường"
+                        adminEditable={adminEdit}
+                      />
+                      <EditableHighlightStat
+                        icon={Zap}
+                        specKey="topSpeed"
+                        value={`${detail.quickSpecs.topSpeed}`}
+                        label="km/h tối đa"
+                        adminEditable={adminEdit}
+                      />
+                      <EditableHighlightStat
+                        icon={Package}
+                        specKey="trunk"
+                        value={
+                          detail.quickSpecs.trunk > 0 ? `${detail.quickSpecs.trunk}L` : "Móc treo"
+                        }
+                        label="Cốp xe"
+                        adminEditable={adminEdit}
+                      />
                     </div>
-                    <ChevronDown
-                      className={`size-4 shrink-0 text-muted-foreground transition ${configOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
 
-                  <div
-                    className={`mt-4 space-y-4 ${configOpen ? "block" : "hidden"} lg:mt-6 lg:block lg:space-y-6`}
-                  >
-                    {/* Variants */}
-                    <div>
+                    {/* Variants — always visible */}
+                    <div className="mt-4">
                       <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
                         Chọn phiên bản
                       </p>
@@ -626,459 +611,483 @@ export default function ScooterDetailPage({
                       </div>
                     </div>
 
-                    {/* Colors */}
-                    <div>
-                      <p className="mb-2.5 text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                        Chọn màu sắc
-                      </p>
-                      <EditableColorPicker
-                        colors={detail.colors}
-                        adminEditable={adminEdit}
-                        selectedColor={selectedColor}
-                        onSelectColor={handleColorSelect}
-                        selectedColorName={selectedColorObj?.name}
-                        withImage={false}
+                    {/* Mobile color toggle */}
+                    <button
+                      type="button"
+                      onClick={() => setConfigOpen((o) => !o)}
+                      className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-left transition hover:border-brand/40 lg:hidden"
+                      aria-expanded={configOpen}
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-brand-dark">Màu sắc</p>
+                        <p className="mt-0.5 truncate text-[11px] font-medium text-muted-foreground">
+                          {selectedColorObj?.name}
+                        </p>
+                      </div>
+                      <ChevronDown
+                        className={`size-4 shrink-0 text-muted-foreground transition ${configOpen ? "rotate-180" : ""}`}
                       />
+                    </button>
+
+                    <div
+                      className={`mt-4 space-y-4 ${configOpen ? "block" : "hidden"} lg:mt-6 lg:block lg:space-y-6`}
+                    >
+                      <div>
+                        <p className="mb-2.5 hidden text-[11px] font-semibold text-brand-dark sm:mb-3 sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider lg:block">
+                          Chọn màu sắc
+                        </p>
+                        <EditableColorPicker
+                          colors={detail.colors}
+                          adminEditable={adminEdit}
+                          selectedColor={selectedColor}
+                          onSelectColor={handleColorSelect}
+                          withImage={false}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Estimated rolling cost preview */}
+                    <div className="mt-4 w-full min-w-0 rounded-xl border border-brand/20 bg-brand/5 p-3 sm:mt-5 sm:p-4">
+                      <p className="text-[11px] font-semibold text-brand sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
+                        Chi phí lăn bánh dự kiến
+                      </p>
+                      <div className="mt-1">
+                        <span className="text-base font-black tabular-nums leading-tight text-brand-dark sm:text-xl">
+                          {formatPrice(rollingCost.totalRolling)}
+                          <span className="ml-1.5 text-xs font-semibold text-muted-foreground">
+                            VND
+                          </span>
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection("tai-chinh")}
+                        className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-brand hover:underline"
+                      >
+                        Xem chi tiết tính toán <ChevronDown className="size-3.5 rotate-[-90deg]" />
+                      </button>
+                    </div>
+
+                    {/* CTAs */}
+                    <div className="mt-6 hidden flex-col gap-2.5 lg:flex">
+                      <button
+                        type="button"
+                        onClick={() => openBooking("Đặt mua ngay")}
+                        className={pdpCtaPrimary}
+                      >
+                        ĐẶT MUA NGAY
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => openBooking("Đăng ký lái thử")}
+                        className={pdpCtaSecondary}
+                      >
+                        ĐĂNG KÝ LÁI THỬ
+                      </button>
                     </div>
                   </div>
+                </motion.div>
 
-                  {/* Estimated rolling cost preview */}
-                  <div className="mt-4 w-full min-w-0 rounded-xl border border-brand/20 bg-brand/5 p-3 sm:mt-5 sm:p-4">
-                    <p className="text-[11px] font-semibold text-brand sm:text-[10px] sm:font-bold sm:uppercase sm:tracking-wider">
-                      Chi phí lăn bánh dự kiến
-                    </p>
-                    <div className="mt-1">
-                      <span className="block break-all text-base font-black tabular-nums leading-tight text-brand-dark sm:inline sm:break-normal sm:text-xl">
-                        {formatPrice(rollingCost.totalRolling)}
-                      </span>
-                      <span className="mt-0.5 block text-xs font-semibold text-muted-foreground sm:mt-0 sm:ml-1.5 sm:inline">
-                        VND
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection("tai-chinh")}
-                      className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-brand hover:underline"
-                    >
-                      Xem chi tiết tính toán <ChevronDown className="size-3.5 rotate-[-90deg]" />
-                    </button>
-                  </div>
-
-                  {/* CTAs */}
-                  <div className="mt-6 hidden flex-col gap-2.5 lg:flex">
-                    <button
-                      type="button"
-                      onClick={() => openBooking("Đặt mua ngay")}
-                      className={pdpCtaPrimary}
-                    >
-                      ĐẶT MUA NGAY
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => openBooking("Đăng ký lái thử")}
-                      className={pdpCtaSecondary}
-                    >
-                      ĐĂNG KÝ LÁI THỬ
-                    </button>
-                  </div>
+                <div className="order-3 min-w-0 w-full lg:hidden">
+                  <PdpQuickSpecBar specs={quickSpecItems} embedded />
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <SectionVisibilityProvider
+            hidden={hiddenSections}
+            editMode={adminEdit}
+            labels={sectionLabels}
+            toggle={edit?.toggleSectionHidden}
+          >
+            <PdpSectionNav
+              items={visibleNavItems}
+              hiddenIds={adminEdit ? hiddenSections : undefined}
+            />
+
+            {/* All content sections */}
+            <div className="bg-white">
+              <SectionWrap id="tong-quan">
+                <OverviewSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="ngoai-that" alt>
+                <ExteriorSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="thiet-ke">
+                <DesignSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="cong-nghe" alt>
+                <TechnologySection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="van-hanh" alt>
+                <PerformanceSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="an-toan">
+                <SafetySection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="pin-sac" alt>
+                <ChargingSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="thong-so">
+                <SpecsSection detail={detail} adminEditable={adminEdit} />
+              </SectionWrap>
+
+              <SectionWrap id="phu-kien" alt>
+                <AccessoriesSection
+                  detail={detail}
+                  products={detailAccessories}
+                  adminEditable={adminEdit}
+                />
+              </SectionWrap>
+
+              <SectionWrap id="tai-chinh">
+                <FinanceSection
+                  detail={detail}
+                  variant={variant}
+                  adminEditable={adminEdit}
+                  estimatorLocation={estimatorLocation}
+                  setEstimatorLocation={setEstimatorLocation}
+                  estimatorTab={estimatorTab}
+                  setEstimatorTab={setEstimatorTab}
+                  downPaymentPct={downPaymentPct}
+                  setDownPaymentPct={setDownPaymentPct}
+                  loanTermYears={loanTermYears}
+                  setLoanTermYears={setLoanTermYears}
+                  interestRate={interestRate}
+                  setInterestRate={setInterestRate}
+                  rollingCost={rollingCost}
+                  installment={installment}
+                  provinces={pricing.provinces}
+                  onBook={() => openBooking("Nhận báo giá")}
+                />
+              </SectionWrap>
+            </div>
+          </SectionVisibilityProvider>
+
+          {/* Related products */}
+          <section className="section-y border-t border-border/40 bg-surface">
+            <div className="container-vf">
+              <InlineSectionTitle
+                titlePath="_section.related.title"
+                titleFallback="Sản phẩm liên quan"
+                subtitlePath="_section.related.subtitle"
+                subtitleFallback="Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn"
+                adminEditable={adminEdit}
+              />
+              <motion.div
+                ref={relatedReveal.ref}
+                className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5"
+                initial={relatedReveal.initial}
+                animate={relatedReveal.animate}
+                variants={reduced ? undefined : { hidden: {}, visible: {} }}
+              >
+                {related.map((scooter, i) => (
+                  <motion.div
+                    key={scooter.id}
+                    custom={i}
+                    variants={reduced ? undefined : detailRelatedCard}
+                    className="h-full"
+                  >
+                    <ScooterCatalogCard
+                      scooter={scooter}
+                      onBookDrive={() => openBooking("Đặt mua ngay")}
+                      onEstimatePrice={() => router.push(`${scooterDetailPath(scooter)}#tai-chinh`)}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+              <div className="mt-8 text-center">
+                <Link href="/xe-may-dien" className={pdpCtaInline}>
+                  Xem tất cả xe máy điện <ArrowRight className="size-4" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* Service bar */}
+          <section className="section-y border-t border-border/40 bg-white">
+            <div className="container-vf">
+              <motion.div
+                ref={servicesReveal.ref}
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+                initial={servicesReveal.initial}
+                animate={servicesReveal.animate}
+                variants={reduced ? undefined : { hidden: {}, visible: {} }}
+              >
+                {SERVICE_BAR.map(({ icon: Icon, title, sub }, i) => (
+                  <motion.div
+                    key={title}
+                    custom={i}
+                    variants={reduced ? undefined : detailServiceItem}
+                    className="flex items-center gap-4 rounded-2xl border border-border/50 bg-surface p-4 transition hover:shadow-soft"
+                  >
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/5">
+                      <Icon className="size-5 text-brand" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-brand-dark">{title}</p>
+                      <p className="text-[11px] text-muted-foreground">{sub}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <SectionVisibilityProvider
-          hidden={hiddenSections}
-          editMode={adminEdit}
-          labels={sectionLabels}
-          toggle={edit?.toggleSectionHidden}
-        >
-          <PdpSectionNav
-            items={visibleNavItems}
-            hiddenIds={adminEdit ? hiddenSections : undefined}
-          />
-
-          {/* All content sections */}
-          <div className="bg-white">
-            <SectionWrap id="tong-quan">
-              <OverviewSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="ngoai-that" alt>
-              <ExteriorSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="thiet-ke">
-              <DesignSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="cong-nghe" alt>
-              <TechnologySection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="van-hanh" alt>
-              <PerformanceSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="an-toan">
-              <SafetySection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="pin-sac" alt>
-              <ChargingSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="thong-so">
-              <SpecsSection detail={detail} adminEditable={adminEdit} />
-            </SectionWrap>
-
-            <SectionWrap id="phu-kien" alt>
-              <AccessoriesSection
-                detail={detail}
-                products={detailAccessories}
-                adminEditable={adminEdit}
-              />
-            </SectionWrap>
-
-            <SectionWrap id="tai-chinh">
-              <FinanceSection
-                detail={detail}
-                variant={variant}
-                adminEditable={adminEdit}
-                estimatorLocation={estimatorLocation}
-                setEstimatorLocation={setEstimatorLocation}
-                estimatorTab={estimatorTab}
-                setEstimatorTab={setEstimatorTab}
-                downPaymentPct={downPaymentPct}
-                setDownPaymentPct={setDownPaymentPct}
-                loanTermYears={loanTermYears}
-                setLoanTermYears={setLoanTermYears}
-                interestRate={interestRate}
-                setInterestRate={setInterestRate}
-                rollingCost={rollingCost}
-                installment={installment}
-                provinces={pricing.provinces}
-                onBook={() => openBooking("Nhận báo giá")}
-              />
-            </SectionWrap>
-          </div>
-        </SectionVisibilityProvider>
-
-        {/* Related products */}
-        <section className="section-y border-t border-border/40 bg-surface">
-          <div className="container-vf">
-            <InlineSectionTitle
-              titlePath="_section.related.title"
-              titleFallback="Sản phẩm liên quan"
-              subtitlePath="_section.related.subtitle"
-              subtitleFallback="Khám phá thêm các mẫu xe VinFast phù hợp với nhu cầu của bạn"
-              adminEditable={adminEdit}
-            />
-            <motion.div
-              ref={relatedReveal.ref}
-              className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5"
-              initial={relatedReveal.initial}
-              animate={relatedReveal.animate}
-              variants={reduced ? undefined : { hidden: {}, visible: {} }}
-            >
-              {related.map((scooter, i) => (
-                <motion.div
-                  key={scooter.id}
-                  custom={i}
-                  variants={reduced ? undefined : detailRelatedCard}
-                  className="h-full"
-                >
-                  <ScooterCatalogCard
-                    scooter={scooter}
-                    onBookDrive={() => openBooking("Đặt mua ngay")}
-                    onEstimatePrice={() => router.push(`${scooterDetailPath(scooter)}#tai-chinh`)}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-            <div className="mt-8 text-center">
-              <Link href="/xe-may-dien" className={pdpCtaInline}>
-                Xem tất cả xe máy điện <ArrowRight className="size-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Service bar */}
-        <section className="section-y border-t border-border/40 bg-white">
-          <div className="container-vf">
-            <motion.div
-              ref={servicesReveal.ref}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-              initial={servicesReveal.initial}
-              animate={servicesReveal.animate}
-              variants={reduced ? undefined : { hidden: {}, visible: {} }}
-            >
-              {SERVICE_BAR.map(({ icon: Icon, title, sub }, i) => (
-                <motion.div
-                  key={title}
-                  custom={i}
-                  variants={reduced ? undefined : detailServiceItem}
-                  className="flex items-center gap-4 rounded-2xl border border-border/50 bg-surface p-4 transition hover:shadow-soft"
-                >
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/5">
-                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-brand-dark">{title}</p>
-                    <p className="text-[11px] text-muted-foreground">{sub}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Showroom CTA */}
-        <section className="section-y bg-brand-dark text-white">
-          <div className="container-vf flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-            <div className="flex-1">
-              <h2 className={`${vfSectionHeadingLeft} text-white`}>
-                Trải nghiệm {detail.name} tại showroom
-              </h2>
-              <p className="mt-2 text-sm text-white/75">
-                VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao
-                xe nhanh chóng.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <a href={HOTLINE_TEL} className={pdpCtaInlineLight}>
-                <Phone className="size-4" /> Gọi {HOTLINE}
-              </a>
-              <button
-                type="button"
-                onClick={() => openBooking("Đăng ký lái thử")}
-                className={pdpCtaInlineGhost}
-              >
-                <Calendar className="size-4" /> Đặt lịch lái thử
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {!embedded ? (
-        <>
-          {/* Mobile sticky bar */}
-          <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-white lg:hidden">
-            <div className="flex items-center gap-2 p-3">
-              <div className="min-w-0 shrink">
-                <p className="text-[9px] font-bold tracking-wider text-muted-foreground uppercase">
-                  Giá từ
-                </p>
-                <p className="truncate text-sm font-black text-brand">
-                  {formatPrice(variant.price)} đ
+          {/* Showroom CTA */}
+          <section className="section-y bg-brand-dark text-white">
+            <div className="container-vf flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+              <div className="flex-1">
+                <h2 className={`${vfSectionHeadingLeft} text-white`}>
+                  Trải nghiệm {detail.name} tại showroom
+                </h2>
+                <p className="mt-2 text-sm text-white/75">
+                  VinFast Ngọc Anh Cà Mau — Đại lý ủy quyền chính thức VinFast. Tư vấn tận tâm, giao
+                  xe nhanh chóng.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => openBooking("Đăng ký lái thử")}
-                className={`flex-1 ${pdpCtaSecondary} py-2.5 text-[11px]`}
-              >
-                LÁI THỬ
-              </button>
-              <button
-                type="button"
-                onClick={() => openBooking("Đặt mua ngay")}
-                className={`flex-1 ${pdpCtaPrimary} py-2.5 text-[11px]`}
-              >
-                ĐẶT MUA
-              </button>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a href={HOTLINE_TEL} className={pdpCtaInlineLight}>
+                  <Phone className="size-4" /> Gọi {HOTLINE}
+                </a>
+                <button
+                  type="button"
+                  onClick={() => openBooking("Đăng ký lái thử")}
+                  className={pdpCtaInlineGhost}
+                >
+                  <Calendar className="size-4" /> Đặt lịch lái thử
+                </button>
+              </div>
             </div>
-          </div>
-        </>
-      ) : null}
+          </section>
+        </main>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
-            {...modalMotion.overlay}
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
-            onClick={() => setLightboxOpen(false)}
-          >
-            <button
-              type="button"
-              onClick={() => setLightboxOpen(false)}
-              className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-            >
-              <X className="size-5" />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute top-1/2 left-4 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white"
-            >
-              <ChevronLeft className="size-6" />
-            </button>
-            <motion.img
-              key={activeImage}
-              src={detail.gallery[activeImage]}
-              alt={detail.name}
-              {...modalMotion.panel}
-              className="max-h-[85vh] max-w-full object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute top-1/2 right-4 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white"
-            >
-              <ChevronRight className="size-6" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Booking modal */}
-      <AnimatePresence>
-        {bookingOpen && (
-          <motion.div
-            {...modalMotion.overlay}
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            onClick={() => setBookingOpen(false)}
-          >
-            <motion.div
-              {...modalMotion.panel}
-              onClick={(e) => e.stopPropagation()}
-              className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
-            >
-              <div className="flex items-center justify-between bg-brand-dark p-5 text-white">
-                <div>
-                  <h3 className="text-sm font-black">{bookingService.toUpperCase()}</h3>
-                  <p className="mt-1 text-[11px] text-white/75">
-                    {variant.name} · {selectedColorObj?.name}
+        {!embedded ? (
+          <>
+            {/* Mobile sticky bar */}
+            <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-white lg:hidden">
+              <div className="flex items-center gap-2 p-3">
+                <div className="min-w-0 shrink">
+                  <p className="text-[9px] font-bold tracking-wider text-muted-foreground uppercase">
+                    Giá từ
+                  </p>
+                  <p className="truncate text-sm font-black text-brand">
+                    {formatPrice(variant.price)} đ
                   </p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setBookingOpen(false)}
-                  className="rounded-lg p-1 hover:bg-white/10"
+                  onClick={() => openBooking("Đăng ký lái thử")}
+                  className={`flex-1 ${pdpCtaSecondary} py-2.5 text-[11px]`}
                 >
-                  <X className="size-5" />
+                  LÁI THỬ
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openBooking("Đặt mua ngay")}
+                  className={`flex-1 ${pdpCtaPrimary} py-2.5 text-[11px]`}
+                >
+                  ĐẶT MUA
                 </button>
               </div>
+            </div>
+          </>
+        ) : null}
 
-              {bookingSubmitted ? (
-                <div className="p-8 text-center">
-                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-100">
-                    <Check className="size-8 text-emerald-600" />
+        {/* Lightbox */}
+        <AnimatePresence>
+          {lightboxOpen && (
+            <motion.div
+              {...modalMotion.overlay}
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
+              onClick={() => setLightboxOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(false)}
+                className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              >
+                <X className="size-5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
+                className="absolute top-1/2 left-4 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white"
+              >
+                <ChevronLeft className="size-6" />
+              </button>
+              <motion.img
+                key={activeImage}
+                src={detail.gallery[activeImage]}
+                alt={detail.name}
+                {...modalMotion.panel}
+                className="max-h-[85vh] max-w-full object-contain"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+                className="absolute top-1/2 right-4 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white"
+              >
+                <ChevronRight className="size-6" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Booking modal */}
+        <AnimatePresence>
+          {bookingOpen && (
+            <motion.div
+              {...modalMotion.overlay}
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+              onClick={() => setBookingOpen(false)}
+            >
+              <motion.div
+                {...modalMotion.panel}
+                onClick={(e) => e.stopPropagation()}
+                className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
+              >
+                <div className="flex items-center justify-between bg-brand-dark p-5 text-white">
+                  <div>
+                    <h3 className="text-sm font-black">{bookingService.toUpperCase()}</h3>
+                    <p className="mt-1 text-[11px] text-white/75">
+                      {variant.name} · {selectedColorObj?.name}
+                    </p>
                   </div>
-                  <h4 className="mt-4 text-lg font-black text-brand-dark">
-                    Gửi yêu cầu thành công!
-                  </h4>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Cảm ơn {bookingForm.name}. Chúng tôi sẽ liên hệ qua {bookingForm.phone} trong
-                    vòng 24 giờ.
-                  </p>
                   <button
                     type="button"
                     onClick={() => setBookingOpen(false)}
-                    className={`mt-6 ${pdpCtaPrimary} w-auto px-6 py-3`}
+                    className="rounded-lg p-1 hover:bg-white/10"
                   >
-                    Đóng
+                    <X className="size-5" />
                   </button>
                 </div>
-              ) : (
-                <form
-                  onSubmit={handleBookingSubmit}
-                  className="max-h-[calc(90vh-5.5rem)] space-y-4 overflow-y-auto overscroll-contain p-6"
-                >
-                  <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
-                    <div className="size-14 shrink-0 overflow-hidden rounded-lg">
-                      <img
-                        src={detail.image}
-                        alt={detail.name}
-                        className="h-full w-full object-cover"
+
+                {bookingSubmitted ? (
+                  <div className="p-8 text-center">
+                    <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-100">
+                      <Check className="size-8 text-emerald-600" />
+                    </div>
+                    <h4 className="mt-4 text-lg font-black text-brand-dark">
+                      Gửi yêu cầu thành công!
+                    </h4>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Cảm ơn {bookingForm.name}. Chúng tôi sẽ liên hệ qua {bookingForm.phone} trong
+                      vòng 24 giờ.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setBookingOpen(false)}
+                      className={`mt-6 ${pdpCtaPrimary} w-auto px-6 py-3`}
+                    >
+                      Đóng
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={handleBookingSubmit}
+                    className="max-h-[calc(90vh-5.5rem)] space-y-4 overflow-y-auto overscroll-contain p-6"
+                  >
+                    <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
+                      <div className="size-14 shrink-0 overflow-hidden rounded-lg">
+                        <img
+                          src={detail.image}
+                          alt={detail.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-brand-dark">{detail.name}</p>
+                        <p className="text-xs text-muted-foreground">{variant.name}</p>
+                        <p className="text-xs font-bold text-brand">
+                          {formatPrice(variant.price)} VND
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {["Đăng ký lái thử", "Đặt mua ngay", "Nhận báo giá", "Tư vấn trả góp"].map(
+                        (svc) => (
+                          <button
+                            key={svc}
+                            type="button"
+                            onClick={() => setBookingService(svc)}
+                            className={`rounded-lg border px-3 py-1.5 text-[11px] font-bold transition ${
+                              bookingService === svc
+                                ? "border-brand bg-brand/5 text-brand"
+                                : "border-border text-muted-foreground hover:border-brand/40"
+                            }`}
+                          >
+                            {svc}
+                          </button>
+                        ),
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
+                        Họ và tên *
+                      </label>
+                      <input
+                        required
+                        value={bookingForm.name}
+                        onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
+                        placeholder="Nguyễn Văn A"
+                        className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
                       />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-brand-dark">{detail.name}</p>
-                      <p className="text-xs text-muted-foreground">{variant.name}</p>
-                      <p className="text-xs font-bold text-brand">
-                        {formatPrice(variant.price)} VND
-                      </p>
+                      <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
+                        Số điện thoại *
+                      </label>
+                      <input
+                        required
+                        type="tel"
+                        value={bookingForm.phone}
+                        onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
+                        placeholder="09xx xxx xxx"
+                        className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                      />
                     </div>
-                  </div>
+                    <div>
+                      <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
+                        Email (tùy chọn)
+                      </label>
+                      <input
+                        type="email"
+                        value={bookingForm.email}
+                        onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
+                        placeholder="email@example.com"
+                        className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                      />
+                    </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {["Đăng ký lái thử", "Đặt mua ngay", "Nhận báo giá", "Tư vấn trả góp"].map(
-                      (svc) => (
-                        <button
-                          key={svc}
-                          type="button"
-                          onClick={() => setBookingService(svc)}
-                          className={`rounded-lg border px-3 py-1.5 text-[11px] font-bold transition ${
-                            bookingService === svc
-                              ? "border-brand bg-brand/5 text-brand"
-                              : "border-border text-muted-foreground hover:border-brand/40"
-                          }`}
-                        >
-                          {svc}
-                        </button>
-                      ),
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
-                      Họ và tên *
-                    </label>
-                    <input
-                      required
-                      value={bookingForm.name}
-                      onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
-                      placeholder="Nguyễn Văn A"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
-                      Số điện thoại *
-                    </label>
-                    <input
-                      required
-                      type="tel"
-                      value={bookingForm.phone}
-                      onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
-                      placeholder="09xx xxx xxx"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1.5 block text-[10px] font-bold text-muted-foreground uppercase">
-                      Email (tùy chọn)
-                    </label>
-                    <input
-                      type="email"
-                      value={bookingForm.email}
-                      onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
-                      placeholder="email@example.com"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
-                    />
-                  </div>
-
-                  <button type="submit" disabled={bookingSubmitting} className={pdpCtaPrimary}>
-                    {bookingSubmitting ? "Đang gửi..." : "GỬI YÊU CẦU"}
-                  </button>
-                </form>
-              )}
+                    <button type="submit" disabled={bookingSubmitting} className={pdpCtaPrimary}>
+                      {bookingSubmitting ? "Đang gửi..." : "GỬI YÊU CẦU"}
+                    </button>
+                  </form>
+                )}
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          )}
+        </AnimatePresence>
+      </div>
+    </ImageLightboxProvider>
   );
 }
 

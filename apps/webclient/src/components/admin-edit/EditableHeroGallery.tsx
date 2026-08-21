@@ -71,11 +71,24 @@ export function EditableHeroGallery({
                 key={safeIndex}
                 src={currentSrc}
                 alt={`${altLabel} ${safeIndex + 1}`}
-                className="absolute inset-0 h-full w-full object-contain p-2 sm:p-4"
+                className={`absolute inset-0 h-full w-full object-contain p-2 sm:p-4 ${onZoom ? "cursor-zoom-in" : ""}`}
                 variants={reduced ? undefined : detailGalleryImage}
                 initial={reduced ? false : "enter"}
                 animate="center"
                 exit={reduced ? undefined : "exit"}
+                onClick={onZoom}
+                role={onZoom ? "button" : undefined}
+                tabIndex={onZoom ? 0 : undefined}
+                onKeyDown={
+                  onZoom
+                    ? (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          onZoom();
+                        }
+                      }
+                    : undefined
+                }
               />
             </AnimatePresence>
           )}
