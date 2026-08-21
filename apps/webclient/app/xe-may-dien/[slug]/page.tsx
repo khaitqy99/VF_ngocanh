@@ -10,6 +10,7 @@ import {
   getScooters,
 } from "@/lib/cms";
 import { getVehicleSeoById } from "@/lib/cms/seo";
+import { getScooterPricingSettings } from "@/lib/cms/scooter-pricing-fetch";
 import { buildScooterMetadata } from "@/lib/seo/product-metadata";
 import { buildBreadcrumbSchema } from "@/lib/seo/local-business";
 import { buildMotorcycleSchema } from "@/lib/seo/product-schema";
@@ -39,9 +40,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ScooterDetailRoute({ params }: Props) {
   const { slug } = await params;
   if (isReservedProductSlug(slug)) notFound();
-  const [detail, detailAccessories] = await Promise.all([
+  const [detail, detailAccessories, pricing] = await Promise.all([
     getScooterDetailBySlug(slug),
     getScooterDetailAccessories(),
+    getScooterPricingSettings(),
   ]);
   if (!detail) {
     // 301 alias slug cũ (vd. xe-may-evo) về slug canonical để tránh 404
@@ -69,7 +71,7 @@ export default async function ScooterDetailRoute({ params }: Props) {
   return (
     <>
       <JsonLd data={[motorcycleSchema, breadcrumb]} />
-      <ScooterDetailPage detail={detail} detailAccessories={detailAccessories} />
+      <ScooterDetailPage detail={detail} detailAccessories={detailAccessories} pricing={pricing} />
     </>
   );
 }

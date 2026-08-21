@@ -6,6 +6,7 @@ import {
   toLeadInsert,
   type CreateLeadInput,
 } from "@vinfast3s/supabase/leads";
+import { sendMetaLeadConversion } from "@/lib/meta-capi";
 
 export async function POST(request: Request) {
   if (!isSupabaseConfigured()) {
@@ -77,6 +78,21 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  const eventId =
+    typeof body.eventId === "string" && body.eventId.trim() ? body.eventId.trim() : data.id;
+  const eventSourceUrl = typeof body.eventSourceUrl === "string" ? body.eventSourceUrl : undefined;
+
+  void sendMetaLeadConversion({
+    request,
+    eventId,
+    email,
+    phone,
+    eventSourceUrl,
+    contentName: service ?? input.vehicleInterest ?? input.type,
+  }).catch((err) => {
+    console.error("[api/leads] meta capi failed:", err);
+  });
 
   return NextResponse.json({ ok: true, id: data.id });
 }

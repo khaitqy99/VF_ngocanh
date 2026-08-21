@@ -13,7 +13,11 @@ import {
 } from "./index";
 import type { StaticPageSlug } from "./static-pages";
 import { fetchCarPricingRow } from "./car-pricing-fetch";
+import { fetchScooterPricingRow } from "./scooter-pricing-fetch";
+import { fetchFloatingSettingsRow } from "./floating-fetch";
 import { fetchFooterSettingsRow } from "./footer-fetch";
+import { fetchLegalPageContent } from "./legal-fetch";
+import { LEGAL_PAGE_SLUGS } from "./legal";
 import { fetchPublishedNews } from "./news";
 import { fetchAccessorySeoRow, fetchPageSeoRow, fetchSiteSeoRow, fetchVehicleSeoRow } from "./seo";
 
@@ -77,10 +81,13 @@ export async function warmCmsRedisCache(): Promise<WarmCmsRedisResult> {
   await Promise.all([
     fetchHomePage(),
     fetchFooterSettingsRow(),
+    fetchFloatingSettingsRow(),
     fetchSiteSeoRow(),
     fetchCarPricingRow(),
+    fetchScooterPricingRow(),
     ...BANNER_PLACEMENTS.map((placement) => fetchBannersByPlacement(placement)),
     ...STATIC_PAGE_SLUGS.map((slug) => fetchCmsPageContent(slug)),
+    ...LEGAL_PAGE_SLUGS.map((slug) => fetchLegalPageContent(slug)),
     ...STATIC_PAGE_SEO.map((page) => fetchPageSeoRow(page.slug)),
   ]);
 
@@ -106,10 +113,10 @@ export async function warmCmsRedisCache(): Promise<WarmCmsRedisResult> {
     vehicleDetails: vehicleIds.length,
     accessories: accessoryRows.length,
     banners: BANNER_PLACEMENTS.length,
-    staticPages: STATIC_PAGE_SLUGS.length + 1,
+    staticPages: STATIC_PAGE_SLUGS.length + 1 + LEGAL_PAGE_SLUGS.length,
     pageSeo: STATIC_PAGE_SEO.length,
     newsArticles: newsArticles.length,
-    settings: 3,
+    settings: 5,
     redisKeys,
   };
 }

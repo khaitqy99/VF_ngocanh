@@ -101,6 +101,15 @@ export function resolveDealershipContact(
   const email = org?.email?.trim() || SHOWROOM_EMAIL;
   const address = org ? formatOrganizationAddress(org) : SHOWROOM_ADDRESS;
   const sameAs = org?.sameAs?.length ? org.sameAs : getShowroomSameAs();
+  const lat = org?.geo?.latitude;
+  const lng = org?.geo?.longitude;
+  const mapUrl =
+    typeof lat === "number" &&
+    Number.isFinite(lat) &&
+    typeof lng === "number" &&
+    Number.isFinite(lng)
+      ? `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+      : SHOWROOM_MAP_URL;
 
   return {
     businessName: org?.name?.trim() || SCHEMA_BUSINESS_NAME,
@@ -108,7 +117,7 @@ export function resolveDealershipContact(
     phone,
     phoneTel: `tel:${phone.replace(/\s/g, "")}`,
     email,
-    mapUrl: SHOWROOM_MAP_URL,
+    mapUrl,
     mapEmbed: SHOWROOM_MAP_EMBED,
     opening: {
       opens: org?.openingHours?.opens ?? SHOWROOM_OPENING.opens,

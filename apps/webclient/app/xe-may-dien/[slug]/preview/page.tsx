@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PreviewEditScopeProvider } from "@/components/admin-edit/PreviewEditScope";
 import { PreviewScooterDetail } from "@/components/admin-edit/PreviewEditViews";
 import { getScooterDetailBySlugForAdminPreview } from "@/lib/cms/preview-catalog";
+import { getScooterPricingSettings } from "@/lib/cms/scooter-pricing-fetch";
 import { previewNoindexMetadata } from "@/lib/seo";
 import { resolvePreviewEditAccess } from "@/lib/preview-access";
 
@@ -21,12 +22,15 @@ export default async function ScooterPreviewRoute({ params, searchParams }: Prop
   const { slug } = await params;
   const { pt } = await searchParams;
   const serverAllowed = await resolvePreviewEditAccess({ pt });
-  const detail = await getScooterDetailBySlugForAdminPreview(slug, serverAllowed);
+  const [detail, pricing] = await Promise.all([
+    getScooterDetailBySlugForAdminPreview(slug, serverAllowed),
+    getScooterPricingSettings(),
+  ]);
   if (!detail) notFound();
 
   return (
     <PreviewEditScopeProvider scope="xe-may-dien" serverAllowed={serverAllowed}>
-      <PreviewScooterDetail detail={detail} />
+      <PreviewScooterDetail detail={detail} pricing={pricing} />
     </PreviewEditScopeProvider>
   );
 }

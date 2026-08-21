@@ -1,25 +1,24 @@
 "use client";
 
-import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { FadeIn } from "@/components/motion";
 
 export type LegalSection = {
   heading: string;
-  body: ReactNode;
+  bodyHtml: string;
 };
 
 export function LegalPage({
   title,
   updatedAt,
-  intro,
+  introHtml,
   sections,
   breadcrumbLabel,
 }: {
   title: string;
   updatedAt: string;
-  intro: ReactNode;
+  introHtml: string;
   sections: LegalSection[];
   breadcrumbLabel: string;
 }) {
@@ -47,22 +46,24 @@ export function LegalPage({
                 {title}
               </h1>
               <p className="mt-2 text-xs text-muted-foreground">Cập nhật lần cuối: {updatedAt}</p>
-              <div className="mt-5 text-sm leading-relaxed text-foreground/80 sm:text-base">
-                {intro}
-              </div>
+              <div
+                className="mt-5 space-y-3 text-sm leading-relaxed text-foreground/80 sm:text-base"
+                dangerouslySetInnerHTML={{ __html: introHtml }}
+              />
             </header>
           </FadeIn>
 
           <div className="mt-10 max-w-3xl space-y-8">
             {sections.map((section, index) => (
-              <FadeIn key={section.heading} delay={index * 0.05}>
+              <FadeIn key={`${section.heading}-${index}`} delay={index * 0.05}>
                 <section>
                   <h2 className="text-lg font-bold tracking-tight text-brand-dark sm:text-xl">
                     {index + 1}. {section.heading}
                   </h2>
-                  <div className="mt-3 space-y-3 text-sm leading-relaxed text-foreground/80 sm:text-base">
-                    {section.body}
-                  </div>
+                  <div
+                    className="mt-3 space-y-3 text-sm leading-relaxed text-foreground/80 sm:text-base"
+                    dangerouslySetInnerHTML={{ __html: section.bodyHtml }}
+                  />
                 </section>
               </FadeIn>
             ))}

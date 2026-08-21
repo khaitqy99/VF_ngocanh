@@ -257,7 +257,7 @@ export async function getAdminPagesForMedia(): Promise<PageMediaRef[]> {
     const { data: bannerRows, error: bannersError } = await admin
       .from("banners")
       .select("placement, desktop_image_url, mobile_image_url, alt_text, sort_order")
-      .in("placement", ["home", "after_sales", "charging"]);
+      .in("placement", ["home", "after_sales", "charging", "cars", "scooters", "accessories"]);
     if (bannersError) throw bannersError;
 
     const bannersByPlacement = new Map<string, unknown[]>();

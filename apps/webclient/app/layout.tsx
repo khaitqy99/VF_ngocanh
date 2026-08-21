@@ -9,6 +9,8 @@ import FloatingButtons from "@/components/site/FloatingButtons";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { SiteNavigationJsonLd } from "@/components/seo/SiteNavigationJsonLd";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
+import { getFloatingSettings } from "@/lib/cms/floating-fetch";
+import { resolveFloatingButtons } from "@/lib/cms/floating-resolve";
 import { getSiteSeo } from "@/lib/cms/seo";
 import { seoToNextMetadata, resolveSeoContent } from "@/lib/seo";
 import { PRODUCTION_SITE_URL } from "@/lib/seo/types";
@@ -90,7 +92,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [site, floating] = await Promise.all([getSiteSeo(), getFloatingSettings()]);
+  const floatingButtons = resolveFloatingButtons(floating, site);
+
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
@@ -122,7 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <div className="relative">{children}</div>
         <SiteFooter />
-        <FloatingButtons />
+        <FloatingButtons buttons={floatingButtons} />
       </body>
     </html>
   );

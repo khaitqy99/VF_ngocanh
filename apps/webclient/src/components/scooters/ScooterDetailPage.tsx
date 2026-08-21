@@ -143,6 +143,12 @@ import {
   expandGalleryToGrid,
 } from "@/components/shared/PdpContentBlocks";
 import { IMAGES } from "@/lib/images";
+import {
+  defaultScooterPricingSettings,
+  scooterPlateFee,
+  type ScooterPricingSettings,
+  type ScooterProvinceFee,
+} from "@/lib/cms/scooter-pricing";
 
 type SectionId =
   | "tong-quan"
@@ -163,13 +169,6 @@ const SERVICE_BAR = [
   { icon: Wallet, title: "Hỗ trợ tài chính", sub: "Trả góp 0%, lãi suất thấp" },
 ] as const;
 
-const PROVINCES = [
-  { id: "camau", name: "Cà Mau & tỉnh khác", rate: 0.02 },
-  { id: "hanoi", name: "Hà Nội (Lệ phí biển 2–4 triệu)", rate: 0.05 },
-  { id: "hcm", name: "TP. HCM (Lệ phí biển 2–4 triệu)", rate: 0.05 },
-  { id: "other", name: "Tỉnh/Thành phố khác", rate: 0.02 },
-] as const;
-
 const TECH_ICONS: Record<TechFeature["icon"], React.ElementType> = {
   voice: Mic,
   fota: Download,
@@ -185,6 +184,7 @@ type Props = {
   embedded?: boolean;
   adminEdit?: boolean;
   detailAccessories?: AccessoryProduct[];
+  pricing?: ScooterPricingSettings;
 };
 
 export default function ScooterDetailPage({
@@ -192,6 +192,7 @@ export default function ScooterDetailPage({
   embedded = false,
   adminEdit = false,
   detailAccessories = [],
+  pricing = defaultScooterPricingSettings(),
 }: Props) {
   const edit = useAdminEdit();
   const detail = (edit?.values as ScooterDetail | undefined) ?? initialDetail;
@@ -214,7 +215,10 @@ export default function ScooterDetailPage({
   const [configOpen, setConfigOpen] = useState(false);
   const thumbStripRef = useRef<HTMLDivElement>(null);
 
-  const [estimatorLocation, setEstimatorLocation] = useState("camau");
+  const [estimatorLocation, setEstimatorLocation] = useState(
+    () =>
+      pricing.provinces.find((p) => p.id === "camau")?.id ?? pricing.provinces[0]?.id ?? "camau",
+  );
   const [estimatorTab, setEstimatorTab] = useState<"rolling" | "installment">("rolling");
   const [downPaymentPct, setDownPaymentPct] = useState(30);
   const [loanTermYears, setLoanTermYears] = useState(5);
@@ -319,24 +323,16 @@ export default function ScooterDetailPage({
   const basePrice = variant.price;
 
   const rollingCost = useMemo(() => {
-    const province = PROVINCES.find((p) => p.id === estimatorLocation) ?? PROVINCES[0];
-    const registrationTax = Math.round(basePrice * province.rate);
-
-    let plateFee = 150_000;
-    if (province.id === "hanoi" || province.id === "hcm") {
-      if (basePrice < 15_000_000) plateFee = 1_000_000;
-      else if (basePrice <= 40_000_000) plateFee = 2_000_000;
-      else plateFee = 4_000_000;
-    } else if (basePrice < 15_000_000) plateFee = 150_000;
-    else if (basePrice <= 40_000_000) plateFee = 400_000;
-    else plateFee = 800_000;
-
-    const inspectionFee = 100_000;
-    const civilInsurance = 66_000;
+    const province =
+      pricing.provinces.find((p) => p.id === estimatorLocation) ?? pricing.provinces[0];
+    const registrationTax = Math.round(basePrice * (province?.registrationTaxRate ?? 0));
+    const plateFee = province ? scooterPlateFee(province, basePrice) : 0;
+    const inspectionFee = pricing.inspectionFee;
+    const civilInsurance = pricing.civilInsurance;
     const totalRolling = basePrice + registrationTax + plateFee + inspectionFee + civilInsurance;
 
     return { registrationTax, plateFee, inspectionFee, civilInsurance, totalRolling };
-  }, [basePrice, estimatorLocation]);
+  }, [basePrice, estimatorLocation, pricing]);
 
   const installment = useMemo(() => {
     const totalCost = rollingCost.totalRolling;
@@ -761,6 +757,7 @@ export default function ScooterDetailPage({
                 setInterestRate={setInterestRate}
                 rollingCost={rollingCost}
                 installment={installment}
+                provinces={pricing.provinces}
                 onBook={() => openBooking("Nhận báo giá")}
               />
             </SectionWrap>
@@ -1780,6 +1777,7 @@ type FinanceProps = {
     firstMonthTotal: number;
     avgMonthlyPayment: number;
   };
+  provinces: ScooterProvinceFee[];
   onBook: () => void;
 };
 
@@ -1799,6 +1797,7 @@ function FinanceSection({
   setInterestRate,
   rollingCost,
   installment,
+  provinces,
   onBook,
 }: FinanceProps) {
   return (
@@ -1852,7 +1851,7 @@ function FinanceSection({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {PROVINCES.map((p) => (
+                    {provinces.map((p) => (
                       <SelectItem key={p.id} value={p.id} className="text-xs">
                         {p.name}
                       </SelectItem>

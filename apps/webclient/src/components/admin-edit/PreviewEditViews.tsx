@@ -11,6 +11,7 @@ import type { AccessoryProduct } from "@/lib/accessories";
 import type { CarDetail } from "@/lib/car-details";
 import type { CarModel } from "@/lib/cars";
 import type { CarPricingSettings } from "@/lib/cms/car-pricing";
+import type { ScooterPricingSettings } from "@/lib/cms/scooter-pricing";
 import type { HeroBannerSlide } from "@/lib/images";
 import type { ScooterDetail } from "@/lib/scooter-details";
 import type { ScooterModel } from "@/lib/scooters";
@@ -39,15 +40,18 @@ export function PreviewCarsPage({
 export function PreviewScootersPage({
   scooters,
   heroBanners,
+  pricing,
 }: {
   scooters: ScooterModel[];
   heroBanners: HeroBannerSlide[];
+  pricing?: ScooterPricingSettings;
 }) {
   const adminEdit = usePreviewEditEnabled();
   return (
     <ScootersPage
       scooters={scooters}
       heroBanners={heroBanners}
+      pricing={pricing}
       embedded={adminEdit}
       adminEdit={adminEdit}
     />
@@ -83,9 +87,15 @@ export function PreviewCarDetail({
   return <CarPreviewClient detail={detail} pricing={pricing} admin={adminEdit} />;
 }
 
-export function PreviewScooterDetail({ detail }: { detail: ScooterDetail }) {
+export function PreviewScooterDetail({
+  detail,
+  pricing,
+}: {
+  detail: ScooterDetail;
+  pricing?: ScooterPricingSettings;
+}) {
   const adminEdit = usePreviewEditEnabled();
-  return <ScooterPreviewClient detail={detail} admin={adminEdit} />;
+  return <ScooterPreviewClient detail={detail} pricing={pricing} admin={adminEdit} />;
 }
 
 export function PreviewAccessoryDetail({ product }: { product: AccessoryProduct }) {

@@ -1,9 +1,40 @@
+import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { loadEnvConfig } from "@next/env";
 import type { NextConfig } from "next";
 
 loadEnvConfig(path.resolve(__dirname, "../.."));
 loadEnvConfig(__dirname);
+
+const require = createRequire(__filename);
+
+function resolvePackageRoot(name: string): string {
+  const candidates = [
+    path.resolve(__dirname, "node_modules", name),
+    path.resolve(__dirname, "../../node_modules", name),
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(path.join(candidate, "package.json"))) {
+      return candidate;
+    }
+  }
+
+  // Fallback via Node resolution (may land on dist/*).
+  try {
+    const resolved = require.resolve(name);
+    let dir = path.dirname(resolved);
+    while (dir !== path.dirname(dir)) {
+      if (fs.existsSync(path.join(dir, "package.json"))) return dir;
+      dir = path.dirname(dir);
+    }
+  } catch {
+    // ignore
+  }
+
+  throw new Error(`Unable to resolve package root for ${name}`);
+}
 
 const nextConfig: NextConfig = {
   env: {
@@ -37,10 +68,19 @@ const nextConfig: NextConfig = {
   output: "standalone",
   transpilePackages: ["@vinfast3s/supabase", "motion"],
   webpack: (config, { dev }) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve(__dirname, "../webclient/src"),
-    };
+    // Bare `@` aliases break scoped packages like `@tiptap/*` under Webpack.
+    // `@/*` comes from tsconfig paths instead.
+    const existingAlias = config.resolve.alias;
+    const alias: Record<string, string | false | string[]> = Array.isArray(existingAlias)
+      ? {}
+      : { ...(existingAlias as Record<string, string | false | string[]>) };
+    delete alias["@"];
+
+    // Force TipTap peers to the hoisted install (avoids ENOENT on nested starter-kit paths).
+    alias["@tiptap/core"] = resolvePackageRoot("@tiptap/core");
+    alias["@tiptap/pm"] = resolvePackageRoot("@tiptap/pm");
+
+    config.resolve.alias = alias;
     if (dev && process.env.DISABLE_HMR === "true") {
       config.watchOptions = { ignored: /.*/ };
     }

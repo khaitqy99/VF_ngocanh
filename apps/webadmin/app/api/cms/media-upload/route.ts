@@ -11,6 +11,7 @@ import {
   uniqueUploadStoragePath,
 } from "@/lib/media-storage";
 import { revalidateAdminMedia } from "@/lib/media-revalidate";
+import { revalidateWebclient, vehicleRevalidatePayload } from "@/lib/revalidate-webclient";
 
 export const runtime = "nodejs";
 
@@ -141,6 +142,19 @@ export async function POST(request: Request) {
   }
 
   await revalidateAdminMedia();
+
+  if ((category === "cars" || category === "scooters") && uploaded.length) {
+    const vehicleType = category === "cars" ? "car" : "scooter";
+    const { data: vehicle } = await admin
+      .from("vehicles")
+      .select("id, slug")
+      .eq("id", slug)
+      .maybeSingle();
+    const vehicleId = vehicle?.id ?? slug;
+    const vehicleSlug =
+      typeof vehicle?.slug === "string" && vehicle.slug.trim() ? vehicle.slug.trim() : undefined;
+    await revalidateWebclient(vehicleRevalidatePayload(vehicleId, vehicleType, vehicleSlug));
+  }
 
   return NextResponse.json({
     ok: true,

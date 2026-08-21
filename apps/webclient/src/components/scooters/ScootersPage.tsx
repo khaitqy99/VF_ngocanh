@@ -71,6 +71,11 @@ import { carsBookingStep, carsEstimatorPanel } from "@/lib/cars-motion";
 import { useModalMotion } from "@/hooks/use-modal-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { formatLeadMessage, submitLead, SubmitLeadError } from "@/lib/submit-lead";
+import {
+  defaultScooterPricingSettings,
+  scooterPlateFee,
+  type ScooterPricingSettings,
+} from "@/lib/cms/scooter-pricing";
 
 const HERO_FEATURES = [
   { icon: Shield, text: "Bảo hành chính hãng", sub: "Lên tới 5 năm hoặc 30.000km" },
@@ -117,29 +122,20 @@ const defaultFilters = (): Filters => ({
   speeds: new Set(),
 });
 
-// Cities and Provinces for Scooter Rolling Cost
-const PROVINCES = [
-  { id: "hanoi", name: "Hà Nội (Lệ phí biển 2 - 4 triệu)", rate: 0.05, maxPlate: 4_000_000 },
-  { id: "hcm", name: "TP. Hồ Chí Minh (Lệ phí biển 2 - 4 triệu)", rate: 0.05, maxPlate: 4_000_000 },
-  {
-    id: "other",
-    name: "Tỉnh/Thành phố khác (Lệ phí biển 100K - 800K)",
-    rate: 0.02,
-    maxPlate: 800_000,
-  },
-];
-
 export default function ScootersPage({
   scooters: SCOOTERS,
   heroBanners: SCOOTER_HERO_BANNERS,
+  pricing: pricingProp,
   embedded = false,
   adminEdit = false,
 }: {
   scooters: ScooterModel[];
   heroBanners: HeroBannerSlide[];
+  pricing?: ScooterPricingSettings;
   embedded?: boolean;
   adminEdit?: boolean;
 }) {
+  const pricing = pricingProp ?? defaultScooterPricingSettings();
   const reduced = useReducedMotion();
   const modalMotion = useModalMotion();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
@@ -168,7 +164,10 @@ export default function ScootersPage({
 
   // Rolling Cost Estimator State
   const [estimatorScooterId, setEstimatorScooterId] = useState<string>("evo");
-  const [estimatorLocation, setEstimatorLocation] = useState<string>("other");
+  const [estimatorLocation, setEstimatorLocation] = useState(
+    () =>
+      pricing.provinces.find((p) => p.id === "other")?.id ?? pricing.provinces[0]?.id ?? "other",
+  );
 
   // Installment Calculator State
   const [downPaymentPct, setDownPaymentPct] = useState<number>(30);
@@ -269,30 +268,16 @@ export default function ScootersPage({
     return SCOOTERS.find((s) => s.id === estimatorScooterId) || SCOOTERS[0];
   }, [estimatorScooterId, SCOOTERS]);
 
-  // Rolling Cost Calculation for Scooter
+  // Rolling Cost Calculation for Scooter — always from admin fee table
   const rollingCostResult = useMemo(() => {
     const scooter = selectedEstimatorScooter;
     const basePrice = scooter.price;
-
-    // Vietnam Motorcycle Registration fee
-    const province = PROVINCES.find((p) => p.id === estimatorLocation) || PROVINCES[0];
-    const registrationTax = Math.round(basePrice * province.rate);
-
-    // Plate Fee (Calculated based on price range in HN/HCM)
-    let plateFee = 100_000;
-    if (province.id === "hanoi" || province.id === "hcm") {
-      if (basePrice < 15_000_000) plateFee = 1_000_000;
-      else if (basePrice <= 40_000_000) plateFee = 2_000_000;
-      else plateFee = 4_000_000;
-    } else {
-      // Provinces
-      if (basePrice < 15_000_000) plateFee = 150_000;
-      else if (basePrice <= 40_000_000) plateFee = 400_000;
-      else plateFee = 800_000;
-    }
-
-    const inspectionFee = 100_000; // soft fee for registration support
-    const civilInsurance = 66_000; // Standard compulsory civil liability insurance for under 50cc or over 50cc scooters
+    const province =
+      pricing.provinces.find((p) => p.id === estimatorLocation) ?? pricing.provinces[0];
+    const registrationTax = Math.round(basePrice * (province?.registrationTaxRate ?? 0));
+    const plateFee = province ? scooterPlateFee(province, basePrice) : 0;
+    const inspectionFee = pricing.inspectionFee;
+    const civilInsurance = pricing.civilInsurance;
 
     const totalRolling = basePrice + registrationTax + plateFee + inspectionFee + civilInsurance;
 
@@ -304,7 +289,7 @@ export default function ScootersPage({
       civilInsurance,
       totalRolling,
     };
-  }, [selectedEstimatorScooter, estimatorLocation]);
+  }, [selectedEstimatorScooter, estimatorLocation, pricing]);
 
   // Installment Calculator Calculation
   const installmentResult = useMemo(() => {
@@ -540,7 +525,7 @@ export default function ScootersPage({
                             <SelectValue placeholder="Chọn Khu Vực" />
                           </SelectTrigger>
                           <SelectContent className="bg-white border-slate-200 text-slate-800">
-                            {PROVINCES.map((p) => (
+                            {pricing.provinces.map((p) => (
                               <SelectItem
                                 key={p.id}
                                 value={p.id}

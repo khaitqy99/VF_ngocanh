@@ -11,8 +11,16 @@ export class SubmitLeadError extends Error {
   }
 }
 
+function createMetaEventId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `lead_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
 /** Gửi lead từ form public → POST /api/leads */
 export async function submitLead(input: SubmitLeadInput): Promise<string> {
+  const eventId = createMetaEventId();
   const response = await fetch("/api/leads", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -25,6 +33,8 @@ export async function submitLead(input: SubmitLeadInput): Promise<string> {
       vehicleInterest: input.vehicleInterest,
       source: input.source ?? ("website" satisfies LeadSource),
       message: input.message,
+      eventId,
+      eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
     }),
   });
 

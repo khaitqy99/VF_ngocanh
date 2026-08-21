@@ -11,12 +11,21 @@ const CMS_WARM_TAGS = [
   "cms-news",
   "cms-home",
   "cms-footer",
+  "cms-floating",
   "cms-car-pricing",
+  "cms-scooter-pricing",
+  "cms-legal",
   "cms-cars",
   "cms-scooters",
   "cms-accessories",
   "cms-banners",
   "cms-banners-home",
+  "cms-banners-cars",
+  "cms-banners-scooters",
+  "cms-banners-accessories",
+  "cms-banners-after_sales",
+  "cms-banners-charging",
+  "cms-banners-energy",
 ] as const;
 
 const CMS_WARM_PATHS = [

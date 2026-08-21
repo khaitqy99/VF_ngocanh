@@ -4,21 +4,14 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp, Phone } from "lucide-react";
 import { ZaloBrandIcon } from "@/components/icons/SocialBrandIcons";
-import {
-  FACEBOOK_URL as DEFAULT_FACEBOOK_URL,
-  SHOWROOM_PHONE_TEL,
-  ZALO_URL as DEFAULT_ZALO_URL,
-} from "@/lib/dealership";
+import type { ResolvedFloatingButton } from "@/lib/cms/floating-resolve";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { floatEntrance, springSnappy } from "@/lib/motion";
-
-const MESSENGER_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL?.trim() || DEFAULT_FACEBOOK_URL;
-const ZALO_URL = process.env.NEXT_PUBLIC_ZALO_URL?.trim() || DEFAULT_ZALO_URL;
 
 const floatBtn =
   "flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors sm:h-12 sm:w-12";
 
-export default function FloatingButtons() {
+export default function FloatingButtons({ buttons }: { buttons: ResolvedFloatingButton[] }) {
   const [show, setShow] = useState(false);
   const reduced = useReducedMotion();
 
@@ -45,56 +38,68 @@ export default function FloatingButtons() {
         variants: floatEntrance,
       };
 
+  const byKey = new Map(buttons.map((button) => [button.key, button]));
+  const hotline = byKey.get("hotline");
+  const messenger = byKey.get("messenger");
+  const zalo = byKey.get("zalo");
+  const scrollTop = byKey.get("scrollTop");
+
   return (
     <div className="fixed right-3 bottom-24 z-40 flex flex-col gap-2.5 sm:right-4 sm:gap-3 lg:bottom-6">
-      <motion.a
-        href={SHOWROOM_PHONE_TEL}
-        {...floatProps}
-        custom={0}
-        {...hoverTap}
-        className={`${floatBtn} relative border border-brand/20 bg-brand hover:bg-brand/90`}
-        aria-label="Hotline"
-      >
-        {!reduced ? (
-          <motion.span
-            className="pointer-events-none absolute inset-0 rounded-full border-2 border-brand/40"
-            animate={{ scale: [1, 1.35], opacity: [0.55, 0] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+      {hotline?.enabled && hotline.resolvedHref ? (
+        <motion.a
+          href={hotline.resolvedHref}
+          {...floatProps}
+          custom={0}
+          {...hoverTap}
+          className={`${floatBtn} relative border border-brand/20 bg-brand hover:bg-brand/90`}
+          aria-label={hotline.label || "Hotline"}
+        >
+          {!reduced ? (
+            <motion.span
+              className="pointer-events-none absolute inset-0 rounded-full border-2 border-brand/40"
+              animate={{ scale: [1, 1.35], opacity: [0.55, 0] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+            />
+          ) : null}
+          <Phone size={20} />
+        </motion.a>
+      ) : null}
+      {messenger?.enabled ? (
+        <motion.a
+          href={messenger.resolvedHref || "#"}
+          {...floatProps}
+          custom={1}
+          {...hoverTap}
+          className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${messenger.resolvedHref ? "" : " pointer-events-none opacity-50"}`}
+          aria-label={messenger.label || "Facebook"}
+          {...(messenger.resolvedHref ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
+          <img
+            src="/images/icons/facebook-messenger.png"
+            alt=""
+            aria-hidden
+            width={48}
+            height={48}
+            className="h-full w-full"
           />
-        ) : null}
-        <Phone size={20} />
-      </motion.a>
-      <motion.a
-        href={MESSENGER_URL || "#"}
-        {...floatProps}
-        custom={1}
-        {...hoverTap}
-        className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${MESSENGER_URL ? "" : " pointer-events-none opacity-50"}`}
-        aria-label="Facebook"
-        {...(MESSENGER_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      >
-        <img
-          src="/images/icons/facebook-messenger.png"
-          alt=""
-          aria-hidden
-          width={48}
-          height={48}
-          className="h-full w-full"
-        />
-      </motion.a>
-      <motion.a
-        href={ZALO_URL || "#"}
-        {...floatProps}
-        custom={2}
-        {...hoverTap}
-        className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${ZALO_URL ? "" : " pointer-events-none opacity-50"}`}
-        aria-label="Zalo"
-        {...(ZALO_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      >
-        <ZaloBrandIcon size={48} className="h-full w-full" />
-      </motion.a>
+        </motion.a>
+      ) : null}
+      {zalo?.enabled ? (
+        <motion.a
+          href={zalo.resolvedHref || "#"}
+          {...floatProps}
+          custom={2}
+          {...hoverTap}
+          className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 sm:h-12 sm:w-12${zalo.resolvedHref ? "" : " pointer-events-none opacity-50"}`}
+          aria-label={zalo.label || "Zalo"}
+          {...(zalo.resolvedHref ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
+          <ZaloBrandIcon size={48} className="h-full w-full" />
+        </motion.a>
+      ) : null}
       <AnimatePresence>
-        {show && (
+        {scrollTop?.enabled && show ? (
           <motion.button
             initial={reduced ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.7, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -103,11 +108,11 @@ export default function FloatingButtons() {
             {...hoverTap}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className={`${floatBtn} border border-brand-dark/20 bg-brand-dark hover:bg-brand-dark/90`}
-            aria-label="Scroll to top"
+            aria-label={scrollTop.label || "Scroll to top"}
           >
             <ArrowUp size={20} />
           </motion.button>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

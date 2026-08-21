@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ScootersPage from "@/components/scooters/ScootersPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBanners, getScooters } from "@/lib/cms";
+import { getScooterPricingSettings } from "@/lib/cms/scooter-pricing-fetch";
 import { buildBreadcrumbSchema, buildItemListSchema } from "@/lib/seo/local-business";
 import { buildStaticPageMetadata } from "@/lib/seo/page-metadata";
 import { scooterDetailPath } from "@/lib/seo/slugs";
@@ -14,7 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function XeMayDienPage() {
-  const [scooters, heroBanners] = await Promise.all([getScooters(), getBanners("scooters")]);
+  const [scooters, heroBanners, pricing] = await Promise.all([
+    getScooters(),
+    getBanners("scooters"),
+    getScooterPricingSettings(),
+  ]);
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Trang chủ", path: "/" },
     { name: "Xe máy điện", path: "/xe-may-dien" },
@@ -29,7 +34,7 @@ export default async function XeMayDienPage() {
   return (
     <>
       <JsonLd data={[breadcrumb, itemList]} />
-      <ScootersPage scooters={scooters} heroBanners={heroBanners} />
+      <ScootersPage scooters={scooters} heroBanners={heroBanners} pricing={pricing} />
     </>
   );
 }

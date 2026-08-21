@@ -4,17 +4,28 @@ import { isSupabaseConfigured } from "@vinfast3s/supabase";
 import { getSessionAdmin } from "@/lib/auth";
 import { storagePathFromPublicUrl } from "@/lib/media-storage";
 import { revalidateAdminMedia } from "@/lib/media-revalidate";
+import { revalidateWebclient, vehicleRevalidatePayload } from "@/lib/revalidate-webclient";
 
-async function removeUrlFromVehicleGalleries(url: string) {
+async function removeUrlFromVehicleGalleries(
+  url: string,
+): Promise<{ id: string; type: "car" | "scooter"; slug?: string }[]> {
   const admin = createAdminClient();
-  const { data: vehicles } = await admin.from("vehicles").select("id, gallery");
+  const { data: vehicles } = await admin.from("vehicles").select("id, type, slug, gallery");
+  const touched: { id: string; type: "car" | "scooter"; slug?: string }[] = [];
   for (const row of vehicles ?? []) {
     if (!Array.isArray(row.gallery)) continue;
     const next = row.gallery.filter((item) => item !== url);
-    if (next.length !== row.gallery.length) {
-      await admin.from("vehicles").update({ gallery: next }).eq("id", row.id);
+    if (next.length === row.gallery.length) continue;
+    await admin.from("vehicles").update({ gallery: next }).eq("id", row.id);
+    if (row.type === "car" || row.type === "scooter") {
+      touched.push({
+        id: row.id,
+        type: row.type,
+        slug: typeof row.slug === "string" && row.slug.trim() ? row.slug.trim() : undefined,
+      });
     }
   }
+  return touched;
 }
 
 export async function PATCH(
@@ -105,8 +116,12 @@ export async function DELETE(
     return NextResponse.json({ error: deleteError.message }, { status: 500 });
   }
 
-  await removeUrlFromVehicleGalleries(asset.url);
+  const touchedVehicles = await removeUrlFromVehicleGalleries(asset.url);
   await revalidateAdminMedia();
+
+  for (const vehicle of touchedVehicles) {
+    await revalidateWebclient(vehicleRevalidatePayload(vehicle.id, vehicle.type, vehicle.slug));
+  }
 
   return NextResponse.json({ ok: true });
 }

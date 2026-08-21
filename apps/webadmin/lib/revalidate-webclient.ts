@@ -106,6 +106,8 @@ export function homePageRevalidatePayload(): RevalidatePayload {
   };
 }
 
+import { STATIC_PAGE_META, type StaticPageSlug } from "@webclient/lib/cms/static-pages";
+
 const STATIC_PAGE_PATHS: Record<string, string> = {
   about: "/gioi-thieu",
   "after-sales": "/dich-vu-hau-mai",
@@ -116,12 +118,20 @@ const STATIC_PAGE_PATHS: Record<string, string> = {
   scooters: "/xe-may-dien",
   accessories: "/phu-kien",
   news: "/tin-tuc",
+  privacy: "/chinh-sach-bao-mat",
+  terms: "/dieu-khoan-su-dung",
 };
 
 export function staticPageRevalidatePayload(slug: string): RevalidatePayload {
   const path = STATIC_PAGE_PATHS[slug];
+  const tags = ["cms", `cms-page-${slug}`, "cms-seo"];
+  const meta =
+    slug in STATIC_PAGE_META ? STATIC_PAGE_META[slug as StaticPageSlug] : undefined;
+  if (meta?.bannerPlacement) {
+    tags.push("cms-banners", `cms-banners-${meta.bannerPlacement}`);
+  }
   return {
-    tags: ["cms", `cms-page-${slug}`, "cms-seo"],
+    tags,
     paths: path ? [path] : [],
   };
 }
