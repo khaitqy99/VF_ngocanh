@@ -54,7 +54,7 @@ const DEFAULT_PRIVACY: LegalPageContent = {
   sections: [
     {
       heading: "Thông tin chúng tôi thu thập",
-      bodyHtml: `<p>Chúng tôi chỉ thu thập thông tin do bạn chủ động cung cấp qua các biểu mẫu:</p><ul class="list-disc space-y-1 pl-5"><li>Họ và tên, số điện thoại, địa chỉ email.</li><li>Dòng xe hoặc dịch vụ bạn quan tâm (lái thử, báo giá, bảo dưỡng...).</li><li>Nội dung tin nhắn hoặc yêu cầu tư vấn bạn gửi cho chúng tôi.</li></ul><p>Ngoài ra, website sử dụng Google Analytics để thu thập dữ liệu thống kê ẩn danh (trang được xem, thời gian truy cập, loại thiết bị) nhằm cải thiện trải nghiệm người dùng. Khi bạn gửi form tư vấn, chúng tôi có thể gửi sự kiện chuyển đổi (email/số điện thoại đã được băm) tới Meta qua Conversions API để đo lường quảng cáo.</p>`,
+      bodyHtml: `<p>Chúng tôi chỉ thu thập thông tin do bạn chủ động cung cấp qua các biểu mẫu:</p><ul class="list-disc space-y-1 pl-5"><li>Họ và tên, số điện thoại, địa chỉ email.</li><li>Dòng xe hoặc dịch vụ bạn quan tâm (lái thử, báo giá, bảo dưỡng...).</li><li>Nội dung tin nhắn hoặc yêu cầu tư vấn bạn gửi cho chúng tôi.</li></ul><p>Ngoài ra, website sử dụng Google Analytics và Meta Pixel để thu thập dữ liệu thống kê ẩn danh (trang được xem, thời gian truy cập, loại thiết bị) nhằm cải thiện trải nghiệm người dùng và đo lường hiệu quả quảng cáo. Khi bạn gửi form tư vấn, chúng tôi có thể gửi sự kiện chuyển đổi (email/số điện thoại đã được băm) tới Meta qua Conversions API.</p>`,
     },
     {
       heading: "Mục đích sử dụng thông tin",
@@ -74,7 +74,7 @@ const DEFAULT_PRIVACY: LegalPageContent = {
     },
     {
       heading: "Cookie và công nghệ theo dõi",
-      bodyHtml: `<p>Website sử dụng cookie kỹ thuật cần thiết cho hoạt động của trang và cookie thống kê của Google Analytics. Bạn có thể tắt cookie trong cài đặt trình duyệt, tuy nhiên một số tính năng của website có thể không hoạt động đầy đủ.</p>`,
+      bodyHtml: `<p>Website sử dụng cookie kỹ thuật cần thiết cho hoạt động của trang, cookie thống kê của Google Analytics và cookie đo lường quảng cáo của Meta Pixel. Bạn có thể tắt cookie trong cài đặt trình duyệt, tuy nhiên một số tính năng của website có thể không hoạt động đầy đủ.</p>`,
     },
     {
       heading: "Thông tin liên hệ",

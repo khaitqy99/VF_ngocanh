@@ -7,6 +7,7 @@ import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import FloatingButtons from "@/components/site/FloatingButtons";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
+import { MetaPixel } from "@/components/seo/MetaPixel";
 import { SiteNavigationJsonLd } from "@/components/seo/SiteNavigationJsonLd";
 import { SCHEMA_BUSINESS_NAME } from "@/lib/dealership";
 import { getFloatingSettings } from "@/lib/cms/floating-fetch";
@@ -123,6 +124,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           className="home-grain pointer-events-none fixed inset-0 -z-10 opacity-[0.028] max-lg:hidden"
         />
         <GoogleAnalytics />
+        <MetaPixel />
         <SiteNavigationJsonLd />
         <SiteHeader />
         <div className="relative">{children}</div>

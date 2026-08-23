@@ -1,4 +1,5 @@
 import type { CreateLeadInput, LeadSource, LeadType } from "@vinfast3s/supabase/leads";
+import { trackMetaLead } from "@/lib/meta-pixel";
 
 export type SubmitLeadInput = CreateLeadInput & {
   service?: string;
@@ -42,6 +43,10 @@ export async function submitLead(input: SubmitLeadInput): Promise<string> {
   if (!response.ok) {
     throw new SubmitLeadError(data?.error ?? "Gửi thất bại. Vui lòng thử lại.");
   }
+
+  trackMetaLead(eventId, {
+    content_name: input.service ?? input.vehicleInterest ?? input.type,
+  });
 
   return data?.id ?? "";
 }

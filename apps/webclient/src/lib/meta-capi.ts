@@ -42,7 +42,9 @@ export async function sendMetaLeadConversion(options: {
   contentName?: string;
 }): Promise<void> {
   const pixelId =
-    process.env.META_PIXEL_ID?.trim() || process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
+    process.env.META_PIXEL_ID?.trim() ||
+    process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
+    "1768938617764504";
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN?.trim();
   if (!pixelId || !accessToken) return;
 
