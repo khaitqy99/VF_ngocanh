@@ -10,9 +10,19 @@ import { Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea } fro
 import { clientAssetUrl } from "@/lib/product-utils";
 import { defaultSiteSeoSettings, type SiteSeoSettings } from "@/lib/seo";
 
+function parseLines(text: string): string[] {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
   const { toast } = useToast();
   const [settings, setSettings] = useState<SiteSeoSettings>(defaultSiteSeoSettings());
+  const [keywordsDraft, setKeywordsDraft] = useState("");
+  const [robotsDisallowDraft, setRobotsDisallowDraft] = useState("");
+  const [sameAsDraft, setSameAsDraft] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [ogPickerOpen, setOgPickerOpen] = useState(false);
@@ -25,7 +35,12 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
         return res.json();
       })
       .then((data) => {
-        if (data.settings) setSettings(data.settings);
+        if (data.settings) {
+          setSettings(data.settings);
+          setKeywordsDraft((data.settings.keywords ?? []).join("\n"));
+          setRobotsDisallowDraft((data.settings.robotsDisallow ?? []).join("\n"));
+          setSameAsDraft((data.settings.organization?.sameAs ?? []).join("\n"));
+        }
       })
       .catch(() => toast("Không tải được cài đặt SEO chung", "error"))
       .finally(() => setLoading(false));
@@ -206,16 +221,12 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
             </label>
             <Textarea
               rows={3}
-              value={(settings.robotsDisallow ?? []).join("\n")}
-              onChange={(e) =>
-                setSettings((s) => ({
-                  ...s,
-                  robotsDisallow: e.target.value
-                    .split("\n")
-                    .map((line) => line.trim())
-                    .filter(Boolean),
-                }))
-              }
+              value={robotsDisallowDraft}
+              onChange={(e) => {
+                const text = e.target.value;
+                setRobotsDisallowDraft(text);
+                setSettings((s) => ({ ...s, robotsDisallow: parseLines(text) }));
+              }}
               placeholder="/api/&#10;/_next/&#10;/preview"
               className="font-mono text-xs"
             />
@@ -247,16 +258,12 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
             <label className="mb-1 block text-xs font-semibold">Keywords (mỗi dòng một từ khóa)</label>
             <Textarea
               rows={4}
-              value={(settings.keywords ?? []).join("\n")}
-              onChange={(e) =>
-                setSettings((s) => ({
-                  ...s,
-                  keywords: e.target.value
-                    .split("\n")
-                    .map((line) => line.trim())
-                    .filter(Boolean),
-                }))
-              }
+              value={keywordsDraft}
+              onChange={(e) => {
+                const text = e.target.value;
+                setKeywordsDraft(text);
+                setSettings((s) => ({ ...s, keywords: parseLines(text) }));
+              }}
               placeholder="VinFast Ngọc Anh Cà Mau"
             />
           </div>
@@ -473,19 +480,18 @@ export function GlobalSeoClient({ embedded = false }: { embedded?: boolean }) {
             </label>
             <Textarea
               rows={3}
-              value={(settings.organization?.sameAs ?? []).join("\n")}
-              onChange={(e) =>
+              value={sameAsDraft}
+              onChange={(e) => {
+                const text = e.target.value;
+                setSameAsDraft(text);
                 setSettings((s) => ({
                   ...s,
                   organization: {
                     ...s.organization,
-                    sameAs: e.target.value
-                      .split("\n")
-                      .map((line) => line.trim())
-                      .filter(Boolean),
+                    sameAs: parseLines(text),
                   },
-                }))
-              }
+                }));
+              }}
               placeholder="https://www.google.com/maps/..."
             />
           </div>
