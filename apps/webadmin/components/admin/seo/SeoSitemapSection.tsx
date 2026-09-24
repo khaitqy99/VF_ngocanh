@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ExternalLink, Download, RefreshCw, Save } from "lucide-react";
 import { useToast } from "@/components/admin/ToastProvider";
 import { Button, Card, CardContent, CardHeader, CardTitle, Textarea } from "@/components/ui/core";
-import { isSitemapExcluded, type SitemapSettings } from "@/lib/seo/sitemap-config";
+import { isSitemapExcluded } from "@/lib/seo/sitemap-config";
+import type { SitemapSettings } from "@/lib/seo";
 
 type SitemapEntryRow = {
   path: string;
