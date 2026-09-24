@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Hướng dẫn Admin CMS — VinFast Ngọc Anh Cà Mau</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #18181b;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  h1 { font-size: 22pt; margin: 0 0 12px; color: #18181b; }
+  h2 {
+    font-size: 15pt;
+    color: #c8102e;
+    border-bottom: 2px solid #c8102e;
+    padding-bottom: 4px;
+    margin: 28px 0 12px;
+    page-break-after: avoid;
+  }
+  h3 { font-size: 12.5pt; margin: 18px 0 8px; color: #27272a; page-break-after: avoid; }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+  code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.92em;
+    background: #f4f4f5;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  th, td {
+    border: 1px solid #e4e4e7;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #fef2f2; }
+  blockquote {
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-left: 4px solid #c8102e;
+    background: #fafafa;
+    color: #3f3f46;
+  }
+  figure {
+    margin: 14px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  figure img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+  }
+  figcaption {
+    font-size: 9pt;
+    color: #71717a;
+    font-style: italic;
+    margin-top: 6px;
+  }
+  .brand {
+    text-align: center;
+    color: #c8102e;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  @media print {
+    body { padding: 0; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="brand">VINFAST NGỌC ANH CÀ MAU</div>
+<h1>Hướng dẫn dùng CMS — VinFast Ngọc Anh Cà Mau</h1>
+<p>Tài liệu dành cho anh/chị bán hàng, marketing, chăm sóc khách.</p>
+<p>Viết theo kiểu: <strong>muốn làm gì → bấm đâu → làm thế nào</strong>.</p>
+<h2>Hai địa chỉ cần nhớ</h2>
+<table>
+<tr><th>Việc</th><th>Mở link này</th></tr>
+<tr><td>Xem website khách xem</td><td>https://vinfast3scamau.com</td></tr>
+<tr><td>Vào trang quản trị (CMS)</td><td>https://cms.vinfast3scamau.com/admin/login</td></tr>
+</table>
+<p>CMS = chỗ <strong>sửa nội dung</strong>. Website = chỗ <strong>khách xem</strong>.</p>
+<p>Sửa xong trong CMS → mở website kiểm tra. Nếu chưa thấy đổi → xem mục [Website chưa cập nhật](#website-chưa-cập-nhật).</p>
+<h2>1. Đăng nhập</h2>
+<ol>
+<li>Mở: https://cms.vinfast3scamau.com/admin/login  </li>
+<li>Nhập email + mật khẩu được cấp.  </li>
+<li>Vào được là thấy menu bên trái (Tổng quan, Trang chủ, Ô tô…).</li>
+</ol>
+<p>Không vào được → kiểm tra đúng link, đúng email/mật khẩu. Vẫn lỗi → báo người cấp tài khoản.</p>
+<h2>2. Giao diện CMS nhìn thế nào</h2>
+<figure><img src="images/01-tong-quan.png" alt="Tổng quan" /><figcaption>Tổng quan</figcaption></figure>
+<ul>
+<li><strong>Bên trái:</strong> menu — chọn phần muốn sửa.  </li>
+<li><strong>Bên phải:</strong> nội dung làm việc.  </li>
+<li><strong>Đăng xuất:</strong> cuối menu trái.</li>
+</ul>
+<p><strong>Ai nên dùng mục nào?</strong></p>
+<table>
+<tr><th>Anh/chị làm việc</th><th>Vào các mục</th></tr>
+<tr><td>Sale / CSKH</td><td><strong>Lead khách</strong></td></tr>
+<tr><td>Marketing nội dung</td><td>Trang chủ, Tin tức, Ô tô/Xe máy/Phụ kiện, Banner, Thư viện ảnh</td></tr>
+<tr><td>Phụ trách kỹ thuật / admin</td><td>SEO, Redirects, Tài khoản admin, Làm mới cache</td></tr>
+</table>
+<h2>3. Việc hay làm nhất</h2>
+<table>
+<tr><th>Muốn…</th><th>Vào menu</th><th>Làm nhanh</th></tr>
+<tr><td>Đổi giá / gắn nhãn “Ưu đãi”</td><td><strong>Ô tô</strong> hoặc <strong>Xe máy</strong></td><td>Sửa trên thẻ xe → <strong>Lưu thẻ</strong></td></tr>
+<tr><td>Đổi giá / còn hàng phụ kiện</td><td><strong>Phụ kiện</strong></td><td>Sửa trên thẻ → <strong>Lưu thẻ</strong></td></tr>
+<tr><td>Đăng bài tin</td><td><strong>Tin tức</strong></td><td><strong>Viết bài mới</strong> → <strong>Xuất bản</strong></td></tr>
+<tr><td>Gọi khách vừa form</td><td><strong>Lead khách</strong></td><td>Bấm <strong>Gọi</strong> → đổi trạng thái</td></tr>
+<tr><td>Đổi banner trang chủ</td><td><strong>Trang chủ</strong></td><td>Bấm vào banner → đổi ảnh → <strong>Lưu thay đổi</strong></td></tr>
+<tr><td>Đổi hotline góc phải web</td><td><strong>Nút nổi</strong> (+ SEO nếu cần)</td><td>Sửa link → <strong>Lưu</strong></td></tr>
+<tr><td>Thêm xe mới</td><td><strong>Ô tô</strong> → <strong>Thêm ô tô</strong></td><td>Chọn xe mẫu + đặt tên → mục 7</td></tr>
+<tr><td>Copy xe gần giống</td><td>Trang chi tiết xe → <strong>Nhân bản</strong></td><td>Mục 8</td></tr>
+</table>
+<h2>4. Menu CMS mở ra trang web nào</h2>
+<p>Sửa trong CMS → kiểm tra đúng trang này trên https://vinfast3scamau.com</p>
+<table>
+<tr><th>Trong CMS (menu trái)</th><th>Trên website</th></tr>
+<tr><td><strong>Trang chủ</strong></td><td>https://vinfast3scamau.com</td></tr>
+<tr><td><strong>Banner catalog</strong> → tab Ô tô</td><td>https://vinfast3scamau.com/oto</td></tr>
+<tr><td><strong>Banner catalog</strong> → tab Xe máy</td><td>https://vinfast3scamau.com/xe-may-dien</td></tr>
+<tr><td><strong>Banner catalog</strong> → tab Phụ kiện</td><td>https://vinfast3scamau.com/phu-kien</td></tr>
+<tr><td><strong>Ô tô</strong> (từng xe)</td><td>https://vinfast3scamau.com/oto/…</td></tr>
+<tr><td><strong>Xe máy</strong> (từng xe)</td><td>https://vinfast3scamau.com/xe-may-dien/…</td></tr>
+<tr><td><strong>Phụ kiện</strong> (từng món)</td><td>https://vinfast3scamau.com/phu-kien/…</td></tr>
+<tr><td><strong>Tin tức</strong></td><td>https://vinfast3scamau.com/tin-tuc</td></tr>
+<tr><td><strong>Nội dung trang</strong> → Giới thiệu</td><td>https://vinfast3scamau.com/gioi-thieu</td></tr>
+<tr><td><strong>Nội dung trang</strong> → Hậu mãi</td><td>https://vinfast3scamau.com/dich-vu-hau-mai</td></tr>
+<tr><td><strong>Nội dung trang</strong> → Pin &amp; sạc</td><td>https://vinfast3scamau.com/pin-va-tram-sac</td></tr>
+<tr><td><strong>Nội dung trang</strong> → Lưu trữ NL</td><td>https://vinfast3scamau.com/luu-tru-nang-luong</td></tr>
+<tr><td><strong>Bảo mật</strong></td><td>trang chính sách bảo mật</td></tr>
+<tr><td><strong>Điều khoản</strong></td><td>trang điều khoản</td></tr>
+<tr><td><strong>Footer</strong> / <strong>Nút nổi</strong></td><td>hiện ở hầu hết mọi trang</td></tr>
+<tr><td><strong>Lead khách</strong></td><td>không phải trang web — hộp thư form khách gửi</td></tr>
+</table>
+<blockquote>Trong CMS đôi khi thấy chữ <code>/preview</code> — đó là <strong>bản xem để sửa</strong>, không gửi khách. Nút <strong>Xem trên web →</strong> / <strong>Website</strong> mới là bản khách xem.</blockquote>
+<h2>5. Sửa trang chủ</h2>
+<figure><img src="images/02-trang-chu.png" alt="Trang chủ — banner" /><figcaption>Trang chủ — banner</figcaption></figure>
+<ol>
+<li>Menu <strong>Trang chủ</strong>.  </li>
+<li>Đợi trang preview hiện (có banner). Trống quá lâu → bấm <strong>Tải lại</strong>.  </li>
+<li><strong>Bấm thẳng</strong> vào chữ hoặc ảnh muốn sửa.  </li>
+<li>Cuộn xuống phần <strong>Ô tô nổi bật</strong> / <strong>Xe máy nổi bật</strong> để chọn xe hiện trên trang chủ:</li>
+</ol>
+<figure><img src="images/02b-oto-noi-bat.png" alt="Danh sách xe nổi bật" /><figcaption>Danh sách xe nổi bật</figcaption></figure>
+<ol>
+<li>Thanh dưới cùng: chọn trạng thái <strong>Xuất bản</strong> → bấm <strong>Lưu thay đổi</strong>.  </li>
+<li>Mở https://vinfast3scamau.com xem đã đúng chưa.</li>
+</ol>
+<p><strong>Ý nghĩa nút:</strong></p>
+<ul>
+<li><strong>Hoàn tác</strong> = hủy chỉnh chưa lưu  </li>
+<li><strong>Lưu thay đổi</strong> = ghi nhận  </li>
+<li><strong>Website</strong> = mở trang khách  </li>
+</ul>
+<h2>6. Sửa xe (ô tô / xe máy / phụ kiện)</h2>
+<p>Ba menu <strong>Ô tô</strong>, <strong>Xe máy</strong>, <strong>Phụ kiện</strong> thao tác gần giống nhau.</p>
+<h3>6.1 Ô tô / Xe máy</h3>
+<figure><img src="images/06-oto.png" alt="Danh mục ô tô" /><figcaption>Danh mục ô tô</figcaption></figure>
+<p>#### Cách A — Đổi nhanh giá / tên / nhãn (hay dùng)</p>
+<ol>
+<li>Vào <strong>Ô tô</strong> (hoặc <strong>Xe máy</strong>).  </li>
+<li>Thấy lưới thẻ xe.  </li>
+<li>Sửa <strong>Tên</strong> hoặc <strong>Giá</strong>.  </li>
+<li>Tick <strong>Mới / Bán chạy / Ưu đãi</strong> nếu cần.  </li>
+<li>Đổi ảnh: <strong>Thư viện</strong> hoặc <strong>Upload</strong>.  </li>
+<li>Bấm <strong>Lưu thẻ</strong>.</li>
+</ol>
+<p>Xe máy:</p>
+<figure><img src="images/15-xe-may.png" alt="Danh mục xe máy" /><figcaption>Danh mục xe máy</figcaption></figure>
+<p>#### Cách B — Sửa cả trang chi tiết xe (nội dung dài)</p>
+<ol>
+<li>Trên thẻ xe bấm <strong>Sửa trang chi tiết →</strong>  </li>
+</ol>
+<p>(hoặc mở <strong>Quản lý ô tô → Mở danh sách → Sửa</strong>).</p>
+<ol>
+<li>Có 3 tab:</li>
+</ol>
+<table>
+<tr><th>Tab</th><th>Dùng để</th></tr>
+<tr><td><strong>Nội dung</strong></td><td>Sửa chữ, ảnh, gallery, màu… ngay trên trang xe</td></tr>
+<tr><td><strong>Thông tin</strong></td><td>Tên, đường dẫn URL, giá từ, trạng thái xuất bản</td></tr>
+<tr><td><strong>SEO</strong></td><td>Tiêu đề / mô tả Google</td></tr>
+</table>
+<figure><img src="images/18-sua-oto-noi-dung.png" alt="Sửa nội dung xe" /><figcaption>Sửa nội dung xe</figcaption></figure>
+<ol>
+<li>Trong tab <strong>Nội dung</strong>: bấm <strong>SỬA</strong> cạnh chỗ cần đổi → xong bấm <strong>Lưu</strong> trên thanh công cụ.  </li>
+<li>Muốn hiện trên web: bấm <strong>Xuất bản</strong>.  </li>
+<li>Bấm <strong>Xem trên web →</strong> để kiểm tra.</li>
+</ol>
+<figure><img src="images/19-sua-oto-thong-tin.png" alt="Tab Thông tin" /><figcaption>Tab Thông tin</figcaption></figure>
+<p>#### Đổi thứ tự xe trên danh mục</p>
+<ol>
+<li><strong>Ô tô</strong> → mở panel <strong>Quản lý ô tô</strong> → <strong>Mở danh sách</strong>.  </li>
+<li>Bật <strong>Sắp xếp thứ tự</strong>.  </li>
+<li>Kéo thả xe lên/xuống — <strong>tự lưu</strong>.  </li>
+<li>Xong thì bấm <strong>Xong sắp xếp</strong>.</li>
+</ol>
+<h3>6.2 Phụ kiện (khác ô tô một chút)</h3>
+<p>Vào menu <strong>Phụ kiện</strong> — vẫn có lưới thẻ + <strong>Lưu thẻ</strong>, nhưng trên mỗi thẻ còn sửa thêm:</p>
+<table>
+<tr><th>Ô trên thẻ</th><th>Ý nghĩa</th></tr>
+<tr><td><strong>Tên sản phẩm</strong></td><td>Tên hiện trên web</td></tr>
+<tr><td><strong>Mô tả ngắn</strong></td><td>Đoạn mô tả dưới tên</td></tr>
+<tr><td><strong>Giá bán ưu đãi</strong></td><td>Giá hiện khách</td></tr>
+<tr><td><strong>Badge</strong></td><td>Chữ nhỏ trên ảnh (nếu có)</td></tr>
+<tr><td><strong>Danh mục</strong></td><td>Nội thất / Ngoại thất / Sạc…</td></tr>
+<tr><td><strong>Dòng xe</strong></td><td>Xe nào dùng được (ví dụ VF 8)</td></tr>
+<tr><td><strong>Còn hàng</strong></td><td>Tắt = hiện hết hàng</td></tr>
+</table>
+<p>Sau khi sửa → <strong>Lưu thẻ</strong>.</p>
+<p>Muốn sửa sâu hơn → <strong>Sửa trang chi tiết →</strong> (giống ô tô: tab Nội dung / Thông tin / SEO).</p>
+<p><strong>Thêm phụ kiện mới:</strong> <strong>Phụ kiện → Thêm phụ kiện</strong> → chọn mẫu + tên → chọn <strong>xe tương thích</strong> (để ảnh đúng thư mục) → tạo nháp → upload ảnh → xuất bản (xem mục 7).</p>
+<h2>7. Thêm xe mới</h2>
+<figure><img src="images/17-them-oto.png" alt="Thêm ô tô mới" /><figcaption>Thêm ô tô mới</figcaption></figure>
+<blockquote>Hệ thống bắt buộc <strong>chọn một xe mẫu</strong> để copy khung trang. Ảnh <strong>không</strong> copy theo — phải upload sau.</blockquote>
+<p><strong>Làm lần lượt:</strong></p>
+<ol>
+<li><strong>Ô tô → + Thêm ô tô</strong> (hoặc Xe máy / Phụ kiện tương ứng).  </li>
+<li>Chọn <strong>Sao chép từ sản phẩm mẫu</strong> (xe gần giống nhất).  </li>
+<li>Điền <strong>Tên hiển thị</strong> (ví dụ: <code>VF 9 Plus</code>).  </li>
+<li>ID và đường dẫn URL thường tự sinh — chỉ sửa nếu cần.  </li>
+<li>Bấm <strong>Tạo sản phẩm nháp</strong>.  </li>
+<li>Tiếp theo bắt buộc:</li>
+</ol>
+<p>- Tab <strong>Thông tin</strong>: giá từ → <strong>Lưu thông tin</strong></p>
+<p>- Upload ảnh (đại diện + gallery)</p>
+<p>- Tab <strong>Nội dung</strong>: chỉnh chữ → <strong>Lưu</strong></p>
+<p>- Tab <strong>SEO</strong>: điền title/mô tả → <strong>Lưu SEO</strong></p>
+<ol>
+<li>Bấm <strong>Xuất bản</strong>.  </li>
+<li><strong>Xem trên web →</strong> kiểm tra.</li>
+</ol>
+<p><strong>Phụ kiện:</strong> nhớ chọn <strong>xe tương thích</strong> lúc tạo. Không chọn → ảnh vào thư mục phụ kiện chung.</p>
+<h2>8. Nhân bản xe (copy gần giống)</h2>
+<p>Dùng khi ra phiên bản mới <strong>gần giống</strong> xe đang có (đỡ dựng lại từ đầu).</p>
+<ol>
+<li>Vào trang chi tiết xe gốc (<strong>Sửa trang chi tiết</strong>).  </li>
+<li>Thanh trên bấm <strong>Nhân bản</strong>.  </li>
+<li>Điền <strong>Tên bản sao</strong> (và đường dẫn URL nếu cần).  </li>
+<li>Bấm <strong>Tạo bản sao</strong> → hệ thống tạo bản <strong>nháp</strong> mới.  </li>
+<li><strong>Upload ảnh mới</strong> cho bản sao (đừng để ảnh nhầm với xe cũ).  </li>
+<li>Chỉnh nội dung / giá nếu khác.  </li>
+<li><strong>Xuất bản</strong> → <strong>Xem trên web</strong>.</li>
+</ol>
+<blockquote>Nhân bản nhanh hơn khi chỉ đổi vài chỗ so với tạo mới hoàn toàn.</blockquote>
+<h2>9. Ẩn hoặc xóa xe</h2>
+<table>
+<tr><th>Muốn</th><th>Làm gì</th><th>Ghi chú</th></tr>
+<tr><td>Ẩn tạm, còn lấy lại sau</td><td>Trang chi tiết → <strong>Chuyển nháp</strong> hoặc <strong>Lưu trữ</strong></td><td>An toàn</td></tr>
+<tr><td>Xóa hẳn</td><td>Nút <strong>Xóa</strong> → xác nhận</td><td><strong>Không hoàn tác</strong></td></tr>
+</table>
+<ul>
+<li>Xóa <strong>ô tô / xe máy</strong> cũng xóa luôn thư mục ảnh của xe đó.  </li>
+<li>Xóa <strong>phụ kiện</strong> chỉ xóa dữ liệu, không xóa ảnh chung.</li>
+</ul>
+<p>Khuyến nghị: chưa chắc thì <strong>Nháp / Lưu trữ</strong>, đừng xóa.</p>
+<h2>10. Đăng tin tức</h2>
+<figure><img src="images/05-tin-tuc.png" alt="Tin tức" /><figcaption>Tin tức</figcaption></figure>
+<h3>Viết bài mới</h3>
+<ol>
+<li><strong>Tin tức → Viết bài mới</strong>.  </li>
+<li>Điền tiêu đề, nội dung.  </li>
+<li>Chọn <strong>Ảnh bìa</strong> từ thư viện.  </li>
+<li>Chọn danh mục, ngày đăng.  </li>
+<li>Bấm:</li>
+</ol>
+<p>- <strong>Lưu nháp</strong> = chưa hiện web</p>
+<p>- <strong>Xuất bản</strong> = hiện ngay trên https://vinfast3scamau.com/tin-tuc</p>
+<p>- <strong>Lên lịch</strong> = đăng đúng giờ đã chọn</p>
+<h3>Sửa / xóa bài</h3>
+<ul>
+<li><strong>Sửa</strong> trên thẻ bài.  </li>
+<li><strong>Xóa</strong> = thùng rác → xác nhận (không lấy lại được).</li>
+</ul>
+<h2>11. Xử lý khách để lại form (Lead)</h2>
+<figure><img src="images/11-lead-khach.png" alt="Lead khách" /><figcaption>Lead khách</figcaption></figure>
+<p>Khách gửi form trên web (báo giá, đặt cọc, lái thử…) sẽ vào đây.</p>
+<p><strong>Mỗi ngày nên:</strong></p>
+<ol>
+<li>Vào <strong>Lead khách</strong>.  </li>
+<li>Ưu tiên trạng thái <strong>Mới</strong>.  </li>
+<li>Bấm <strong>Gọi</strong>.  </li>
+<li>Đổi trạng thái:</li>
+</ol>
+<p>- Đang xử lý → đang tư vấn</p>
+<p>- Chốt đơn → đã chốt</p>
+<p>- Đóng → không còn nhu cầu</p>
+<ol>
+<li>Ghi chú nội bộ nếu cần.</li>
+</ol>
+<p>Có thể lọc theo loại form (báo giá, đặt cọc…) và tìm theo tên / SĐT.</p>
+<h2>12. Upload ảnh</h2>
+<figure><img src="images/10-thu-vien-anh.png" alt="Thư viện ảnh" /><figcaption>Thư viện ảnh</figcaption></figure>
+<ol>
+<li>Vào <strong>Thư viện ảnh</strong>.  </li>
+<li>Chọn tab: Ô tô / Xe máy / Phụ kiện / Bài viết / Trang.  </li>
+<li><strong>Mở thư mục</strong> đúng xe hoặc bài.  </li>
+<li><strong>Tải nhiều ảnh</strong> hoặc kéo thả vào.  </li>
+<li>Khi sửa xe/tin: chọn <strong>Thư viện</strong> / <strong>Chọn từ thư viện</strong> thay vì dán link lung tung.</li>
+</ol>
+<p><strong>Cẩn thận:</strong> đừng <strong>Xóa thư mục</strong> nếu chưa chắc ảnh còn đang dùng trên web.</p>
+<h2>13. Đổi banner danh mục</h2>
+<figure><img src="images/03-banner-catalog.png" alt="Banner catalog" /><figcaption>Banner catalog</figcaption></figure>
+<p>Banner lớn trên trang danh mục ô tô / xe máy / phụ kiện (xem bảng mục 4).</p>
+<ol>
+<li><strong>Banner catalog</strong>.  </li>
+<li>Chọn tab Ô tô / Xe máy / Phụ kiện.  </li>
+<li>Điền ảnh desktop, ảnh mobile, mô tả Alt.  </li>
+<li><strong>+ Thêm banner</strong> hoặc xóa banner cũ.  </li>
+<li><strong>Lưu thay đổi</strong>.</li>
+</ol>
+<p>Nên lấy URL ảnh từ <strong>Thư viện ảnh</strong>.</p>
+<h2>14. Đổi hotline / Zalo (nút nổi)</h2>
+<figure><img src="images/09-nut-noi.png" alt="Nút nổi" /><figcaption>Nút nổi</figcaption></figure>
+<p>Các nút góc phải website (gọi, Messenger, Zalo, lên đầu trang).</p>
+<ol>
+<li><strong>Nút nổi</strong>.  </li>
+<li>Bật/tắt từng nút, sửa số điện thoại / link.  </li>
+<li><strong>Lưu thay đổi</strong>.  </li>
+</ol>
+<p>Đổi hotline “chính thức” của đại lý: sửa thêm ở <strong>SEO → Cài đặt chung</strong> (để Footer / thông tin chung khớp).</p>
+<h2>15. Các mục khác (ít dùng hơn)</h2>
+<h3>Nội dung trang (Giới thiệu, hậu mãi…)</h3>
+<figure><img src="images/04-noi-dung-trang.png" alt="Nội dung trang" /><figcaption>Nội dung trang</figcaption></figure>
+<p>Bấm thẻ trang → sửa như trang chủ (bấm chữ/ảnh) → Lưu.</p>
+<p>Link web tương ứng xem <strong>mục 4</strong>.</p>
+<h3>Bảo mật / Điều khoản</h3>
+<figure><img src="images/14-bao-mat.png" alt="Bảo mật" /><figcaption>Bảo mật</figcaption></figure>
+<p>Sửa tiêu đề + các mục → <strong>Lưu thay đổi</strong>.</p>
+<h3>Footer (chân trang)</h3>
+<figure><img src="images/08-footer.png" alt="Footer" /><figcaption>Footer</figcaption></figure>
+<p>Sửa chữ thương hiệu + link các cột → <strong>Lưu thay đổi</strong>.</p>
+<h3>Giá lăn bánh (phí đăng ký, biển số…)</h3>
+<figure><img src="images/13-lan-banh-oto.png" alt="Lăn bánh ô tô" /><figcaption>Lăn bánh ô tô</figcaption></figure>
+<ul>
+<li><strong>Lăn bánh ô tô</strong> / <strong>Lăn bánh xe máy</strong>  </li>
+<li>Chỉ sửa <strong>phí</strong> (đăng kiểm, bảo hiểm, phí biển theo tỉnh…)  </li>
+<li><strong>Không</strong> phải chỗ đổi giá bán xe (giá bán sửa ở menu Ô tô/Xe máy)  </li>
+<li>Xong → <strong>Lưu thay đổi</strong></li>
+</ul>
+<h3>SEO (Google / mạng xã hội)</h3>
+<figure><img src="images/07-seo.png" alt="SEO" /><figcaption>SEO</figcaption></figure>
+<table>
+<tr><th>Tab</th><th>Khi nào dùng</th></tr>
+<tr><td>Cài đặt chung</td><td>Tên site, mô tả mặc định, hotline chung</td></tr>
+<tr><td>Sản phẩm / Blog / Trang tĩnh</td><td>SEO từng trang</td></tr>
+<tr><td>Redirects</td><td>Đổi link cũ → link mới (<strong>nên nhờ kỹ thuật</strong>)</td></tr>
+<tr><td>Sitemap</td><td>Danh sách trang Google đọc</td></tr>
+</table>
+<figure><img src="images/16-seo-sitemap.png" alt="Sitemap" /><figcaption>Sitemap</figcaption></figure>
+<h3>Tài khoản admin</h3>
+<figure><img src="images/12-tai-khoan-admin.png" alt="Tài khoản" /><figcaption>Tài khoản</figcaption></figure>
+<p>Thêm người dùng, đổi mật khẩu, chặn / xóa tài khoản.</p>
+<p>Không tự xóa hoặc chặn tài khoản đang đăng nhập của mình.</p>
+<h2>Website chưa cập nhật</h2>
+<p>Đã <strong>Lưu</strong> trong CMS nhưng https://vinfast3scamau.com vẫn cũ:</p>
+<ol>
+<li>Vào <strong>Tổng quan</strong>.  </li>
+<li>Bấm <strong>Làm mới cache</strong> (làm mới bộ nhớ tạm của website).  </li>
+<li>Mở lại website, nhấn <strong>Ctrl + F5</strong> (tải lại mạnh).</li>
+</ol>
+<p>Không cần bấm mỗi lần sửa nhỏ nếu web đã hiện đúng.</p>
+<h2>17. Khi nào hỏi kỹ thuật</h2>
+<p>Nhờ người phụ trách kỹ thuật khi:</p>
+<ul>
+<li>Sửa <strong>Redirects</strong>, chặn Google (robots), sitemap phức tạp  </li>
+<li>Web lỗi / preview trắng lâu  </li>
+<li>Cần tạo / khóa nhiều tài khoản admin  </li>
+<li>Xóa nhầm dữ liệu quan trọng  </li>
+</ul>
+<h2>Tóm tắt một dòng</h2>
+<blockquote><strong>CMS</strong> (cms.vinfast3scamau.com) = chỗ sửa · <strong>Web</strong> (vinfast3scamau.com) = chỗ khách xem · Sửa xong nhớ <strong>Lưu</strong> · Không thấy đổi thì <strong>Làm mới cache</strong>.</blockquote>
+<h2>File gửi anh/chị khác</h2>
+<table>
+<tr><th>File</th><th>Dùng</th></tr>
+<tr><td>File Word / PDF cùng thư mục này</td><td>In hoặc gửi Zalo / email</td></tr>
+<tr><td><code>QUY-TRINH-NHANH.md</code></td><td>Giấy nháp 1 trang</td></tr>
+</table>
+<p>*Cập nhật 09/2026 — VinFast Ngọc Anh Cà Mau.*</p>
+<p style="margin-top:32px;font-size:9pt;color:#71717a;font-style:italic">Cập nhật theo bản admin hiện tại (tháng 09/2026).</p>
+</body>
+</html>

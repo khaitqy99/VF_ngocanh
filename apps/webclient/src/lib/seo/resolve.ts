@@ -21,6 +21,7 @@ import {
   type SiteSeoSettings,
   type StaticPageSeoDefinition,
 } from "./types";
+import { parseSitemapSettings } from "./sitemap-config";
 
 function mergeOrganization(
   base?: OrganizationSettings,
@@ -155,6 +156,7 @@ export function parseSiteSeoSettings(value: unknown): SiteSeoSettings {
             : undefined,
         }
       : undefined,
+    sitemap: parseSitemapSettings(raw.sitemap),
   };
 }
 
@@ -180,6 +182,10 @@ export function defaultSiteSeoSettings(): SiteSeoSettings {
     ],
     robotsDisallow: ["/api/", "/_next/", "/static/", "/preview", "/*/preview", "/*/preview/*"],
     robots: { index: true, follow: true },
+    sitemap: {
+      excludePaths: [],
+      includeImageSitemap: true,
+    },
     organization: {
       name: SCHEMA_BUSINESS_NAME,
       legalName: SCHEMA_BUSINESS_NAME,
@@ -219,6 +225,11 @@ export function mergeSiteSeoSettings(partial?: SiteSeoSettings | null): SiteSeoS
     keywords: partial.keywords?.length ? partial.keywords : base.keywords,
     robotsDisallow: partial.robotsDisallow?.length ? partial.robotsDisallow : base.robotsDisallow,
     robots: { ...base.robots, ...partial.robots },
+    sitemap: {
+      excludePaths: partial.sitemap?.excludePaths ?? base.sitemap?.excludePaths ?? [],
+      includeImageSitemap:
+        partial.sitemap?.includeImageSitemap ?? base.sitemap?.includeImageSitemap ?? true,
+    },
     organization: mergeOrganization(base.organization, partial.organization),
   };
 }

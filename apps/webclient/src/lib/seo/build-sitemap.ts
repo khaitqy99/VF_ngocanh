@@ -9,6 +9,7 @@ import {
 } from "@/lib/cms/seo";
 import { accessoryDetailPath, carDetailPath, scooterDetailPath } from "@/lib/seo/slugs";
 import { collectSitemapImages } from "@/lib/seo/sitemap-images";
+import { isSitemapExcluded } from "@/lib/seo/sitemap-config";
 import { PRODUCTION_SITE_URL, STATIC_PAGE_SEO } from "@/lib/seo/types";
 
 export type SitemapEntryData = {
@@ -112,6 +113,11 @@ function buildHubEntries(
 
 /** Shared sitemap data for `/sitemap.xml` and `/sitemap-images.xml`. */
 export async function buildSitemapEntries(): Promise<SitemapEntryData[]> {
+  const site = await getSiteSeo();
+  const excludePaths = site.sitemap?.excludePaths ?? [];
+  const filterExcluded = (entries: SitemapEntryData[]) =>
+    entries.filter((entry) => !isSitemapExcluded(entry.path, excludePaths));
+
   let noindexPaths = new Set<string>();
   let imagesByPath = new Map<string, string[]>();
 
@@ -192,7 +198,7 @@ export async function buildSitemapEntries(): Promise<SitemapEntryData[]> {
         });
       });
 
-    return [
+    return filterExcluded([
       ...priorityHubs,
       ...carRoutes,
       ...scooterRoutes,
@@ -200,10 +206,10 @@ export async function buildSitemapEntries(): Promise<SitemapEntryData[]> {
       ...secondaryHubs,
       ...accessoryRoutes,
       ...legalHubs,
-    ];
+    ]);
   } catch (error) {
     console.error("[sitemap] Failed to load dynamic routes, serving static routes only:", error);
-    return [...priorityHubs, ...secondaryHubs, ...legalHubs];
+    return filterExcluded([...priorityHubs, ...secondaryHubs, ...legalHubs]);
   }
 }
 

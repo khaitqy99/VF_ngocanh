@@ -64,6 +64,13 @@ export type OrganizationSettings = {
   sameAs?: string[];
 };
 
+export type SitemapSettings = {
+  /** Paths to omit from sitemap.xml (one per line in admin). Supports trailing `*` prefix match. */
+  excludePaths?: string[];
+  /** When false, robots.txt omits sitemap-images.xml. */
+  includeImageSitemap?: boolean;
+};
+
 export type SiteSeoSettings = {
   siteName?: string;
   titleTemplate?: string;
@@ -77,6 +84,7 @@ export type SiteSeoSettings = {
   robotsDisallow?: string[];
   robots?: SeoRobots;
   organization?: OrganizationSettings;
+  sitemap?: SitemapSettings;
 };
 
 export type StaticPageSeoDefinition = {

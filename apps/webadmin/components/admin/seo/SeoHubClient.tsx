@@ -6,11 +6,18 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { GlobalSeoClient } from "@/components/admin/seo/GlobalSeoClient";
 import { SeoStaticPagesSection } from "@/components/admin/seo/SeoStaticPagesSection";
 import { SeoRedirectsSection } from "@/components/admin/seo/SeoRedirectsSection";
+import { SeoSitemapSection } from "@/components/admin/seo/SeoSitemapSection";
 
-type SeoHubTab = "global" | "products" | "pages" | "blog" | "redirects";
+type SeoHubTab = "global" | "products" | "pages" | "blog" | "redirects" | "sitemap";
 
 function parseTab(value: string | null): SeoHubTab {
-  if (value === "products" || value === "pages" || value === "blog" || value === "redirects") {
+  if (
+    value === "products" ||
+    value === "pages" ||
+    value === "blog" ||
+    value === "redirects" ||
+    value === "sitemap"
+  ) {
     return value;
   }
   return "global";
@@ -41,6 +48,11 @@ const TAB_ITEMS: { value: SeoHubTab; label: string; hint: string }[] = [
     value: "redirects",
     label: "Redirects",
     hint: "301/302 từ path cũ sang path mới",
+  },
+  {
+    value: "sitemap",
+    label: "Sitemap",
+    hint: "Xem URL trong sitemap, loại trừ path và bật/tắt image sitemap",
   },
 ];
 
@@ -98,6 +110,7 @@ export function SeoHubClient({
       {tab === "blog" ? blogSection : null}
       {tab === "pages" ? <SeoStaticPagesSection /> : null}
       {tab === "redirects" ? <SeoRedirectsSection /> : null}
+      {tab === "sitemap" ? <SeoSitemapSection /> : null}
     </div>
   );
 }

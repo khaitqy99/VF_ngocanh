@@ -11,6 +11,11 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     ...new Set([...(site.robotsDisallow?.length ? site.robotsDisallow : DEFAULT_DISALLOW)]),
   ];
 
+  const sitemaps = [`${PRODUCTION_SITE_URL}/sitemap.xml`];
+  if (site.sitemap?.includeImageSitemap !== false) {
+    sitemaps.push(`${PRODUCTION_SITE_URL}/sitemap-images.xml`);
+  }
+
   // MetadataRoute.Robots has limited follow support; honor disallow + sitewide index flag.
   return {
     rules: [
@@ -26,7 +31,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
             }),
       },
     ],
-    sitemap: [`${PRODUCTION_SITE_URL}/sitemap.xml`, `${PRODUCTION_SITE_URL}/sitemap-images.xml`],
+    sitemap: sitemaps,
     host: PRODUCTION_SITE_URL,
   };
 }
